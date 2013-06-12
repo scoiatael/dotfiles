@@ -7,5 +7,6 @@ for LINKFILE in $( ls $LINKDIR )
 do
 	LINKPATH=$DIR/$( cat $LINKDIR/$LINKFILE )
 	LINKNAME=${LINKFILE%.link}
+	rm $HOME/.$LINKNAME
 	ln -fvs $LINKPATH $HOME/.$LINKNAME
 done
