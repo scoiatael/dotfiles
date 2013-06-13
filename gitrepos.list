@@ -1,5 +1,21 @@
-vim/snipmate.vim
-vim/syntastic
-vim/nerdtree
-vim/vim-pathogen
-zsh/zprezto
+[vim]
+  [[snipmate]]
+  PATH=snipmate.vim
+  URL=https://github.com/msanders/snipmate.vim.git
+  [[syntastic]]
+  PATH=syntastic      
+  URL=https://github.com/scrooloose/syntastic.git
+  [[nerdtree]]
+  PATH=nerdtree
+  URL=https://github.com/scrooloose/nerdtree.git
+  [[pathogen]]
+  PATH=vim-pathogen
+  URL=https://github.com/tpope/vim-pathogen.git
+[zsh]
+  [[zprezto]]
+  PATH=zprezto
+  URL=https://github.com/sorin-ionescu/prezto.git
+[font]
+  [[SourceCodePro]]
+  PATH=scp
+  URL=https://github.com/adobe/source-code-pro.git

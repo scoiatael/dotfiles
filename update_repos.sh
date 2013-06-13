@@ -1,14 +1,41 @@
 #!/bin/bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-REPOLIST="gitrepos.list"
-CURDIR=$( pwd )
+function usage {
+  echo " Usage: $0 [init] "
+}
 
-for REPO in $( cat $DIR/$REPOLIST )
-do
-	echo "Updating $REPO.."
-	cd $DIR/$REPO
-	echo $( pwd ) 
-	echo $( git pull origin master )
-done
-cd $CURDIR
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+REPOSCRIPT="$DIR/scripts/parselist"
+REPODIR="$DIR/repos"
+
+echo $REPOSCRIPT
+
+function start {
+  case $1 in
+    "update" )
+      for REPO in $( $REPOSCRIPT path )
+      do
+        echo "Updating $REPO.."
+        cd $DIR/$REPO && echo $( git pull origin master )
+      done ;; 
+    "init" )
+      for REPO in $( $REPOSCRIPT url )
+      do
+        echo "Cloning $REPO.."
+        cd $REPODIR && echo "$( git clone $REPO )"
+      done ;; 
+    * )
+      echo "Bad args.."
+      usage ;;
+  esac 
+}
+
+case $@ in
+  "" )
+    start update;;
+  "--help" )
+    usage ;;
+  *)
+    start $1 ;;
+esac
+
