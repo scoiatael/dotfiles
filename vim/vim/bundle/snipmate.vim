@@ -1,1 +1,1 @@
-../../repos/snipmate.vim
+../../../repos/snipmate.vim

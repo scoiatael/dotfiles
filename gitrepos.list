@@ -11,6 +11,9 @@
   [[pathogen]]
   PATH=vim-pathogen
   URL=https://github.com/tpope/vim-pathogen.git
+  [[ctrlp]]
+  PATH=ctrlp.vim
+  URL=https://github.com/kien/ctrlp.vim.git
 [zsh]
   [[zprezto]]
   PATH=zprezto

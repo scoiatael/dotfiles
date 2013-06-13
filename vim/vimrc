@@ -29,12 +29,10 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :set hlsearch
 :nmap \q :nohlsearch<CR>
 
-:nmap <C-e> :e#<CR>
-
-:nmap <C-n> :bnext<CR>
-:nmap <C-p> :bprev<CR>
 
 :nmap ; :CtrlPBuffer<CR>
+
+:nmap <C-e> :e#<CR>
 
 :let g:ctrlp_map = '<Leader>t'
 :let g:ctrlp_match_window_bottom = 0
@@ -45,13 +43,15 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :let g:ctrlp_switch_buffer = 0
 
 :nmap \e :NERDTreeToggle<CR>
+:nmap \a :bnext<CR>
+:nmap \s :bprev<CR>
+:nmap \d :bd<CR>
 
 :nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 :nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 :nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 :nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 
-:nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 
 runtime! debian.vim
 
