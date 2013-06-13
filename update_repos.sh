@@ -16,7 +16,7 @@ function start {
       for REPO in $( $REPOSCRIPT path )
       do
         echo "Updating $REPO.."
-        cd $DIR/$REPO && echo $( git pull origin master )
+        cd $REPODIR/$REPO && echo $( git pull origin master )
       done ;; 
     "init" )
       for REPO in $( $REPOSCRIPT url )
