@@ -8,8 +8,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPOSCRIPT="$DIR/scripts/parselist"
 REPODIR="$DIR/repos"
 
-echo $REPOSCRIPT
-
 function start {
   case $1 in
     "update" )
