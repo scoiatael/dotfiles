@@ -1,0 +1,6 @@
+# Due to linking whole .xmonad dir, ignore compilation results
+*.o
+*.hi
+*.errors
+xmonad-*
+history

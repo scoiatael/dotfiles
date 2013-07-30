@@ -1,0 +1,104 @@
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#background yes 
+double_buffer yes
+
+total_run_times 0
+
+cpu_avg_samples 2
+
+out_to_console no
+
+use_xft yes
+
+# Xft font when Xft is enabled
+xftfont Bitstream Vera Sans Mono:size=8
+
+xftalpha 0.8
+
+on_bottom yes
+
+# mail spool
+mail_spool $MAIL
+
+# Update interval in seconds
+update_interval 5
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Minimum size of text area
+#minimum_size 280 5
+#maximum_width 150
+
+# Draw shades?
+draw_shades no
+
+# Draw outlines?
+draw_outline no
+
+# Draw borders around text
+draw_borders no
+
+# Stippled borders?
+stippled_borders 10
+
+# border margins
+border_margin 4
+
+# border width
+border_width 1
+
+# Default colors and also border colors
+default_color white
+default_shade_color white
+default_outline_color white
+
+# Text alignment, other possible values are commented
+#alignment top_left
+#minimum_size 10 10
+gap_x 13
+gap_y 13
+#alignment top_right
+alignment bottom_left
+#alignment bottom_right
+
+# Gap between borders of screen and text
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+use_spacer no
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+TEXT
+$nodename - $sysname $kernel on $machine
+$stippled_hr
+${color lightgrey}Uptime:$color $uptime ${color lightgrey}- Load:$color $loadavg
+${color lightgrey}CPU Usage:${color #5000a0} ${cpu}% ${cpubar}
+${color black}${cpugraph 000000 5000a0}
+${color lightgrey}RAM Usage:$color $mem/$memmax - $memperc% $membar
+${color lightgrey}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar}
+${color lightgrey}Processes:$color $processes  ${color grey}Running:$color $running_processes
+$color$stippled_hr
+${color lightgrey}File systems:
+ / $color${fs_used /}/${fs_size /} ${fs_bar /}
+ /home $color${fs_used /home}/${fs_size /home} ${fs_bar /home}
+ C:// $color${fs_used /mnt/WinC}/${fs_size /mnt/WinC} ${fs_bar /mnt/WinC}
+ D:// $color${fs_used /mnt/WinD}/${fs_size /mnt/WinD} ${fs_bar /mnt/WinD}
+${color lightgrey}Temperatures:
+ CPU:$color ${acpitemp}C${color grey}
+${color}Name              PID     CPU%   MEM%
+${color #ddaa00} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${color}Mem usage
+${color #ddaa00} ${top_mem name 1} ${top_mem pid 1} ${top_mem cpu 1} ${top_mem mem 1}
+${color lightgrey} ${top_mem name 2} ${top_mem pid 2} ${top_mem cpu 2} ${top_mem mem 2}
+${color lightgrey} ${top_mem name 3} ${top_mem pid 3} ${top_mem cpu 3} ${top_mem mem 3}
+
