@@ -194,7 +194,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = onWorkspace "2:floats" custom3 $ onWorkspace "2:web" custom2 $ custom1
+myLayout = onWorkspace "3:floats" custom3 $ onWorkspace "2:web" custom2 $ custom1
 
      -- default tiling algorithm partitions the screen into two panes
 myTiled   = Tall nmaster delta ratio
