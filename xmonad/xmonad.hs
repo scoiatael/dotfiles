@@ -132,13 +132,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
     --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock | logger")
     ]
     ++
 
@@ -279,6 +280,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 --
 -- By default, do nothing.
 myStartupHook = do
+  spawn "xscreensaver &"
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc1"
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc2"
   spawn "sleep 1 && lxterminal"
