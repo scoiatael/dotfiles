@@ -177,8 +177,10 @@ myStartupHook = ewmhDesktopsStartup >> do
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc2"
   spawn "sleep 1 && lxterminal"
 
-myXmonadBar = "dzen2 -y '0' -h '24'  -w '512' -ta 'l'" ++ myDzenStyle
-myStatusBar = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -w '512' -x '512'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
+res = 1024
+border = 600
+myXmonadBar = "dzen2 -y '0' -h '24'  -w '" ++ show border ++ "' -ta 'l'" ++ myDzenStyle
+myStatusBar = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -w '" ++ show (res - border) ++ "' -x '" ++ show border ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
 myConfigDir = "$HOME/.xmonad/"
 myBitmapsDir = "$HOME/.xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'arial:bold:size=11'"
