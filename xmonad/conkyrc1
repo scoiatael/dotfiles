@@ -16,4 +16,4 @@ xftalpha 0.8
 xftfont Source CodePro:size=8
 update_interval 10
 TEXT
-${exec tail -n20 /var/log/messages}
+${exec tail -n15 /var/log/messages}
