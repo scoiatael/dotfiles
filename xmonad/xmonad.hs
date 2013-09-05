@@ -163,8 +163,11 @@ myDzenPP  = dzenPP
     , ppLayout  = dzenColor "#aaaaaa" "" . wrap "^ca(1,xdotool key super+space)· " " ·^ca()"
     , ppTitle   = dzenColor "#ffffff" "" 
                     . wrap "^ca(1,xdotool key super+k)^ca(2,xdotool key super+shift+c)"
-                           "                          ^ca()^ca()" . shorten 15 . dzenEscape
+                           "^ca()^ca()" . pad . fixToWidth 25 . dzenEscape
     }
+  where
+  fixToWidth :: Int -> String -> String
+  fixToWidth a s = let ls = length s in if ls < a then s ++ (replicate (a-ls) ' ') else shorten a s 
  
 myLogHook myDzen = dynamicLogWithPP $ myDzenPP { 
   ppOutput = hPutStrLn myDzen,
@@ -178,7 +181,7 @@ myStartupHook = ewmhDesktopsStartup >> do
   spawn "sleep 1 && lxterminal"
 
 res = 1024
-border = 600
+border = 650
 myXmonadBar = "dzen2 -y '0' -h '24'  -w '" ++ show border ++ "' -ta 'l'" ++ myDzenStyle
 myStatusBar = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -w '" ++ show (res - border) ++ "' -x '" ++ show border ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
 myConfigDir = "$HOME/.xmonad/"
