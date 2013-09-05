@@ -164,6 +164,7 @@ myDzenPP  = dzenPP
     , ppTitle   = dzenColor "#ffffff" "" 
                     . wrap "^ca(1,xdotool key super+k)^ca(2,xdotool key super+shift+c)"
                            "^ca()^ca()" . pad . fixToWidth 25 . dzenEscape
+    , ppOrder = reverse
     }
   where
   fixToWidth :: Int -> String -> String
