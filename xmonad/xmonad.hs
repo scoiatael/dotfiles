@@ -184,7 +184,7 @@ myStartupHook = ewmhDesktopsStartup >> do
 res = 1024
 border = 650
 myXmonadBar = "dzen2 -y '0' -h '24'  -w '" ++ show border ++ "' -ta 'l'" ++ myDzenStyle
-myStatusBar = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -w '" ++ show (res - border) ++ "' -x '" ++ show border ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
+myStatusBar = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -x '" ++ show border ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
 myConfigDir = "$HOME/.xmonad/"
 myBitmapsDir = "$HOME/.xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'arial:bold:size=11'"
