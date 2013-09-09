@@ -22,7 +22,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.Monitor
 import Data.Ratio
 
-myTerminal      = "lxterminal"
+myTerminal      = "urxvt"
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse =True
