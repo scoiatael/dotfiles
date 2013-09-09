@@ -2,3 +2,4 @@ lightdm -> chown -hR lightdm:lightdm /var/lib/lightm
 add wallpaper to /usr/share/backgrounds/default.jpg
 rsyslog -> chown 0644 /var/log/messages
 net names -> ln -s /dev/null /etc/polkit-1/rules.d/80-net-name-slot.rules
+volume -> modprobe snd_mixer_oss
