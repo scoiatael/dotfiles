@@ -1,5 +1,7 @@
 import XMonad
+
 import Data.Monoid
+import Data.Ratio
 import System.Exit
 
 import qualified XMonad.StackSet as W
@@ -16,11 +18,11 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Spiral
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.LayoutModifier
---import XMonad.Config.Xfce
 import XMonad.Layout.NoBorders
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Layout.Monitor
-import Data.Ratio
+
+import XMonad.Prompt
+import XMonad.Prompt.Window
 
 myTerminal      = "urxvt"
 
@@ -48,48 +50,42 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     , ((modm,               xK_p     ), spawn "dmenu_run")
-
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
     , ((modm .|. shiftMask, xK_c     ), kill)
 
     , ((modm,               xK_space ), sendMessage NextLayout)
-
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
     , ((modm,               xK_n     ), refresh)
 
     , ((modm,               xK_Tab   ), windows W.focusDown)
-
     , ((modm,               xK_j     ), windows W.focusDown)
-
     , ((modm,               xK_k     ), windows W.focusUp  )
-
     , ((modm,               xK_m     ), windows W.focusMaster  )
 
     , ((modm,               xK_Return), windows W.swapMaster)
-
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
-
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
     , ((modm,               xK_h     ), sendMessage Shrink)
-
     , ((modm,               xK_l     ), sendMessage Expand)
 
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
-
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
     
-    , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage $ ToggleStrut D)
+    , ((modm .|. shiftMask, xK_b     ), sendMessage ToggleStruts)
 
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
-
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+
     , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock | logger")
+
+    , ((modm              , xK_a     ), windowPromptGoto defaultXPConfig { autoComplete = Just 500000 })
     ]
     ++
 
@@ -124,9 +120,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     ]
 
-myLayout = ModifiedLayout hidePanel $ avoidStruts $ smartBorders $ onWorkspace "3" custom3 $ onWorkspace "2" custom2 $ custom1
-
-hidePanel = monitor {  prop = ClassName "xfce4-panel", rect = Rectangle 0 0 0 0 }
+myLayout = avoidStrutsOn [U,L,R] $ smartBorders $ onWorkspace "3" custom3 $ onWorkspace "2" custom2 $ custom1
 
 myTiled   = Tall nmaster delta ratio
   where
@@ -141,7 +135,7 @@ custom1 = myTiled ||| Mirror myTiled ||| Full ||| spiral (1 % 1)
 custom2 = Mirror myTiled ||| myTiled ||| Full
 custom3 = simpleFloat ||| Full ||| Mirror myTiled ||| myTiled
 
-myManageHook = manageMonitor hidePanel <+> manageDocks <+> composeAll ( concat (
+myManageHook =  manageDocks <+> composeAll ( concat (
     [ [className =? c       --> doShift "2" | c <- myWebs]
     , [className =? "Conky"          --> doIgnore]
     , [className =? "xfce4-panel" --> doIgnore]
@@ -163,7 +157,7 @@ myDzenPP  = dzenPP
     , ppLayout  = dzenColor "#aaaaaa" "" . wrap "^ca(1,xdotool key super+space)· " " ·^ca()"
     , ppTitle   = dzenColor "#ffffff" "" 
                     . wrap "^ca(1,xdotool key super+k)^ca(2,xdotool key super+shift+c)"
-                           "^ca()^ca()" . pad . fixToWidth 25 . dzenEscape
+                           "^ca()^ca()" . pad . fixToWidth 12 . dzenEscape
     , ppOrder = reverse
     }
   where
@@ -187,7 +181,7 @@ myXmonadBar = "dzen2 -y '0' -h '24'  -w '" ++ show border ++ "' -ta 'l'" ++ myDz
 myStatusBar = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -x '" ++ show border ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
 myConfigDir = "$HOME/.xmonad/"
 myBitmapsDir = "$HOME/.xmonad/dzen2"
-myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'arial:bold:size=11'"
+myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
 main = do
   myDzen <- spawnPipe myXmonadBar
