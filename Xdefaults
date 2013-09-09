@@ -5,7 +5,7 @@
 !-------------------------------------------------------------------------------
  
 Xft.dpi:                    96
-Xft.antialias:              false
+Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
 Xft.hintstyle:              hintslight
@@ -62,7 +62,7 @@ URxvt.pointerBlank:         true
  
 !!Source http://github.com/altercation/solarized
  
-*background: #002b36
+*background: #1a1312
 *foreground: #657b83
 !!*fading: 40
 *fadeColor: #002b36
