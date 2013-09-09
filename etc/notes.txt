@@ -1,0 +1,2 @@
+lightdm -> chown -hR lightdm:lightdm /var/lib/lightm
+add wallpaper to /usr/share/backgrounds/default.jpg

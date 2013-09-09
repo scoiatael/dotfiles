@@ -145,3 +145,4 @@ zsh
 rxvt-unicode 
 rxvt-unicode-terminfo 
 urxvt-perls  
+xorg-xserver
