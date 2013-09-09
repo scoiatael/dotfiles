@@ -147,3 +147,4 @@ rxvt-unicode-terminfo
 urxvt-perls  
 xorg-server
 midori
+xclip
