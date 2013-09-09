@@ -42,13 +42,16 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
  
 ! Perl extensions
-URxvt.perl-ext-common:      default,matcher,url-select
-URxvt.keysym.C-i:           perl:url-select:select-next
+URxvt.perl-ext-common:      default,matcher,url-select,clipboard,tabbed
+URxvt.keysym.C-i:           perl:url-select:select_next
 URXvt.url-select.launcher:  midori
 URXvt.url-select.underline: true
 URxvt.matcher.button:       1
 URxvt.urlLauncher:          midori
- 
+
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.ios14755:             false
+
 ! Cursor
 URxvt.cursorBlink:          false
 URxvt.cursorColor:          #657b83

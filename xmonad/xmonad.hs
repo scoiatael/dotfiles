@@ -179,7 +179,7 @@ myLogHook myDzen = dynamicLogWithPP $ myDzenPP {
 myStartupHook = ewmhDesktopsStartup >> do
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc1"
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc2"
-  spawn "sleep 1 && lxterminal"
+  spawn $ "sleep 1 && " ++ myTerminal
 
 res = 1024
 border = 650
