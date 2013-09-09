@@ -18,4 +18,5 @@ ln -s /dev/null /etc/polkit-1/rules.d/80-net-name-slot.rules
 modprobe snd_mixer_oss
 #copy/paste -> 
 cp urxvtclip /usr/lib/urxvt/perl/clipboard
-
+#fonts ->
+ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d/
