@@ -13,7 +13,7 @@ text_buffer_size 3000
 max_text_width 90
 use_xft yes
 xftalpha 0.8
-xftfont Source CodePro:size=8
+xftfont Monokai:size=8
 update_interval 10
 TEXT
 ${exec tail -n15 /var/log/messages}
