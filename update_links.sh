@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LINKDIR="$DIR/dotfiles/"
 
-for LINKFILE in $( ls $LINKDIR ) 
+for LINKFILE in $( ls $LINKDIR/*.link ) 
 do
 	LINKPATH=$DIR/$( cat $LINKDIR/$LINKFILE )
 	LINKNAME=${LINKFILE%.link}

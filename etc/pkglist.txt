@@ -148,3 +148,8 @@ urxvt-perls
 xorg-server
 midori
 xclip
+evince
+gv
+vlc
+deadbeef
+abiword

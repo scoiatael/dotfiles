@@ -18,7 +18,3 @@
   [[zprezto]]
   PATH=prezto
   URL=https://github.com/sorin-ionescu/prezto.git
-[font]
-  [[SourceCodePro]]
-  PATH=source-code-pro
-  URL=https://github.com/adobe/source-code-pro.git
