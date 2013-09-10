@@ -171,6 +171,7 @@ myLogHook myDzen = dynamicLogWithPP $ myDzenPP {
               date "%b %d %H:%M"] }
 
 myStartupHook = ewmhDesktopsStartup >> do
+  spawn $ "xscreensaver -no-splash"
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc1"
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc2"
   spawn $ "sleep 1 && " ++ myTerminal

@@ -2,5 +2,6 @@
 *.o
 *.hi
 *.errors
+*.swp
 xmonad-*
 history
