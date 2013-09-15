@@ -4,6 +4,8 @@
 # add 'nosplash' to boot options
 ##
 
+#packages ->
+cat etc/pkglist.txt | pacman -Syu --needed -
 #lightdm ->
 chown -hR lightdm:lightdm /var/lib/lightdm
 tar czf lightdm.tgz.bp /etc/lightdm/* 
@@ -15,7 +17,8 @@ tar xzf rsyslog.tgz -C /
 #net names -> 
 ln -s /dev/null /etc/polkit-1/rules.d/80-net-name-slot.rules
 #volume -> 
-modprobe snd_mixer_oss
+#modprobe snd_mixer_oss
+echo 'snd_mixer_oss' > /etc/modules-load.d/snd_mixer_oss.conf
 #copy/paste -> 
 cp urxvtclip /usr/lib/urxvt/perl/clipboard
 #fonts ->

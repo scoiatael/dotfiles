@@ -136,15 +136,15 @@ custom2 = Mirror myTiled ||| myTiled ||| Full
 custom3 = simpleFloat ||| Full ||| Mirror myTiled ||| myTiled
 
 myManageHook =  manageDocks <+> composeAll ( concat (
-    [ [className =? c       --> doShift "2" | c <- myWebs]
-    , [className =? "Conky"          --> doIgnore]
-    , [className =? "xfce4-panel" --> doIgnore]
-    , [resource =? "Dialog" --> doFloat]
-    , [ className =? f        --> doShift "3"  | f <- myFloats]
+    [ [ className =? c        --> doShift "2" | c <- myWebs]
+    , [ className =? c        --> doIgnore    | c <- myIgnore]
+    , [ resource  =? "Dialog" --> doFloat]
+    , [ className =? f        --> doFloat | f <- myFloats]
     ] ))
 
-myWebs = ["Chromium"]
-myFloats = ["Angband", "DeaDBeeF"]
+myWebs = ["Chromium","Midori"]
+myFloats = ["Angband", "DeaDBeeF", "Aumix", "Orage", "Xfce4-appfinder"]
+myIgnore = ["Conky"]
 
 myEventHook = ewmhDesktopsEventHook
 
@@ -157,7 +157,7 @@ myDzenPP  = dzenPP
     , ppLayout  = dzenColor "#aaaaaa" "" . wrap "^ca(1,xdotool key super+space)· " " ·^ca()"
     , ppTitle   = dzenColor "#ffffff" "" 
                     . wrap "^ca(1,xdotool key super+k)^ca(2,xdotool key super+shift+c)"
-                           "^ca()^ca()" . pad . fixToWidth 12 . dzenEscape
+                           "^ca()^ca()" . pad . fixToWidth 9 . dzenEscape
     , ppOrder = reverse
     }
   where
@@ -167,8 +167,8 @@ myDzenPP  = dzenPP
 myLogHook myDzen = dynamicLogWithPP $ myDzenPP { 
   ppOutput = hPutStrLn myDzen,
   ppExtras = [wrapL "bat: " "" battery, 
-              aumixVolume, 
-              date "%b %d %H:%M"] }
+              wrapL "^ca(1, aumix)" "^ca()" $ shortenL 10 $ aumixVolume, 
+              wrapL "^ca(1, orage)" "^ca()" $ date "%b %d %H:%M"] }
 
 myStartupHook = ewmhDesktopsStartup >> do
   spawn $ "xscreensaver -no-splash"
