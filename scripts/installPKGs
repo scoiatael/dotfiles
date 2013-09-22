@@ -1,0 +1,5 @@
+#!/bin/sh
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PKGFILE="$( cd $DIR && cd ../etc && pwd)"/pkglist.txt
+cat $PKGFILE | pacman -Syu --needed -
+
