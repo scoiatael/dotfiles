@@ -3,6 +3,9 @@ import XMonad
 import Data.Monoid
 import Data.Ratio
 import System.Exit
+import Control.Exception
+import System.IO
+import System.Directory
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -34,7 +37,7 @@ myClickJustFocuses = False
 
 myBorderWidth   = 1
 
-myModMask       = mod4Mask
+myModMask       = mod1Mask
 
 myWorkspaces    = clickable. (map dzenEscape) $ ["1","2","3","4","5"]    
   where clickable l     = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
@@ -176,17 +179,30 @@ myStartupHook = ewmhDesktopsStartup >> do
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc2"
   spawn $ "sleep 1 && " ++ myTerminal
 
-res = 1024
-border = 650
-myXmonadBar = "dzen2 -y '0' -h '24'  -w '" ++ show border ++ "' -ta 'l'" ++ myDzenStyle
-myStatusBar = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -x '" ++ show border ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
+data MyConfig = MyConfig { border :: Int }
+getConfig :: IO MyConfig
+getConfig = do
+  l <- doesFileExist config 
+  if not l then defaultConf else do
+    str <- readFile config  
+    let l = lines str in case reads (l !! 0) of 
+      [(x,"")] -> return $ MyConfig x 
+      _      -> defaultConf
+  where 
+  defaultConf = return $ MyConfig defaultBor
+  config = ".xmonad/xmonad.config"
+  defaultBor = 650
+
+myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" ++ myDzenStyle
+myStatusBar c = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
 myConfigDir = "$HOME/.xmonad/"
 myBitmapsDir = "$HOME/.xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
 main = do
-  myDzen <- spawnPipe myXmonadBar
-  dzenRightBar <- spawnPipe myStatusBar
+  myConfig <- getConfig
+  myDzen <- spawnPipe $ myXmonadBar myConfig
+  dzenRightBar <- spawnPipe $ myStatusBar myConfig
   xmonad defaultConfig {
 
         terminal           = myTerminal,
