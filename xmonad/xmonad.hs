@@ -27,7 +27,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Prompt
 import XMonad.Prompt.Window
 
-myTerminal      = "urxvt"
+myTerminal      = "urxvtc"
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse =True
@@ -37,7 +37,7 @@ myClickJustFocuses = False
 
 myBorderWidth   = 1
 
-myModMask       = mod1Mask
+myModMask       = mod4Mask
 
 myWorkspaces    = clickable. (map dzenEscape) $ ["1","2","3","4","5"]    
   where clickable l     = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
@@ -175,8 +175,9 @@ myLogHook myDzen = dynamicLogWithPP $ myDzenPP {
 
 myStartupHook = ewmhDesktopsStartup >> do
   spawn $ "xscreensaver -no-splash"
-  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc1"
-  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyrc2"
+  spawn $ "urxvtd"
+  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyMessages.conf"
+  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyStats.conf"
   spawn $ "sleep 1 && " ++ myTerminal
 
 data MyConfig = MyConfig { border :: Int }
@@ -190,12 +191,12 @@ getConfig = do
       _      -> defaultConf
   where 
   defaultConf = return $ MyConfig defaultBor
-  config = ".xmonad/xmonad.config"
+  config = ".xmonad/" ++ myConfigDir ++" xmonad.conf"
   defaultBor = 650
 
 myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" ++ myDzenStyle
-myStatusBar c = "i3status -c " ++ myConfigDir ++ "/i3status.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
-myConfigDir = "$HOME/.xmonad/"
+myStatusBar c = "conky -c " ++ myConfigDir ++ "/conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
+myConfigDir = "$HOME/.xmonad/confs"
 myBitmapsDir = "$HOME/.xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
