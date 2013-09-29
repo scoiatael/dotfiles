@@ -154,3 +154,4 @@ vlc
 deadbeef
 abiword
 ttf-dejavu
+orage
