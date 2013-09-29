@@ -169,8 +169,8 @@ myDzenPP  = dzenPP
  
 myLogHook myDzen = dynamicLogWithPP $ myDzenPP { 
   ppOutput = hPutStrLn myDzen,
-  ppExtras = [wrapL "bat: " "" battery, 
-              wrapL "^ca(1, aumix)" "^ca()" $ shortenL 10 $ aumixVolume, 
+  ppExtras = [ 
+              wrapL "^ca(1, aumix)" "^ca()" $ aumixVolume, 
               wrapL "^ca(1, orage)" "^ca()" $ date "%b %d %H:%M"] }
 
 myStartupHook = ewmhDesktopsStartup >> do
@@ -196,7 +196,7 @@ getConfig = do
 
 myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" ++ myDzenStyle
 myStatusBar c = "conky -c " ++ myConfigDir ++ "/conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
-myConfigDir = "$HOME/.xmonad/confs"
+myConfigDir = "$HOME/.xmonad/confs/"
 myBitmapsDir = "$HOME/.xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
