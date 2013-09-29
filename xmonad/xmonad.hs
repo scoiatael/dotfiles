@@ -37,7 +37,7 @@ myClickJustFocuses = False
 
 myBorderWidth   = 1
 
-myModMask       = mod4Mask
+myModMask       = mod1Mask
 
 myWorkspaces    = clickable. (map dzenEscape) $ ["1","2","3","4","5"]    
   where clickable l     = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
