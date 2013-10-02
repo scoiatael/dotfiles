@@ -146,7 +146,7 @@ myManageHook =  manageDocks <+> composeAll ( concat (
     ] ))
 
 myWebs = ["Chromium","Midori"]
-myFloats = ["Angband", "DeaDBeeF", "Aumix", "Orage", "Xfce4-appfinder"]
+myFloats = ["Angband", "DeaDBeeF", "Aumix", "Orage", "Xfce4-appfinder", "wifi-menu"]
 myIgnore = ["Conky"]
 
 myEventHook = ewmhDesktopsEventHook
@@ -169,7 +169,7 @@ myDzenPP  = dzenPP
  
 myLogHook myDzen = dynamicLogWithPP $ myDzenPP { 
   ppOutput = hPutStrLn myDzen,
-  ppExtras = [wrapL "bat: " "" battery, 
+  ppExtras = [
               wrapL "^ca(1, aumix)" "^ca()" $ shortenL 10 $ aumixVolume, 
               wrapL "^ca(1, orage)" "^ca()" $ date "%b %d %H:%M"] }
 
@@ -180,29 +180,30 @@ myStartupHook = ewmhDesktopsStartup >> do
   spawn $ "conky -qdc " ++ myConfigDir ++ "conkyStats.conf"
   spawn $ "sleep 1 && " ++ myTerminal
 
-data MyConfig = MyConfig { border :: Int }
+data MyConfig = MyConfig { border :: Int } deriving (Show)
 getConfig :: IO MyConfig
 getConfig = do
-  l <- doesFileExist config 
+  l <- doesFileExist configPath
   if not l then defaultConf else do
-    str <- readFile config  
+    str <- readFile configPath  
     let l = lines str in case reads (l !! 0) of 
-      [(x,"")] -> return $ MyConfig x 
+      (x,_):_ -> return $ MyConfig x 
       _      -> defaultConf
-  where 
-  defaultConf = return $ MyConfig defaultBor
-  config = ".xmonad/" ++ myConfigDir ++" xmonad.conf"
-  defaultBor = 650
+
+defaultConf = return $ MyConfig defaultBor
+configPath = myConfigDir ++ "xmonad.conf"
+defaultBor = 650
 
 myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" ++ myDzenStyle
 myStatusBar c = "conky -c " ++ myConfigDir ++ "/conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
-myConfigDir = "$HOME/.xmonad/confs/"
-myBitmapsDir = "$HOME/.xmonad/dzen2"
+myConfigDir = ".xmonad/confs/"
+myBitmapsDir = ".xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
 main = do
   myConfig <- getConfig
   myDzen <- spawnPipe $ myXmonadBar myConfig
+  writeFile "xmonad_debug" (show myConfig ++ "\n") 
   dzenRightBar <- spawnPipe $ myStatusBar myConfig
   xmonad defaultConfig {
 
