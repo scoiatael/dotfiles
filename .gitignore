@@ -2,7 +2,11 @@
 *.o
 *.hi
 *.errors
-*.swp
-*.bp
 xmonad-*
 history
+# Files i'm working on
+*.swp
+# Ignore backups of files before installation
+*.bp
+# Config for custom resolutions
+xmonad.conf
