@@ -10,7 +10,7 @@ do
       echo $ESSID
       ;;
     * )
-      ADDR=$( "ip addr show $INT | grep -oE inet: [[:digit:].]*" )
+      ADDR=$( ip addr show $INT | grep -oE 'inet [[:digit:].]*' )
       echo $ADDR ;;
   esac
 done

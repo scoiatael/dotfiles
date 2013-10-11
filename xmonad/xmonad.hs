@@ -49,7 +49,7 @@ myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-
+--KeyConfig
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     , ((modm,               xK_p     ), spawn "dmenu_run")
@@ -110,7 +110,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
+--EndOfKeyConfig
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
@@ -139,7 +139,7 @@ custom2 = Mirror myTiled ||| myTiled ||| Full
 custom3 = simpleFloat ||| Full ||| Mirror myTiled ||| myTiled
 
 myManageHook =  manageDocks <+> composeAll ( concat (
-    [ [ className =? c        --> doShift "2" | c <- myWebs]
+    [ [ className =? c        --> doShift (myWorkspaces !! 1) | c <- myWebs]
     , [ className =? c        --> doIgnore    | c <- myIgnore]
     , [ resource  =? "Dialog" --> doFloat]
     , [ className =? f        --> doFloat | f <- myFloats]
