@@ -174,11 +174,7 @@ myLogHook myDzen = dynamicLogWithPP $ myDzenPP {
               wrapL "^ca(1, orage)" "^ca()" $ date "%b %d %H:%M"] }
 
 myStartupHook = ewmhDesktopsStartup >> do
-  spawn $ "xscreensaver -no-splash"
-  spawn $ "urxvtd"
-  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyMessages.conf"
-  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyStats.conf"
-  spawn $ "sleep 1 && " ++ myTerminal
+  spawn $ "$HOME/.xmonad/startup.sh"
 
 data MyConfig = MyConfig { border :: Int } deriving (Show)
 getConfig :: IO MyConfig
@@ -195,9 +191,9 @@ configPath = myConfigDir ++ "xmonad.conf"
 defaultBor = 650
 
 myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" ++ myDzenStyle
-myStatusBar c = "conky -c " ++ myConfigDir ++ "/conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
-myConfigDir = ".xmonad/confs/"
-myBitmapsDir = ".xmonad/dzen2"
+myStatusBar c = "conky -c " ++ myConfigDir ++ "conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
+myConfigDir = "$HOME/.xmonad/confs/"
+myBitmapsDir = "$HOME/.xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
 main = do
