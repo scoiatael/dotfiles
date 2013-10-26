@@ -153,3 +153,5 @@ ttf-dejavu
 orage
 file-roller
 epiphany
+deluge
+pygtk
