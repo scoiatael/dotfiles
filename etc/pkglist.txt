@@ -59,7 +59,6 @@ mdadm
 mousepad
 ntfs-3g
 ntp
-obkey
 openbox-themes
 openssh
 p7zip
