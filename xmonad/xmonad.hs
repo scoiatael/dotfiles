@@ -176,24 +176,24 @@ myLogHook myDzen = dynamicLogWithPP $ myDzenPP {
 myStartupHook = ewmhDesktopsStartup >> do
   spawn $ "$HOME/.xmonad/startup.sh"
 
-data MyConfig = MyConfig { border :: Int } deriving (Show)
+data MyConfig = MyConfig { border :: Int, def :: Bool } deriving (Show)
 getConfig :: IO MyConfig
 getConfig = do
   l <- doesFileExist configPath
   if not l then defaultConf else do
     str <- readFile configPath  
     let l = lines str in case reads (l !! 0) of 
-      (x,_):_ -> return $ MyConfig x 
+      (x,_):_ -> return $ MyConfig x False
       _      -> defaultConf
 
-defaultConf = return $ MyConfig defaultBor
+defaultConf = return $ MyConfig defaultBor True
 configPath = myConfigDir ++ "xmonad.conf"
 defaultBor = 650
 
 myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" ++ myDzenStyle
 myStatusBar c = "conky -c " ++ myConfigDir ++ "conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
-myConfigDir = "$HOME/.xmonad/confs/"
-myBitmapsDir = "$HOME/.xmonad/dzen2"
+myConfigDir = ".xmonad/confs/"
+myBitmapsDir = ".xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
 main = do
