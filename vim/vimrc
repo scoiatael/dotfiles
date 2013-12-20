@@ -4,6 +4,8 @@ set nu
 
 set tabstop=2 shiftwidth=2 expandtab
 
+set tags=./.tags
+
 nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 
 :nmap \l :setlocal number!<CR>

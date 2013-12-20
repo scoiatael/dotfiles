@@ -18,3 +18,10 @@
   [[zprezto]]
   PATH=prezto
   URL=https://github.com/sorin-ionescu/prezto.git
+[emacs]
+  [[evil]]
+  PATH=evil
+  URL=git://gitorious.org/evil/evil.git
+  [[undo-tree]]
+  PATH=undo-tree
+  URL=http://www.dr-qubit.org/git/undo-tree.git
