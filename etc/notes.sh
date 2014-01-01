@@ -23,3 +23,5 @@ echo 'snd_mixer_oss' > /etc/modules-load.d/snd_mixer_oss.conf
 cp etc/urxvtclip /usr/lib/urxvt/perl/clipboard
 #fonts ->
 ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d/
+#unicode support
+cp etc/locale.* /etc/

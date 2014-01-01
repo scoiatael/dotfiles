@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.22 for luki on Tue Sep 10 14:46:05 2013.
+# Written by xscreensaver-demo 5.22 for luki on Tue Oct  8 10:23:33 2013.
 # http://www.jwz.org/xscreensaver/
 
 timeout:	0:01:00
@@ -19,7 +19,7 @@ nice:		10
 memoryLimit:	0
 fade:		True
 unfade:		False
-fadeSeconds:	0:00:03
+fadeSeconds:	0:00:01
 fadeTicks:	20
 captureStderr:	True
 ignoreUninstalledPrograms:False
@@ -95,7 +95,7 @@ programs:								      \
 				xjack -root				    \n\
 				xlyap -root				    \n\
   GL: 				atlantis -root				    \n\
-				bsod -root -bsd				    \n\
+				bsod -root -delay 58 -bsd		    \n\
   GL: 				bubble3d -root				    \n\
   GL: 				cage -root				    \n\
 -				crystal -root				    \n\

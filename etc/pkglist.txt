@@ -23,7 +23,6 @@ flex
 gamin
 gettext
 git
-gmrun
 gparted
 gtk-chtheme
 gtk2-xfce-engine
@@ -33,10 +32,8 @@ guvcview
 gvfs-smb
 hdparm
 heirloom-mailx
-i3status
 iputils
 jfsutils
-kdeutils-ark
 laptop-mode-tools
 libtool
 licenses
@@ -61,8 +58,6 @@ mdadm
 mousepad
 ntfs-3g
 ntp
-obconf
-obkey
 openbox-themes
 openssh
 p7zip
@@ -139,7 +134,6 @@ xmonad-contrib
 xorg-server-utils
 xorg-server-xephyr
 xscreensaver
-xterm
 zip
 zsh
 rxvt-unicode 
@@ -149,9 +143,12 @@ xorg-server
 midori
 xclip
 evince
-gv
 vlc
 deadbeef
 abiword
 ttf-dejavu
 orage
+file-roller
+epiphany
+deluge
+pygtk

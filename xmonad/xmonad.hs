@@ -49,7 +49,7 @@ myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-
+--KeyConfig
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     , ((modm,               xK_p     ), spawn "dmenu_run")
@@ -110,7 +110,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
+--EndOfKeyConfig
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
@@ -139,14 +139,14 @@ custom2 = Mirror myTiled ||| myTiled ||| Full
 custom3 = simpleFloat ||| Full ||| Mirror myTiled ||| myTiled
 
 myManageHook =  manageDocks <+> composeAll ( concat (
-    [ [ className =? c        --> doShift "2" | c <- myWebs]
+    [ [ className =? c        --> doShift (myWorkspaces !! 1) | c <- myWebs]
     , [ className =? c        --> doIgnore    | c <- myIgnore]
     , [ resource  =? "Dialog" --> doFloat]
     , [ className =? f        --> doFloat | f <- myFloats]
     ] ))
 
 myWebs = ["Chromium","Midori"]
-myFloats = ["Angband", "DeaDBeeF", "Aumix", "Orage", "Xfce4-appfinder"]
+myFloats = ["Angband", "DeaDBeeF", "Aumix", "Orage", "Xfce4-appfinder", "wifi-menu"]
 myIgnore = ["Conky"]
 
 myEventHook = ewmhDesktopsEventHook
@@ -169,40 +169,37 @@ myDzenPP  = dzenPP
  
 myLogHook myDzen = dynamicLogWithPP $ myDzenPP { 
   ppOutput = hPutStrLn myDzen,
-  ppExtras = [wrapL "bat: " "" battery, 
+  ppExtras = [
               wrapL "^ca(1, aumix)" "^ca()" $ shortenL 10 $ aumixVolume, 
               wrapL "^ca(1, orage)" "^ca()" $ date "%b %d %H:%M"] }
 
 myStartupHook = ewmhDesktopsStartup >> do
-  spawn $ "xscreensaver -no-splash"
-  spawn $ "urxvtd"
-  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyMessages.conf"
-  spawn $ "conky -qdc " ++ myConfigDir ++ "conkyStats.conf"
-  spawn $ "sleep 1 && " ++ myTerminal
+  spawn $ "$HOME/.xmonad/startup.sh"
 
-data MyConfig = MyConfig { border :: Int }
+data MyConfig = MyConfig { border :: Int, def :: Bool } deriving (Show)
 getConfig :: IO MyConfig
 getConfig = do
-  l <- doesFileExist config 
+  l <- doesFileExist configPath
   if not l then defaultConf else do
-    str <- readFile config  
+    str <- readFile configPath  
     let l = lines str in case reads (l !! 0) of 
-      [(x,"")] -> return $ MyConfig x 
+      (x,_):_ -> return $ MyConfig x False
       _      -> defaultConf
-  where 
-  defaultConf = return $ MyConfig defaultBor
-  config = ".xmonad/" ++ myConfigDir ++" xmonad.conf"
-  defaultBor = 650
+
+defaultConf = return $ MyConfig defaultBor True
+configPath = myConfigDir ++ "xmonad.conf"
+defaultBor = 650
 
 myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" ++ myDzenStyle
-myStatusBar c = "conky -c " ++ myConfigDir ++ "/conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
-myConfigDir = "$HOME/.xmonad/confs/"
-myBitmapsDir = "$HOME/.xmonad/dzen2"
+myStatusBar c = "conky -c " ++ myConfigDir ++ "conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
+myConfigDir = ".xmonad/confs/"
+myBitmapsDir = ".xmonad/dzen2"
 myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
 
 main = do
   myConfig <- getConfig
   myDzen <- spawnPipe $ myXmonadBar myConfig
+  writeFile "xmonad_debug" (show myConfig ++ "\n") 
   dzenRightBar <- spawnPipe $ myStatusBar myConfig
   xmonad defaultConfig {
 
