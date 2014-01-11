@@ -1,3 +1,3 @@
-My confiurations files.
-Inclued pkglist for Archlinux.
+My configuration files.
+Included pkglist for Archlinux.
 
