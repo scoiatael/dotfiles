@@ -9,4 +9,5 @@ history
 # Ignore backups of files before installation
 *.bp
 # Config for custom resolutions
-xmonad.conf
+*/xmonad.conf
+*/conkyStats.conf
