@@ -23,7 +23,6 @@ flex
 gamin
 gettext
 git
-gmrun
 gparted
 gtk-chtheme
 gtk2-xfce-engine
@@ -135,7 +134,6 @@ xmonad-contrib
 xorg-server-utils
 xorg-server-xephyr
 xscreensaver
-xterm
 zip
 zsh
 rxvt-unicode 
@@ -145,7 +143,6 @@ xorg-server
 midori
 xclip
 evince
-gv
 vlc
 deadbeef
 abiword

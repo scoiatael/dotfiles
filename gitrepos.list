@@ -14,7 +14,17 @@
   [[ctrlp]]
   PATH=ctrlp.vim
   URL=https://github.com/kien/ctrlp.vim.git
+  [[supertab]
+  PATH=supertab
+  URL=https://github.com/ervandew/supertab.git
 [zsh]
   [[zprezto]]
   PATH=prezto
   URL=https://github.com/sorin-ionescu/prezto.git
+[emacs]
+  [[evil]]
+  PATH=evil
+  URL=git://gitorious.org/evil/evil.git
+  [[undo-tree]]
+  PATH=undo-tree
+  URL=http://www.dr-qubit.org/git/undo-tree.git

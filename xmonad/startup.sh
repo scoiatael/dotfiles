@@ -9,3 +9,5 @@ conky -c "$myConfigDir"conkyMessages.conf &
 conky -c "$myConfigDir"conkyStats.conf &
 sleep 1 && $myTerminal &
 syndaemon -k -d -t 1.0
+setxkbmap pl
+xmodmap "$myConfigDir"xmodmap &
