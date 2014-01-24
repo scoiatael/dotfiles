@@ -12,10 +12,11 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :nmap \o :set paste!<CR>
 :nmap j gj
 :nmap k gk
-:nmap <C-a>  <Home>
-:nmap <C-e>  <End>
-:nmap <C-b>  <PageUp>
-:nmap <C-f>  <PageDown>
+:map <C-a>  <Home>
+:map <C-e>  <End>
+:map <C-b>  <PageUp>
+:map <C-f>  <PageDown>
+:map \p <C-p>
 
 :cnoremap <C-d>  <Delete>
 :cnoremap <M-b>  <S-Left>
