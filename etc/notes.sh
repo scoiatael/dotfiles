@@ -25,3 +25,6 @@ cp etc/urxvtclip /usr/lib/urxvt/perl/clipboard
 ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d/
 #unicode support
 cp etc/locale.* /etc/
+#autostart in openbox
+mkdir ~/.config/openbox/autostart
+ln -s xmonad/startup.sh ~/.config/openbox/autostart
