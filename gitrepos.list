@@ -1,7 +1,7 @@
 [vim]
   [[snipmate]]
   PATH=snipmate.vim
-  URL=https://github.com/msanders/snipmate.vim.git
+  URL=https://github.com/ervandew/snipmate.vim.git
   [[syntastic]]
   PATH=syntastic      
   URL=https://github.com/scrooloose/syntastic.git
