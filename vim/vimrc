@@ -34,7 +34,7 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :nmap \q :nohlsearch<CR>
 
 
-:nmap ; :CtrlPBuffer<CR>
+:nmap ; :CtrlP<CR>
 
 :let g:ctrlp_map = '<Leader>t'
 :let g:ctrlp_match_window_bottom = 0

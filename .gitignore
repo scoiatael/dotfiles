@@ -6,8 +6,9 @@ xmonad-*
 history
 # Files i'm working on
 *.swp
+# and hidden
+.*
 # Ignore backups of files before installation
 *.bp
 # Config for custom resolutions
-*/xmonad.conf
-*/conkyStats.conf
+xmonad/confs/custom/*
