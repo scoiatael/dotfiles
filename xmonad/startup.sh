@@ -4,10 +4,10 @@ myConfigDir=$HOME/.xmonad/confs/
 myTerminal=/usr/bin/urxvtc
 
 xscreensaver -no-splash &
-urxvtd &
-conky -c "$myConfigDir"conkyMessages.conf &
-conky -c "$myConfigDir"conkyStats.conf &
+sleep 1 && urxvtd &
+sleep 1 && conky -c "$myConfigDir"conkyMessages.conf &
+sleep 1 && conky -c "$myConfigDir"conkyStats.conf &
 sleep 1 && $myTerminal &
-syndaemon -k -d -t 1.0
-setxkbmap pl
-xmodmap "$myConfigDir"xmodmap &
+sleep 1 && syndaemon -k -d -t 1.0 &
+sleep 1 && xmodmap "$myConfigDir"xmodmap &
+setxkbmap pl &
