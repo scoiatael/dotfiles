@@ -406,10 +406,18 @@ function conky_main()
 
     local cs = cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
     local display = cairo_create(cs)
-    
+   
     local updates = conky_parse('${updates}')
     update_num = tonumber(updates)
-    
+   
+--    local bg = cairo_image_surface_create_from_png('gradient.apng')
+--    cairo_save(display)
+
+--    cairo_set_source_surface(display, bg, 0, 0)
+--    cairo_paint_with_alpha(display, 128)
+--    cairo_restore(display)
+--    cairo_surface_destroy(bg)
+
     if update_num > 2 then
         go_clock_rings(display)
  --       go_gauge_rings(display)
