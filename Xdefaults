@@ -43,7 +43,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
  
 ! Perl extensions
-URxvt.perl-ext-common:      default,matcher,url-select,clipboard,tabbed
+URxvt.perl-ext-common:      default,url-select,clipboard,tabbedex
 URxvt.keysym.C-i:           perl:url-select:select_next
 URXvt.url-select.launcher:  midori
 URXvt.url-select.underline: true
@@ -57,6 +57,9 @@ URxvt.iso14755:             false
 URxvt.cursorBlink:          false
 URxvt.cursorColor:          #657b83
 URxvt.cursorUnderline:      false
+
+! Tabs
+URxvt.tabbed.autohide:      true
  
 ! Pointer
 URxvt.pointerBlank:         true
