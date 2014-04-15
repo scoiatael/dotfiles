@@ -55,6 +55,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_p     ), spawn "dmenu_run")
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
+    , ((controlMask .|. shiftMask, xK_p     ), spawn "musickeys.sh next")
+    , ((controlMask , xK_p     ), spawn "musickeys.sh play")
+
     , ((modm .|. shiftMask, xK_c     ), kill)
 
     , ((modm,               xK_space ), sendMessage NextLayout)
