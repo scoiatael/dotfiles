@@ -1,2 +1,1 @@
-source $HOME/.zprezto/runcoms/zpreztorc
-zstyle ':prezto:module:prompt' theme 'steeef'
+zprezto/runcoms/zpreztorc

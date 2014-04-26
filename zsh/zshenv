@@ -1,3 +1,1 @@
-source $HOME/.zprezto/runcoms/zshenv
-PATH="$HOME/bin:$PATH"
-export PATH
+zprezto/runcoms/zshenv

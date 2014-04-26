@@ -20,7 +20,7 @@
 [zsh]
   [[zprezto]]
   PATH=prezto
-  URL=https://github.com/sorin-ionescu/prezto.git
+  URL=https://github.com/scoiatael/prezto.git
 [emacs]
   [[evil]]
   PATH=evil
