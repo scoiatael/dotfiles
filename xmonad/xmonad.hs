@@ -160,7 +160,7 @@ myDzenPP  = dzenPP
     , ppHiddenNoWindows = dzenColor "#777777" "" . wrap " " " "
     , ppUrgent  = dzenColor "#ff0000" "" . wrap " " " "
     , ppSep     = " | "
-    , ppLayout  = dzenColor "#aaaaaa" "" . wrap "^ca(1,xdotool key super+space)· " " ·^ca()"
+    , ppLayout  = dzenColor "#aaaaaa" "" . wrap "^ca(1,xdotool key super+space)·" "·^ca()" . fixToWidth 6
     , ppTitle   = dzenColor "#ffffff" "" 
                     . wrap "^ca(1,xdotool key super+k)^ca(2,xdotool key super+shift+c)"
                            "^ca()^ca()" . pad . fixToWidth 9 . dzenEscape
