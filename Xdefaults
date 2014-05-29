@@ -43,7 +43,7 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
  
 ! Perl extensions
-URxvt.perl-ext-common:      default,url-select,clipboard,tabbedex
+URxvt.perl-ext-common:      default,url-select,clipboard
 URxvt.keysym.C-i:           perl:url-select:select_next
 URXvt.url-select.launcher:  midori
 URXvt.url-select.underline: true
