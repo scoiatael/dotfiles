@@ -1,4 +1,6 @@
 #!/bin/zsh
+
+mkdir -p $HOME/.config/autostart
 echo "
 [Desktop Entry]
 Name=Utilities autostart 
