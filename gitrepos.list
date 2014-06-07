@@ -17,6 +17,9 @@
   [[supertab]
   PATH=supertab
   URL=https://github.com/ervandew/supertab.git
+  [[rainbow]]
+  PATH=rainbow
+  URL=https://github.com/luochen1990/rainbow.git
 [zsh]
   [[zprezto]]
   PATH=prezto
@@ -28,3 +31,7 @@
   [[undo-tree]]
   PATH=undo-tree
   URL=http://www.dr-qubit.org/git/undo-tree.git
+[themes]
+  [[solarized]
+  PATH=solarized
+  URL=https://github.com/altercation/solarized.git

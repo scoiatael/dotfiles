@@ -3,6 +3,7 @@
 myConfigDir=$HOME/.xmonad/confs/
 myTerminal=/usr/bin/urxvtc
 
+( echo "Merging $HOME/.Xdefaults" && xrdb $HOME/.Xdefaults ) | logger &
 xscreensaver -no-splash &
 sleep 1 && (pgrep urxvtd || urxvtd) &
 sleep 1 && conky -c "$myConfigDir"conkyStats.conf &
