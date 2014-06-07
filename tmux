@@ -6,3 +6,6 @@ bind -n S-left prev
 bind -n S-right next
 bind -n C-left swap-window -t -1
 bind -n C-right swap-window -t +1
+
+source-file ~/config/repos/solarized/tmux/tmuxcolors-dark.conf
+
