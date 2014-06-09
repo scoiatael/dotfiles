@@ -197,7 +197,7 @@ myXmonadBar c = "dzen2 -y '0' -h '24'  -w '" ++ show (border c) ++ "' -ta 'l'" +
 myStatusBar c = "conky -c " ++ myConfigDir ++ "conkyDzen.conf | dzen2 -x '" ++ show (border c) ++ "'  -h '24' -ta 'r' -y '0'" ++ myDzenStyle
 myConfigDir = ".xmonad/confs/"
 myBitmapsDir = ".xmonad/dzen2"
-myDzenStyle  = " -h '20' -fg '#777777' -bg '#222222' -fn 'monospace:size=10'"
+myDzenStyle  = " -h '20' -fg '#93a1a1' -bg '#002b36' -fn 'monospace:size=10'"
 
 main = do
   myConfig <- getConfig

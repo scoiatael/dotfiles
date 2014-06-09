@@ -45,6 +45,23 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :let g:ctrlp_dotfiles = 0
 :let g:ctrlp_switch_buffer = 0
 
+:let g:rainbow_active = 1
+:let g:rainbow_conf = {
+      \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+      \   'ctermfgs': ['142', '26', '199', '122', '196', '46'],
+      \   'operators': '_,_',
+      \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+      \   'separately': {
+      \       'html': {
+      \           'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
+      \       },
+      \       'tex': {
+      \           'operators': '',
+      \           'parentheses': [['(',')'], ['\[','\]']],
+      \       },
+      \   }
+      \}
+
 :nmap \e :NERDTreeToggle<CR>
 :nmap \a :bnext<CR>
 :nmap \s :bprev<CR>
@@ -62,7 +79,9 @@ if has("syntax")
   syntax on
 endif
 
+set t_Co=256
 set background=dark
+color solarized
 
 if has("autocmd")
   filetype plugin indent on
