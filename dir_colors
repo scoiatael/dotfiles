@@ -36,11 +36,11 @@ FIFO               00;33      # pipe
 SOCK               01;35      # socket
 BLK                01;33;40   # block device driver
 CHR                01;35;40   # character device driver
-ORPHAN             01;30
+ORPHAN             01;31
 EXEC                01;32 
-STICKY_OTHER_WRITABLE 01;30   # dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE     01;30      # dir that is other-writable (o+w) and not sticky
-STICKY             01;30      # dir with the sticky bit set (+t) and not other-writable
+STICKY_OTHER_WRITABLE 01;31   # dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE     01;31      # dir that is other-writable (o+w) and not sticky
+STICKY             01;31      # dir with the sticky bit set (+t) and not other-writable
 
 .cmd               01;32      # executables (bright green)
 .exe               01;32
