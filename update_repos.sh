@@ -20,7 +20,7 @@ function start {
       for REPO in $( $REPOSCRIPT url )
       do
         echo "Cloning $REPO.."
-        cd $REPODIR && echo "$( git clone $REPO )"
+        cd $REPODIR && echo "$( git clone --recursive $REPO )"
       done ;; 
     * )
       echo "Bad args.."
