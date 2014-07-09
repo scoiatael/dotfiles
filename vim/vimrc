@@ -15,6 +15,8 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :nmap k gk
 :map <C-a>  <Home>
 :map <C-e>  <End>
+:map <A-Left>   :MNEBp
+:map <A-Right>  :MBEbn
 :map <C-b>  <PageUp>
 :map <C-f>  <PageDown>
 :map \p <C-p>
@@ -44,6 +46,7 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :let g:ctrlp_working_path_mode = 0
 :let g:ctrlp_dotfiles = 0
 :let g:ctrlp_switch_buffer = 0
+:let g:ctrlp_by_filename=1
 
 :let g:rainbow_active = 1
 :let g:rainbow_conf = {
@@ -81,7 +84,7 @@ endif
 
 set t_Co=256
 set background=dark
-color solarized
+color slate
 
 if has("autocmd")
   filetype plugin indent on
@@ -90,7 +93,15 @@ endif
 set showcmd		" Show (partial) command in status line.
 set showmatch		" Show matching brackets.
 set mouse=a		" Enable mouse usage (all modes)
+set ttyfast
+set ttymouse=xterm2
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+set laststatus=2
+let g:miniBufExplorerAutoStart = 0
 
 if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
+

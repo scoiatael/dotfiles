@@ -20,6 +20,27 @@
   [[rainbow]]
   PATH=rainbow
   URL=https://github.com/luochen1990/rainbow.git
+  [[SearchComplete]]
+  PATH=SearchComplete
+  URL=https://github.com/vim-scripts/SearchComplete.git
+  [[tmuxline.vim]]
+  PATH=tmuxline.vim
+  URL=https://github.com/edkolev/tmuxline.vim.git
+  [[vim-airline]]
+  PATH=vim-airline
+  URL=https://github.com/bling/vim-airline.git
+  [[vim-coffee-script]]
+  PATH=vim-coffee-script
+  URL=https://github.com/kchmck/vim-coffee-script.git
+  [[vim-easymotion]]
+  PATH=vim-easymotion
+  URL=https://github.com/Lokaltog/vim-easymotion.git
+  [[vim-fugitive]]
+  PATH=vim-fugitive
+  URL=https://github.com/tpope/vim-fugitive.git
+  [[vim-plugin-minibufexpl]]
+  PATH=vim-plugin-minibufexpl
+  URL=https://github.com/techlivezheng/vim-plugin-minibufexpl.git
 [zsh]
   [[zprezto]]
   PATH=prezto
