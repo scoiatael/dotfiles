@@ -9,14 +9,13 @@ set tags=./.tags
 
 nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 
-:nmap \l :setlocal number!<CR>
 :nmap \o :set paste!<CR>
 :nmap j gj
 :nmap k gk
 :map <C-a>  <Home>
 :map <C-e>  <End>
-:map <A-Left>   :MNEBp
-:map <A-Right>  :MBEbn
+:nmap \h  :MBEbp<CR>
+:nmap \l  :MBEbn<CR>
 :map <C-b>  <PageUp>
 :map <C-f>  <PageDown>
 :map \p <C-p>
@@ -84,7 +83,7 @@ endif
 
 set t_Co=256
 set background=dark
-color slate
+colorscheme slate
 
 if has("autocmd")
   filetype plugin indent on
@@ -101,7 +100,13 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 let g:miniBufExplorerAutoStart = 0
 
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+let g:indent_guides_auto_colors=0
+hi IndentGuidesOdd  ctermbg=24
+hi IndentGuidesEven ctermbg=25
+
 if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
-
