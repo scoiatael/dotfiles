@@ -41,6 +41,9 @@
   [[vim-plugin-minibufexpl]]
   PATH=vim-plugin-minibufexpl
   URL=https://github.com/techlivezheng/vim-plugin-minibufexpl.git
+  [[vim-indent-guides]]
+  PATH=vim-indent-guides
+  URL=git://github.com/nathanaelkane/vim-indent-guides.git
 [zsh]
   [[zprezto]]
   PATH=prezto
