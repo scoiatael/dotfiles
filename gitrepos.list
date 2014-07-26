@@ -56,3 +56,7 @@
   [[solarized]
   PATH=solarized
   URL=https://github.com/altercation/solarized.git
+[fonts]
+  [[powerline]]
+  PATH=powerline-fonts
+  URL=https://github.com/Lokaltog/powerline-fonts.git

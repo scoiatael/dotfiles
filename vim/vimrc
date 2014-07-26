@@ -84,7 +84,7 @@ endif
 
 set t_Co=256
 set background=dark
-color slate
+color solarized
 
 if has("autocmd")
   filetype plugin indent on
