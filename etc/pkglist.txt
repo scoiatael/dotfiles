@@ -1,154 +1,122 @@
-acpi
-acpid
-alsa-utils
-aria2
-astyle
-aumix
-autoconf
-automake
-bison
-cabal-install
-cmake
-conky
-cronie
-cryptsetup
-devhelp
-dmenu
-dzen2
-ethtool
-fakeroot
-file
-flashplugin
-flex
-gamin
-gettext
-git
-gparted
-gtk-chtheme
-gtk2-xfce-engine
-gtk2hs-buildtools
-gtk3-xfce-engine
-guvcview
-gvfs-smb
-hdparm
-heirloom-mailx
-iputils
-jfsutils
-laptop-mode-tools
-libtool
-licenses
-lightdm-gtk3-greeter
-linux
-logrotate
-lvm2
-lxappearance-obconf
-lxde-common
-lxinput
-lxlauncher
-lxmusic
-lxpanel
-lxrandr
-lxshortcut
-lxtask
-lxterminal
-make
-man-db
-man-pages
-mdadm
-mousepad
-ntfs-3g
-ntp
-openbox-themes
-openssh
-p7zip
-patch
-pcmanfm
-pcmciautils
-pkg-config
-pkgfile
-reiserfsprogs
-rfkill
-rsyslog
-sdl_gfx
-sudo
-systemd-sysvcompat
-thunar-archive-plugin
-thunar-media-tags-plugin
-thunar-volman
-traceroute
-tumbler
-unrar
-unzip
-usbutils
-vi
-vim
-wget
-which
-whois
-wpa_actiond
-xcursor-bluecurve
-xdotool
-xf86-input-synaptics
-xf86-video-intel
-xf86-video-vesa
-xfburn
-xfce4-appfinder
-xfce4-artwork
-xfce4-battery-plugin
-xfce4-clipman-plugin
-xfce4-cpufreq-plugin
-xfce4-cpugraph-plugin
-xfce4-datetime-plugin
-xfce4-dict
-xfce4-diskperf-plugin
-xfce4-eyes-plugin
-xfce4-fsguard-plugin
-xfce4-genmon-plugin
-xfce4-mailwatch-plugin
-xfce4-mixer
-xfce4-mount-plugin
-xfce4-mpc-plugin
-xfce4-netload-plugin
-xfce4-notes-plugin
-xfce4-notifyd
-xfce4-power-manager
-xfce4-quicklauncher-plugin
-xfce4-screenshooter
-xfce4-sensors-plugin
-xfce4-session
-xfce4-settings
-xfce4-smartbookmark-plugin
-xfce4-systemload-plugin
-xfce4-taskmanager
-xfce4-terminal
-xfce4-time-out-plugin
-xfce4-timer-plugin
-xfce4-verve-plugin
-xfce4-wavelan-plugin
-xfce4-weather-plugin
-xfce4-xkb-plugin
-xfdesktop
-xfsprogs
-xfwm4-themes
-xmonad-contrib
-xorg-server-utils
-xorg-server-xephyr
-xscreensaver
-zip
-zsh
-rxvt-unicode 
-rxvt-unicode-terminfo 
-urxvt-perls  
-xorg-server
-midori
-xclip
-evince
-vlc
-deadbeef
-abiword
-ttf-dejavu
-orage
-file-roller
-epiphany
-deluge
-pygtk
+core/autoconf 2.69-2 (base-devel)
+core/automake 1.14.1-1 (base-devel)
+extra/baobab 3.12.1-1 (gnome)
+community/bbswitch 0.8-14
+core/bison 3.0.2-1 (base-devel)
+extra/bluez-utils 5.21-2
+extra/chromium 36.0.1985.125-1
+local/conky-lua 1.9.0-2
+core/cryptsetup 1.6.5-2 (base)
+core/dialog 1:1.2_20140219-1
+core/dosfstools 3.0.26-1
+core/efibootmgr 0.7.0-1
+extra/empathy 3.12.4-1 (gnome)
+extra/eog 3.12.2-1 (gnome)
+community/exfat-utils 1.1.0-1
+core/fakeroot 1.20-1 (base-devel)
+core/file 5.19-1 (base base-devel)
+extra/firefox 31.0-1
+extra/flashplugin 11.2.202.394-1
+core/flex 2.5.39-1 (base-devel)
+community/fuse-exfat 1.1.0-1
+extra/gdm 3.12.2-1 (gnome)
+extra/git 2.0.4-1
+extra/gnome-backgrounds 3.12.2-1 (gnome)
+extra/gnome-calculator 3.12.3-1 (gnome)
+extra/gnome-contacts 3.12.0-1 (gnome)
+extra/gnome-dictionary 3.10.0-1 (gnome)
+extra/gnome-disk-utility 3.12.1-1 (gnome)
+extra/gnome-font-viewer 3.12.0-1 (gnome)
+local/gnome-gmail 1.8.2-5
+local/gnome-gmail-notifier 0.10.1-2
+extra/gnome-icon-theme-extras 3.12.0-1 (gnome)
+extra/gnome-keyring 3.12.2-1 (gnome)
+extra/gnome-screenshot 3.12.0-1 (gnome)
+local/gnome-session-properties 3.10.0-1
+extra/gnome-shell-extensions 3.12.2-1 (gnome)
+extra/gnome-system-log 3.9.90-1 (gnome)
+extra/gnome-system-monitor 3.12.2-1 (gnome)
+extra/gnome-terminal 3.12.3-1 (gnome)
+extra/gnome-tweak-tool 3.12.0-1
+extra/gnome-user-docs 3.12.2-1 (gnome)
+extra/gnome-user-share 3.10.2-3 (gnome)
+local/google-talkplugin 5.4.2.0-1
+extra/gparted 0.19.1-1
+extra/grilo-plugins 0.2.12-2 (gnome)
+core/grub 1:2.02.beta2-4
+community/gtk-aurora-engine 1.5.1-4
+community/gtk-engine-murrine 0.98.2-2
+community/gtk-engine-unico 1.0.2-6
+extra/gucharmap 3.12.1-1 (gnome)
+extra/gvim 7.4.383-1
+local/hipchat 2.2.1163-1
+extra/ifplugd 0.28-14
+core/iputils 20121221-3 (base)
+core/jfsutils 1.1.15-4 (base)
+core/libtool 2.4.2-14 (base-devel)
+community/lightdm-gtk3-greeter 1:1.8.5-1
+core/logrotate 3.8.7-3 (base)
+local/luacairo 1.10.2.0-1
+core/lvm2 2.02.108-1 (base)
+extra/lynx 2.8.8-1
+core/make 4.0-2 (base-devel)
+core/man-db 2.6.7.1-1 (base)
+core/man-pages 3.70-1 (base)
+core/mdadm 3.3.1-2 (base)
+extra/memtest86+ 5.01-1
+extra/mesa-demos 8.2.0-1
+extra/mousetweaks 3.12.0-1 (gnome)
+extra/mtools 4.0.18-2
+extra/namcap 3.2.5-2
+core/nano 2.2.6-3 (base)
+extra/nautilus 3.12.2-1 (gnome)
+core/net-tools 1.60.20130531git-1
+core/netctl 1.8-1 (base)
+community/nodejs 0.10.30-1
+extra/nvidia 340.24-3
+core/openssh 6.6p1-2
+community/os-prober 1.58-1
+core/patch 2.7.1-3 (base-devel)
+core/pcmciautils 018-7 (base)
+core/pkg-config 0.28-2 (base-devel)
+community/primus 20131226-1
+core/procps-ng 3.3.9-3 (base)
+core/psmisc 22.21-2 (base)
+community/python-pygments 1.6-4
+community/python2-pygments 1.6-4
+core/reiserfsprogs 3.6.24-1 (base)
+extra/rsync 3.1.1-2
+core/s-nail 14.7.5-1 (base)
+local/spotify 0.9.11.27-1
+core/sudo 1.8.10.p3-1 (base-devel)
+extra/sushi 3.12.0-1 (gnome)
+core/systemd-sysvcompat 215-4 (base)
+extra/telepathy-gabble 0.18.3-1 (telepathy)
+extra/telepathy-haze 0.8.0-1 (telepathy)
+extra/telepathy-idle 0.2.0-1 (telepathy)
+extra/telepathy-rakia 0.8.0-1 (telepathy)
+extra/telepathy-salut 0.8.1-2 (telepathy)
+community/tmux 1.9_a-1
+extra/totem 3.12.1-2 (gnome)
+extra/tracker 1.0.2-1 (gnome)
+community/urxvt-perls 2.1-1
+core/usbutils 007-1 (base)
+community/vagrant 1.6.3-2
+core/vi 1:050325-4 (base)
+extra/vino 3.12.0-1 (gnome)
+community/virtualbox 4.3.14-3
+core/which 2.20-7 (base base-devel)
+core/wpa_actiond 1.4-2
+extra/xclip 0.12-4
+extra/xdg-user-dirs-gtk 0.10-2 (gnome)
+extra/xf86-input-synaptics 1.8.0-2 (xorg-drivers xorg)
+extra/xf86-video-intel 2.99.914-4 (xorg-drivers xorg)
+core/xfsprogs 3.2.0-1 (base)
+local/xkillall 1.0-1
+extra/xorg-server-xephyr 1.16.0-6
+extra/xorg-twm 1.0.8-3
+extra/xorg-xinit 1.3.3-3
+extra/xorg-xkill 1.0.4-1 (xorg-apps xorg)
+extra/xterm 309-1
+local/yaourt 1.5-1
+extra/zsh 5.0.5-1

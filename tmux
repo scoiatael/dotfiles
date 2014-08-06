@@ -1,5 +1,4 @@
 set-option -g destroy-unattached on 
-set-option -g default-command "reattach-to-user-namespace -l zsh"
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 set -g mouse-utf8 off
 

@@ -31,8 +31,8 @@ URxvt.internalBorder:       3
 URxvt.allow_bold:           true
 /* URxvt.font:                 -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 
 URxvt*boldFont: xft:Monospace:pixelsize=14 */
-URxvt*font: xft:Ubuntu Mono derivative Powerline:size=12
-URxvt*boldFont: xft:Ubuntu Mono derivative Powerline:size=12
+URxvt*font: xft:Ubuntu Mono derivative Powerline:size=16
+URxvt*boldFont: xft:Ubuntu Mono derivative Powerline:size=16
 URxvt.letterSpace: -1
 URxvt.lineSpace: 1
  
