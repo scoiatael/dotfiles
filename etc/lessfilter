@@ -1,5 +1,5 @@
 #!/bin/sh
-PYGMENTIZE="pygmentize"
+PYGMENTIZE="/usr/bin/pygmentize -O encoding='utf-8'"
 
 case "$1" in
     *.awk|*.groff|*.java|*.js|*.m4|*.php|*.pl|*.pm|*.pod|*.sh|\
