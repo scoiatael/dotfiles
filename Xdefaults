@@ -4,7 +4,7 @@
 ! Xft settings
 !-------------------------------------------------------------------------------
  
-Xft.dpi:                    96
+Xft.dpi:                    200
 Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
@@ -46,10 +46,10 @@ URxvt.scrollBar:            false
 ! Perl extensions
 URxvt.perl-ext-common:      default,url-select,clipboard
 URxvt.keysym.C-i:           perl:url-select:select_next
-URXvt.url-select.launcher:  midori
+URXvt.url-select.launcher:  firefox
 URXvt.url-select.underline: true
 URxvt.matcher.button:       1
-URxvt.urlLauncher:          midori
+URxvt.urlLauncher:          firefox
 
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.iso14755:             false

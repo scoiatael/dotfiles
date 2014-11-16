@@ -9,7 +9,9 @@
 
 require 'cairo'
 
-clock_offset_x = 500
+clock_offset_x = 800
+clock_offset_y = 100
+scale = 3
 
 --------------------------------------------------------------------------------
 --                                                                    clock DATA
@@ -17,17 +19,17 @@ clock_offset_x = 500
 clock_h = {
     {
     name='time',                   arg='%H',                    max_value=12,
-    x=clock_offset_x,              y=100,
-    graph_radius=53,
-    graph_thickness=3,
+    x=clock_offset_x,              y=100+clock_offset_y,
+    graph_radius=53*scale,
+    graph_thickness=3*scale,
     graph_unit_angle=30,           graph_unit_thickness=30,
     graph_bg_colour=0xffffff,      graph_bg_alpha=0.0,
     graph_fg_colour=0xFFFFFF,      graph_fg_alpha=0.3,
-    txt_radius=34,
-    txt_weight=1,                  txt_size=10.0,
+    txt_radius=34*scale,
+    txt_weight=1,                  txt_size=12.0*scale,
     txt_fg_colour=0xFFFFFF,        txt_fg_alpha=0.6,
-    graduation_radius=53,
-    graduation_thickness=6,        graduation_mark_thickness=2,
+    graduation_radius=53*scale,
+    graduation_thickness=6*scale,        graduation_mark_thickness=2*scale,
     graduation_unit_angle=30,
     graduation_fg_colour=0xFFFFFF, graduation_fg_alpha=0.3,
     },
@@ -36,17 +38,17 @@ clock_h = {
 clock_m = {
     {
     name='time',                   arg='%M',                    max_value=60,
-    x=clock_offset_x,              y=100,
-    graph_radius=57,
-    graph_thickness=2,
+    x=clock_offset_x,              y=100+clock_offset_y,
+    graph_radius=57*scale,
+    graph_thickness=2*scale,
     graph_unit_angle=6,            graph_unit_thickness=6,
     graph_bg_colour=0xffffff,      graph_bg_alpha=0.1,
     graph_fg_colour=0xFFFFFF,      graph_fg_alpha=0.3,
-    txt_radius=70,
-    txt_weight=0,                  txt_size=9.0,
+    txt_radius=70*scale,
+    txt_weight=0,                  txt_size=10.0*scale,
     txt_fg_colour=0xFFFFFF,        txt_fg_alpha=0.6,
-    graduation_radius=57,
-    graduation_thickness=0,        graduation_mark_thickness=2,
+    graduation_radius=57*scale,
+    graduation_thickness=0,        graduation_mark_thickness=2*scale,
     graduation_unit_angle=30,
     graduation_fg_colour=0xFFFFFF, graduation_fg_alpha=0.3,
     },
@@ -55,14 +57,14 @@ clock_m = {
 clock_s = {
     {
     name='time',                   arg='%S',                    max_value=60,
-    x=clock_offset_x,              y=100,
-    graph_radius=50,
-    graph_thickness=2,
+    x=clock_offset_x,              y=100+clock_offset_y,
+    graph_radius=50*scale,
+    graph_thickness=2*scale,
     graph_unit_angle=6,            graph_unit_thickness=2,
     graph_bg_colour=0xffffff,      graph_bg_alpha=0.0,
     graph_fg_colour=0xFFFFFF,      graph_fg_alpha=0.2,
-    txt_radius=40,
-    txt_weight=0,                  txt_size=12.0,
+    txt_radius=40*scale,
+    txt_weight=0,                  txt_size=9.0*scale,
     txt_fg_colour=0xFFFFFF,        txt_fg_alpha=0.3,
     graduation_radius=0,
     graduation_thickness=0,        graduation_mark_thickness=0,
@@ -367,7 +369,7 @@ function go_clock_rings(display)
         value = tonumber(str)
         draw_clock_ring(display, data, value)
     end
-    
+
     for i in pairs(clock_h) do
         load_clock_rings(display, clock_h[i])
     end
@@ -391,7 +393,7 @@ function go_gauge_rings(display)
         value = tonumber(str)
         draw_gauge_ring(display, data, value)
     end
-    
+
     for i in pairs(gauge) do
         load_gauge_rings(display, gauge[i])
     end
@@ -400,16 +402,16 @@ end
 -------------------------------------------------------------------------------
 --                                                                         MAIN
 function conky_main()
-    if conky_window == nil then 
+    if conky_window == nil then
         return
     end
 
     local cs = cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
     local display = cairo_create(cs)
-   
+
     local updates = conky_parse('${updates}')
     update_num = tonumber(updates)
-   
+
 --    local bg = cairo_image_surface_create_from_png('gradient.apng')
 --    cairo_save(display)
 
@@ -422,7 +424,7 @@ function conky_main()
         go_clock_rings(display)
  --       go_gauge_rings(display)
     end
-    
+
     cairo_surface_destroy(cs)
     cairo_destroy(display)
 end

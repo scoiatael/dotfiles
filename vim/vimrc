@@ -3,7 +3,11 @@ call pathogen#helptags()
 
 set nu
 
-set tabstop=2 shiftwidth=2 expandtab
+cmap w!! w !sudo tee > /dev/null %
+
+set tabstop=2 
+set shiftwidth=2 
+set expandtab
 
 set tags=./.tags
 
