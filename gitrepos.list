@@ -44,6 +44,9 @@
   [[vim-indent-guides]]
   PATH=vim-indent-guides
   URL=git://github.com/nathanaelkane/vim-indent-guides.git
+  [[vim-haml]]
+  PATH=vim-haml
+  URL=https://github.com/tpope/vim-haml.git
 [zsh]
   [[zprezto]]
   PATH=prezto

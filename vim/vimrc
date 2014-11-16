@@ -39,17 +39,19 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :set hlsearch
 :nmap \q :nohlsearch<CR>
 
+ino <silent> <Leader><tab> <c-r>=TriggerSnippet()<cr>
+snor <silent> <Leader><tab> <esc>i<right><c-r>=TriggerSnippet()<cr>
+
 
 :nmap ; :CtrlP<CR>
 
 :let g:ctrlp_map = '<Leader>t'
 :let g:ctrlp_match_window_bottom = 0
 :let g:ctrlp_match_window_reversed = 0
-:let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend|hi|ho)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
-:let g:ctrlp_working_path_mode = 0
+:let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend|hi|ho)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|node_modules'
+:let g:ctrlp_working_path_mode = "r"
 :let g:ctrlp_dotfiles = 0
 :let g:ctrlp_switch_buffer = 0
-:let g:ctrlp_by_filename=1
 
 :let g:rainbow_active = 1
 :let g:rainbow_conf = {
