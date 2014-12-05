@@ -47,6 +47,9 @@
   [[vim-haml]]
   PATH=vim-haml
   URL=https://github.com/tpope/vim-haml.git
+  [[vim-multiple-cursors]]
+  PATH=vim-multiple-cursors
+  URL=https://github.com/terryma/vim-multiple-cursors.git
 [zsh]
   [[zprezto]]
   PATH=prezto
