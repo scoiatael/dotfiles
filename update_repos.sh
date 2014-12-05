@@ -33,6 +33,11 @@ case $@ in
     start update;;
   "--help" )
     usage ;;
+  "list" )
+      for REPO in $( $REPOSCRIPT url )
+      do
+        echo "$REPO"
+      done ;;
   *)
     start $1 ;;
 esac
