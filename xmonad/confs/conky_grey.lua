@@ -453,6 +453,8 @@ function conky_main()
         return
     end
 
+    conky_window.height = 900
+
     local cs = cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
     local display = cairo_create(cs)
 
