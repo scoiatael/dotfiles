@@ -10,10 +10,11 @@
 require 'cairo'
 
 clock_offset_x = 800
-clock_offset_y = 110
+clock_offset_y = 275
 scale = 3
 
 stats_offset_x = 300
+stats_offset_y = 195
 stats_fg_colour = 0x000000
 stats_bg_colour = 0x000000
 
@@ -23,7 +24,7 @@ stats_bg_colour = 0x000000
 clock_h = {
     {
     name='time',                   arg='%H',                    max_value=12,
-    x=clock_offset_x,              y=100+clock_offset_y,
+    x=clock_offset_x,              y=clock_offset_y,
     graph_radius=57*scale,
     graph_thickness=3*scale,
     graph_unit_angle=6,            graph_unit_thickness=6,
@@ -42,7 +43,7 @@ clock_h = {
 clock_m = {
     {
     name='time',                   arg='%M',                    max_value=60,
-    x=clock_offset_x,              y=100+clock_offset_y,
+    x=clock_offset_x,              y=clock_offset_y,
     graph_radius=53*scale,
     graph_thickness=2*scale,
     graph_unit_angle=6,           graph_unit_thickness=6,
@@ -61,7 +62,7 @@ clock_m = {
 clock_s = {
     {
     name='time',                   arg='%S',                    max_value=60,
-    x=clock_offset_x,              y=100+clock_offset_y,
+    x=clock_offset_x,              y=clock_offset_y,
     graph_radius=50*scale,
     graph_thickness=2*scale,
     graph_unit_angle=6,            graph_unit_thickness=2,
@@ -82,7 +83,7 @@ clock_s = {
 gauge = {
 {
     name='cpu',                    arg='cpu0',                  max_value=100,
-    x=clock_offset_x+stats_offset_x,                            y=100,
+    x=clock_offset_x+stats_offset_x,                            y=stats_offset_y,
     graph_radius=24*scale,
     graph_thickness=5*scale,
     graph_start_angle=180,
@@ -103,7 +104,7 @@ gauge = {
 },
 {
     name='cpu',                    arg='cpu1',                  max_value=100,
-    x=clock_offset_x+stats_offset_x,                            y=100,
+    x=clock_offset_x+stats_offset_x,                            y=stats_offset_y,
     graph_radius=18*scale,
     graph_thickness=5*scale,
     graph_start_angle=180,
@@ -124,7 +125,7 @@ gauge = {
 },
 {
     name='memperc',                arg='',                      max_value=100,
-    x=clock_offset_x+stats_offset_x,                            y=310,
+    x=clock_offset_x+stats_offset_x,                            y=200+stats_offset_y,
     graph_radius=24*scale,
     graph_thickness=5*scale,
     graph_start_angle=180,
