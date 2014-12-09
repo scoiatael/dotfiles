@@ -5,13 +5,14 @@ set nu
 
 cmap w!! w !sudo tee > /dev/null %
 
-set tabstop=2 
-set shiftwidth=2 
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 set tags=./.tags
 
 nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
+:nnoremap \w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 :nmap \o :set paste!<CR>
 :nmap j gj
