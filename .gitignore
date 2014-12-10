@@ -12,3 +12,4 @@ history
 *.bp
 # Config for custom resolutions
 xmonad/confs/custom/*
+!xmonad/confs/custom/.*
