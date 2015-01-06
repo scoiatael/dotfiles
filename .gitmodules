@@ -86,3 +86,6 @@
 	path = repos/powerline-fonts
 	url = https://github.com/Lokaltog/powerline-fonts.git
 	branch = master
+[submodule "repos/vim-ruby"]
+	path = repos/vim-ruby
+	url = git://github.com/vim-ruby/vim-ruby.git
