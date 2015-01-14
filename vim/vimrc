@@ -24,6 +24,7 @@ Plugin 'techlivezheng/vim-plugin-minibufexpl'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+Plugin 'Raimondi/delimitMate'
 call vundle#end()
 filetype plugin indent on
 
