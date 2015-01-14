@@ -1,5 +1,29 @@
-call pathogen#infect()
-call pathogen#helptags()
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'vim-scripts/SearchComplete'
+Plugin 'kien/ctrlp.vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'luochen1990/rainbow'
+Plugin 'ervandew/supertab'
+Plugin 'scrooloose/syntastic'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'bling/vim-airline'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'altercation/solarized'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-haml'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'techlivezheng/vim-plugin-minibufexpl'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+call vundle#end()
+filetype plugin indent on
 
 set nu
 
