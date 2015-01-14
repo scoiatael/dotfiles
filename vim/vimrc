@@ -2,6 +2,8 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+
 Plugin 'vim-scripts/SearchComplete'
 Plugin 'kien/ctrlp.vim'
 Plugin 'editorconfig/editorconfig-vim'
@@ -12,7 +14,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'bling/vim-airline'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'altercation/solarized'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-haml'
@@ -64,8 +66,9 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :set hlsearch
 :nmap \q :nohlsearch<CR>
 
-ino <silent> <Leader><tab> <c-r>=TriggerSnippet()<cr>
-snor <silent> <Leader><tab> <esc>i<right><c-r>=TriggerSnippet()<cr>
+let g:UltiSnipsExpandTrigger="\\<Tab>"
+let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 
 
 :nmap ; :CtrlP<CR>

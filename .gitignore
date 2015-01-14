@@ -13,3 +13,6 @@ history
 # Config for custom resolutions
 xmonad/confs/custom/*
 !xmonad/confs/custom/.*
+# vim Vundle files
+vim/vim/bundle/*
+vim/vim/bundle/Vundle.vim
