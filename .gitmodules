@@ -18,3 +18,6 @@
 	path = repos/powerline-fonts
 	url = https://github.com/Lokaltog/powerline-fonts.git
 	branch = master
+[submodule "vim/vim/bundle/Vundle.vim"]
+	path = vim/vim/bundle/Vundle.vim
+	url = https://github.com/gmarik/Vundle.vim.git
