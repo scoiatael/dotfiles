@@ -52,6 +52,8 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :map <C-b>  <PageUp>
 :map <C-f>  <PageDown>
 :map \p <C-p>
+:map \f :set foldenable!<CR>
+:map \F za
 
 :cnoremap <C-d>  <Delete>
 :cnoremap <M-b>  <S-Left>
@@ -67,6 +69,9 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :set smartcase
 :set hlsearch
 :nmap \q :nohlsearch<CR>
+
+:set foldmethod=syntax
+:set foldlevel=3
 
 let g:UltiSnipsExpandTrigger="\\<Tab>"
 let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
