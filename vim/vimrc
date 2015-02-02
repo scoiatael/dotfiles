@@ -71,7 +71,7 @@ nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :nmap \q :nohlsearch<CR>
 
 :set foldmethod=syntax
-:set foldlevel=3
+:set foldlevel=2
 
 let g:UltiSnipsExpandTrigger="\\<Tab>"
 let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
