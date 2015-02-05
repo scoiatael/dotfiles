@@ -21,3 +21,6 @@
 [submodule "repos/vim-ruby"]
 	path = repos/vim-ruby
 	url = git://github.com/vim-ruby/vim-ruby.git
+[submodule "repos/Vundle.vim"]
+	path = repos/Vundle.vim
+	url = https://github.com/gmarik/Vundle.vim.git
