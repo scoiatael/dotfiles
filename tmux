@@ -1,4 +1,4 @@
-set-option -g destroy-unattached on 
+set-option -g destroy-unattached off
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 set -g mouse-utf8 off
 
