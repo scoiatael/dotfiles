@@ -26,8 +26,9 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 Plugin 'ap/vim-css-color'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'kana/vim-filetype-haskell'
+Plugin 'eagletmt/neco-ghc'
 call vundle#end()
 filetype plugin indent on
 
