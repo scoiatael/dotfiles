@@ -42,7 +42,7 @@ URL_file = thunar %s
 URL_readme = ${TermExec} 'less /usr/doc/%s/README'
 URL_info = ${TermExec} 'info %s'
 URL_sh = sh -c '%s'
-URL_paci = ${TermExec} 'pacman -S %s'
+URL_paci = ${TermExec} 'pacman -Syu %s'
 URL_pacs = ${TermExec} 'pacman -Ss %s'
 
 # extension handlers
