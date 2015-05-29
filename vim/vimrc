@@ -30,6 +30,7 @@ Plugin 'eagletmt/ghcmod-vim'
 Plugin 'kana/vim-filetype-haskell'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'chrisbra/unicode.vim'
+Plugin 'dart-lang/dart-vim-plugin'
 call vundle#end()
 filetype plugin indent on
 
