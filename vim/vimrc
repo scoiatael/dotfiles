@@ -32,6 +32,9 @@ Plugin 'eagletmt/neco-ghc'
 Plugin 'chrisbra/unicode.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdcommenter'
 call vundle#end()
 filetype plugin indent on
 
