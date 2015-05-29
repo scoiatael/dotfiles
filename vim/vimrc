@@ -30,6 +30,8 @@ Plugin 'eagletmt/ghcmod-vim'
 Plugin 'kana/vim-filetype-haskell'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'chrisbra/unicode.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'majutsushi/tagbar'
 call vundle#end()
 filetype plugin indent on
 
@@ -45,6 +47,27 @@ set shiftwidth=2
 set expandtab
 
 set tags=./.tags
+nmap \g :TagbarToggle<CR>
+" use 'ripper-tags' (if available) to generate ruby ctags with tagbar
+if executable('ripper-tags')
+    " Configure Tagbar to user ripper-tags with ruby
+    let g:tagbar_type_ruby = {
+                \ 'kinds' : [
+                    \ 'm:modules',
+                    \ 'c:classes',
+                    \ 'f:methods',
+                    \ 'F:singleton methods',
+                    \ 'C:constants',
+                    \ 'a:aliases'
+                \ ],
+                \ 'ctagsbin':  'ripper-tags',
+                \ 'ctagsargs': ['-f', '-']
+                \ }
+endif
+let g:tagbar_autoclose=1
+let g:tagbar_autofocus=1
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+let g:tagbar_sort = 0
 
 nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
 :nnoremap \w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
