@@ -73,56 +73,45 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 let g:tagbar_sort = 0
 
 nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
-:nnoremap \w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap \w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
-:nmap \o :set paste!<CR>
-:nmap j gj
-:nmap k gk
-:map <C-a>  <Home>
-:map <C-e>  <End>
-:nmap \h  :MBEbp<CR>
-:nmap \l  :MBEbn<CR>
-:map <C-b>  <PageUp>
-:map <C-f>  <PageDown>
-:map \p <C-p>
-:map \f :set foldenable!<CR>
-:map \F za
+nmap \o :set paste!<CR>
+nmap j gj
+nmap k gk
+nmap \h  :bn<CR>
+nmap \l  :bp<CR>
+nmap \d :bd<CR>
+map \f zR
+map \F zM
 
-:cnoremap <C-d>  <Delete>
-:cnoremap <M-b>  <S-Left>
-:cnoremap <M-f>  <S-Right>
-:cnoremap <M-d>  <S-right><Delete>
-:cnoremap <Esc>b <S-Left>
-:cnoremap <Esc>f <S-Right>
-:cnoremap <Esc>d <S-right><Delete>
-:cnoremap <C-g>  <C-c>
+imap <C-a>  <Home>
+imap <C-e>  <End>
 
-:set incsearch
-:set ignorecase
-:set smartcase
-:set hlsearch
-:nmap \q :nohlsearch<CR>
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+nmap \q :nohlsearch<CR>
 
-:set foldmethod=syntax
-:set foldlevel=2
+set foldmethod=syntax
+set foldlevel=2
 
 let g:UltiSnipsExpandTrigger="\\<Tab>"
 let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 
+nmap ; :CtrlP<CR>
 
-:nmap ; :CtrlP<CR>
+let g:ctrlp_map = '<Leader>t'
+let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend|hi|ho)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|node_modules'
+let g:ctrlp_working_path_mode = "r"
+let g:ctrlp_dotfiles = 0
+let g:ctrlp_switch_buffer = 0
 
-:let g:ctrlp_map = '<Leader>t'
-:let g:ctrlp_match_window_bottom = 0
-:let g:ctrlp_match_window_reversed = 0
-:let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend|hi|ho)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|node_modules'
-:let g:ctrlp_working_path_mode = "r"
-:let g:ctrlp_dotfiles = 0
-:let g:ctrlp_switch_buffer = 0
-
-:let g:rainbow_active = 1
-:let g:rainbow_conf = {
+let g:rainbow_active = 1
+let g:rainbow_conf = {
       \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
       \   'ctermfgs': ['142', '26', '199', '122', '196', '46'],
       \   'operators': '_,_',
@@ -138,15 +127,12 @@ let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
       \   }
       \}
 
-:nmap \e :NERDTreeToggle<CR>
-:nmap \a :bnext<CR>
-:nmap \s :bprev<CR>
-:nmap \d :bd<CR>
+nmap \e :NERDTreeToggle<CR>
 
-:nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-:nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-:nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
-:nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 
 if has("syntax")
   syntax on
