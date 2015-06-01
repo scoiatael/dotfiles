@@ -36,6 +36,9 @@ Plugin 'majutsushi/tagbar'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 filetype plugin indent on
 
@@ -70,7 +73,6 @@ if executable('ripper-tags')
 endif
 let g:tagbar_autoclose=1
 let g:tagbar_autofocus=1
-autocmd VimEnter * nested :call tagbar#autoopen(1)
 let g:tagbar_sort = 0
 
 nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
