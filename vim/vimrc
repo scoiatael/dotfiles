@@ -104,6 +104,7 @@ let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 
 nmap ; :CtrlP<CR>
+nmap <C-\> :Unite<CR>
 
 let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_match_window_bottom = 0
