@@ -12,5 +12,12 @@ set -g mouse-resize-pane on
 set -g mouse-select-pane on
 set -g mouse-select-window on
 
+##CLIPBOARD selection integration
+##Requires prefix key before the command key
+##Copy tmux paste buffer to CLIPBOARD
+bind C-c run "tmux show-buffer | xsel -i -b"
+##Copy CLIPBOARD to tmux paste buffer and paste tmux paste buffer
+bind C-v run "tmux set-buffer -- \"$(xsel -o -b)\"; tmux paste-buffer"
+
 #source-file ~/config/repos/solarized/tmux/tmuxcolors-dark.conf
 source-file ~/config/tmuxln
