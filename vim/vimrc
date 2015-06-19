@@ -39,6 +39,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'shime/vim-livedown'
 call vundle#end()
 filetype plugin indent on
 
