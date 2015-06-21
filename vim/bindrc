@@ -2,6 +2,7 @@
 
 " \ is too far to be good leader
 map <Space> <Leader>
+map <Space><Space> <Leader><Leader>
 
 " Force save when forgot sudo
 cmap w!! w !sudo tee > /dev/null %
