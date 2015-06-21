@@ -42,4 +42,6 @@ Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'shime/vim-livedown'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'AndrewRadev/splitjoin.vim'
 call vundle#end()
