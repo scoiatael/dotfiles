@@ -1,0 +1,19 @@
+# vim
+vimrc           -> vim/vimrc
+vim             -> vim/vim
+# zsh
+zprofile        -> zsh/zprofile
+zshrc           -> zsh/zshrc
+zshenv          -> zsh/zshenv
+zprezto         -> zsh/zprezto
+zpreztorc       -> zsh/zpreztorc
+zlogin          -> zsh/zlogin
+zlogout         -> zsh/zlogout
+# tmux
+tmux.conf       -> tmux/tmux.conf
+tmuxln.conf     -> tmux/tmuxln.conf
+# misc
+dir_colors      -> misc/dir_colors
+gmrunrc         -> misc/gmrunrc
+Xdefaults       -> misc/Xdefaults
+xscreensaver    -> misc/xscreensaver
