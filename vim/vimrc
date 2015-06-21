@@ -1,176 +1,39 @@
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+function! LoadFile(var)
+  if filereadable(a:var)
+    exec 'source ' . a:var
+  endif
+endfunction
 
-Plugin 'vim-scripts/SearchComplete'
-Plugin 'kien/ctrlp.vim'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'luochen1990/rainbow'
-Plugin 'ervandew/supertab'
-Plugin 'scrooloose/syntastic'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'bling/vim-airline'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-haml'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'techlivezheng/vim-plugin-minibufexpl'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'Raimondi/delimitMate'
-Plugin 'ap/vim-css-color'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'kana/vim-filetype-haskell'
-Plugin 'eagletmt/neco-ghc'
-Plugin 'chrisbra/unicode.vim'
-Plugin 'dart-lang/dart-vim-plugin'
-Plugin 'tpope/vim-surround'
-Plugin 'majutsushi/tagbar'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mileszs/ack.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'shime/vim-livedown'
-call vundle#end()
-filetype plugin indent on
+call LoadFile('/etc/vimrc')
+call LoadFile($HOME . '/.vim-vundlerc')
 
-set nu
-set nocompatible      " We're running Vim, not Vi!
-syntax on             " Enable syntax highlighting
-filetype on           " Enable filetype detection
+set nu " Show line numbers
+set nocompatible " We're running Vim, not Vi!
+syntax on " Enable syntax highlighting
+filetype plugin indent on " Enable filetype detection
 
-cmap w!! w !sudo tee > /dev/null %
+set tabstop=2 " <Tab> equals to 2x <Space>
+set shiftwidth=2 " Equal to tabstop
+set expandtab " Always insert <Space>s instead of <Tab>s
 
-set tabstop=2
-set shiftwidth=2
-set expandtab
+set incsearch " Show where pattern so far matches
+set smartcase " Ignore case of letters if pattern contains only lowercase
+set hlsearch " Highlight occurences of pattern
 
-set tags=./.tags
-nmap \g :TagbarToggle<CR>
-" use 'ripper-tags' (if available) to generate ruby ctags with tagbar
-if executable('ripper-tags')
-    " Configure Tagbar to user ripper-tags with ruby
-    let g:tagbar_type_ruby = {
-                \ 'kinds' : [
-                    \ 'm:modules',
-                    \ 'c:classes',
-                    \ 'f:methods',
-                    \ 'F:singleton methods',
-                    \ 'C:constants',
-                    \ 'a:aliases'
-                \ ],
-                \ 'ctagsbin':  'ripper-tags',
-                \ 'ctagsargs': ['-f', '-']
-                \ }
-endif
-let g:tagbar_autoclose=1
-let g:tagbar_autofocus=1
-let g:tagbar_sort = 0
+set foldmethod=syntax " Syntax highlighting items specify folds.
+set foldlevel=2 " Start folding when nested 2 times
 
-nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
-nnoremap \w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+set t_Co=256 " Use 256 colours
+set background=dark " Dark background
+color solarized " Solarized color scheme
 
-nmap \o :set paste!<CR>
-nmap j gj
-nmap k gk
-nmap \h  :bn<CR>
-nmap \l  :bp<CR>
-nmap \d :bd<CR>
-map \f zR
-map \F zM
+set showcmd	" Show (partial) command in status line.
+set showmatch	" Show matching brackets.
+set mouse=a	" Enable mouse usage (all modes)
+set ttyfast " Force fast terminal
+set ttymouse=urxvt " Force mouse handling for urxvt
+set laststatus=2 " Always show statusline
+set backspace=indent,eol,start " Backspace works as expected
 
-imap <C-a>  <Home>
-imap <C-e>  <End>
-
-set incsearch
-set ignorecase
-set smartcase
-set hlsearch
-nmap \q :nohlsearch<CR>
-
-set foldmethod=syntax
-set foldlevel=2
-
-let g:UltiSnipsExpandTrigger="\\<Tab>"
-let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
-
-nmap ; :CtrlP<CR>
-nmap <C-\> :Unite<CR>
-
-let g:ctrlp_map = '<Leader>t'
-let g:ctrlp_match_window_bottom = 0
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend|hi|ho)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|node_modules'
-let g:ctrlp_working_path_mode = "r"
-let g:ctrlp_dotfiles = 0
-let g:ctrlp_switch_buffer = 0
-
-let g:rainbow_active = 1
-let g:rainbow_conf = {
-      \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-      \   'ctermfgs': ['142', '26', '199', '122', '196', '46'],
-      \   'operators': '_,_',
-      \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
-      \   'separately': {
-      \       'html': {
-      \           'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
-      \       },
-      \       'tex': {
-      \           'operators': '',
-      \           'parentheses': [['(',')'], ['\[','\]']],
-      \       },
-      \   }
-      \}
-
-nmap \e :NERDTreeToggle<CR>
-
-nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
-nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
-
-if has("syntax")
-  syntax on
-endif
-
-set t_Co=256
-set background=dark
-color solarized
-
-if has("autocmd")
-  filetype plugin indent on
-endif
-
-set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-set mouse=a		" Enable mouse usage (all modes)
-set ttyfast
-set ttymouse=xterm2
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-set laststatus=2
-let g:miniBufExplorerAutoStart = 0
-
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
-let g:indent_guides_auto_colors=0
-hi IndentGuidesOdd  ctermbg=24
-hi IndentGuidesEven ctermbg=25
-
-let g:ycm_register_as_syntastic_checker = 0
-
-if filereadable("/etc/vim/vimrc.local")
-  source /etc/vim/vimrc.local
-endif
+call LoadFile($HOME . '/.vim-pluginrc')
+call LoadFile($HOME . '/.vim-bindrc')

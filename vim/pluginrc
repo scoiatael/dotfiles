@@ -1,0 +1,58 @@
+" vi: syntax=vim
+
+" use 'ripper-tags' (if available) to generate ruby ctags with tagbar
+if executable('ripper-tags')
+    " Configure Tagbar to user ripper-tags with ruby
+    let g:tagbar_type_ruby = {
+                \ 'kinds' : [
+                    \ 'm:modules',
+                    \ 'c:classes',
+                    \ 'f:methods',
+                    \ 'F:singleton methods',
+                    \ 'C:constants',
+                    \ 'a:aliases'
+                \ ],
+                \ 'ctagsbin':  'ripper-tags',
+                \ 'ctagsargs': ['-f', '-']
+                \ }
+endif
+let g:tagbar_autoclose=1
+let g:tagbar_autofocus=1
+let g:tagbar_sort = 0
+
+let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend|hi|ho)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|node_modules'
+let g:ctrlp_working_path_mode = "r"
+let g:ctrlp_dotfiles = 0
+let g:ctrlp_switch_buffer = 0
+
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+      \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+      \   'ctermfgs': ['142', '26', '199', '122', '196', '46'],
+      \   'operators': '_,_',
+      \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+      \   'separately': {
+      \       'html': {
+      \           'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
+      \       },
+      \       'tex': {
+      \           'operators': '',
+      \           'parentheses': [['(',')'], ['\[','\]']],
+      \       },
+      \   }
+      \}
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:miniBufExplorerAutoStart = 0
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+let g:indent_guides_auto_colors=0
+hi IndentGuidesOdd  ctermbg=24
+hi IndentGuidesEven ctermbg=25
+
+let g:ycm_register_as_syntastic_checker = 0

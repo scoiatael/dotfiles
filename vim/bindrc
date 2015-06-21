@@ -1,0 +1,38 @@
+" vi: syntax=vim
+
+cmap w!! w !sudo tee > /dev/null %
+
+nmap \g :TagbarToggle<CR>
+
+nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
+nnoremap \w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+nmap \o :set paste!<CR>
+nmap j gj
+nmap k gk
+nmap \h  :bn<CR>
+nmap \l  :bp<CR>
+nmap \d :bd<CR>
+map \f zR
+map \F zM
+
+imap <C-a>  <Home>
+imap <C-e>  <End>
+nmap \q :nohlsearch<CR>
+
+nmap ; :CtrlP<CR>
+nmap <C-\> :Unite<CR>
+
+nmap \e :NERDTreeToggle<CR>
+
+nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+
+
+let g:UltiSnipsExpandTrigger="\\<Tab>"
+let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+
+let g:ctrlp_map = '<Leader>t'

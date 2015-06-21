@@ -1,5 +1,8 @@
 # vim
 vimrc           -> vim/vimrc
+vim-pluginrc    -> vim/pluginrc
+vim-vundlerc    -> vim/vundlerc
+vim-bindrc      -> vim/bindrc
 vim             -> vim/vim
 # zsh
 zprofile        -> zsh/zprofile
