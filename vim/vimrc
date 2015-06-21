@@ -34,6 +34,7 @@ set ttyfast " Force fast terminal
 set ttymouse=urxvt " Force mouse handling for urxvt
 set laststatus=2 " Always show statusline
 set backspace=indent,eol,start " Backspace works as expected
+set hidden " Don't force saving buffers when leaving them
 
 call LoadFile($HOME . '/.vim-pluginrc')
 call LoadFile($HOME . '/.vim-bindrc')

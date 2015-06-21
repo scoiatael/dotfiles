@@ -1,4 +1,4 @@
-" vi: syntax=vim
+" vi: syntax=vim, filetype=vim
 
 " use 'ripper-tags' (if available) to generate ruby ctags with tagbar
 if executable('ripper-tags')
@@ -55,4 +55,4 @@ let g:indent_guides_auto_colors=0
 hi IndentGuidesOdd  ctermbg=24
 hi IndentGuidesEven ctermbg=25
 
-let g:ycm_register_as_syntastic_checker = 0
+au FileType vim let b:delimitMate_autoclose = 0

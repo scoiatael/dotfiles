@@ -1,38 +1,41 @@
-" vi: syntax=vim
+" vi: syntax=vim, filetype=vim
 
+" \ is too far to be good leader
+map <Space> <Leader>
+
+" Force save when forgot sudo
 cmap w!! w !sudo tee > /dev/null %
 
-nmap \g :TagbarToggle<CR>
+nmap ; :CtrlP<CR>
+nmap <Leader>; :Unite buffer<CR>
+nmap <Leader>e :NERDTreeToggle<CR>
+nmap <Leader>g :TagbarToggle<CR>
+nmap <Leader>w :w<CR>
+nmap <Leader>q :q<CR>
+" Remove trailing whitespace
+nmap <Leader><Leader>w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+" Easy paste
+nmap <Leader>o :set paste!<CR>
+" Turn off highlight after search
+nmap <Leader><Leader>q :nohlsearch<CR>
 
-nmap <F2> :%!astyle --mode=cs --style=stroustrup -p -s2<cr>
-nnoremap \w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-
-nmap \o :set paste!<CR>
+" Move by screen, not text line
 nmap j gj
 nmap k gk
-nmap \h  :bn<CR>
-nmap \l  :bp<CR>
-nmap \d :bd<CR>
-map \f zR
-map \F zM
 
-imap <C-a>  <Home>
-imap <C-e>  <End>
-nmap \q :nohlsearch<CR>
+" Buffer movement
+nmap <Leader>h :bn<CR>
+nmap <Leader>l :bp<CR>
+nmap <Leader>d :bd<CR>
 
-nmap ; :CtrlP<CR>
-nmap <C-\> :Unite<CR>
+" Open all folds
+nmap <Leader>f zR
+" Close all folds
+nmap <Leader>F zM
 
-nmap \e :NERDTreeToggle<CR>
+imap <C-a> <Home>
+imap <C-e> <End>
 
-nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
-nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
-
-
-let g:UltiSnipsExpandTrigger="\\<Tab>"
-let g:UltiSnipsJumpForwardTrigger="\\<Tab>"
+let g:UltiSnipsExpandTrigger="<Leader><Tab>"
+let g:UltiSnipsJumpForwardTrigger="<Leader><Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
-
-let g:ctrlp_map = '<Leader>t'
