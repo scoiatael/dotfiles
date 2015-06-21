@@ -2,22 +2,6 @@
 	path = repos/prezto
 	url = https://github.com/scoiatael/prezto.git
 	branch = master
-[submodule "repos/evil"]
-	path = repos/evil
-	url = git://gitorious.org/evil/evil.git
-	branch = master
-[submodule "repos/undo-tree"]
-	path = repos/undo-tree
-	url = http://www.dr-qubit.org/git/undo-tree.git
-	branch = master
-[submodule "repos/solarized"]
-	path = repos/solarized
-	url = https://github.com/altercation/solarized.git
-	branch = master
-[submodule "repos/powerline-fonts"]
-	path = repos/powerline-fonts
-	url = https://github.com/Lokaltog/powerline-fonts.git
-	branch = master
 [submodule "repos/Vundle.vim"]
 	path = repos/Vundle.vim
 	url = https://github.com/gmarik/Vundle.vim.git
