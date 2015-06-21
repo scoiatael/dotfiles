@@ -5,13 +5,13 @@ vim-vundlerc    -> vim/vundlerc
 vim-bindrc      -> vim/bindrc
 vim             -> vim/vim
 # zsh
-zprofile        -> zsh/zprofile
-zshrc           -> zsh/zshrc
-zshenv          -> zsh/zshenv
-zprezto         -> zsh/zprezto
-zpreztorc       -> zsh/zpreztorc
-zlogin          -> zsh/zlogin
-zlogout         -> zsh/zlogout
+zprofile        -> zsh/runcoms/zprofile
+zshrc           -> zsh/runcoms/zshrc
+zshenv          -> zsh/runcoms/zshenv
+zprezto         -> zsh
+zpreztorc       -> zsh/runcoms/zpreztorc
+zlogin          -> zsh/runcoms/zlogin
+zlogout         -> zsh/runcoms/zlogout
 # tmux
 tmux.conf       -> tmux/tmux.conf
 tmuxln.conf     -> tmux/tmuxln.conf

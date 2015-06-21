@@ -1,18 +1,10 @@
-# Due to linking whole .xmonad dir, ignore compilation results
-*.o
-*.hi
-*.errors
-xmonad-*
-history
 # Files i'm working on
 *.swp
 # and hidden
 .*
 # Ignore backups of files before installation
 *.bp
-# Config for custom resolutions
-xmonad/confs/custom/*
-!xmonad/confs/custom/.*
+*.bak
 # vim Vundle files
 vim/vim/bundle/*
-vim/vim/bundle/Vundle.vim
+!vim/vim/bundle/Vundle.vim

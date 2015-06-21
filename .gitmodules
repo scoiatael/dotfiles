@@ -1,7 +1,3 @@
-[submodule "repos/prezto"]
-	path = repos/prezto
-	url = https://github.com/scoiatael/prezto.git
-	branch = master
-[submodule "repos/Vundle.vim"]
-	path = repos/Vundle.vim
-	url = https://github.com/gmarik/Vundle.vim.git
+[submodule "prezto"]
+	path = prezto
+	url = https://github.com/scoiatael/prezto
