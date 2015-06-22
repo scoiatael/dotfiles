@@ -31,7 +31,7 @@ set showcmd	" Show (partial) command in status line.
 set showmatch	" Show matching brackets.
 set mouse=a	" Enable mouse usage (all modes)
 set ttyfast " Force fast terminal
-set ttymouse=urxvt " Force mouse handling for urxvt
+set ttymouse=sgr " Force mouse handling for urxvt
 set laststatus=2 " Always show statusline
 set backspace=indent,eol,start " Backspace works as expected
 set hidden " Don't force saving buffers when leaving them
