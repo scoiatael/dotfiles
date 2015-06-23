@@ -43,4 +43,6 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'shime/vim-livedown'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'benmills/vimux'
+Plugin 'skalnik/vim-vroom'
 call vundle#end()
