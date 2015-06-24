@@ -1,6 +1,6 @@
 " vi: syntax=vim, filetype=vim
 
-" \ is too far to be good leader
+" \ is too far to be a good leader
 map <Space> <Leader>
 map <Space><Space> <Leader><Leader>
 
@@ -14,11 +14,12 @@ nmap <Leader>g :TagbarToggle<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
 " Remove trailing whitespace
-nmap <Leader><Leader>w :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nmap <Leader>rw :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " Easy paste
-nmap <Leader>o :set paste!<CR>
+nmap <Leader>ro :set paste!<CR>
+nmap <Leader>re :
 " Turn off highlight after search
-nmap <Leader><Leader>q :nohlsearch<CR>
+nmap <Leader>rq :nohlsearch<CR>
 
 " Move by screen, not text line
 nmap j gj
