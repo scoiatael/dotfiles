@@ -45,4 +45,5 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'benmills/vimux'
 Plugin 'skalnik/vim-vroom'
+Plugin 'terryma/vim-expand-region'
 call vundle#end()

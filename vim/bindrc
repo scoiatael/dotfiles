@@ -20,6 +20,9 @@ nmap <Leader>ro :set paste!<CR>
 nmap <Leader>re :
 " Turn off highlight after search
 nmap <Leader>rq :nohlsearch<CR>
+" Control selected region
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 " Move by screen, not text line
 nmap j gj
