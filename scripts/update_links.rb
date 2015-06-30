@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
+
 def get_char
   state = `stty -g`
   `stty raw -echo -icanon isig`
@@ -42,6 +44,9 @@ File.open(LINK_PATH) do |f|
     end
 
     next if exist?(to)
+
+    dirname = File.dirname(to)
+    FileUtils.mkpath(dirname) unless File.exist?(dirname)
 
     puts "Symlinking #{line}"
     File.symlink(from, to)
