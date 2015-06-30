@@ -42,6 +42,11 @@ nmap <Leader>F zM
 imap <C-a> <Home>
 imap <C-e> <End>
 
+" Vimux/Vroom
+nmap <Leader>vd :VimuxCloseRunner<CR>
+nmap <Leader>vrt :VroomRunTestFile<CR>
+nmap <Leader>vrn :VroomRunNearestTest<CR>
+
 let g:UltiSnipsExpandTrigger="<Leader><Tab>"
 let g:UltiSnipsJumpForwardTrigger="<Leader><Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
