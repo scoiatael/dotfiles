@@ -62,3 +62,5 @@ hi IndentGuidesOdd  ctermbg=24
 hi IndentGuidesEven ctermbg=25
 
 au FileType vim let b:delimitMate_autoclose = 0
+
+let maplocalleader=","
