@@ -36,8 +36,7 @@ let g:ctrlp_switch_buffer = 0
 
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-      \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-      \   'ctermfgs': ['142', '26', '199', '122', '196', '46'],
+      \   'ctermfgs': ['13', '5', '1', '9', '3', '2', '6', '4'],
       \   'operators': '_,_',
       \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
       \   'separately': {
