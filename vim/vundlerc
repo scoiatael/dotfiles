@@ -53,4 +53,5 @@ Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-salve'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-classpath'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
 call vundle#end()
