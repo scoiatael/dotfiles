@@ -1,22 +1,23 @@
 # vi: syntax=zsh
-vimrc           -> vim/vimrc
-vim-pluginrc    -> vim/pluginrc
-vim-vundlerc    -> vim/vundlerc
-vim-bindrc      -> vim/bindrc
-vim             -> vim/vim
+vimrc             -> vim/vimrc
+vim-pluginrc      -> vim/pluginrc
+vim-vundlerc      -> vim/vundlerc
+vim-bindrc        -> vim/bindrc
+vim               -> vim/vim
 # zsh
-zprezto         -> prezto
-zprofile        -> prezto/runcoms/zprofile
-zshrc           -> prezto/runcoms/zshrc
-zshenv          -> prezto/runcoms/zshenv
-zpreztorc       -> prezto/runcoms/zpreztorc
-zlogin          -> prezto/runcoms/zlogin
-zlogout         -> prezto/runcoms/zlogout
+zprezto           -> prezto
+zprofile          -> prezto/runcoms/zprofile
+zshrc             -> prezto/runcoms/zshrc
+zshenv            -> prezto/runcoms/zshenv
+zpreztorc         -> prezto/runcoms/zpreztorc
+zlogin            -> prezto/runcoms/zlogin
+zlogout           -> prezto/runcoms/zlogout
 # tmux
-tmux.conf       -> tmux/tmux.conf
-tmuxln.conf     -> tmux/tmuxln.conf
+tmux.conf         -> tmux/tmux.conf
+tmuxln.conf       -> tmux/tmuxln.conf
 # misc
-dir_colors      -> misc/dir_colors
-gmrunrc         -> misc/gmrunrc
-Xdefaults       -> misc/Xdefaults
-xscreensaver    -> misc/xscreensaver
+dir_colors        -> misc/dir_colors
+gmrunrc           -> misc/gmrunrc
+Xdefaults         -> misc/Xdefaults
+xscreensaver      -> misc/xscreensaver
+lein/profiles.clj -> misc/lein_profiles.clj
