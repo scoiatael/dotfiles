@@ -34,6 +34,9 @@ nmap <Leader>h :bn<CR>
 nmap <Leader>l :bp<CR>
 nmap <Leader>d :bd<CR>
 
+" Quickfix
+nmap <Leader>cd :ccl<CR>
+
 " Open all folds
 nmap <Leader>f zR
 " Close all folds

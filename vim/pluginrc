@@ -63,4 +63,7 @@ hi IndentGuidesEven ctermbg=25
 
 au FileType vim let b:delimitMate_autoclose = 0
 
+" Autoclose complete window
+autocmd CompleteDone * pclose
+
 let maplocalleader=","

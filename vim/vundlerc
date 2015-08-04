@@ -27,6 +27,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'Raimondi/delimitMate'
 Plugin 'ap/vim-css-color'
+Plugin 'Hydrotoast/vim-gss'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'kana/vim-filetype-haskell'
 Plugin 'eagletmt/neco-ghc'
@@ -57,4 +58,5 @@ Plugin 'tpope/vim-dispatch'
 " Plugin 'tpope/vim-classpath'
 Plugin 'guns/vim-sexp'
 Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+" End-of Clojure Specific
 call vundle#end()
