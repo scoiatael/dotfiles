@@ -6,27 +6,4 @@
 
 (require 'cl)
 
-(setq inhibit-splash-screen t
-      inhibit-startup-message t
-      inhibit-startup-echo-area-message t)
-(menu-bar-mode -1)
-(scroll-bar-mode 1)
-(tool-bar-mode -1)
-
-(require 'evil)
-(evil-mode 1)
-
-;; change mode-line color by evil state
-(lexical-let ((default-color (cons (face-background 'mode-line)
-                                   (face-foreground 'mode-line))))
-             (add-hook 'post-command-hook
-                       (lambda ()
-                         (let ((color (cond ((minibufferp) default-color)
-                                            ((evil-insert-state-p) '("#e80000" . "#ffffff"))
-                                            ((evil-emacs-state-p)  '("#444488" . "#ffffff"))
-                                            ((buffer-modified-p)   '("#006fa0" . "#ffffff"))
-                                            (t default-color))))
-                           (set-face-background 'mode-line (car color))
-                           (set-face-foreground 'mode-line (cdr color))))))
-
-(mapc 'load (directory-files "~/.emacs.d/customizations" t "^[0-9]+.*\.el$"))
+(mapc 'load (directory-files "~/.emacs.d/custom" t "^[0-9]+.*\.el$"))
