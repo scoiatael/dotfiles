@@ -4,7 +4,6 @@
 (source melpa)
 
 (depends-on "color-theme")
-(depends-on "color-theme-sanityinc-solarized")
 (depends-on "evil")
 (depends-on "evil-annoying-arrows")
 (depends-on "evil-leader")
@@ -14,4 +13,5 @@
 (depends-on "evil-terminal-cursor-changer")
 (depends-on "evil-visualstar")
 (depends-on "pallet")
-(depends-on "powerline-evil")
+(depends-on "rainbow-delimiters")
+(depends-on "solarized-theme")
