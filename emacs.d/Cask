@@ -12,6 +12,7 @@
 (depends-on "evil-surround")
 (depends-on "evil-terminal-cursor-changer")
 (depends-on "evil-visualstar")
+(depends-on "neotree")
 (depends-on "pallet")
 (depends-on "rainbow-delimiters")
 (depends-on "solarized-theme")

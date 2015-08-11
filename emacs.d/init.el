@@ -6,6 +6,8 @@
 
 (require 'cl)
 
+(require 'neotree)
+
 (mapc 'load (directory-files "~/.emacs.d/custom" t "^[0-9]+.*\.el$"))
 
 (require 'powerline)
