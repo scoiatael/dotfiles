@@ -2,3 +2,5 @@ auto-save-list
 \#*
 *~
 elpa
+ido.last
+srecode-map.el
