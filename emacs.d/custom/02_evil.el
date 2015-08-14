@@ -16,7 +16,7 @@
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
   ":" 'helm-M-x
   "w" 'save-buffer
-  "q" 'quit
+  "q" 'evil-quit
   "e" 'neotree-toggle)
 
 (add-hook 'neotree-mode-hook
