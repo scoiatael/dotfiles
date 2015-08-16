@@ -25,7 +25,6 @@
 (depends-on "helm-fuzzy-find")
 (depends-on "helm-git")
 (depends-on "helm-ls-git")
-(depends-on "icicles")
 (depends-on "lispy")
 (depends-on "magit")
 (depends-on "magit-filenotify")
