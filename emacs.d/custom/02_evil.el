@@ -1,12 +1,13 @@
-(defvar magit-rigid-key-bindings nil)
-(require 'evil-rebellion)
-(require 'evil-leader)
 (require 'magit)
+;;(require 'evil-rebellion)
+(require 'evil-leader)
+(require 'evil-surround)
 (require 'evil)
 
 (global-evil-leader-mode)
 (global-evil-annoying-arrows-mode)
 (global-evil-visualstar-mode)
+(global-evil-surround-mode 1)
 (evil-mode 1)
 
 (evil-leader/set-leader "<SPC>")

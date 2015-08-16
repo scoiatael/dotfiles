@@ -4,3 +4,5 @@ auto-save-list
 elpa
 ido.last
 srecode-map.el
+.recentf
+ac-comphist.dat
