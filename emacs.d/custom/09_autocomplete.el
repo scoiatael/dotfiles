@@ -1,0 +1,6 @@
+(require 'fuzzy)
+(require 'auto-complete)
+(setq ac-auto-show-menu 0.0)
+(setq ac-use-fuzzy t)
+(setq ac-comphist-file "/tmp/ac-comphist.dat")
+(ac-config-default)

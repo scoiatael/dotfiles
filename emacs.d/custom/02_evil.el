@@ -3,6 +3,7 @@
 (require 'evil-leader)
 (require 'evil-surround)
 (require 'evil)
+(require 'neotree)
 
 (global-evil-leader-mode)
 (global-evil-annoying-arrows-mode)
