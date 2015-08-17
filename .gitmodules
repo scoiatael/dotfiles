@@ -10,3 +10,6 @@
 [submodule "emacs.d/vendor/evil-rebellion"]
 	path = emacs.d/vendor/evil-rebellion
 	url = https://github.com/tarleb/evil-rebellion
+[submodule "emacs.d/vendor/evil-lispy"]
+	path = emacs.d/vendor/evil-lispy
+	url = https://github.com/bcarrell/evil-lispy
