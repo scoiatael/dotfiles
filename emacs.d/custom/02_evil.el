@@ -1,6 +1,8 @@
 (require 'magit)
 ;;(require 'evil-rebellion)
 (require 'evil-leader)
+(setq evil-lisp-state-global t)
+(require 'evil-lisp-state)
 (require 'evil-surround)
 (require 'evil)
 (require 'neotree)
@@ -21,9 +23,10 @@
   "cr" 'comment-or-uncomment-region
   "cv" 'evilnc-toggle-invert-comment-line-by-line
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
-  ":" 'helm-M-x
+  "r" 'helm-M-x
   "w" 'save-buffer
   "q" 'evil-quit
+  "g" 'magit-status
   "e" 'neotree-toggle)
 
 (defun minibuffer-keyboard-quit ()

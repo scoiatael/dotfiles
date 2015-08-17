@@ -18,5 +18,7 @@
 
 (add-hook 'magit-status-mode-hook 'magit-filenotify-mode)
 
+(show-paren-mode 1)
+
 (provide 'init)
 ;;; init.el ends here
