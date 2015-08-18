@@ -14,8 +14,6 @@
 (global-aggressive-indent-mode 1)
 (dired-async-mode 1)
 
-(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-
 (add-hook 'magit-status-mode-hook 'magit-filenotify-mode)
 
 (show-paren-mode 1)

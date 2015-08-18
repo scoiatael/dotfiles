@@ -10,4 +10,6 @@
 
 (add-hook 'clojure-mode-hook #'scoiatael/clj-mode-hook)
 
+(add-hook 'emacs-lisp-mode-hook (lambda () (evil-lispy-mode 1)))
+
 (require 'evil-lispy)
