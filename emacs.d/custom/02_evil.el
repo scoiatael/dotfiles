@@ -25,6 +25,7 @@
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
   "r" 'helm-M-x
   "w" 'save-buffer
+  "rw" 'delete-trailing-whitespace
   "q" 'evil-quit
   "g" 'magit-status
   "e" 'neotree-toggle)
@@ -63,3 +64,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq evil-insert-state-cursor '((bar . 3) "grey")
       evil-normal-state-cursor '(box "grey"))
+
+(add-to-list 'evil-emacs-state-modes 'helm-minor-mode)
