@@ -7,7 +7,7 @@
   (clj-refactor-mode 1)
   (yas-minor-mode 1)
   (evil-lispy-mode 1)
-					;(lispy-mode 1)
+  (flycheck-clojure-setup)
   (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (defun scoiatael/emacs-lisp-mode-hook ()
@@ -16,3 +16,5 @@
 (add-hook 'clojure-mode-hook #'scoiatael/clj-mode-hook)
 
 (add-hook 'emacs-lisp-mode-hook #'scoiatael/emacs-lisp-mode-hook)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
