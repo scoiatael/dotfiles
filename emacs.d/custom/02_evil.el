@@ -25,10 +25,12 @@
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
   "r" 'helm-M-x
   "w" 'save-buffer
-  "rw" 'delete-trailing-whitespace
+  "C-w" 'delete-trailing-whitespace
   "q" 'evil-quit
   "g" 'magit-status
   "e" 'neotree-toggle)
+
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.

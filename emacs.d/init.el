@@ -5,11 +5,16 @@
 (pallet-mode t)
 
 (require 'cl)
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
 
 (let ((default-directory "~/.emacs.d/vendor"))
   (normal-top-level-add-subdirs-to-load-path))
 
-(mapc 'load (directory-files "~/.emacs.d/custom" t "^[0-9]+.*\.el$"))
+(mapc 'load (directory-files "~/.emacs.d/custom" t "^[0-9]+.*\.el$"))   
 
 (global-aggressive-indent-mode 1)
 (dired-async-mode 1)
