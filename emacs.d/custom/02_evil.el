@@ -26,11 +26,12 @@
   "r" 'helm-M-x
   "w" 'save-buffer
   "C-w" 'delete-trailing-whitespace
+  "C-c" 'ace-jump-mode
   "q" 'evil-quit
   "g" 'magit-status
   "e" 'neotree-toggle)
 
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.

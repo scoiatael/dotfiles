@@ -1,4 +1,4 @@
-;; Load Packages
+;; load packages
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 (require 'pallet)
@@ -14,7 +14,7 @@
 (let ((default-directory "~/.emacs.d/vendor"))
   (normal-top-level-add-subdirs-to-load-path))
 
-(mapc 'load (directory-files "~/.emacs.d/custom" t "^[0-9]+.*\.el$"))   
+(mapc 'load (directory-files "~/.emacs.d/custom" t "^[0-9]+.*\.el$"))
 
 (global-aggressive-indent-mode 1)
 (dired-async-mode 1)
