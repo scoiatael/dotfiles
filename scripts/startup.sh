@@ -11,3 +11,4 @@ lazy_start 1 urxvtd
 lazy_start 2 urxvtc
 syndaemon -k -d -t 1.0 &
 setxkbmap pl -option "caps:swapescape" &
+unclutter &
