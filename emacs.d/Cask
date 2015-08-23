@@ -67,6 +67,7 @@
 (depends-on "powerline")
 (depends-on "powerline-evil")
 (depends-on "rainbow-delimiters")
+(depends-on "rainbow-mode")
 (depends-on "robe")
 (depends-on "ruby-electric")
 (depends-on "rvm")
