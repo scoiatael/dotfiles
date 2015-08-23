@@ -63,6 +63,7 @@
 (depends-on "magit-find-file")
 (depends-on "magit-popup")
 (depends-on "neotree")
+(depends-on "package-build")
 (depends-on "pallet")
 (depends-on "powerline")
 (depends-on "powerline-evil")

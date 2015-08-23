@@ -7,9 +7,9 @@ function lazy_start {
 }
 
 ( echo "Merging $Xdefaults" && xrdb $Xdefaults ) | logger &
-lazy_start 1 urxvtd
-lazy_start 2 urxvtc
-emacs --daemon &
-syndaemon -k -d -t 1.0 &
-setxkbmap pl -option "caps:swapescape" &
-unclutter &
+#lazy_start 1 urxvtd
+#lazy_start 2 urxvtc
+#emacs --daemon &
+#syndaemon -k -d -i 1.0 &
+#setxkbmap pl -option "caps:swapescape" &
+#unclutter &
