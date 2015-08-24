@@ -76,3 +76,4 @@
 (depends-on "srefactor")
 (depends-on "swiper")
 (depends-on "with-editor")
+(depends-on "yaml-mode")
