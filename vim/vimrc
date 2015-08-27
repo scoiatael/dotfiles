@@ -38,3 +38,11 @@ set hidden " Don't force saving buffers when leaving them
 
 call LoadFile($HOME . '/.vim-pluginrc')
 call LoadFile($HOME . '/.vim-bindrc')
+
+if has("gui_running")
+  set guioptions-=m  "remove menu bar
+  set guioptions-=T  "remove toolbar
+  set guioptions-=r  "remove right-hand scroll bar
+  set guioptions-=L  "remove left-hand scroll bar
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+endif
