@@ -26,7 +26,8 @@
   "r" 'helm-M-x
   "w" 'save-buffer
   "C-w" 'delete-trailing-whitespace
-  "C-c" 'ace-jump-mode
+  "a" 'ace-jump-mode
+  "d" 'writegood-mode
   "q" 'evil-quit
   "g" 'magit-status
   "e" 'neotree-toggle)

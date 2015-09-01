@@ -25,6 +25,8 @@
 (add-hook 'ruby-mode-hook 'ruby-electric-mode)
 (add-hook 'robe-mode-hook 'ac-robe-setup)
 (setq tab-width 2)
+(setq standard-indent 2)
+(setq js-indent-level 2)
 (setq indent-tabs-mode nil)
 
 (show-paren-mode 1)
