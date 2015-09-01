@@ -25,6 +25,8 @@
 (depends-on "clj-refactor")
 (depends-on "color-theme")
 (depends-on "dash")
+(depends-on "docker")
+(depends-on "dockerfile-mode")
 (depends-on "evil")
 (depends-on "evil-annoying-arrows")
 (depends-on "evil-leader")
