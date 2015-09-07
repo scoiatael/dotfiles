@@ -18,15 +18,7 @@
 
 (global-aggressive-indent-mode 1)
 (dired-async-mode 1)
-
-(require 'ruby-electric)
 (add-hook 'magit-status-mode-hook 'magit-filenotify-mode)
-(add-hook 'ruby-mode-hook 'robe-mode)
-(add-hook 'ruby-mode-hook 'ruby-electric-mode)
-(add-hook 'robe-mode-hook 'ac-robe-setup)
-(eval-after-load 'auto-complete
-  '(add-to-list 'ac-modes 'inf-ruby-mode))
-(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
 
 (add-to-list 'post-command-hook 'whitespace-cleanup)
 (add-to-list 'before-save-hook 'whitespace-cleanup)
