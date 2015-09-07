@@ -4,7 +4,7 @@
 (require 'pallet)
 (pallet-mode t)
 
-(require 'cl)
+(require 'cl-lib)
 (autoload
   'ace-jump-mode
   "ace-jump-mode"
@@ -24,6 +24,13 @@
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'ruby-mode-hook 'ruby-electric-mode)
 (add-hook 'robe-mode-hook 'ac-robe-setup)
+(eval-after-load 'auto-complete
+  '(add-to-list 'ac-modes 'inf-ruby-mode))
+(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
+
+(add-to-list 'post-command-hook 'whitespace-cleanup)
+(add-to-list 'before-save-hook 'whitespace-cleanup)
+
 (setq tab-width 2)
 (setq standard-indent 2)
 (setq js-indent-level 2)
@@ -33,13 +40,13 @@
 (electric-pair-mode 1)
 
 (setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-    '(("." . "~/.emacs.d/saves"))    ; don't litter my fs tree
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)       ; use versioned backups
+ backup-by-copying t      ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.emacs.d/saves"))    ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)       ; use versioned backups
 
 (provide 'init)
 ;;; init.el ends here

@@ -25,7 +25,7 @@
   "\\" 'evilnc-comment-operator ; if you prefer backslash key
   "r" 'helm-M-x
   "w" 'save-buffer
-  "C-w" 'delete-trailing-whitespace
+  "C-w" 'whitespace-cleanup
   "a" 'ace-jump-mode
   "d" 'writegood-mode
   "q" 'evil-quit
