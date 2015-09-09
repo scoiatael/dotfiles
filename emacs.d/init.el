@@ -31,6 +31,8 @@
 (show-paren-mode 1)
 (electric-pair-mode 1)
 
+(global-auto-revert-mode 1)
+
 (setq
  backup-by-copying t      ; don't clobber symlinks
  backup-directory-alist
