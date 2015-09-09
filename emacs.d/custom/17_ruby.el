@@ -5,3 +5,9 @@
 (eval-after-load 'auto-complete
   '(add-to-list 'ac-modes 'inf-ruby-mode))
 (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
+(defun my-ruby-mode-hook ()
+  (push 'ac-source-yasnippet ac-sources))
+(add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
+
+(provide '17_ruby)
+;;; 17_ruby.el ends here
