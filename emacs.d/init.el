@@ -42,5 +42,11 @@
  kept-old-versions 2
  version-control t)       ; use versioned backups
 
+(setq font-lock-support-mode 'jit-lock-mode)
+(setq jit-lock-stealth-time 16
+      jit-lock-defer-contextually t
+      jit-lock-stealth-nice 0.5)
+(setq-default font-lock-multiline t)
+
 (provide 'init)
 ;;; init.el ends here
