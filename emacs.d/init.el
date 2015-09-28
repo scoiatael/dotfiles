@@ -24,8 +24,10 @@
 (add-to-list 'before-save-hook 'whitespace-cleanup)
 
 (setq tab-width 2)
+(setq-default tab-width 2)
+(add-hook 'js-mode-hook (lambda ()
+			  (setq js-indent-level 2)))
 (setq standard-indent 2)
-(setq js-indent-level 2)
 (setq indent-tabs-mode nil)
 
 (show-paren-mode 1)
