@@ -41,6 +41,7 @@
 (depends-on "evil-nerd-commenter")
 (depends-on "evil-org")
 (depends-on "evil-search-highlight-persist")
+(depends-on "evil-snipe")
 (depends-on "evil-surround")
 (depends-on "evil-terminal-cursor-changer")
 (depends-on "evil-visualstar")
