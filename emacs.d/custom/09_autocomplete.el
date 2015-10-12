@@ -1,6 +1,7 @@
 (require 'fuzzy)
 (require 'yasnippet)
 (require 'auto-complete-config)
+(require 'go-autocomplete)
 (require 'semantic)
 (yas-global-mode 1)
 (semantic-mode 1)
