@@ -63,6 +63,7 @@
 (depends-on "go-mode")
 (depends-on "go-snippets")
 (depends-on "golint")
+(depends-on "haml-mode")
 (depends-on "haskell-snippets")
 (depends-on "helm")
 (depends-on "helm-ag")

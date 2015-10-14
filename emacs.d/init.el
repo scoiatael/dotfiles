@@ -51,5 +51,10 @@
 			jit-lock-stealth-nice 0.5)
 (setq-default font-lock-multiline t)
 
+(add-hook 'haml-mode-hook
+	  (lambda ()
+	    (setq indent-tabs-mode nil)
+	    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+
 (provide 'init)
 ;;; init.el ends here
