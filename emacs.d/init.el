@@ -6,13 +6,13 @@
 
 (require 'cl-lib)
 (autoload
-	'ace-jump-mode
-	"ace-jump-mode"
-	"Emacs quick move minor mode"
-	t)
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
 
 (let ((default-directory "~/.emacs.d/vendor"))
-	(normal-top-level-add-subdirs-to-load-path))
+  (normal-top-level-add-subdirs-to-load-path))
 
 (mapc 'load (directory-files "~/.emacs.d/custom" t "^[0-9]+.*\.el$"))
 
@@ -26,7 +26,7 @@
 (setq tab-width 2)
 (setq-default tab-width 2)
 (add-hook 'js-mode-hook (lambda ()
-				(setq js-indent-level 2)))
+                          (setq js-indent-level 2)))
 (setq standard-indent 2)
 (setq-default indent-tabs-mode nil)
 (setq indent-tabs-mode nil)
@@ -47,14 +47,14 @@
 
 (setq font-lock-support-mode 'jit-lock-mode)
 (setq jit-lock-stealth-time 16
-			jit-lock-defer-contextually t
-			jit-lock-stealth-nice 0.5)
+      jit-lock-defer-contextually t
+      jit-lock-stealth-nice 0.5)
 (setq-default font-lock-multiline t)
 
 (add-hook 'haml-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode nil)
-	    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+          (lambda ()
+            (setq indent-tabs-mode nil)
+            (define-key haml-mode-map "\C-m" 'newline-and-indent)))
 
 (provide 'init)
 ;;; init.el ends here

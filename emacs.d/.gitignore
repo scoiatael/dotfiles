@@ -10,3 +10,5 @@ session.*
 semanticdb/
 saves/
 url/
+projectile.cache
+projectile-bookmarks.eld
