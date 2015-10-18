@@ -56,5 +56,14 @@
             (setq indent-tabs-mode nil)
             (define-key haml-mode-map "\C-m" 'newline-and-indent)))
 
+(setq auto-mode-alist
+      (append '((".*zpreztorc$" . sh-mode)
+                (".*zprofile$"  . sh-mode)
+                (".*zlogin$"    . sh-mode)
+                (".*zlogout$"   . sh-mode)
+                (".*zshenv$"    . sh-mode)
+                (".*zshrc$"     . sh-mode))
+              auto-mode-alist))
+
 (provide 'init)
 ;;; init.el ends here

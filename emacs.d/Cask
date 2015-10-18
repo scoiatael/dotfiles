@@ -83,6 +83,7 @@
 (depends-on "highlight")
 (depends-on "highlight-indentation")
 (depends-on "hlinum")
+(depends-on "hydra")
 (depends-on "icicles")
 (depends-on "iedit")
 (depends-on "indent-guide")

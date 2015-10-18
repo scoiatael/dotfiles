@@ -1,10 +1,15 @@
-;; go get -u github.com/dougm/goflymake
-;; go get -u -v github.com/nsf/gocode
-;; go get golang.org/x/tools/cmd/goimports
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+(require 'evil)
 
 (defun my-go-mode-hook ()
-  (add-to-list 'load-path (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
-  (require 'go-flycheck)
+  "Go-mode customizations."
+
+  (add-to-list 'load-path
+               (concat (getenv "GOPATH")
+                       "/src/github.com/dougm/goflymake"))
+
   (add-hook 'before-save-hook 'gofmt-before-save)
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
                                         ; Godef jump key binding
@@ -12,3 +17,6 @@
 
 
 (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+(provide '20_go)
+;;; 20_go ends here
