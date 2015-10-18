@@ -11,6 +11,8 @@
   "Emacs quick move minor mode"
   t)
 
+(setq-default comment-multi-line t)
+
 (let ((default-directory "~/.emacs.d/vendor"))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -25,8 +27,6 @@
 
 (setq tab-width 2)
 (setq-default tab-width 2)
-(add-hook 'js-mode-hook (lambda ()
-                          (setq js-indent-level 2)))
 (setq standard-indent 2)
 (setq-default indent-tabs-mode nil)
 (setq indent-tabs-mode nil)
