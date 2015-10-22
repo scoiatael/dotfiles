@@ -1,5 +1,0 @@
-(require 'hlinum)
-(hlinum-activate)
-(setq linum-format "%4d ")
-(setq-default left-fringe-width  20)
-(global-linum-mode 1)
