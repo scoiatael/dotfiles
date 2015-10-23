@@ -44,12 +44,13 @@ values."
      colors
      evil-commentary
      ipython-notebook
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(llvm-mode s)
+   dotspacemacs-additional-packages '(llvm-mode s systemd grizzl)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -202,6 +203,14 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
 
+  ;; Projectile use grizzl
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-enable-caching t)
+  (setq projectile-completion-system 'grizzl)
+
+  ;; Set ispell language to avoid 'No word list can be found for language "en_GB" error'
+  (setq ispell-dictionary "english")
+  ;; I use RVM for all ruby installations
   (setq-default ruby-version-manager 'rvm))
 
 (defun dotspacemacs/user-config ()
@@ -209,12 +218,22 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  ;; Use ; for grizzl-powered fuzzy search through files in project
+  (define-key evil-normal-state-map (kbd ";") 'projectile-find-file)
+
   ;; Bind clang-format-buffer to tab
   ;; Bind clang-format-region to C-M-tab 
   (add-hook 'c-c++-mode-hook 'clang-format-bindings)
   (defun clang-format-bindings ()
     (define-key c-c++-mode-map [C-M-tab] 'clang-format-region)
     (define-key c-c++-mode-map [tab] 'clang-format-buffer))
+
+  ;; Use spaces instead of tabs, width of tab is 2 spaces
+  (setq tab-width 2)
+  (setq-default tab-width 2)
+  (setq standard-indent 2)
+  (setq-default indent-tabs-mode nil)
+  (setq indent-tabs-mode nil)
 
   ;; Change powerline (modeline) separator to arrow
   (setq powerline-default-separator 'arrow))
