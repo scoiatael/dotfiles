@@ -226,12 +226,12 @@ layers configuration. You are free to put any user code."
   ;; Use ; for grizzl-powered fuzzy search through files in project
   (define-key evil-normal-state-map (kbd ";") 'projectile-find-file)
 
-  (define-key utop-mode-map (kbd "C-d") 'kill-buffer-and-window)
+ ;; (define-key utop-mode-map (kbd "C-d") 'kill-buffer-and-window)
 
-  (define-key evil-normal-state-map (kbd "M-h") 'windmove-left)
-  (define-key evil-normal-state-map (kbd "M-l") 'windmove-right)
-  (define-key evil-normal-state-map (kbd "M-k") 'windmove-up)
-  (define-key evil-normal-state-map (kbd "M-j") 'windmove-down)
+ ;; (define-key evil-normal-state-map (kbd "M-h") 'windmove-left)
+ ;; (define-key evil-normal-state-map (kbd "M-l") 'windmove-right)
+ ;; (define-key evil-normal-state-map (kbd "M-k") 'windmove-up)
+ ;; (define-key evil-normal-state-map (kbd "M-j") 'windmove-down)
 
   ;; Bind clang-format-buffer to tab
   ;; Bind clang-format-region to C-M-tab
