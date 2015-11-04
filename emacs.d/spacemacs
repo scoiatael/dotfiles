@@ -36,7 +36,7 @@ values."
      spell-checking
      syntax-checking
      version-control
-     evil-snipe
+     (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t )
      ocaml
      (c-c++ :variables c-c++-enable-clang-support t)
      ruby
