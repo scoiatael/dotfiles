@@ -51,6 +51,8 @@ values."
      (clojure :variables clojure-enable-fancify-symbols t)
      chrome
      seeing-is-believing
+     (haskell :variables haskell-enable-shm-support t)
+     rust
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
