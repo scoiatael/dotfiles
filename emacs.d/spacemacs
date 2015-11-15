@@ -53,12 +53,18 @@ values."
      seeing-is-believing
      (haskell :variables haskell-enable-shm-support t)
      rust
+     dockerfile
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(llvm-mode s systemd grizzl jsx-mode)
+   dotspacemacs-additional-packages '(llvm-mode
+                                      s
+                                      systemd
+                                      grizzl
+                                      docker
+                                      jsx-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -228,8 +234,7 @@ user code."
 layers configuration. You are free to put any user code."
 
   ;; Use ; for grizzl-powered fuzzy search through files in project
-  (define-key evil-normal-state-map (kbd ";") 'projectile-find-file)
-
+  (evil-leader/set-key "wd" 'kill-buffer-and-window)
   (define-key evil-emacs-state-map (kbd "C-d") 'kill-buffer-and-window)
 
  ;; (define-key evil-normal-state-map (kbd "M-h") 'windmove-left)
