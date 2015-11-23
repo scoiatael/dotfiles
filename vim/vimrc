@@ -36,6 +36,10 @@ set laststatus=2 " Always show statusline
 set backspace=indent,eol,start " Backspace works as expected
 set hidden " Don't force saving buffers when leaving them
 
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
+
 call LoadFile($HOME . '/.vim-pluginrc')
 call LoadFile($HOME . '/.vim-bindrc')
 

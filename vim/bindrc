@@ -14,6 +14,7 @@ nmap <Leader>g :TagbarToggle<CR>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q<CR>
 nmap <Leader>wq :wq<CR>
+nmap <Leader>fs :wq<CR>
 " Remove trailing whitespace
 nmap <Leader>rw :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " Easy paste
