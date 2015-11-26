@@ -23,7 +23,14 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-completion-complete-with-key-sequence "jk"
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-snippets-in-popup t)
+     semantic
      better-defaults
      emacs-lisp
      (git :variables
@@ -114,7 +121,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Liberation Mono for Powerline"
-                               :size 14.0
+                               :height 14.0
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -223,6 +230,28 @@ user code."
   (setq projectile-enable-caching t)
   (setq projectile-completion-system 'grizzl)
 
+  ;; Autocomplete tweaks
+  ;; see http://auto-complete.org/doc/manual.html#configuration
+  (setq-default ac-auto-show-menu 0.1)
+  (setq-default ac-delay 0.1)
+  (setq-default ac-use-fuzzy t)
+
+  ;; Use spaces instead of tabs, width of tab is 2 spaces
+  (setq tab-width 2)
+  (setq-default tab-width 2)
+  (setq standard-indent 2)
+  (setq-default standard-indent 2)
+  (setq indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil)
+
+  (require 'org)
+  (require 'ox-beamer)
+  (add-to-list 'org-modules 'org-table)
+  (setq org-export-backends '(beamer html latex md gfm))
+
+  ;; Change powerline (modeline) separator to arrow
+  (setq powerline-default-separator 'arrow)
+
   ;; Set ispell language to avoid 'No word list can be found for language "en_GB" error'
   (setq ispell-dictionary "english")
   ;; I use RVM for all ruby installations
@@ -247,27 +276,12 @@ layers configuration. You are free to put any user code."
   ;; Bind clang-format-buffer to tab
   ;; Bind clang-format-region to C-M-tab
   (add-hook 'c-c++-mode-hook 'clang-format-bindings)
+  (add-hook 'c-c++-mode-hook 'flycheck-mode)
   (defun clang-format-bindings ()
     (define-key c-c++-mode-map [C-M-tab] 'clang-format-region)
     (define-key c-c++-mode-map [tab] 'clang-format-buffer))
 
-  (evil-set-initial-state 'utop-mode 'emacs)
-
-  ;; Use spaces instead of tabs, width of tab is 2 spaces
-  (setq tab-width 2)
-  (setq-default tab-width 2)
-  (setq standard-indent 2)
-  (setq-default standard-indent 2)
-  (setq indent-tabs-mode nil)
-  (setq-default indent-tabs-mode nil)
-
-  (require 'org)
-  (require 'ox-beamer)
-  (add-to-list 'org-modules 'org-table)
-  (setq org-export-backends '(beamer html latex md gfm))
-
-  ;; Change powerline (modeline) separator to arrow
-  (setq powerline-default-separator 'arrow))
+  (evil-set-initial-state 'utop-mode 'emacs))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
