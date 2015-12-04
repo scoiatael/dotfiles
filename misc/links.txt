@@ -22,6 +22,7 @@ Xdefaults         -> misc/Xdefaults
 xscreensaver      -> misc/xscreensaver
 lein/profiles.clj -> misc/lein_profiles.clj
 config/redshift.conf -> misc/redshift.conf
+curlrc             -> misc/curlrc
 # emacs
 emacs.d           -> emacs.d/spacemacs.d
 spacemacs         -> emacs.d/spacemacs
