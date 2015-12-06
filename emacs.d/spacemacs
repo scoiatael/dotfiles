@@ -71,6 +71,7 @@ values."
                                       systemd
                                       grizzl
                                       docker
+                                      splitjoin
                                       jsx-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -124,7 +125,7 @@ values."
                                :height 14.0
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.3)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
