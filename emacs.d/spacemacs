@@ -58,7 +58,9 @@ values."
      (clojure :variables clojure-enable-fancify-symbols t)
      chrome
      seeing-is-believing
-     (haskell :variables haskell-enable-shm-support t)
+     (haskell :variables
+              haskell-enable-ghci-ng-support t
+              haskell-enable-shm-support t)
      rust
      dockerfile
      )

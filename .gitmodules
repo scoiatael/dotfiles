@@ -25,3 +25,9 @@
 [submodule "emacs.d/spacemacs.d"]
 	path = emacs.d/spacemacs.d
 	url = https://github.com/syl20bnr/spacemacs
+[submodule "haskell/structured-haskell-mode"]
+	path = haskell/structured-haskell-mode
+	url = https://github.com/chrisdone/structured-haskell-mode.git
+[submodule "haskell/ghci-ng"]
+	path = haskell/ghci-ng
+	url = https://github.com/chrisdone/ghci-ng.git
