@@ -41,7 +41,7 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      spell-checking
-     syntax-checking
+     (syntax-checking :variables syntax-checking-enable-tooltips nil)
      version-control
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t )
      ocaml
@@ -59,8 +59,9 @@ values."
      chrome
      seeing-is-believing
      (haskell :variables
-              haskell-enable-ghci-ng-support t
-              haskell-enable-shm-support t)
+              haskell-enable-hindent-style "gibansky"
+              haskell-enable-shm-support t
+              haskell-enable-ghci-ng-support t)
      rust
      dockerfile
      )
@@ -257,6 +258,16 @@ user code."
 
   ;; Set ispell language to avoid 'No word list can be found for language "en_GB" error'
   (setq ispell-dictionary "english")
+
+  (add-hook 'haskell-mode-hook (lambda () "set SHM faces"
+                                  (progn
+                                    ;; Structured Haskell Mode
+                                    (set-face-background 'shm-current-face "#073642")
+                                    (set-face-background 'shm-quarantine-face "#886e75")
+                                    (setq-default 'shm-auto-insert-skeletons nil)
+                                    (setq-default 'shm- shm-display-quarantine nil)
+                                    )))
+
   ;; I use RVM for all ruby installations
   (setq-default ruby-version-manager 'rvm))
 
@@ -293,7 +304,6 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flycheck-pos-tip-timeout 3)
  '(safe-local-variable-values (quote ((TeX-command-extra-options . "-shell-escape")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
