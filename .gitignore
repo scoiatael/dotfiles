@@ -8,3 +8,4 @@
 # vim Vundle files
 vim/vim/bundle/*
 !vim/vim/bundle/Vundle.vim
+scripts/startup.sh
