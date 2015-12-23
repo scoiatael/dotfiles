@@ -259,13 +259,15 @@ user code."
   ;; Set ispell language to avoid 'No word list can be found for language "en_GB" error'
   (setq ispell-dictionary "english")
 
+
+  (setq-default shm-auto-insert-skeletons nil)
+  (setq-default shm-display-quarantine nil)
+
   (add-hook 'haskell-mode-hook (lambda () "set SHM faces"
                                   (progn
                                     ;; Structured Haskell Mode
                                     (set-face-background 'shm-current-face "#073642")
                                     (set-face-background 'shm-quarantine-face "#886e75")
-                                    (setq-default 'shm-auto-insert-skeletons nil)
-                                    (setq-default 'shm- shm-display-quarantine nil)
                                     )))
 
   ;; I use RVM for all ruby installations
