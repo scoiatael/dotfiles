@@ -24,6 +24,7 @@ lein/profiles.clj    -> misc/lein_profiles.clj
 config/redshift.conf -> misc/redshift.conf
 curlrc               -> misc/curlrc
 stack/config.yml     -> misc/stack.yml
+xmonad/xmonad.hs     -> haskell/xmonad.hs
 # emacs
 emacs.d              -> emacs.d/spacemacs.d
 spacemacs            -> emacs.d/spacemacs
