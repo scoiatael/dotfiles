@@ -64,6 +64,7 @@ values."
               haskell-enable-ghci-ng-support t)
      rust
      dockerfile
+     ycmd
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -228,6 +229,8 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
 
+  ;; YCMD path
+  (set-variable 'ycmd-server-command '("python" "~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
 
   ;; Projectile use grizzl
   (setq projectile-indexing-method 'alien)
@@ -283,6 +286,9 @@ layers configuration. You are free to put any user code."
 
   (evil-leader/set-key "wd" 'kill-buffer-and-window)
   (define-key evil-emacs-state-map (kbd "C-d") 'kill-buffer-and-window)
+
+
+  (define-key evil-normal-state-map (kbd "gS") 'splitjoin)
 
  ;; (define-key evil-normal-state-map (kbd "M-h") 'windmove-left)
  ;; (define-key evil-normal-state-map (kbd "M-l") 'windmove-right)
