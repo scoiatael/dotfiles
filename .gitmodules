@@ -1,9 +1,6 @@
 [submodule "prezto"]
 	path = prezto
 	url = https://github.com/scoiatael/prezto
-[submodule "vim/vim/bundle/Vundle.vim"]
-	path = vim/vim/bundle/Vundle.vim
-	url = https://github.com/gmarik/Vundle.vim
 [submodule "emacs.d/themes/emacs-color-theme-solarized"]
 	path = emacs.d/themes/emacs-color-theme-solarized
 	url = https://github.com/sellout/emacs-color-theme-solarized
@@ -31,3 +28,6 @@
 [submodule "haskell/ghci-ng"]
 	path = haskell/ghci-ng
 	url = https://github.com/chrisdone/ghci-ng.git
+[submodule "vim/vim/bundle/Vundle.vim"]
+	path = vim/vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
