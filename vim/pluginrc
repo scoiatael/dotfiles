@@ -7,6 +7,9 @@ au FileType haskell setlocal omnifunc=necoghc#omnifunc
 " let vroom use vimux for running test
 let g:vroom_use_vimux = 1
 
+" disable rooter automatically mapping to \cd
+let g:rooter_disable_map = 1
+
 " use 'ripper-tags' (if available) to generate ruby ctags with tagbar
 if executable('ripper-tags')
     " Configure Tagbar to user ripper-tags with ruby
