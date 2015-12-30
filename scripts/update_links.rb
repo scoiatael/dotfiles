@@ -15,7 +15,7 @@ Linker.create! do
   end
 
   group 'prezto/runcoms' do
-    links %(zprofile zshrc zshenv zpreztorc zlogin zlogout)
+    links %w(zprofile zshrc zshenv zpreztorc zlogin zlogout)
   end
 
   group 'tmux' do
