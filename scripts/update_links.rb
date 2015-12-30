@@ -1,54 +1,46 @@
 #!/usr/bin/env ruby
 
-require 'fileutils'
+require_relative 'lib/linker'
 
-def get_char
-  state = `stty -g`
-  `stty raw -echo -icanon isig`
-
-  STDIN.getc.chr
-ensure
-  `stty #{state}`
-end
-
-def ask_if(q)
-  puts "#{q}? [y/N]"
-  get_char.downcase == 'y'
-end
-
-def exist?(name)
-  File.exist?(name) || File.symlink?(name)
-end
-
-CONFIG_DIR = File.expand_path(File.dirname(__FILE__) << '/..')
-LINK_PATH = CONFIG_DIR + '/misc/links.txt'
-File.open(LINK_PATH) do |f|
-  f.each_line do |line|
-    next if line =~ /^#/ # Comment
-
-    to, from = line.split('->').map(&:strip)
-    to = "#{ENV['HOME']}/.#{to}"
-    from = "#{CONFIG_DIR}/#{from}"
-
-    fail ArgumentError, "File missing: #{from}" unless exist?(from)
-
-    if exist?(to)
-      next if File.identical?(from, to)
-
-      puts `ls -l #{to}`
-      if ask_if('remove')
-        File.delete(to)
-      else
-        File.rename(to, "#{to}.bak") if ask_if('rename')
-      end
+Linker.create! do
+  group 'vim' do
+    links %w(vim vimrc)
+    %w(pluginrc vundlerc bindrc).each do |file|
+      link "#{current_group}-#{file}", to: "#{current_group}/#{file}"
     end
+  end
 
-    next if exist?(to)
+  group 'prezto' do
+    link 'zprezto', to: 'prezto'
+  end
 
-    dirname = File.dirname(to)
-    FileUtils.mkpath(dirname) unless File.exist?(dirname)
+  group 'prezto/runcoms' do
+    links %(zprofile zshrc zshenv zpreztorc zlogin zlogout)
+  end
 
-    puts "Symlinking #{line}"
-    File.symlink(from, to)
+  group 'tmux' do
+    links %w(tmux tmuxln).map { |f| f + '.conf' }
+  end
+
+  group 'git' do
+    link 'gitconfig'
+    link 'gitignore_global', to: "#{current_group}/gitignore"
+  end
+
+  group 'misc' do
+    links %w(dir_colors gmrunrc Xdefaults xscreensaver curlrc)
+
+    link 'lein/profiles.clj', to: "#{current_group}/lein_profiles.clj"
+    link 'config/redshift.conf', to: "#{current_group}/redshift.conf"
+  end
+
+  group 'haskell' do
+    link 'xmonad/xmonad.hs', to: "#{current_group}/xmonad.hs"
+    link 'stack/config.yml', to: "#{current_group}/stack.yml"
+  end
+
+  group 'emacs' do
+    link 'emacs.d', to: "#{current_group}/spacemacs.d"
+    link 'spacemacs'
   end
 end
