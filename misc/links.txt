@@ -15,6 +15,9 @@ zlogout              -> prezto/runcoms/zlogout
 # tmux
 tmux.conf            -> tmux/tmux.conf
 tmuxln.conf          -> tmux/tmuxln.conf
+# git
+gitconfig            -> git/gitconfig
+gitignore_global     -> git/gitignore
 # misc
 dir_colors           -> misc/dir_colors
 gmrunrc              -> misc/gmrunrc

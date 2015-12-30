@@ -1,0 +1,6 @@
+[user]
+	email = czapl.luk@gmail.com
+	name = scoiatael
+[core]
+	editor = vim
+	excludesfile = /home/luki/.gitignore_global
