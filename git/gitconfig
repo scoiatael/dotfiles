@@ -3,4 +3,4 @@
 	name = scoiatael
 [core]
 	editor = vim
-	excludesfile = /home/luki/.gitignore_global
+	excludesfile = ~/.gitignore_global
