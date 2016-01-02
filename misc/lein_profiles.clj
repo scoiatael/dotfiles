@@ -5,7 +5,7 @@
                     [lein-kibit "0.1.2"]
                     [jonase/eastwood "0.2.1"]
                     [cloc  "0.1.0"]
-                    [cider/cider-nrepl "0.9.1"]
                     [mvxcvi/whidbey  "1.0.0"]
                     [acyclic/squiggly-clojure "0.1.3-SNAPSHOT"]
-                    [lein-plz  "0.4.0-SNAPSHOT" :exclusions  [[rewrite-clj]  [ancient-clj]]]]}}
+                    [lein-plz  "0.4.0-SNAPSHOT" :exclusions  [[rewrite-clj]  [ancient-clj]]]]}
+ :repl {:plugins [[cider/cider-nrepl "0.10.0"]]}}

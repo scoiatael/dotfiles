@@ -10,9 +10,8 @@ TermExec = ${Terminal} -e
 AlwaysInTerm = ssh telnet ftp vi vim perldoc man pacman less
 
 # Set window geometry (except height)
-Width = 400
-Top = 300
-Left = 450
+Width = 600
+Top = 100
 
 # History size
 History = 256
@@ -27,7 +26,7 @@ ShowDotFiles = 0
 
 # Timeout (in milliseconds) after which gmrun will simulate a TAB press
 # Set this to NULL if do not like this feature.
-TabTimeout = 0
+TabTimeout = 100
 
 # URL handlers
 # If the entered text is "http://www.google.com" then:
