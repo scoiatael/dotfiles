@@ -30,6 +30,7 @@ values."
                       auto-completion-enable-help-tooltip t
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t)
+     ipython-notebook
      semantic
      better-defaults
      emacs-lisp
@@ -265,6 +266,7 @@ user code."
 
   (setq-default shm-auto-insert-skeletons nil)
   (setq-default shm-display-quarantine nil)
+
 
   (add-hook 'haskell-mode-hook (lambda () "set SHM faces"
                                   (progn

@@ -33,6 +33,9 @@ tramp
 # cask packages
 .cask/
 
+# emacs sessions
+session\.*
+
 # Source https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
