@@ -231,7 +231,7 @@ It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
 
   ;; YCMD path
-  (set-variable 'ycmd-server-command '("python" "~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
+  (set-variable 'ycmd-server-command (list "python2" (substitute-in-file-name "$HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd")))
 
   ;; Projectile use grizzl
   (setq projectile-indexing-method 'alien)
