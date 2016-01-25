@@ -267,6 +267,15 @@ user code."
   (setq-default shm-auto-insert-skeletons nil)
   (setq-default shm-display-quarantine nil)
 
+  (defun leo-markdown-fontify-buffer-wiki-links-empty ()
+    "Empty replacement for `markdown-fontify-buffer-wiki-links` due to hanging bug."
+    (interactive))
+
+  (eval-after-load "markdown-mode"
+    '(progn
+       (fset 'markdown-fontify-buffer-wiki-links
+             'leo-markdown-fontify-buffer-wiki-links-empty)))
+
 
   (add-hook 'haskell-mode-hook (lambda () "set SHM faces"
                                   (progn
@@ -314,6 +323,7 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(paradox-github-token t)
  '(safe-local-variable-values (quote ((TeX-command-extra-options . "-shell-escape")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
