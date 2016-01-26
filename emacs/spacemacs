@@ -267,6 +267,14 @@ user code."
   (setq-default shm-auto-insert-skeletons nil)
   (setq-default shm-display-quarantine nil)
 
+  (eval-after-load "hideshow"
+    '(add-to-list 'hs-special-modes-alist
+                  `(ruby-mode
+                    ,(rx (or "def" "class" "module" "{" "[")) ; Block start
+                    ,(rx (or "}" "]" "end"))                  ; Block end
+                    ,(rx (or "#" "=begin"))                   ; Comment start
+                    ruby-forward-sexp nil)))
+
   (defun leo-markdown-fontify-buffer-wiki-links-empty ()
     "Empty replacement for `markdown-fontify-buffer-wiki-links` due to hanging bug."
     (interactive))
