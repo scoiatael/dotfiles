@@ -9,6 +9,8 @@
 auto-save-list
 tramp
 .\#*
+recentf
+srecode-map.el
 
 # Org-mode
 .org-id-locations
