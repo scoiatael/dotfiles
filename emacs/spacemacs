@@ -285,6 +285,8 @@ user code."
        (fset 'markdown-fontify-buffer-wiki-links
              'leo-markdown-fontify-buffer-wiki-links-empty)))
 
+  (set-fontset-font "fontset-default" nil "Symbola")
+
 
   (add-hook 'haskell-mode-hook (lambda () "set SHM faces"
                                   (progn

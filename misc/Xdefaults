@@ -33,7 +33,7 @@ URxvt.insecure:             true
 
 ! Fonts
 URxvt.allow_bold:           true
-URxvt*font: xft:Liberation Mono for Powerline:size=12
+URxvt*font: xft:Liberation Mono for Powerline:size=12,xft:Symbola:size=12
 URxvt.keysym.C-0: command:\033]710;xft:Liberation Mono for Powerline:size=12\007
 URxvt.keysym.C-minus: command:\033]710;xft:Liberation Mono for Powerline:size=10\007
 URxvt.keysym.C-equal: command:\033]710;xft:Liberation Mono for Powerline:size=14\007
