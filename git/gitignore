@@ -38,6 +38,9 @@ srecode-map.el
 # emacs sessions
 session\.*
 
+# ctags
+TAGS
+
 # Source https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
