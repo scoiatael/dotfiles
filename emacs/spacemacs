@@ -48,7 +48,7 @@ values."
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t )
      ocaml
      (c-c++ :variables c-c++-enable-clang-support t)
-     ruby
+     (ruby :variables ruby-test-runner 'rspec)
      go
      colors
      evil-commentary
@@ -78,6 +78,7 @@ values."
                                       grizzl
                                       docker
                                       splitjoin
+                                      evil-nerd-commenter
                                       jsx-mode)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -317,6 +318,9 @@ layers configuration. You are free to put any user code."
  ;; (define-key evil-normal-state-map (kbd "M-k") 'windmove-up)
  ;; (define-key evil-normal-state-map (kbd "M-j") 'windmove-down)
 
+  (add-hook 'ruby-mode-hook (lambda ()
+                              (setq projectile-tags-command "ripper-tags -R -f \"%s\" %s")))
+
   ;; Bind clang-format-buffer to tab
   ;; Bind clang-format-region to C-M-tab
   (add-hook 'c-c++-mode-hook 'clang-format-bindings)
@@ -336,7 +340,7 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (hlinum racket-mode yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe utop use-package tuareg toml-mode toc-org systemd stickyfunc-enhance srefactor splitjoin spacemacs-theme spaceline solarized-theme smooth-scrolling smeargle shm shell-pop seeing-is-believing rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-mode rainbow-identifiers rainbow-delimiters racer quelpa popwin persp-mode pcre2el paradox page-break-lines orgit org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file ocp-indent ob-sml neotree multi-term move-text mmm-mode merlin markdown-toc magit-gitflow macrostep lorem-ipsum llvm-mode linum-relative leuven-theme jsx-mode info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag haskell-snippets grizzl google-translate golden-ratio go-eldoc gnuplot gmail-message-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe git-gutter-fringe+ gh-md flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-jumper evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eshell-prompt-extras esh-help elisp-slime-nav ein edit-server dockerfile-mode docker disaster diff-hl define-word company-ycmd company-statistics company-racer company-quickhelp company-go company-ghc company-cabal company-c-headers company-auctex cmm-mode cmake-mode clj-refactor clean-aindent-mode clang-format cider-eval-sexp-fu chruby bundler buffer-move bracketed-paste auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk align-cljlet aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (evil-nerd-commenter hlinum racket-mode yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe utop use-package tuareg toml-mode toc-org systemd stickyfunc-enhance srefactor splitjoin spacemacs-theme spaceline solarized-theme smooth-scrolling smeargle shm shell-pop seeing-is-believing rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rainbow-mode rainbow-identifiers rainbow-delimiters racer quelpa popwin persp-mode pcre2el paradox page-break-lines orgit org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file ocp-indent ob-sml neotree multi-term move-text mmm-mode merlin markdown-toc magit-gitflow macrostep lorem-ipsum llvm-mode linum-relative leuven-theme jsx-mode info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag haskell-snippets grizzl google-translate golden-ratio go-eldoc gnuplot gmail-message-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe git-gutter-fringe+ gh-md flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-jumper evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eshell-prompt-extras esh-help elisp-slime-nav ein edit-server dockerfile-mode docker disaster diff-hl define-word company-ycmd company-statistics company-racer company-quickhelp company-go company-ghc company-cabal company-c-headers company-auctex cmm-mode cmake-mode clj-refactor clean-aindent-mode clang-format cider-eval-sexp-fu chruby bundler buffer-move bracketed-paste auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk align-cljlet aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(safe-local-variable-values (quote ((TeX-command-extra-options . "-shell-escape")))))
 (custom-set-faces
@@ -344,6 +348,5 @@ layers configuration. You are free to put any user code."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- (if (not window-system) '(default ((t (:background "nil")))))
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
