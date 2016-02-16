@@ -14,6 +14,11 @@ Linker.create! do
     link 'zprezto', to: 'prezto'
   end
 
+  group 'rvm' do
+    link 'rvmrc'
+    link 'rvm/gemsets/default.gems', to: "#{current_group}/default.gems"
+  end
+
   group 'prezto/runcoms' do
     links %w(zprofile zshrc zshenv zpreztorc zlogin zlogout)
   end
