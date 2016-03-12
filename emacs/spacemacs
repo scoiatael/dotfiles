@@ -336,6 +336,10 @@ layers configuration. You are free to put any user code."
   (eval-after-load "rubocop" '(diminish 'rubocop-mode "🅡"))
   (eval-after-load "ycmd" '(diminish 'ycmd-mode "🅨"))
 
+
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
+
   (setq browse-url-browser-function 'browse-url-generic
         engine/browser-function 'browse-url-generic
         browse-url-generic-program "google-chrome-stable")
