@@ -32,6 +32,10 @@ Linker.create! do
     link 'gitignore_global', to: "#{current_group}/gitignore"
   end
 
+  group 'node' do
+    link 'package.json', to: 'local/package.json'
+  end
+
   group 'misc' do
     links %w(dir_colors gmrunrc Xdefaults xscreensaver curlrc)
 

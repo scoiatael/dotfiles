@@ -6,8 +6,11 @@ class Link
   def initialize(to, from = nil, group = nil)
     group ||= 'misc'
 
-    @to = "#{ENV['HOME']}/.#{to}"
-    @from = from.nil? ? "#{CONFIG_DIR}/#{group}/#{to}" : "#{CONFIG_DIR}/#{from}"
+    @to = to
+    @to = "#{ENV['HOME']}/.#{@to}" unless @to.start_with?('/')
+
+    @from = from.nil? ? "#{group}/#{to}" : from
+    @from = "#{CONFIG_DIR}/#{@from}" unless @from.start_with?('/')
   end
 
   def create!
