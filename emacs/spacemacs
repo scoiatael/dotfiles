@@ -329,13 +329,13 @@ layers configuration. You are free to put any user code."
     (inf-ruby-console-auto)
     (robe-start))
 
-  (setq-default company-backends-ruby-mode '((company-robe :with company-ycmd company-yasnippet)))
+  (setq-default company-backends-ruby-mode '((company-robe :with company-ycmd company-yasnippet)
+                                             (company-ycmd :with company-dabbrev company-yasnippet)))
 
   (global-ycmd-mode)
 
   (eval-after-load "rubocop" '(diminish 'rubocop-mode "🅡"))
   (eval-after-load "ycmd" '(diminish 'ycmd-mode "🅨"))
-
 
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
@@ -348,7 +348,6 @@ layers configuration. You are free to put any user code."
 
   (add-hook 'ruby-mode-hook (lambda ()
                               (spacemacs/set-leader-keys "oc" 'scoiatael-start-robe-inside-inf-ruby)
-                              (spacemacs/set-leader-keys "oy" 'scoiatael-push-ycmd)
                               (define-key evil-normal-state-map (kbd "gS") 'splitjoin)
                               (setq projectile-tags-command "ripper-tags -R -f \"%s\" %s")))
 
