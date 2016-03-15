@@ -343,8 +343,7 @@ layers configuration. You are free to put any user code."
   (eval-after-load "merlin" '(diminish 'merlin-mode "🅜"))
 
   (setq fci-rule-column 120)
-  (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
-  (global-fci-mode 1)
+  (add-hook 'prog-mode-hook 'fci-mode)
 
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
