@@ -51,7 +51,6 @@ values."
      ocaml
      (c-c++ :variables c-c++-enable-clang-support t)
      (ruby :variables ruby-test-runner 'rspec)
-     ruby-on-rails
      go
      colors
      evil-commentary
