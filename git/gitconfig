@@ -10,6 +10,7 @@
   lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p
   df = diff --color --color-words --abbrev
   pr = pull --rebase
+  su = submodule update --init --recursive
 [color]
   branch = auto
   diff = auto
