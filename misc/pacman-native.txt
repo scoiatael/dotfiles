@@ -47,7 +47,6 @@ ipython2-notebook
 julia
 kdebase-kdepasswd
 keepassx
-kshutdown
 libconfig
 licenses
 linux
