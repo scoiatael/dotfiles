@@ -65,7 +65,7 @@ values."
      seeing-is-believing
      (haskell :variables
               haskell-enable-hindent-style "gibansky"
-              haskell-enable-shm-support t
+
               haskell-enable-ghci-ng-support t)
      rust
      dockerfile

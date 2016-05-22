@@ -1,6 +1,7 @@
 [user]
 	email = czapl.luk+git@gmail.com
 	name = scoiatael
+	signingkey = B9674C90
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
@@ -18,3 +19,5 @@
   status = auto
 [push]
 	default = current
+[commit]
+	gpgsign = true
