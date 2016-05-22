@@ -10,6 +10,10 @@ Linker.create! do
     end
   end
 
+  link 'config/fish', to: 'fish'
+
+  link 'config/terminology', to: 'terminology'
+
   group 'prezto' do
     link 'zprezto', to: 'prezto'
   end
@@ -33,7 +37,7 @@ Linker.create! do
   end
 
   group 'node' do
-    link 'package.json', to: 'local/package.json'
+    link 'local/package.json', to: "#{current_group}/package.json"
   end
 
   group 'misc' do
