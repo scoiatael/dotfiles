@@ -18,6 +18,7 @@ function _remote_hostname
 end
 
 function fish_prompt
+  set -l last_command_status $status
   set -l cyan (set_color cyan)
   set -l yellow (set_color yellow)
   set -l red (set_color red)
@@ -36,7 +37,13 @@ function fish_prompt
   # Output the prompt, left to right
 
   # Add a newline before new prompts
-  echo -e '[' $status ']'
+  echo -n '['
+  if [ $last_command_status = 0 ]
+    echo -n -e $green ✓ $normal
+  else
+    echo -n -e $red ❌ $normal
+  end
+  echo ']'
 
   # User@server time
   echo -n -s $whowheredate
