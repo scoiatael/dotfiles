@@ -10,7 +10,7 @@ Linker.create! do
     end
   end
 
-  link 'config/fish', to: 'fish'
+  link 'config/omf', to: 'fish'
 
   link 'config/terminology', to: 'terminology'
 

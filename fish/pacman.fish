@@ -1,1 +1,0 @@
-alias pacman=yaourt
