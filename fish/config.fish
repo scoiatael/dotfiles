@@ -6,3 +6,4 @@ end
 
 alias vi=vim
 alias pacman=yaourt
+eval (python -m virtualfish auto_activation compat_aliases)
