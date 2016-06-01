@@ -98,6 +98,7 @@ povray
 pth
 python-click
 python-httplib2
+python-pip
 python-pytest
 python-scikit-learn
 python-sympy
@@ -110,9 +111,10 @@ qt5ct
 re2c
 redshift
 refind-efi
+remind
 scons
 sudo
-swi-prolog
+task
 texlive-bibtexextra
 texlive-fontsextra
 texlive-formatsextra
