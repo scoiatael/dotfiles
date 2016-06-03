@@ -32,7 +32,7 @@ function $fisher_cmd_name -d "fish plugin manager"
             return 1
     end
 
-    set -g fisher_version "2.9.0"
+    set -g fisher_version "2.10.0"
     set -g fisher_spinners ⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏
     set -g __fisher_stdout /dev/stdout
     set -g __fisher_stderr /dev/stderr
@@ -479,7 +479,7 @@ function __fisher_plugin_fetch_items
                 end
 
             case \*
-                printf "%s\n" "$i" | sed 's/[@:]\(.*\)/ \1/' | read i branch
+                printf "%s\n" "$i" | sed 's/[@]\(.*\)/ \1/' | read i branch
                 set names (__fisher_plugin_get_names "$i")
         end
 
@@ -1226,7 +1226,7 @@ function __fisher_list_remote -a format
             gsub(/%url/, url, fmt)
             gsub(/%info/, info, fmt)
 
-            printf(fmt)
+            printf("%s", fmt)
         }
 
         BEGIN {
@@ -1606,7 +1606,7 @@ function __fisher_plugin_get_names
         {
             sub(/\/$/, "")
             n = split($0, s, "/")
-            sub(/^(omf|omf-theme|omf-plugin|plugin|theme|fish|fisher)-/, "", s[n])
+            sub(/^(omf|omf-theme|omf-plugin|plugin|theme|fish|fisher|fish-plugin|fish-theme)-/, "", s[n])
 
             printf("%s\n%s\n", s[n], s[n - 1])
         }
