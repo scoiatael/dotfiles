@@ -44,7 +44,7 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
+     (spell-checking :variables spell-checking-enable-auto-dictionary t)
      (syntax-checking :variables syntax-checking-enable-tooltips nil)
      version-control
      (evil-snipe :variables evil-snipe-enable-alternate-f-and-t-behaviors t )
