@@ -2,5 +2,7 @@ fish_history
 fishd.*
 functions/*
 !functions/fisher.fish
+!functions/fish_prompt.fish
+!functions/fish_right_prompt.fish
 conf.d/*
 completions/*
