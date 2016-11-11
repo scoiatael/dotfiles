@@ -41,7 +41,7 @@ Linker.create! do
   end
 
   group 'misc' do
-    links %w(dir_colors gmrunrc Xdefaults xscreensaver curlrc)
+    links %w(dir_colors gmrunrc Xdefaults xscreensaver curlrc slate)
 
     link 'lein/profiles.clj', to: "#{current_group}/lein_profiles.clj"
     link 'config/redshift.conf', to: "#{current_group}/redshift.conf"

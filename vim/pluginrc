@@ -2,7 +2,7 @@
 
 " use neco-ghc with YCM
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
-let g:ycm_path_to_python_interpreter = '/usr/bin/python'
+"let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter']
 au FileType haskell setlocal omnifunc=necoghc#omnifunc
 
