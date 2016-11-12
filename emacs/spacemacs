@@ -423,8 +423,7 @@ layers configuration. You are free to put any user code."
   (defun iterm-focus ()
     (interactive)
     (do-applescript
-     " do shell script \"open -a iTerm\"\n"
-     ))
+     " do shell script \"open -a iTerm\"\n"))
 
   (spacemacs/set-leader-keys "'" 'iterm-focus)
 
