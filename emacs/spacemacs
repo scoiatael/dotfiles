@@ -292,6 +292,9 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
+
+  (setq vc-follow-symlinks t)
+
   ;; Files with the following extensions should open in javascript-mode
   (add-to-list 'auto-mode-alist '("\\.jsx$" . javascript-mode))
   (add-to-list 'auto-mode-alist '("\\.es6$" . javascript-mode))
@@ -368,6 +371,9 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  (when (not (display-graphic-p))
+    (spacemacs/load-theme 'spacemacs-dark))
+
   (setq org-agenda-files (list "~/Dropbox/org/tooploox.org"
                                "~/Dropbox/org/nowthis.org"
                                "~/Dropbox/org/home.org"))
@@ -413,6 +419,14 @@ layers configuration. You are free to put any user code."
 
 
   (spacemacs/set-leader-keys "os" 'delete-window)
+  (spacemacs/set-leader-keys "qw" 'suspend-frame)
+  (defun iterm-focus ()
+    (interactive)
+    (do-applescript
+     " do shell script \"open -a iTerm\"\n"
+     ))
+
+  (spacemacs/set-leader-keys "'" 'iterm-focus)
 
   (global-set-key (kbd "C-x g") 'google-this-noconfirm)
 

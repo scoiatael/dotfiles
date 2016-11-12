@@ -7,6 +7,8 @@ end
 
 alias vi=vim
 alias pacman=yaourt
+alias em='emacsclient -nw -s console-edit -a \'\''
+alias emg='open -a Emacs'
 eval (python -m virtualfish auto_activation compat_aliases)
 
 set -l iterm_integration $HOME/.iterm2_shell_integration.fish
@@ -15,3 +17,4 @@ if test -f $iterm_integration
 end
 
 set PATH $PATH /usr/local/opt/go/libexec/bin
+set EDITOR em
