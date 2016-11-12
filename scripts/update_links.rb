@@ -12,23 +12,9 @@ Linker.create! do
 
   link 'config/fish', to: 'fish'
 
-  link 'config/terminology', to: 'terminology'
-
-  group 'prezto' do
-    link 'zprezto', to: 'prezto'
-  end
-
   group 'rvm' do
     link 'rvmrc'
     link 'rvm/gemsets/default.gems', to: "#{current_group}/default.gems"
-  end
-
-  group 'prezto/runcoms' do
-    links %w(zprofile zshrc zshenv zpreztorc zlogin zlogout)
-  end
-
-  group 'tmux' do
-    links %w(tmux tmuxln).map { |f| f + '.conf' }
   end
 
   group 'git' do
