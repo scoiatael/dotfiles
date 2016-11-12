@@ -3,13 +3,6 @@
 require_relative 'lib/linker'
 
 Linker.create! do
-  group 'vim' do
-    links %w(vim vimrc)
-    %w(pluginrc vundlerc bindrc).each do |file|
-      link "#{current_group}-#{file}", to: "#{current_group}/#{file}"
-    end
-  end
-
   link 'config/fish', to: 'fish'
 
   group 'rvm' do
@@ -27,10 +20,9 @@ Linker.create! do
   end
 
   group 'misc' do
-    links %w(dir_colors gmrunrc Xdefaults xscreensaver curlrc slate)
+    links %w(dir_colors curlrc slate)
 
     link 'lein/profiles.clj', to: "#{current_group}/lein_profiles.clj"
-    link 'config/redshift.conf', to: "#{current_group}/redshift.conf"
   end
 
   group 'haskell' do
