@@ -4,5 +4,6 @@ functions/*
 !functions/fisher.fish
 !functions/fish_prompt.fish
 !functions/fish_right_prompt.fish
+!functions/c.fish
 conf.d/*
 completions/*

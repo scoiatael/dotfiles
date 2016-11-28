@@ -17,7 +17,8 @@
 
   bc = checkout -b
 
-  bgc="! git branch --merged | grep -v '*'"
+  bms="! git branch --merged | grep -v '*'"
+  bmc="! git branch --merged | grep -v '*' | xargs git branch -d"
 
   la = config --get-regexp alias
 [color]
