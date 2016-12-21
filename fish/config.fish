@@ -18,3 +18,6 @@ end
 
 set PATH $PATH /usr/local/opt/go/libexec/bin
 set EDITOR em
+
+set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+set -g fish_user_paths "$HOME/.local/bin" $fish_user_paths

@@ -1,0 +1,36 @@
+Host *
+  ServerAliveInterval 120
+
+Host engineering-blog
+  User lczaplinski
+  Hostname 54.82.196.66
+
+Host staging
+  User lczaplinski
+  Hostname ssh.staging.nowthis.network
+
+Host prod
+  User lczaplinski
+  Hostname ssh.production.nowthis.network
+
+Host insights
+  User lczaplinski
+  Hostname ssh.insights.nowthis.network
+
+Host yeti
+  User lczaplinski
+  Hostname ssh.yeti.nowthis.network
+
+Host ci
+  User lczaplinski
+  Hostname ssh.ci.nowthis.network
+
+Host thebeast
+  User lczaplinski
+  Hostname 206.252.196.69
+  Port 2222
+
+Host aruba
+  User L
+  Hostname 85.255.8.174
+  IdentityFile ~/.ssh/aruba_rsa
