@@ -105,3 +105,6 @@ fabric.properties
 GPATH
 GTAGS
 GRTAGS
+
+# Virtualfish
+.venv
