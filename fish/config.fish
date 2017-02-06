@@ -9,7 +9,7 @@ alias vi=vim
 alias pacman=yaourt
 alias em='emacsclient -nw -s console-edit -a \'\''
 alias emg='open -a Emacs'
-eval (python -m virtualfish auto_activation compat_aliases)
+python -m virtualfish auto_activation compat_aliases | source
 
 function random;
   set -l length $argv[1]
@@ -33,4 +33,7 @@ set -g fish_user_paths "$HOME/Library/Python/2.7/bin" $fish_user_paths
 
 test -e ~/.cargo/env; and bass source ~/.cargo/env
 
-ssh-add -A
+which envoy; and envoy -f | source; or ssh-add -A
+which thefuck; and thefuck --alias | source
+
+which nvim; and alias vim nvim

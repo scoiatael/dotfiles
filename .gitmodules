@@ -25,3 +25,6 @@
 [submodule "haskell/ghci-ng"]
 	path = haskell/ghci-ng
 	url = https://github.com/chrisdone/ghci-ng.git
+[submodule "vim/SpaceVim"]
+	path = vim/SpaceVim
+	url = https://github.com/SpaceVim/SpaceVim.git
