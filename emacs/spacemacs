@@ -372,6 +372,9 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
+  (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
+
   (when (not (display-graphic-p))
     (require 'evil-terminal-cursor-changer)
     (evil-terminal-cursor-changer-activate)
