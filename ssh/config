@@ -29,6 +29,14 @@ Host infra
   User lczaplinski
   Hostname ssh.infra.nowthis.network
 
+Host insights
+  User lczaplinski
+  Hostname ssh.infra.nowthis.network
+
+Host insights-testing
+  User lczaplinski
+  Hostname ssh.insights-testing.nowthis.network
+
 Host thebeast
   User lczaplinski
   Hostname 206.252.196.69

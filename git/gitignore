@@ -5,6 +5,7 @@
 \#*\#
 /.emacs.desktop
 /.emacs.desktop.lock
+/TODO.org
 *.elc
 auto-save-list
 tramp
