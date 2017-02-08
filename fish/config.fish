@@ -35,7 +35,7 @@ set -g fish_user_paths "$HOME/Library/Python/2.7/bin" $fish_user_paths
 test -e ~/.cargo/env; and bass source ~/.cargo/env
 
 which envoy; and envoy -p | source
-ssh-add -l | grep -v 'no identities'; or ssh-add
+ssh-add -l | grep -v 'no identities'; or ssh-add -A; or ssh-add
 which thefuck; and thefuck --alias | source
 
 which nvim; and alias vim nvim
