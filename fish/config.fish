@@ -42,19 +42,20 @@ function _scoiatael_fish_init
     _scoiatael_maybe_load bass ~/.cargo/env
     _scoiatael_maybe_load bass ~/.rvm/scripts/rvm
 
-    set PATH $PATH /usr/local/opt/go/libexec/bin
     set EDITOR em
 
-    set -l additional_user_paths /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin
+    set -l additional_user_paths /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin
 
     for p in $additional_user_paths
-        set -g fish_user_paths $p $fish_user_paths
+        if test -d $p
+            set -g fish_user_paths $p $fish_user_paths
+        end
     end
 
     which envoy
     and envoy -p | source
     ssh-add -l | grep -v 'no identities'
-    or ssh-add -A
+    or ssh-add -A ^ /dev/null
     or ssh-add
     which thefuck
     and thefuck --alias | source >/dev/null
