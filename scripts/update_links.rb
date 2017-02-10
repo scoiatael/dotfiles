@@ -2,8 +2,11 @@
 
 require_relative 'lib/linker'
 
+# rubocop:disable Metrics/BlockLength
 Linker.create! do
   link 'config/fish', to: 'fish'
+
+  link 'profile', to: 'bash/profile'
 
   group 'rvm' do
     link 'rvmrc'

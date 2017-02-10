@@ -1,0 +1,18 @@
+function _scoiatael_sh_init {
+    test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+    local -a additional_user_paths=( /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $HOME/.rvm/bin )
+
+    for p in $additional_user_paths
+    do
+        if test -d $p
+        then
+            export PATH="$p:$PATH"
+        fi
+    done
+
+    ssh-add -l | grep -v 'no identities' || ssh-add -A ^/dev/null || ssh-add
+    which thefuck && thefuck --alias
+}
+
+_scoiatael_sh_init > /dev/null

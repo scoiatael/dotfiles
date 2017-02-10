@@ -37,14 +37,13 @@ function _scoiatael_fish_init
 
     python -m virtualfish auto_activation compat_aliases | source
 
-    _scoiatael_maybe_load ~/.iterm2_shell_integration.fish
+    #_scoiatael_maybe_load ~/.iterm2_shell_integration.fish
 
-    _scoiatael_maybe_load bass ~/.cargo/env
     _scoiatael_maybe_load bass ~/.rvm/scripts/rvm
 
     set EDITOR em
 
-    set -l additional_user_paths /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin
+    set -l additional_user_paths /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin
 
     for p in $additional_user_paths
         if test -d $p
@@ -54,9 +53,11 @@ function _scoiatael_fish_init
 
     which envoy
     and envoy -p | source
+
     ssh-add -l | grep -v 'no identities'
-    or ssh-add -A ^ /dev/null
+    or ssh-add -A ^/dev/null
     or ssh-add
+
     which thefuck
     and thefuck --alias | source >/dev/null
 end
