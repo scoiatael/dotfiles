@@ -6,6 +6,7 @@ fisherman/fzf
 fisherman/get
 fisherman/getopts
 fisherman/last_job_id
+fisherman/rvm
 fisherman/spin
 oh-my-fish/plugin-wttr
 fisherman/z

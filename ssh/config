@@ -8,39 +8,46 @@ Host engineering-blog
 Host staging
   User lczaplinski
   Hostname ssh.staging.nowthis.network
+  ProxyJump jumpbox
 
 Host prod
   User lczaplinski
   Hostname ssh.production.nowthis.network
+  ProxyJump jumpbox
 
 Host insights
   User lczaplinski
   Hostname ssh.insights.nowthis.network
+  ProxyJump jumpbox
 
 Host yeti
   User lczaplinski
   Hostname ssh.yeti.nowthis.network
+  ProxyJump jumpbox
 
 Host ci
   User lczaplinski
   Hostname ssh.ci.nowthis.network
+  ProxyJump jumpbox
 
 Host infra
   User lczaplinski
   Hostname ssh.infra.nowthis.network
+  ProxyJump jumpbox
 
 Host insights
   User lczaplinski
   Hostname ssh.infra.nowthis.network
+  ProxyJump jumpbox
 
 Host insights-testing
   User lczaplinski
   Hostname ssh.insights-testing.nowthis.network
+  ProxyJump jumpbox
 
 Host thebeast
   User lczaplinski
   Hostname 206.252.196.69
-  Port 2222
 
 Host aruba
   User L
