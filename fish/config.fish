@@ -22,6 +22,7 @@ function _scoiatael_fish_init
     set -U fish_greeting ""
     set -U fish_key_bindings fish_vi_key_bindings
     set -U GOPATH $HOME/Documents/go
+    export GOPATH
     function fish_mode_prompt
     end
 
@@ -44,7 +45,7 @@ function _scoiatael_fish_init
 
     set EDITOR em
 
-    set -l additional_user_paths /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin
+    set -l additional_user_paths /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin
 
     for p in $additional_user_paths
         if test -d $p

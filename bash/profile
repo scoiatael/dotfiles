@@ -1,7 +1,8 @@
 function _scoiatael_sh_init {
     test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+    export GOPATH=$HOME/Documents/go
 
-    local -a additional_user_paths=( /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $HOME/.rvm/bin )
+    local -a additional_user_paths=( /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $HOME/.rvm/bin $GOPATH/bin)
 
     for p in $additional_user_paths
     do
