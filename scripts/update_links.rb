@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'rbconfig'
 require_relative 'lib/linker'
 
 # rubocop:disable Metrics/BlockLength
@@ -47,5 +48,15 @@ Linker.create! do
     link 'vim', to: "#{current_group}/SpaceVim"
 
     link 'SpaceVim.d', to: "#{current_group}/SpaceVim.d"
+  end
+
+  group 'gnupg' do
+      link 'gnupg/gpg.conf', to: "#{current_group}/gpg.conf"
+      case RbConfig::CONFIG['host_os']
+      when /linux/
+        link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.linux.conf"
+      when /darwin/
+        link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.darwin.conf"
+      end
   end
 end

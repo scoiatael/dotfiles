@@ -53,8 +53,11 @@ function _scoiatael_fish_init
         end
     end
 
-    which envoy
-    and envoy -p | source
+    which gpgconf
+    and gpgconf --launch gpg-agent
+
+    set -U SSH_AGENT_SOCK (gpgconf --list-dirs agent-ssh-socket)
+    export SSH_AGENT_SOCK
 
     ssh-add -l | grep -v 'no identities'
     or ssh-add -A ^/dev/null
