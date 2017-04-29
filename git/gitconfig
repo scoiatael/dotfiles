@@ -21,6 +21,13 @@
   bmc="! git branch --merged | grep -v '*' | xargs git branch -d"
 
   la = config --get-regexp alias
+  cm = checkout master
+  cmp ="! git checkout master && git pull --rebase"
+
+  prune = remote prune origin
+
+  cb="checkout -b"
+  co="checkout"
 [color]
   branch = auto
   diff = auto

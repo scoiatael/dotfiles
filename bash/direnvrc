@@ -1,0 +1,62 @@
+#!/bin/bash
+
+function _scoiatael_maybe_load() {
+    [ -z "$VERBOSE" ] || log_status "Trying $1.."
+    if test -f $1;
+    then
+        source $1
+    fi
+}
+
+function _scoiatael_maybe_PATH_add() {
+    [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
+    if test -d $p;
+    then
+        PATH_add $p
+    fi
+}
+
+function _scoiatael_init() {
+    [ -z "$VERBOSE" ] || log_status "Start init.."
+    export GOPATH=$HOME/Documents/go
+    PATH_add $GOPATH/bin
+
+    if has nvim;
+    then
+        alias vim=nvim
+        alias vi=nvim
+    else
+        alias vi=vim
+    fi
+
+    alias pacman=yaourt
+    alias em="emacsclient -nw -s console-edit -a \'\'"
+    export EDITOR="em"
+
+    _scoiatael_maybe_load $HOME/.iterm2_shell_integration.bash
+    # _scoiatael_maybe_load $HOME/.rvm/scripts/rvm
+
+    [ -z "$VERBOSE" ] || log_status "Extending PATH.."
+    for p in /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin;
+    do
+        _scoiatael_maybe_PATH_add $p;
+    done
+
+    [ -z "$VERBOSE" ] || log_status "Loading agent.."
+    if ! ssh-add -l | grep -v 'no identities';
+    then
+        if ! ssh-add -A 2> /dev/null;
+        then
+            ssh-add
+        fi
+    fi
+
+    if has thefuck;
+    then
+        eval $(thefuck --alias)
+    fi
+
+    [ -z "$VERBOSE" ] || log_status "Done."
+}
+
+_scoiatael_init > /dev/null

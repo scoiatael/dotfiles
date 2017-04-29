@@ -8,6 +8,8 @@ Linker.create! do
   link 'config/fish', to: 'fish'
 
   link 'profile', to: 'bash/profile'
+  link 'bashrc', to: 'bash/profile'
+  link 'direnvrc', to: 'bash/direnvrc'
 
   group 'rvm' do
     link 'rvmrc'
@@ -51,12 +53,12 @@ Linker.create! do
   end
 
   group 'gnupg' do
-      link 'gnupg/gpg.conf', to: "#{current_group}/gpg.conf"
-      case RbConfig::CONFIG['host_os']
-      when /linux/
-        link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.linux.conf"
-      when /darwin/
-        link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.darwin.conf"
-      end
+    link 'gnupg/gpg.conf', to: "#{current_group}/gpg.conf"
+    case RbConfig::CONFIG['host_os']
+    when /linux/
+      link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.linux.conf"
+    when /darwin/
+      link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.darwin.conf"
+    end
   end
 end

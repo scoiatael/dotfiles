@@ -35,6 +35,15 @@ Host infra
   Hostname ssh.infra.nowthis.network
   ProxyJump jumpbox
 
+Host ufo
+  User lczaplinski
+  Hostname zeppelin.ufo.nowthis.network
+  ProxyJump jumpbox
+
+Host *.infra.nowthis.network
+  User lczaplinski
+  ProxyJump jumpbox
+
 Host insights
   User lczaplinski
   Hostname ssh.infra.nowthis.network

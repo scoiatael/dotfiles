@@ -18,11 +18,16 @@ function _scoiatael_maybe_load
     end
 end
 
+function _scoiatael_launch_gpg_agent
+  gpgconf --launch gpg-agent
+
+  set -U SSH_AGENT_SOCK (gpgconf --list-dirs agent-ssh-socket)
+  export SSH_AGENT_SOCK
+end
+
 function _scoiatael_fish_init
     set -U fish_greeting ""
     set -U fish_key_bindings fish_vi_key_bindings
-    set -U GOPATH $HOME/Documents/go
-    export GOPATH
     function fish_mode_prompt
     end
 
@@ -30,41 +35,13 @@ function _scoiatael_fish_init
         source $file
     end
 
-    which nvim;
-    and alias vim nvim
-    alias vi=vim
-    alias pacman=yaourt
-    alias em='emacsclient -nw -s console-edit -a \'\''
-    alias emg='open -a Emacs'
-
     python -m virtualfish auto_activation compat_aliases | source
 
-    #_scoiatael_maybe_load ~/.iterm2_shell_integration.fish
+    set -q SSH_AGENT_SOCK
+    or _scoiatael_launch_gpg_agent
 
-    _scoiatael_maybe_load bass ~/.rvm/scripts/rvm
-
-    set EDITOR em
-
-    set -l additional_user_paths /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin
-
-    for p in $additional_user_paths
-        if test -d $p
-            set -g fish_user_paths $p $fish_user_paths
-        end
-    end
-
-    which gpgconf
-    and gpgconf --launch gpg-agent
-
-    set -U SSH_AGENT_SOCK (gpgconf --list-dirs agent-ssh-socket)
-    export SSH_AGENT_SOCK
-
-    ssh-add -l | grep -v 'no identities'
-    or ssh-add -A ^/dev/null
-    or ssh-add
-
-    which thefuck
-    and thefuck --alias | source >/dev/null
+    which direnv
+    and eval (direnv hook fish)
 end
 
 _scoiatael_fish_init >/dev/null
