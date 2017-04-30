@@ -13,6 +13,10 @@ class Link
     @from = "#{CONFIG_DIR}/#{@from}" unless @from.start_with?('/')
   end
 
+  def touch!
+      FileUtils.touch(@to)
+  end
+
   def create!
     fail ArgumentError, "File missing: #{from}" unless exist?(from)
 

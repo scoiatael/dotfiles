@@ -1,4 +1,5 @@
 require_relative 'link'
+require 'fileutils'
 
 class Linker
   def self.create!(&block)
@@ -23,6 +24,10 @@ class Linker
 
   def link(dest, to: nil)
     Link.new(dest, to, current_group).create!
+  end
+
+  def touch(dest)
+      Link.new(dest).touch!
   end
 
   def links(args)

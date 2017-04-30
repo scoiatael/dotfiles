@@ -10,6 +10,7 @@ Linker.create! do
   link 'profile', to: 'bash/profile'
   link 'bashrc', to: 'bash/profile'
   link 'direnvrc', to: 'bash/direnvrc'
+  touch 'envrc'
 
   group 'rvm' do
     link 'rvmrc'

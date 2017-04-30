@@ -1,13 +1,5 @@
 #!/bin/bash
 
-function _scoiatael_maybe_load() {
-    [ -z "$VERBOSE" ] || log_status "Trying $1.."
-    if test -f $1;
-    then
-        source $1
-    fi
-}
-
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
     if test -d $p;
@@ -16,31 +8,29 @@ function _scoiatael_maybe_PATH_add() {
     fi
 }
 
+function _scoiatael_launch_gpg_agent() {
+  gpgconf --launch gpg-agent
+
+  export SSH_AGENT_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+}
+
+
 function _scoiatael_init() {
     [ -z "$VERBOSE" ] || log_status "Start init.."
     export GOPATH=$HOME/Documents/go
     PATH_add $GOPATH/bin
 
-    if has nvim;
-    then
-        alias vim=nvim
-        alias vi=nvim
-    else
-        alias vi=vim
-    fi
-
-    alias pacman=yaourt
-    alias em="emacsclient -nw -s console-edit -a \'\'"
-    export EDITOR="em"
-
-    _scoiatael_maybe_load $HOME/.iterm2_shell_integration.bash
-    # _scoiatael_maybe_load $HOME/.rvm/scripts/rvm
-
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
-    for p in /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin;
+    for p in /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin $HOME/dotfiles/bin;
     do
         _scoiatael_maybe_PATH_add $p;
     done
+
+    [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
+    if [ -z "$SSH_AGENT_SOCK" ];
+    then
+        _scoiatael_launch_gpg_agent;
+    fi
 
     [ -z "$VERBOSE" ] || log_status "Loading agent.."
     if ! ssh-add -l | grep -v 'no identities';
@@ -51,10 +41,7 @@ function _scoiatael_init() {
         fi
     fi
 
-    if has thefuck;
-    then
-        eval $(thefuck --alias)
-    fi
+    export EDITOR="em"
 
     [ -z "$VERBOSE" ] || log_status "Done."
 }
