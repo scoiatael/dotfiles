@@ -27,7 +27,7 @@ function _scoiatael_init() {
     done
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
-    if [ -z "$SSH_AGENT_SOCK" ];
+    if [ -z "$SSH_AGENT_SOCK" ] && [ -z "$SSH_AUTH_SOCK" ];
     then
         _scoiatael_launch_gpg_agent;
     fi
