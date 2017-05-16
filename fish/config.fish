@@ -21,6 +21,8 @@ function _scoiatael_fish_init
 
     which direnv
     and eval (direnv hook fish)
+
+    alias b bundle
 end
 
 _scoiatael_fish_init >/dev/null
