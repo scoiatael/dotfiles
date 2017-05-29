@@ -1,6 +1,4 @@
 function fish_user_key_bindings
-    bind \cf forward-char
-
     ### fzf ###
     bind \ct '__fzf_ctrl_t'
     bind \cr '__fzf_ctrl_r'
@@ -15,4 +13,6 @@ function fish_user_key_bindings
         bind -M insert \eC '__fzf_alt_shift_c'
     end
     ### fzf ###
+
+    bind -M insert \cf forward-char
 end

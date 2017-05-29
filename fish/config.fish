@@ -23,6 +23,9 @@ function _scoiatael_fish_init
     and eval (direnv hook fish)
 
     alias b bundle
+    alias p prevd
+    alias n nextd
+    alias g git
 end
 
 _scoiatael_fish_init >/dev/null
