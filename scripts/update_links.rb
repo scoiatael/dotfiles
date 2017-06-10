@@ -30,6 +30,8 @@ Linker.create! do
     links %w(dir_colors curlrc slate)
 
     link 'lein/profiles.clj', to: "#{current_group}/lein_profiles.clj"
+
+    link 'config/tilda/config_0', to: "#{current_group}/tilda"
   end
 
   group 'haskell' do
