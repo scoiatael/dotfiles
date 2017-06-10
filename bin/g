@@ -4,5 +4,5 @@ if [ -z "$1" ];
 then 
     exec git status
 else
-    exec git $@
+    exec git "$@"
 fi
