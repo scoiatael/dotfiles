@@ -31,7 +31,7 @@ Linker.create! do
 
     link 'lein/profiles.clj', to: "#{current_group}/lein_profiles.clj"
 
-    link 'config/tilda/config_0', to: "#{current_group}/tilda"
+    link 'config/terminator/config', to: "#{current_group}/terminator"
   end
 
   group 'haskell' do
