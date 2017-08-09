@@ -25,6 +25,8 @@ function _scoiatael_fish_init
     alias b bundle
     alias p prevd
     alias n nextd
+
+    rvm use default
 end
 
 _scoiatael_fish_init >/dev/null
