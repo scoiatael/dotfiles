@@ -41,8 +41,6 @@ function _scoiatael_init() {
         fi
     fi
 
-    export EDITOR="em"
-
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
