@@ -12,11 +12,6 @@ Linker.create! do
   link 'direnvrc', to: 'bash/direnvrc'
   touch 'envrc'
 
-  group 'rvm' do
-    link 'rvmrc'
-    link 'rvm/gemsets/default.gems', to: "#{current_group}/default.gems"
-  end
-
   group 'git' do
     link 'gitconfig'
     link 'gitignore_global', to: "#{current_group}/gitignore"

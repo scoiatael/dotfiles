@@ -17,7 +17,7 @@ function _scoiatael_launch_gpg_agent() {
 
 function _scoiatael_init() {
     [ -z "$VERBOSE" ] || log_status "Start init.."
-    export GOPATH=$HOME/Documents/go
+    export GOPATH=$HOME/go
     PATH_add $GOPATH/bin
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
@@ -45,3 +45,9 @@ function _scoiatael_init() {
 }
 
 _scoiatael_init > /dev/null
+
+use_ruby() {
+  local ruby_root=$HOME/.rubies/ruby-$1
+  load_prefix "$ruby_root"
+  layout_ruby
+}

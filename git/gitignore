@@ -109,3 +109,10 @@ GRTAGS
 
 # Virtualfish
 .venv
+
+# Ensime for Scala
+.ensime
+.ensime_cache
+
+# direnv
+.direnv/
