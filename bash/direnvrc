@@ -51,3 +51,5 @@ use_ruby() {
   load_prefix "$ruby_root"
   layout_ruby
 }
+
+use ruby 2.4.1
