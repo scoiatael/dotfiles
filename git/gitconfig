@@ -1,6 +1,6 @@
 [user]
-	email = czapl.luk+git@gmail.com
-	name = scoiatael
+	email = lukasz.czaplinski@tooploox.com
+	name = lukasz.czaplinski
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
