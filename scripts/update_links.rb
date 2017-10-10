@@ -5,6 +5,7 @@ require_relative 'lib/linker'
 
 # rubocop:disable Metrics/BlockLength
 Linker.create! do
+  link 'config/ranger', to: 'ranger'
   link 'config/fish', to: 'fish'
 
   link 'profile', to: 'bash/profile'
