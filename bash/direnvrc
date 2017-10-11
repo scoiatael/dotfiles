@@ -52,4 +52,4 @@ use_ruby() {
   layout_ruby
 }
 
-use ruby 2.4.1
+export LANG=en

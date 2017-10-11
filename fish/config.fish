@@ -16,7 +16,7 @@ function _scoiatael_fish_init
         source $file
     end
 
-    python -m virtualfish auto_activation compat_aliases | source
+    python2 -m virtualfish auto_activation compat_aliases | source
     eval (thefuck --alias | tr "\n" ';')
 
     which direnv
