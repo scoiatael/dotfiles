@@ -20,6 +20,8 @@ function _scoiatael_init() {
     export GOPATH=$HOME/go
     PATH_add $GOPATH/bin
 
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
     for p in /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin $HOME/dotfiles/bin;
     do
