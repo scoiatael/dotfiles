@@ -10,8 +10,6 @@ function _scoiatael_maybe_PATH_add() {
 
 function _scoiatael_launch_gpg_agent() {
   gpgconf --launch gpg-agent
-
-  export SSH_AGENT_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 }
 
 
@@ -29,9 +27,11 @@ function _scoiatael_init() {
     done
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
-    if [ -z "$SSH_AGENT_SOCK" ] && [ -z "$SSH_AUTH_SOCK" ];
+    local ssh_agent="$(gpgconf --list-dirs agent-ssh-socket)"
+    if [ -z "$SSH_AUTH_SOCK" ] || [ $SSH_AUTH_SOCK != $ssh_agent ];
     then
         _scoiatael_launch_gpg_agent;
+        export SSH_AUTH_SOCK=$ssh_agent
     fi
 
     [ -z "$VERBOSE" ] || log_status "Loading agent.."
