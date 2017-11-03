@@ -25,5 +25,5 @@ function get_git_status -d "Gets the current git status"
 end
 
 function fish_right_prompt -d "Prints right prompt"
-  # get_git_status
+  get_git_status
 end
