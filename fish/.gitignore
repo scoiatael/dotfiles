@@ -4,7 +4,7 @@ functions/*
 !functions/fisher.fish
 !functions/fish_prompt.fish
 !functions/fish_right_prompt.fish
-!functions/c.fish
+!functions/gitbrowse.fish
 !functions/rvm.fish
 !functions/fish_user_key_bindings.fish
 conf.d/*
