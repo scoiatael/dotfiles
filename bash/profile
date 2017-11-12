@@ -1,2 +1,2 @@
 eval "$(direnv hook bash)"
-source $HOME/.rvm/scripts/rvm
+[-d $HOME/.rvm/scripts] && source $HOME/.rvm/scripts/rvm
