@@ -9,3 +9,7 @@
 vim/vim/bundle/*
 !vim/vim/bundle/Vundle.vim
 scripts/startup.sh
+
+# ranger
+ranger/history
+ranger/bookmarks
