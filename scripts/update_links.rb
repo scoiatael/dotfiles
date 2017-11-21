@@ -5,6 +5,7 @@ require_relative 'lib/linker'
 
 # rubocop:disable Metrics/BlockLength
 Linker.create! do
+  link 'vimrc'
   link 'config/ranger', to: 'ranger'
   link 'config/fish', to: 'fish'
 
@@ -42,13 +43,6 @@ Linker.create! do
 
   group 'ssh' do
     link 'ssh/config', to: "#{current_group}/config"
-  end
-
-  group 'vim' do
-    link 'config/nvim', to: "#{current_group}/SpaceVim"
-    link 'vim', to: "#{current_group}/SpaceVim"
-
-    link 'SpaceVim.d', to: "#{current_group}/SpaceVim.d"
   end
 
   group 'gnupg' do
