@@ -136,10 +136,6 @@ set foldcolumn=1
 syntax enable 
 
 set background=dark
-try
-    colorscheme slate
-catch
-endtry
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -306,6 +302,11 @@ map <leader>pp :setlocal paste!<cr>
 " ctrlp
 " http://ctrlpvim.github.io/ctrlp.vim
 set runtimepath+=~/.vim/bundle/ctrlp.vim
+
+" colorschmes
+" https://github.com/flazz/vim-colorschemes
+set runtimepath+=~/.vim/bundle/colorschemes
+colorscheme monokai
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
