@@ -5,7 +5,6 @@ require_relative 'lib/linker'
 
 # rubocop:disable Metrics/BlockLength
 Linker.create! do
-  link 'vimrc'
   link 'config/ranger', to: 'ranger'
   link 'config/fish', to: 'fish'
 
@@ -13,6 +12,12 @@ Linker.create! do
   link 'bashrc', to: 'bash/profile'
   link 'direnvrc', to: 'bash/direnvrc'
   touch 'envrc'
+
+  group 'vim' do
+    link 'vimrc'
+    link 'config/nvim/init.vim', to: "#{current_group}/vimrc"
+    link 'vim/bundle', to: "#{current_group}/bundle"
+  end
 
   group 'git' do
     link 'gitconfig'

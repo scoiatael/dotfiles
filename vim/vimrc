@@ -157,9 +157,9 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+" 1 tab == 2 spaces
+set shiftwidth=2
+set tabstop=2
 
 set ai "Auto indent
 set si "Smart indent
@@ -299,6 +299,13 @@ map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Extensions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ctrlp
+" http://ctrlpvim.github.io/ctrlp.vim
+set runtimepath+=~/.vim/bundle/ctrlp.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
