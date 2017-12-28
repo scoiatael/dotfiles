@@ -299,15 +299,9 @@ map <leader>pp :setlocal paste!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Extensions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ctrlp
-" http://ctrlpvim.github.io/ctrlp.vim
-set runtimepath+=~/.vim/bundle/ctrlp.vim
-
-" colorschmes
-" https://github.com/flazz/vim-colorschemes
-set runtimepath+=~/.vim/bundle/colorschemes
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
 colorscheme 0x7A69_dark
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
