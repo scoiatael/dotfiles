@@ -22,21 +22,34 @@ class Link
 
     if exist?(to)
       return if File.identical?(from, to)
-
-      puts `ls -l #{to}`
-      if ask_if('remove')
-        File.delete(to)
-      else
-        File.rename(to, "#{to}.bak") if ask_if('rename')
-      end
+      handle_existing(to)
     end
 
     return if exist?(to)
 
     dirname = File.dirname(to)
-    FileUtils.mkpath(dirname) unless File.exist?(dirname)
+    if exist?(dirname)
+      unless File.directory?(dirname)
+        handle_existing(dirname)
+        FileUtils.mkpath(dirname)
+      end
+    else
+      FileUtils.mkpath(dirname)
+    end
 
     puts "Symlinking #{to} -> #{from}"
     File.symlink(from, to)
+  end
+
+  private
+
+  def handle_existing(to)
+    puts `ls -l #{to}`
+    if ask_if('remove')
+      return File.delete(to)
+    end
+    if ask_if('rename')
+      File.rename(to, "#{to}.bak")
+    end
   end
 end

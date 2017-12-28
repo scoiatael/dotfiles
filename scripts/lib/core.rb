@@ -23,5 +23,6 @@ def ask_if(q)
 end
 
 def exist?(name)
-  File.exist?(name) || File.symlink?(name)
+  full_name = File.expand_path(name)
+  File.exist?(full_name) || File.symlink?(full_name)
 end
