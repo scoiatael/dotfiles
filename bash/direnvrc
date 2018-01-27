@@ -43,6 +43,11 @@ function _scoiatael_init() {
         fi
     fi
 
+    if which opam > /dev/null 2> /dev/null;
+    then
+      eval $(opam config env --shell=bash)
+    fi
+
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
