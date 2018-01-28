@@ -1,5 +1,6 @@
 require_relative 'link'
 require 'fileutils'
+require 'rbconfig'
 
 class Linker
   def self.create!(&block)
@@ -32,5 +33,18 @@ class Linker
 
   def links(args)
     args.each { |a| link(a) }
+  end
+
+  OS = %w{linux darwin}
+  OS.each do |os|
+    define_method("#{os}?") do
+      RbConfig::CONFIG['host_os'] =~ /#{os}/
+    end
+  end
+
+  def os
+    OS.each do |os|
+      return os if send("#{os}?")
+    end
   end
 end
