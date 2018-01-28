@@ -15,6 +15,7 @@ Linker.create! do
   group 'vim' do
     link 'vimrc'
     link 'config/nvim/init.vim', to: "#{current_group}/vimrc"
+    link 'config/nvim/bundle', to: "#{current_group}/bundle"
     link 'vim/bundle', to: "#{current_group}/bundle"
   end
 
