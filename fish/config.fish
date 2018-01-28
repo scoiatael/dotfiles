@@ -16,6 +16,11 @@ function _scoiatael_fish_init
         source $file
     end
 
+    set -U LESS '-R'
+    export LESS
+    set -U LESSOPEN '|lesspipe.sh %s'
+    export LESSOPEN
+
     python2 -m virtualfish auto_activation compat_aliases | source
     eval (thefuck --alias | tr "\n" ';')
 

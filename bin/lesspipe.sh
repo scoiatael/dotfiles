@@ -1,5 +1,10 @@
 #!/bin/sh
-PYGMENTIZE="/usr/bin/pygmentize -O encoding='utf-8'"
+PYGMENTIZE_BIN=$(which pygmentize)
+if test -z "$PYGMENTIZE_BIN";
+then
+  exit 1
+fi
+PYGMENTIZE="${PYGMENTIZE_BIN} -O encoding='utf-8'"
 
 case "$1" in
     *.awk|*.groff|*.java|*.js|*.m4|*.php|*.pl|*.pm|*.pod|*.sh|\
@@ -28,14 +33,18 @@ if [ "$?" -eq "0" ]; then
     exit 0
 fi
 
-# view strings inside of an executable
+# guess based on filetype
 if [ -x "$1" ]; then
     type=$(file "$1")
     case "$type" in
-      *executable* )
-        echo -e "$type\n"
-        strings "$1"
-        exit 0
-        ;;
+        *Python* )
+            $PYGMENTIZE -l python "$1"
+            exit 0
+            ;;
+        *executable* )
+            echo -e "$type\n"
+            strings "$1"
+            exit 0
+            ;;
     esac
-fi 
+fi
