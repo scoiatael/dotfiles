@@ -1,15 +1,18 @@
 [global_config]
   always_on_top = True
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   extra_styling = False
   hide_from_taskbar = True
   sticky = True
   window_state = fullscreen
 [keybindings]
+  copy = <Super>c
   go_down = <Primary>j
   go_left = <Primary>h
   go_right = <Primary>l
   go_up = <Primary>k
-  hide_window = <Alt>apostrophe
+  hide_window = <Super>apostrophe
+  paste = <Super>v
   switch_to_tab_1 = <Primary><Shift>exclam
   switch_to_tab_10 = <Primary><Shift>parenright
   switch_to_tab_2 = <Primary><Shift>at
