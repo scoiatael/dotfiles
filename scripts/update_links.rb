@@ -21,6 +21,7 @@ Linker.create! do
 
   group 'git' do
     link 'gitconfig'
+    link 'gitconfig_custom', to: "#{current_group}/gitconfig_custom_#{os}"
     link 'gitignore_global', to: "#{current_group}/gitignore"
   end
 
