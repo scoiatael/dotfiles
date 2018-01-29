@@ -33,3 +33,7 @@ function _scoiatael_fish_init
 end
 
 _scoiatael_fish_init >/dev/null
+
+if test -f $HOME/.iterm2_shell_integration.fish;
+  source $HOME/.iterm2_shell_integration.fish
+end

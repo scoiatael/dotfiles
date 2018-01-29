@@ -40,7 +40,7 @@ Host ufo
   Hostname zeppelin.ufo.nowthis.network
   ProxyJump jumpbox
 
-Host *.infra.nowthis.network
+Host *.nowthis.network
   User lczaplinski
   ProxyJump jumpbox
 
