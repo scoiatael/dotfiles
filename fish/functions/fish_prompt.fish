@@ -99,8 +99,8 @@ end
 
 function show_short_git_status -d "Shows the current git status with two dots"
     if command git rev-parse --is-inside-work-tree >/dev/null 2>&1
-        set -l staged (command git diff --shortstat --staged | tee /dev/null | cut -c 1,2)
-        set -l dirty (command git diff --shortstat | tee /dev/null | cut -c 1,2)
+        set -l staged (command git diff --ignore-submodules=dirty --shortstat --staged | tee /dev/null | cut -c 1,2)
+        set -l dirty (command git diff --ignore-submodules=dirty --shortstat | tee /dev/null | cut -c 1,2)
 
         if test -n "$dirty"
             set_color red
