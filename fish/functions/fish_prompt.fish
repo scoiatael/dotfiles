@@ -26,6 +26,7 @@ function show_status -d "Function to show the current status"
       prompt_segment blue white " SSH: "
       set pad ""
     end
+  set_color normal
 end
 
 ## Show user if not default
@@ -54,37 +55,85 @@ end
 function show_prompt -d "Shows prompt with cue for current priv"
   set -l uid (id -u $USER)
     if [ $uid -eq 0 ]
-    prompt_segment red white " ! "
+    prompt_segment red white "! "
     set_color normal
     echo -n -s " "
   else
-    prompt_segment normal white " \$ "
+    prompt_segment normal white "\$ "
     end
 
   set_color normal
 end
 
 function show_vi_status -d "Shows vi mode"
-  echo ''
   switch $fish_bind_mode
     case default
-        prompt_segment blue white 'n'
+        prompt_segment blue black '[N]'
     case insert
-        prompt_segment yellow white 'i'
+        prompt_segment yellow black '[I]'
     case visual
-        prompt_segment magenta white 'v'
+        prompt_segment magenta black '[V]'
   end
   set_color normal
-
-  echo -n ' '
 end
+
+function show_git_status -d "Shows the current git status"
+    if command git rev-parse --is-inside-work-tree >/dev/null 2>&1
+        set -l dirty (command git status -s --ignore-submodules=dirty | wc -l | sed -e 's/^ *//' -e 's/ *$//' 2> /dev/null)
+        set -l ref (command git describe --tags --exact-match ^/dev/null ; or command git symbolic-ref --short HEAD 2> /dev/null ; or command git rev-parse --short HEAD 2> /dev/null)
+        set -l fish_prompt_git_status_ref_length 4
+        set -l short_ref (string replace -ar '(\.?[^/]{'"$fish_prompt_git_status_ref_length"'})[^/]*/' '$1/' $ref)
+
+        if [ "$dirty" != "0" ]
+            set_color -b red
+            set_color white
+        else
+            set_color -b cyan
+            set_color white
+        end
+
+        echo -n "$short_ref"
+        set_color normal
+    end
+end
+
+function show_short_git_status -d "Shows the current git status with two dots"
+    if command git rev-parse --is-inside-work-tree >/dev/null 2>&1
+        set -l staged (command git diff --shortstat --staged | tee /dev/null | cut -c 1,2)
+        set -l dirty (command git diff --shortstat | tee /dev/null | cut -c 1,2)
+
+        if test -n "$dirty"
+            set_color red
+        else
+            set_color cyan
+        end
+        echo -n "○"
+
+        if test -n "$staged"
+            set_color green
+        else
+            set_color cyan
+        end
+        echo -n "○"
+        set_color normal
+    else
+        echo -n "··"
+    end
+end
+
 
 ## SHOW PROMPT
 function fish_prompt
   set -g RETVAL $status
-  show_status
-  show_user
-  show_pwd
+  # show_status
+  echo -n ' '
+#  show_user
+  if test "$COLUMNS" -gt 90
+      show_pwd
+      show_git_status
+      echo '' # Break to multiline
+  end
   show_vi_status
+  show_short_git_status
   show_prompt
 end
