@@ -61,7 +61,6 @@ Host thebeast
 Host aruba
   User L
   Hostname 85.255.8.174
-  IdentityFile ~/.ssh/aruba_rsa
 
 Host jumpbox
   User lczaplinski
