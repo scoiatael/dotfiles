@@ -662,6 +662,13 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x5f-0x120000</key>
+		<dict>
+			<key>Action</key>
+			<integer>28</integer>
+			<key>Text</key>
+			<string>7C30DFCB-2FCF-4DDD-A4B1-FBA1D44DB919</string>
+		</dict>
 		<key>0x68-0x40000</key>
 		<dict>
 			<key>Action</key>
@@ -689,6 +696,13 @@
 			<integer>19</integer>
 			<key>Text</key>
 			<string></string>
+		</dict>
+		<key>0x7c-0x120000</key>
+		<dict>
+			<key>Action</key>
+			<integer>29</integer>
+			<key>Text</key>
+			<string>7C30DFCB-2FCF-4DDD-A4B1-FBA1D44DB919</string>
 		</dict>
 		<key>0x9-0x40000</key>
 		<dict>
@@ -821,7 +835,7 @@
 	<key>NSScrollViewShouldScrollUnderTitlebar</key>
 	<false/>
 	<key>NSStatusItem Preferred Position Item-0</key>
-	<real>518</real>
+	<real>528</real>
 	<key>NSTableView Columns v2 KeyBingingTable</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGNjdYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
@@ -857,11 +871,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1920 1178 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>307 363 918 381 0 0 1280 800 </string>
+	<string>307 255 918 512 0 0 1280 778 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>154 594 592 584 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 194 1920 984 0 0 1920 1178 </string>
+	<string>0 1178 1920 970 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 0 1277 778 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1773,7 +1787,7 @@
 			<key>HotKey Window Animates</key>
 			<true/>
 			<key>HotKey Window AutoHides</key>
-			<true/>
+			<false/>
 			<key>HotKey Window Dock Click Action</key>
 			<integer>0</integer>
 			<key>HotKey Window Floats</key>
@@ -2132,7 +2146,7 @@
 			<key>Send Code When Idle</key>
 			<false/>
 			<key>Shortcut</key>
-			<string></string>
+			<string>A</string>
 			<key>Silence Bell</key>
 			<false/>
 			<key>Space</key>
@@ -2974,7 +2988,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-01-22T08:14:04Z</date>
+	<date>2018-02-07T09:55:43Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
