@@ -86,10 +86,10 @@ function show_git_status -d "Shows the current git status"
 
         if [ "$dirty" != "0" ]
             set_color -b red
-            set_color white
+            set_color black
         else
             set_color -b cyan
-            set_color white
+            set_color black
         end
 
         echo -n "$short_ref"
