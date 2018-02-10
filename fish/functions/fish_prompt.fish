@@ -14,6 +14,8 @@ function prompt_segment -d "Function to show a segment"
   if [ -n "$argv[3]" ]
     echo -n -s $argv[3]
   end
+  set_color -b normal
+  set_color normal
 end
 
 ## Function to show current status
@@ -84,16 +86,16 @@ function show_git_status -d "Shows the current git status"
         set -l fish_prompt_git_status_ref_length 4
         set -l short_ref (string replace -ar '(\.?[^/]{'"$fish_prompt_git_status_ref_length"'})[^/]*/' '$1/' $ref)
 
+        echo -n '('
         if [ "$dirty" != "0" ]
-            set_color -b red
-            set_color black
+            set_color red
         else
-            set_color -b cyan
-            set_color black
+            set_color cyan
         end
 
         echo -n "$short_ref"
         set_color normal
+        echo -n ')'
     end
 end
 
