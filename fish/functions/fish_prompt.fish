@@ -107,14 +107,14 @@ function show_short_git_status -d "Shows the current git status with two dots"
         if test -n "$dirty"
             set_color red
         else
-            set_color cyan
+            set_color normal
         end
         echo -n "○"
 
         if test -n "$staged"
             set_color green
         else
-            set_color cyan
+            set_color normal
         end
         echo -n "○"
         set_color normal
