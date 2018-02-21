@@ -835,7 +835,7 @@
 	<key>NSScrollViewShouldScrollUnderTitlebar</key>
 	<false/>
 	<key>NSStatusItem Preferred Position Item-0</key>
-	<real>528</real>
+	<real>530</real>
 	<key>NSTableView Columns v2 KeyBingingTable</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGNjdYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
@@ -875,7 +875,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>154 594 592 584 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 1178 1920 970 0 0 1920 1178 </string>
+	<string>0 194 1920 984 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 0 1277 778 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2988,7 +2988,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-02-07T09:55:43Z</date>
+	<date>2018-02-14T09:13:43Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -2996,7 +2996,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>SuppressRestartAnnouncement</key>
 	<true/>
 	<key>TabStyle</key>
