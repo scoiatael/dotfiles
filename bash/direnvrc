@@ -59,4 +59,4 @@ use_ruby() {
   layout_ruby
 }
 
-export LANG=en
+export LANG=en_GB.utf-8
