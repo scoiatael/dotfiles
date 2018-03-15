@@ -409,6 +409,8 @@ layers configuration. You are free to put any user code."
   (direnv-mode)
 
   (add-hook 'prog-mode 'fci-mode)
+  (setq ns-right-alternate-modifier nil)
+
 
   (when (not (display-graphic-p))
     (require 'evil-terminal-cursor-changer)
