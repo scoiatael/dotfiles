@@ -21,15 +21,10 @@ function _scoiatael_fish_init
     set -U LESSOPEN '|lesspipe.sh %s'
     export LESSOPEN
 
-    python2 -m virtualfish auto_activation compat_aliases | source
-    eval (thefuck --alias | tr "\n" ';')
-
     which direnv
     and eval (direnv hook fish)
 
     alias b bundle
-    alias p prevd
-    alias n nextd
 end
 
 _scoiatael_fish_init >/dev/null
