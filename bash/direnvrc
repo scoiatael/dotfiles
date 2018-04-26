@@ -18,6 +18,7 @@ function _scoiatael_init() {
     export GOPATH=$HOME/go
     PATH_add $GOPATH/bin
 
+    PATH_add $HOME/.cargo/bin
     export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
@@ -57,6 +58,11 @@ use_ruby() {
   local ruby_root=$HOME/.rubies/ruby-$1
   load_prefix "$ruby_root"
   layout_ruby
+}
+
+use_go() {
+  export GOPATH="$PWD:$(go env GOPATH)"
+  PATH_add "$PWD/bin"
 }
 
 export LANG=en_GB.utf-8

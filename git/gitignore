@@ -116,3 +116,6 @@ GRTAGS
 
 # direnv
 .direnv/
+
+# Visual Studio Code ElixirLS
+.elixir_ls
