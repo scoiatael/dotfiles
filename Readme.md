@@ -1,4 +1,5 @@
-##My configuration files.
+## My configuration files.
 
-###Installation
-`git clone --recursive https://github.com/scoiatael/config && ruby config/scripts/update_links.rb`
+### Installation
+
+`git clone --recursive https://github.com/scoiatael/dotfiles ~/dotfiles && ruby config/scripts/update_links.rb`
