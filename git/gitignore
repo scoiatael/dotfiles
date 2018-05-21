@@ -12,6 +12,7 @@ tramp
 .\#*
 recentf
 srecode-map.el
+.dir-locals.el
 
 # Org-mode
 .org-id-locations
