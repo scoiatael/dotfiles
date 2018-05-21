@@ -417,6 +417,7 @@ layers configuration. You are free to put any user code."
   (exec-path-from-shell-copy-env "SSH_AGENT_PID")
   (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
 
+  ;; From https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
   (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                  (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                  (36 . ".\\(?:>\\)")
@@ -446,7 +447,11 @@ layers configuration. You are free to put any user code."
     (dolist (char-regexp alist)
       (set-char-table-range composition-function-table (car char-regexp)
                             `([,(cdr char-regexp) 0 font-shape-gstring]))))
+  (add-hook 'helm-major-mode-hook
+            (lambda ()
+              (setq auto-composition-mode nil)))
 
+  ;; Enable Left Alt for national symbols (important for polish users)
   (setq ns-right-alternate-modifier nil)
 
   (add-hook 'prog-mode-hook 'fci-mode)
