@@ -6,6 +6,17 @@ function random
     ruby -e "puts (('a'..'z').to_a + (0..9).to_a).sample($length).join('')"
 end
 
+function install_node
+  set -l version $argv[1]
+  if test -z $version
+      set -l version (curl -s http://nodejs.org/dist/index.tab | head -n 2  | tail -n 1 | awk '{ print $1 }')
+  end
+  set -l install_dir $NODE_VERSIONS/node-$version
+  echo "Installing node $version to $install_dir"
+  mkdir -p $install_dir
+  curl -fsSL http://nodejs.org/dist/$version/node-$version-darwin-x64.tar.gz | tar xvz --strip 1 -C $install_dir
+end
+
 function _scoiatael_fish_init
     set -U fish_greeting ""
     set -U fish_key_bindings fish_vi_key_bindings

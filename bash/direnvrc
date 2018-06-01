@@ -49,6 +49,8 @@ function _scoiatael_init() {
       eval $(opam config env --shell=bash)
     fi
 
+    export NODE_VERSIONS="$HOME/.node"
+    mkdir -p $NODE_VERSIONS
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
