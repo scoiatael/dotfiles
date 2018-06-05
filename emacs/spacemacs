@@ -41,7 +41,9 @@ values."
      csv
      html
      markdown
-     shell
+     (shell :variables
+            shell-default-shell 'eshell
+            shell-enable-smart-eshell t)
      shell-scripts
      (ranger :variables ranger-show-preview t)
      sql
@@ -405,6 +407,7 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (require 'helm-bookmark)
+  (direnv-update-environment)
 
   ;; https://github.com/syl20bnr/spacemacs/issues/9756
   (setq spacemacs-default-jump-handlers
@@ -476,9 +479,9 @@ layers configuration. You are free to put any user code."
   (eval-after-load "hideshow"
     '(add-to-list 'hs-special-modes-alist
                   `(elixir-mode
-                    ,(rx (or "do" "{" "["))  ; Block start
-                    ,(rx (or "}" "]" "end")) ; Block end
-                    ,(rx (or "#" "=begin"))  ; Comment start
+                    ,(rx "do[^:]")  ; Block start
+                    ,(rx "end") ; Block end
+                    ,(rx "#")  ; Comment start
                     nil
                     nil)))
 
