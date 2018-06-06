@@ -455,6 +455,10 @@ layers configuration. You are free to put any user code."
             (lambda ()
               (setq auto-composition-mode nil)))
 
+  (add-hook 'ediff-mode-hook
+            (lambda ()
+              (setq auto-composition-mode nil)))
+
   ;; Enable Left Alt for national symbols (important for polish users)
   (setq ns-right-alternate-modifier nil)
 
