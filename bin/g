@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ -z "$1" ];
-then 
-    exec git status
-else
-    exec git "$@"
-fi

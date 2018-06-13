@@ -36,6 +36,8 @@ function _scoiatael_fish_init
     and eval (direnv hook fish)
 
     alias b bundle
+    alias gls "git status"
+    alias g git
 end
 
 _scoiatael_fish_init >/dev/null
