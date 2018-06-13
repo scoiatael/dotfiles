@@ -483,7 +483,7 @@ layers configuration. You are free to put any user code."
   (eval-after-load "hideshow"
     '(add-to-list 'hs-special-modes-alist
                   `(elixir-mode
-                    ,(rx "do[^:]")  ; Block start
+                    ,(rx "do")  ; Block start
                     ,(rx "end") ; Block end
                     ,(rx "#")  ; Comment start
                     nil
