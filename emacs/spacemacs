@@ -80,7 +80,6 @@ values."
      osx
      docker
      elixir
-     ;; gtags
      docker
      systemd
      (haskell :variables haskell-completion-backend 'intero)
@@ -491,7 +490,6 @@ layers configuration. You are free to put any user code."
 
   (eval-after-load "rubocop" '(diminish 'rubocop-mode "🅡"))
   (eval-after-load "alchemist" '(diminish 'alchemist-mode "🅐"))
-  (eval-after-load "ggtags" '(diminish 'ggtags-mode "Ⓖ"))
   (eval-after-load "alchemist-phoenix" '(diminish 'alchemist-phoenix-mode "㋭"))
   (eval-after-load "auto-dictionary-mode" '(diminish 'ispell-minor-mode "🅡"))
   (eval-after-load "auto-dictionary-mode" '(diminish 'auto-dictionary-mode "ⓓ"))
