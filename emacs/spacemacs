@@ -462,6 +462,7 @@ layers configuration. You are free to put any user code."
   (setq ns-right-alternate-modifier nil)
 
   (add-hook 'prog-mode-hook 'fci-mode)
+  (add-hook 'prog-mode-hook 'direnv-mode)
 
   (add-hook 'ruby-mode-hook
             (lambda () (hs-minor-mode)))
