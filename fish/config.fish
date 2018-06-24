@@ -1,3 +1,7 @@
+set -l dotfiles_path "$HOME/dotfiles/fish"
+set fish_function_path $dotfiles_path/fisherman $fish_function_path
+set fish_function_path $dotfiles_path/functions $fish_function_path
+
 function random
     set -l length $argv[1]
     if test -z $length
