@@ -5,7 +5,11 @@ require_relative 'lib/linker'
 # rubocop:disable Metrics/BlockLength
 Linker.create! do
   link 'config/ranger', to: 'ranger'
-  link 'config/fish', to: 'fish'
+  group 'fish' do
+    %w[config.fish fishfile].each do |file|
+      link "config/fish/#{file}", to: "#{current_group}/#{file}"
+    end
+  end
 
   link 'profile', to: 'bash/profile'
   link 'bashrc', to: 'bash/profile'

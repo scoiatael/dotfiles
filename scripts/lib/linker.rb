@@ -35,7 +35,7 @@ class Linker
     args.each { |a| link(a) }
   end
 
-  OS = %w{linux darwin}
+  OS = %w{linux darwin freebsd}
   OS.each do |os|
     define_method("#{os}?") do
       RbConfig::CONFIG['host_os'] =~ /#{os}/
