@@ -477,6 +477,22 @@ layers configuration. You are free to put any user code."
                     nil
                     nil)))
 
+  (defun elixir-remove-do-sugar ()
+    (interactive)
+    (save-excursion
+      (elixir-beginning-of-defun)
+      (goto-char (line-end-position))
+      (backward-kill-word 1)
+      (delete-horizontal-space)
+      (insert ", do:")
+      (forward-line 1)
+      (delete-indentation)
+      (forward-line 1)
+      (kill-whole-line)))
+
+  (evil-define-key '(normal visual motion) elixir-mode-map
+    "gS" 'elixir-remove-do-sugar)
+
   (defun elixir-mix-format-code ()
     (interactive)
     (shell-command-to-string (format "mix format %s" buffer-file-name)))
