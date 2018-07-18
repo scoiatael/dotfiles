@@ -1,0 +1,2 @@
+* My programming environment
+  Defines all basic setup that I use for general programming. Sets up [[https://direnv.net/][direnv]], overrides my default shell ([[https://fishshell.com/][fish]]).

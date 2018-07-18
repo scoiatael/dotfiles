@@ -31,6 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     prog-env
+     prog-ruby
+     prog-elixir
      terraform
      csv
      markdown
@@ -39,15 +42,6 @@ values."
      sql
      (python :variables python-enable-yapf-format-on-save t)
      nginx
-     helm
-     (auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence "jk"
-                      auto-completion-enable-help-tooltip t
-                      auto-completion-enable-sort-by-usage t
-                      auto-completion-enable-snippets-in-popup t)
-     better-defaults
      emacs-lisp
      (git :variables
           git-gutter-use-fringe t)
@@ -59,21 +53,16 @@ values."
                        version-control-global-margin t)
      (evil-snipe :variables
                  evil-snipe-enable-alternate-f-and-t-behaviors t)
-     (ruby :variables ruby-test-runner 'rspec)
      (go :variables go-use-gometalinter t)
-     colors
-     evil-commentary
      yaml
      docker
-     elixir
      systemd
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(direnv
-                                      splitjoin)
+   dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -325,29 +314,6 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
-  (setq exec-path-from-shell-shell-name "bash")
-  (setq shell-file-name (replace-regexp-in-string "\n$" ""  (shell-command-to-string "which bash")))
-  (setenv "shell" "bash")
-
-  (setq vc-follow-symlinks t)
-
-  ;; Autocomplete tweaks
-  ;; see http://auto-complete.org/doc/manual.html#configuration
-  (setq ac-auto-show-menu 0.1)
-  (setq ac-delay 0.1)
-  (setq ac-use-fuzzy t)
-
-  ;; Use spaces instead of tabs, width of tab is 2 spaces
-  (setq tab-width 2)
-  (setq tab-width 2)
-  (setq standard-indent 2)
-  (setq standard-indent 2)
-  (setq indent-tabs-mode nil)
-  (setq indent-tabs-mode nil)
-  (setq js2-basic-offset 2)
-  (setq js-indent-level 2)
-  (setq typescript-indent-level 2)
-
   ;; Set ispell language to avoid 'No word list can be found for language "en_GB" error'
   (setq ispell-dictionary "english")
 
@@ -379,14 +345,6 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (direnv-update-environment)
-
-  ;; https://github.com/syl20bnr/spacemacs/issues/9756
-  (setq spacemacs-default-jump-handlers
-        (remove 'evil-goto-definition spacemacs-default-jump-handlers))
-
-  (exec-path-from-shell-copy-env "SSH_AGENT_PID")
-  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
 
   ;; From https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
   ;; (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
@@ -430,52 +388,7 @@ layers configuration. You are free to put any user code."
   (setq ns-right-alternate-modifier nil)
 
   (add-hook 'prog-mode-hook 'fci-mode)
-  (add-hook 'prog-mode-hook 'direnv-mode)
 
-  (add-hook 'ruby-mode-hook
-            (lambda () (hs-minor-mode)))
-
-  (eval-after-load "hideshow"
-    '(add-to-list 'hs-special-modes-alist
-                  `(ruby-mode
-                    ,(rx (or "def" "class" "module" "{" "[" "do")) ; Block start
-                    ,(rx (or "}" "]" "end"))                  ; Block end
-                    ,(rx (or "#" "=begin"))                   ; Comment start
-                    nil
-                    nil)))
-
-  (defun elixir-remove-do-sugar ()
-    (interactive)
-    (save-excursion
-      (elixir-beginning-of-defun)
-      (goto-char (line-end-position))
-      (backward-kill-word 1)
-      (delete-horizontal-space)
-      (insert ", do:")
-      (forward-line 1)
-      (delete-indentation)
-      (forward-line 1)
-      (kill-whole-line)))
-
-  (evil-define-key '(normal visual motion) elixir-mode-map
-    "gS" 'elixir-remove-do-sugar)
-
-  (defun elixir-mix-format-code ()
-    (interactive)
-    (shell-command-to-string (format "mix format %s" buffer-file-name)))
-
-  (eval-after-load "hideshow"
-    '(add-to-list 'hs-special-modes-alist
-                  `(elixir-mode
-                    ,(rx "do")  ; Block start
-                    ,(rx "end") ; Block end
-                    ,(rx "#")  ; Comment start
-                    nil
-                    nil)))
-
-  (eval-after-load "rubocop" '(diminish 'rubocop-mode "🅡"))
-  (eval-after-load "alchemist" '(diminish 'alchemist-mode "🅐"))
-  (eval-after-load "alchemist-phoenix" '(diminish 'alchemist-phoenix-mode "㋭"))
   (eval-after-load "auto-dictionary-mode" '(diminish 'ispell-minor-mode "🅡"))
   (eval-after-load "auto-dictionary-mode" '(diminish 'auto-dictionary-mode "ⓓ")))
 
@@ -483,3 +396,17 @@ layers configuration. You are free to put any user code."
   (interactive)
   (magit-status)
   (delete-other-windows))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yasnippet auto-complete evil-nerd-commenter yapfify yaml-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org terraform-mode systemd sql-indent splitjoin spaceline smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir nginx-mode neotree mwim move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint jinja2-mode insert-shebang indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-gometalinter flycheck-credo flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump dockerfile-mode docker direnv diminish diff-hl define-word cython-mode csv-mode company-statistics company-shell company-quickhelp company-go company-ansible company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
