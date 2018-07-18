@@ -20,7 +20,7 @@ values."
    ;; installation feature and you have to explicitly list a layer in the
    ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
-   dotspacemacs-enable-lazy-installation 'unused
+   dotspacemacs-enable-lazy-installation nil
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
@@ -32,18 +32,8 @@ values."
    dotspacemacs-configuration-layers
    '(
      terraform
-     typescript
-     ocaml
-     rust
-     fsharp
-     scala
-     javascript
      csv
-     html
      markdown
-     (shell :variables
-            shell-default-shell 'eshell
-            shell-enable-smart-eshell t)
      shell-scripts
      (ranger :variables ranger-show-preview t)
      sql
@@ -62,7 +52,6 @@ values."
      (git :variables
           git-gutter-use-fringe t)
      org
-     salt
      ansible
      (spell-checking :variables spell-checking-enable-auto-dictionary t)
      (syntax-checking :variables syntax-checking-enable-tooltips nil)
@@ -75,28 +64,18 @@ values."
      colors
      evil-commentary
      yaml
-     (clojure :variables clojure-enable-fancify-symbols t)
-     chrome
-     osx
      docker
      elixir
-     docker
      systemd
-     (haskell :variables haskell-completion-backend 'intero)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(cql-mode
-                                      groovy-mode
-                                      direnv
-                                      splitjoin
-                                      vue-mode
-                                      vue-html-mode
-                                      feature-mode)
+   dotspacemacs-additional-packages '(direnv
+                                      splitjoin)
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '(info+ help-fns+ hide-comnt)
+   dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -346,15 +325,17 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
-  (setq-default exec-path-from-shell-shell-name "bash")
+  (setq exec-path-from-shell-shell-name "bash")
+  (setq shell-file-name (replace-regexp-in-string "\n$" ""  (shell-command-to-string "which bash")))
+  (setenv "shell" "bash")
 
   (setq vc-follow-symlinks t)
 
   ;; Autocomplete tweaks
   ;; see http://auto-complete.org/doc/manual.html#configuration
-  (setq-default ac-auto-show-menu 0.1)
-  (setq-default ac-delay 0.1)
-  (setq-default ac-use-fuzzy t)
+  (setq ac-auto-show-menu 0.1)
+  (setq ac-delay 0.1)
+  (setq ac-use-fuzzy t)
 
   ;; Use spaces instead of tabs, width of tab is 2 spaces
   (setq tab-width 2)
@@ -372,17 +353,9 @@ user code."
 
   (setq ranger-show-literal nil)
 
-  (setq shell-file-name (replace-regexp-in-string "\n$" ""  (shell-command-to-string "which bash")))
-
-
-  (setq-default shm-auto-insert-skeletons nil)
-  (setq-default shm-display-quarantine nil)
-
   (setq fci-rule-column 120)
 
   (setq ruby-insert-encoding-magic-comment nil)
-
-  (setq js2-strict-trailing-comma-warning nil)
 
   ;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
   (setq flycheck-gometalinter-vendor t)
@@ -391,73 +364,67 @@ user code."
   ;; only run fast linters
   (setq flycheck-gometalinter-fast t)
 
-  (setq projectile-indexing-method 'alien)
   (setq projectile-enable-caching t)
 
   ;; Add some nice additions like italicized comments, etc.
-  (set-face-attribute 'font-lock-comment-delimiter-face nil :slant 'italic)
-  (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
-  (set-face-attribute 'font-lock-doc-face nil :slant 'italic)
-  (set-face-attribute 'font-lock-keyword-face nil :weight 'bold)
-  (set-face-attribute 'font-lock-builtin-face nil :weight 'bold)
-  (set-face-attribute 'font-lock-preprocessor-face nil :weight 'bold))
+  ;; (set-face-attribute 'font-lock-comment-delimiter-face nil :slant 'italic)
+  ;; (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+  ;; (set-face-attribute 'font-lock-doc-face nil :slant 'italic)
+  ;; (set-face-attribute 'font-lock-keyword-face nil :weight 'bold)
+  ;; (set-face-attribute 'font-lock-builtin-face nil :weight 'bold)
+  ;; (set-face-attribute 'font-lock-preprocessor-face nil :weight 'bold)
+  )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (require 'helm-bookmark)
   (direnv-update-environment)
 
   ;; https://github.com/syl20bnr/spacemacs/issues/9756
   (setq spacemacs-default-jump-handlers
         (remove 'evil-goto-definition spacemacs-default-jump-handlers))
 
-  (setenv "shell" "bash")
-
-  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-  (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
-
   (exec-path-from-shell-copy-env "SSH_AGENT_PID")
   (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
 
   ;; From https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
-  (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-                 (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-                 (36 . ".\\(?:>\\)")
-                 (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-                 (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-                 (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-                 (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-                 (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-                 (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-                 (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-                 (48 . ".\\(?:x[a-zA-Z]\\)")
-                 (58 . ".\\(?:::\\|[:=]\\)")
-                 (59 . ".\\(?:;;\\|;\\)")
-                 (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-                 (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-                 (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-                 (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-                 (91 . ".\\(?:]\\)")
-                 (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-                 (94 . ".\\(?:=\\)")
-                 (119 . ".\\(?:ww\\)")
-                 (123 . ".\\(?:-\\)")
-                 (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-                 (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-                 )
-               ))
-    (dolist (char-regexp alist)
-      (set-char-table-range composition-function-table (car char-regexp)
-                            `([,(cdr char-regexp) 0 font-shape-gstring]))))
-  (add-hook 'helm-major-mode-hook
-            (lambda ()
-              (setq auto-composition-mode nil)))
+  ;; (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
+  ;;                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
+  ;;                (36 . ".\\(?:>\\)")
+  ;;                (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
+  ;;                (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+  ;;                (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
+  ;;                (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
+  ;;                (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+  ;;                (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+  ;;                (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+  ;;                (48 . ".\\(?:x[a-zA-Z]\\)")
+  ;;                (58 . ".\\(?:::\\|[:=]\\)")
+  ;;                (59 . ".\\(?:;;\\|;\\)")
+  ;;                (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
+  ;;                (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+  ;;                (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+  ;;                (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
+  ;;                (91 . ".\\(?:]\\)")
+  ;;                (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+  ;;                (94 . ".\\(?:=\\)")
+  ;;                (119 . ".\\(?:ww\\)")
+  ;;                (123 . ".\\(?:-\\)")
+  ;;                (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+  ;;                (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
+  ;;                )
+  ;;              ))
+  ;;   (dolist (char-regexp alist)
+  ;;     (set-char-table-range composition-function-table (car char-regexp)
+  ;;                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
+  ;; (add-hook 'helm-major-mode-hook
+  ;;           (lambda ()
+  ;;             (setq auto-composition-mode nil)))
 
-  (add-hook 'ediff-mode-hook
-            (lambda ()
-              (setq auto-composition-mode nil)))
+  ;; (add-hook 'ediff-mode-hook
+  ;;           (lambda ()
+  ;;             (setq auto-composition-mode nil)))
 
   ;; Enable Left Alt for national symbols (important for polish users)
   (setq ns-right-alternate-modifier nil)
@@ -510,46 +477,9 @@ layers configuration. You are free to put any user code."
   (eval-after-load "alchemist" '(diminish 'alchemist-mode "🅐"))
   (eval-after-load "alchemist-phoenix" '(diminish 'alchemist-phoenix-mode "㋭"))
   (eval-after-load "auto-dictionary-mode" '(diminish 'ispell-minor-mode "🅡"))
-  (eval-after-load "auto-dictionary-mode" '(diminish 'auto-dictionary-mode "ⓓ"))
-  (eval-after-load "utop" '(diminish 'utop-minor-mode "🅤"))
-  (eval-after-load "merlin" '(diminish 'merlin-mode "🅜"))
-  (add-to-list 'auto-mode-alist '("\\.nomad$" . conf-mode))
-  (add-to-list 'auto-mode-alist '("\\.cql$" . cql-mode))
-
-  (require 'ansi-color)
-  (defun colorize-compilation-buffer ()
-    (let ((inhibit-read-only t))
-      (ansi-color-apply-on-region (point-min) (point-max))))
-  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
-  )
+  (eval-after-load "auto-dictionary-mode" '(diminish 'auto-dictionary-mode "ⓓ")))
 
 (defun fullscreen-magit-status ()
   (interactive)
   (magit-status)
   (delete-other-windows))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (evil-nerd-commenter define-word yapfify xterm-color ws-butler winum which-key web-mode web-beautify vue-mode volatile-highlights vi-tilde-fringe uuidgen utop use-package unfill tuareg toml-mode toc-org tide terraform-mode tagedit systemd sql-indent splitjoin spaceline smeargle slim-mode shell-pop scss-mode sass-mode salt-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pbcopy paradox osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ocp-indent ob-elixir noflet nginx-mode neotree mwim multi-term move-text minitest merlin markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl js2-refactor js-doc jinja2-mode intero insert-shebang indent-guide hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets groovy-mode google-translate golden-ratio go-guru go-eldoc gnuplot gmail-message-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy fsharp-mode flyspell-correct-helm flymd flycheck-rust flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-gometalinter flycheck-credo flx-ido fish-mode fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eshell-z eshell-prompt-extras esh-help ensime emmet-mode elisp-slime-nav edit-server dumb-jump dockerfile-mode docker direnv diminish diff-hl cython-mode csv-mode cql-mode company-web company-tern company-statistics company-shell company-go company-ghci company-ghc company-cabal company-ansible company-anaconda column-enforce-mode color-identifiers-mode coffee-mode cmm-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(safe-local-variable-values
-   (quote
-    ((checkdoc-minor-mode . t)
-     (eval add-hook
-           (quote after-save-hook)
-           (function elixir-mix-format-code)
-           nil t)
-     (elixir-enable-compilation-checking\
-      . t)
-     (elixir-enable-compilation-checking . t)
-     (elixir-enable-compilation-checking)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
