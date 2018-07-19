@@ -34,9 +34,10 @@ values."
      prog-env
      prog-ruby
      prog-elixir
+     pretty-code
+     markdown
      terraform
      csv
-     markdown
      shell-scripts
      (ranger :variables ranger-show-preview t)
      sql
@@ -319,10 +320,6 @@ user code."
 
   (setq ranger-show-literal nil)
 
-  (setq fci-rule-column 120)
-
-  (setq ruby-insert-encoding-magic-comment nil)
-
   ;; skips 'vendor' directories and sets GO15VENDOREXPERIMENT=1
   (setq flycheck-gometalinter-vendor t)
   ;; only show errors
@@ -331,63 +328,16 @@ user code."
   (setq flycheck-gometalinter-fast t)
 
   (setq projectile-enable-caching t)
-
-  ;; Add some nice additions like italicized comments, etc.
-  ;; (set-face-attribute 'font-lock-comment-delimiter-face nil :slant 'italic)
-  ;; (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
-  ;; (set-face-attribute 'font-lock-doc-face nil :slant 'italic)
-  ;; (set-face-attribute 'font-lock-keyword-face nil :weight 'bold)
-  ;; (set-face-attribute 'font-lock-builtin-face nil :weight 'bold)
-  ;; (set-face-attribute 'font-lock-preprocessor-face nil :weight 'bold)
   )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-
-  ;; From https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
-  ;; (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-  ;;                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-  ;;                (36 . ".\\(?:>\\)")
-  ;;                (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-  ;;                (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-  ;;                (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-  ;;                (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-  ;;                (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-  ;;                (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-  ;;                (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-  ;;                (48 . ".\\(?:x[a-zA-Z]\\)")
-  ;;                (58 . ".\\(?:::\\|[:=]\\)")
-  ;;                (59 . ".\\(?:;;\\|;\\)")
-  ;;                (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-  ;;                (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-  ;;                (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-  ;;                (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-  ;;                (91 . ".\\(?:]\\)")
-  ;;                (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-  ;;                (94 . ".\\(?:=\\)")
-  ;;                (119 . ".\\(?:ww\\)")
-  ;;                (123 . ".\\(?:-\\)")
-  ;;                (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-  ;;                (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-  ;;                )
-  ;;              ))
-  ;;   (dolist (char-regexp alist)
-  ;;     (set-char-table-range composition-function-table (car char-regexp)
-  ;;                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
-  ;; (add-hook 'helm-major-mode-hook
-  ;;           (lambda ()
-  ;;             (setq auto-composition-mode nil)))
-
-  ;; (add-hook 'ediff-mode-hook
-  ;;           (lambda ()
-  ;;             (setq auto-composition-mode nil)))
+  (remove-hook 'markdown-mode-hook 'spacemacs/activate-mmm-mode)
 
   ;; Enable Left Alt for national symbols (important for polish users)
   (setq ns-right-alternate-modifier nil)
-
-  (add-hook 'prog-mode-hook 'fci-mode)
 
   (eval-after-load "auto-dictionary-mode" '(diminish 'ispell-minor-mode "🅡"))
   (eval-after-load "auto-dictionary-mode" '(diminish 'auto-dictionary-mode "ⓓ")))
@@ -403,7 +353,7 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yasnippet auto-complete evil-nerd-commenter yapfify yaml-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org terraform-mode systemd sql-indent splitjoin spaceline smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir nginx-mode neotree mwim move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint jinja2-mode insert-shebang indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-gometalinter flycheck-credo flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump dockerfile-mode docker direnv diminish diff-hl define-word cython-mode csv-mode company-statistics company-shell company-quickhelp company-go company-ansible company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (markdown-mode yasnippet auto-complete evil-nerd-commenter yapfify yaml-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org terraform-mode systemd sql-indent splitjoin spaceline smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file ob-elixir nginx-mode neotree mwim move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint jinja2-mode insert-shebang indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-gometalinter flycheck-credo flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump dockerfile-mode docker direnv diminish diff-hl define-word cython-mode csv-mode company-statistics company-shell company-quickhelp company-go company-ansible company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
