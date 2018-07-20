@@ -35,6 +35,7 @@ values."
      prog-ruby
      prog-elixir
      pretty-code
+     prog-vcs
      markdown
      terraform
      csv
@@ -44,14 +45,10 @@ values."
      (python :variables python-enable-yapf-format-on-save t)
      nginx
      emacs-lisp
-     (git :variables
-          git-gutter-use-fringe t)
      org
      ansible
      (spell-checking :variables spell-checking-enable-auto-dictionary t)
      (syntax-checking :variables syntax-checking-enable-tooltips nil)
-     (version-control :variables
-                       version-control-global-margin t)
      (evil-snipe :variables
                  evil-snipe-enable-alternate-f-and-t-behaviors t)
      (go :variables go-use-gometalinter t)
@@ -341,11 +338,6 @@ layers configuration. You are free to put any user code."
 
   (eval-after-load "auto-dictionary-mode" '(diminish 'ispell-minor-mode "🅡"))
   (eval-after-load "auto-dictionary-mode" '(diminish 'auto-dictionary-mode "ⓓ")))
-
-(defun fullscreen-magit-status ()
-  (interactive)
-  (magit-status)
-  (delete-other-windows))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
