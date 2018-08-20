@@ -38,7 +38,7 @@
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
 ;; These modes break when ligatures are enabled
-(let ((modes-without-ligatures '(helm-major-mode-hook ediff-mode-hook)))
+(let ((modes-without-ligatures '(helm-major-mode-hook ediff-mode-hook mmm-mode-hook markdown-mode-hook org-mode-hook)))
   (dolist (mode modes-without-ligatures)
       (add-hook mode
        (lambda ()

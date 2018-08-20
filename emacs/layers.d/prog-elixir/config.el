@@ -13,8 +13,10 @@
 ;; https://github.com/syl20bnr/spacemacs/issues/9756
 (eval-after-load "alchemist"
   '(setq spacemacs-default-jump-handlers
-         (remove 'evil-goto-definition spacemacs-default-jump-handlers)))
+         (remove 'dumb-jump-go
+                 (remove 'evil-goto-definition spacemacs-default-jump-handlers))))
 
 ;; elixir-mode hook to format file after save
 (add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'after-save-hook 'elixir-mix-format-current-file)))
+          (lambda ()
+            (add-hook 'after-save-hook 'elixir-mix-format-current-file)))

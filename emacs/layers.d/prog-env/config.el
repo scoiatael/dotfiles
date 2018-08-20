@@ -19,3 +19,9 @@
 (setq standard-indent 2)
 (setq indent-tabs-mode nil)
 (setq indent-tabs-mode nil)
+
+;; macOS ls does not support --dired by default.
+;; Use one installed by Homebrew instead
+(when (eq system-type 'darwin)
+  (setq ls-lisp-use-insert-directory-program "/usr/local/bin/gls")
+  (require 'ls-lisp))
