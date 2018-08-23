@@ -38,7 +38,7 @@ values."
      prog-vcs
      vinegar
      markdown
-     terraform
+     (terraform :variables terraform-auto-format-on-save t)
      csv
      shell-scripts
      (ranger :variables ranger-show-preview t)
