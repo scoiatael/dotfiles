@@ -36,7 +36,6 @@ values."
      prog-elixir
      pretty-code
      prog-vcs
-     vinegar
      markdown
      (terraform :variables terraform-auto-format-on-save t)
      csv
