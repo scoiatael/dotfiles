@@ -3,10 +3,7 @@ oh-my-fish/plugin-bak
 edc/bass
 oh-my-fish/plugin-bundler
 fisherman/fzf
-fisherman/get
-fisherman/getopts
-fisherman/last_job_id
 laughedelic/pisces
 fisherman/spin
-oh-my-fish/plugin-wttr
 fisherman/z
+oh-my-fish/plugin-wttr
