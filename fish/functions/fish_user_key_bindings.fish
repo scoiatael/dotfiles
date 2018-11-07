@@ -2,6 +2,5 @@ function fish_user_key_bindings
     bind -M insert \cs forward-char
     bind -M insert \cp 'prevd > /dev/null; commandline -f repaint'
     bind -M insert \cn 'nextd > /dev/null; commandline -f repaint'
-    [ -f ~/.config/fish/functions/fish_user_key_bindings.fish ]; and source ~/.config/fish/functions/fish_user_key_bindings.fish; and fish_user_key_bindings
 end
 
