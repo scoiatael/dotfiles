@@ -135,6 +135,7 @@ function fish_prompt
       show_git_status
       echo '' # Break to multiline
   end
+  functions --query iterm2_prompt_mark; and iterm2_prompt_mark
   show_vi_status
   show_short_git_status
   show_prompt
