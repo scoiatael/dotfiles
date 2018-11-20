@@ -38,3 +38,5 @@
 	hideCampaign = true
 [include]
   path = ~/.gitconfig_custom
+[diff "sopsdiffer"]
+	textconv = sops -d
