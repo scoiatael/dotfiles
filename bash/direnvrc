@@ -22,7 +22,7 @@ function _scoiatael_init() {
     export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
-    for p in /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin $HOME/dotfiles/bin;
+    for p in /usr/local/bin /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin $HOME/dotfiles/bin /usr/local/opt/texinfo/bin;
     do
         _scoiatael_maybe_PATH_add $p;
     done
