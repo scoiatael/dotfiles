@@ -60,6 +60,7 @@ Each entry is either:
 
 (defun disable-mouse/init-disable-mouse ()
   (global-disable-mouse-mode)
+  (spacemacs|diminish disable-mouse-global-mode)
   )
 
 ;;; packages.el ends here
