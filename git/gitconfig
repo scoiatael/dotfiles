@@ -40,3 +40,11 @@
   path = ~/.gitconfig_custom
 [diff "sopsdiffer"]
 	textconv = sops -d
+[magithub]
+	online = false
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false
+[github]
+	user = scoiatael
