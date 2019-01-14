@@ -34,15 +34,15 @@ Linker.create! do
   end
 
   group 'misc' do
-    links %w(dir_colors curlrc slate)
+    links %w(dir_colors curlrc)
 
     link 'lein/profiles.clj', to: "#{current_group}/lein_profiles.clj"
 
-    link 'config/terminator/config', to: "#{current_group}/terminator"
+    link 'config/terminator/config', to: "#{current_group}/terminator" if linux?
   end
 
   group 'haskell' do
-    link 'xmonad/xmonad.hs', to: "#{current_group}/xmonad.hs"
+    link 'xmonad/xmonad.hs', to: "#{current_group}/xmonad.hs" if linux?
     link 'stack/config.yml', to: "#{current_group}/stack.yml"
   end
 
@@ -58,5 +58,9 @@ Linker.create! do
   group 'gnupg' do
     link 'gnupg/gpg.conf', to: "#{current_group}/gpg.conf"
     link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.#{os}.conf"
+  end
+
+  group 'macos' do
+    links %w(skhdrc chunkwmrc) if darwin?
   end
 end
