@@ -18,11 +18,13 @@ set -q FZF_PREVIEW_DIR_CMD; or set -U FZF_PREVIEW_DIR_CMD "ls"
 
 
 function random
-    set -l length $argv[1]
-    if test -z $length
-        set -l length 10
-    end
-    ruby -e "puts (('a'..'z').to_a + (0..9).to_a).sample($length).join('')"
+    set -q argv[1]; and set -l length $argv[1]; or set -l length 32
+    cat /dev/urandom | gtr -dc 'a-zA-Z0-9' | fold -w $length | head -n 1
+end
+
+function reset_gpg_agent
+  gpgconf --kill gpg-agent
+  gpgconf --launch gpg-agent
 end
 
 function install_node
