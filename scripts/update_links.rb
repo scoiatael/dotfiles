@@ -57,7 +57,17 @@ Linker.create! do
     link 'gnupg/gpg-agent.conf', to: "#{current_group}/gpg-agent.#{os}.conf"
   end
 
-  group 'macos' do
-    links %w(skhdrc chunkwmrc) if darwin?
+  if darwin?
+    group 'macos' do
+      links %w(skhdrc chunkwmrc)
+    end
+  end
+
+  if linux?
+    group 'linux' do
+      link "config/compton/compton.conf", to: "#{current_group}/compton.conf"
+      link "config/termite/config", to: "#{current_group}/termite_config"
+      link "config/i3/config", to: "#{current_group}/i3_config"
+    end
   end
 end
