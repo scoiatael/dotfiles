@@ -40,3 +40,6 @@
 [submodule "vim/bundle/vim-autoclose"]
 	path = vim/bundle/vim-autoclose
 	url = https://github.com/Townk/vim-autoclose.git
+[submodule "linux/termite-color-switcher"]
+	path = linux/termite-color-switcher
+	url = https://github.com/NearHuscarl/termite-color-switcher.git

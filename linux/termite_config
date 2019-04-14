@@ -1,3 +1,36 @@
+[colors]
+# If both of these are unset, cursor falls back to the foreground color,
+# and cursor_foreground falls back to the background color.
+cursor = #16A085
+cursor_foreground = #ECF0F1
+
+foreground = #ECF0F1
+foreground_bold = #ECF0F1
+
+# 20% background transparency (requires a compositor)
+background = rgba(31, 45, 58, 0.8)
+
+# If unset, will reverse foreground and background
+highlight = #2980B9
+
+# Colors from color0 to color254 can be set
+color0 = #1F2D3A
+color1 = #C0392B
+color2 = #27AE60
+color3 = #F39C12
+color4 = #2980B9
+color5 = #8E44AD
+color6 = #16A085
+color7 = #84888B
+color8 = #2C3E50
+color9 = #E74C3C
+color10 = #2ECC71
+color11 = #F1C40F
+color12 = #3498DB
+color13 = #9B59B6
+color14 = #2AA198
+color15 = #ECF0F1
+
 [options]
 #allow_bold = true
 #audible_bell = false
@@ -37,40 +70,6 @@ scrollback_lines = 10000
 
 # "off", "left" or "right"
 #scrollbar = off
-
-[colors]
-# If both of these are unset, cursor falls back to the foreground color,
-# and cursor_foreground falls back to the background color.
-#cursor = #dcdccc
-#cursor_foreground = #dcdccc
-
-#foreground = #dcdccc
-#foreground_bold = #ffffff
-#background = #3f3f3f
-
-# 20% background transparency (requires a compositor)
-# background = rgba(63, 63, 63, 0.5)
-
-# If unset, will reverse foreground and background
-highlight = #2f2f2f
-
-# Colors from color0 to color254 can be set
-color0 = #3f3f3f
-color1 = #705050
-color2 = #60b48a
-color3 = #dfaf8f
-color4 = #506070
-color5 = #dc8cc3
-color6 = #8cd0d3
-color7 = #dcdccc
-color8 = #709080
-color9 = #dca3a3
-color10 = #c3bf9f
-color11 = #f0dfaf
-color12 = #94bff3
-color13 = #ec93d3
-color14 = #93e0e3
-color15 = #ffffff
 
 [hints]
 #font = Monospace 12
