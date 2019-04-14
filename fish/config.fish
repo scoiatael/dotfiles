@@ -2,16 +2,11 @@ set -l dotfiles_path "$HOME/dotfiles/fish"
 set fish_function_path $dotfiles_path/functions $fish_function_path
 
 fundle plugin 'edc/bass'
-fundle plugin 'fisherman/await'
-fundle plugin 'fisherman/fzf'
-fundle plugin 'fisherman/getopts'
-fundle plugin 'fisherman/last_job_id'
-fundle plugin 'fisherman/spin'
-fundle plugin 'fisherman/z'
 fundle plugin 'laughedelic/pisces'
 fundle plugin 'oh-my-fish/plugin-bak'
 fundle plugin 'oh-my-fish/plugin-bundler'
 fundle plugin 'oh-my-fish/plugin-wttr'
+fundle plugin 'jethrokuan/z'
 
 fundle init
 
