@@ -37,12 +37,9 @@ Linker.create! do
     links %w(dir_colors curlrc)
 
     link 'lein/profiles.clj', to: "#{current_group}/lein_profiles.clj"
-
-    link 'config/terminator/config', to: "#{current_group}/terminator" if linux?
   end
 
   group 'haskell' do
-    link 'xmonad/xmonad.hs', to: "#{current_group}/xmonad.hs" if linux?
     link 'stack/config.yml', to: "#{current_group}/stack.yml"
   end
 
