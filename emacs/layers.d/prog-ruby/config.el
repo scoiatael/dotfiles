@@ -13,3 +13,5 @@
 (setq ruby-insert-encoding-magic-comment nil)
 
 (eval-after-load "rubocop" '(diminish 'rubocop-mode "🅡"))
+
+(setq feature-default-language "fi")
