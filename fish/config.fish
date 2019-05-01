@@ -26,14 +26,16 @@ function random
 end
 
 function install_node
-  set -l version $argv[1]
-  if test -z $version
-      set -l version (curl -s http://nodejs.org/dist/index.tab | head -n 2  | tail -n 1 | awk '{ print $1 }')
+  set -l node_version $argv[1]
+  if test -z $node_version
+      set -l node_version (curl -s http://nodejs.org/dist/index.tab | head -n 2  | tail -n 1 | awk '{ print $1 }')
   end
-  set -l install_dir $NODE_VERSIONS/node-$version
-  echo "Installing node $version to $install_dir"
+  set -l install_dir $NODE_VERSIONS/node-$node_version
+  set -l node_url http://nodejs.org/dist/$node_version/node-$node_version-darwin-x64.tar.gz
+  echo "Installing node $node_version to $install_dir"
+  echo "   from $node_url"
   mkdir -p $install_dir
-  curl -fsSL http://nodejs.org/dist/$version/node-$version-darwin-x64.tar.gz | tar xvz --strip 1 -C $install_dir
+  curl -fsSL "$node_url" | tar xvz --strip 1 -C $install_dir
 end
 
 function _scoiatael_fish_init
