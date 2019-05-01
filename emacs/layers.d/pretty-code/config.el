@@ -43,8 +43,3 @@
       (add-hook mode
        (lambda ()
          (setq auto-composition-mode nil)))))
-
-
-(setq fci-rule-column 120)
-
-(add-hook 'prog-mode-hook 'fci-mode)
