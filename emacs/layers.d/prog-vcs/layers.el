@@ -3,5 +3,4 @@
                                                        version-control-global-margin t)
                                       (git :variables
                                            git-gutter-use-fringe t)
-                                      github
                                       ))
