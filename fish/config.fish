@@ -7,6 +7,7 @@ fundle plugin 'oh-my-fish/plugin-bak'
 fundle plugin 'oh-my-fish/plugin-bundler'
 fundle plugin 'oh-my-fish/plugin-wttr'
 fundle plugin 'jethrokuan/z'
+fundle plugin 'jethrokuan/fzf'
 
 fundle init
 
