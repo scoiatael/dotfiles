@@ -7,16 +7,19 @@
                   nil
                   nil)))
 
-(eval-after-load "alchemist" '(diminish 'alchemist-mode "🅐"))
-(eval-after-load "alchemist-phoenix" '(diminish 'alchemist-phoenix-mode "㋭"))
-
-;; https://github.com/syl20bnr/spacemacs/issues/9756
-(eval-after-load "alchemist"
-  '(setq spacemacs-default-jump-handlers
-         (remove 'dumb-jump-go
-                 (remove 'evil-goto-definition spacemacs-default-jump-handlers))))
-
 ;; elixir-mode hook to format file after save
 (add-hook 'elixir-mode-hook
           (lambda ()
+            (require 'eglot)
+            (add-to-list 'eglot-server-programs `(elixir-mode "~/Documents/elixir/elixir-ls/release/language_server.sh"))
+            (eglot-ensure)
             (add-hook 'after-save-hook 'elixir-mix-format-current-file)))
+
+(with-eval-after-load 'elixir-mode
+  (spacemacs/declare-prefix-for-mode 'elixir-mode
+    "mt" "tests" "testing related functionality")
+  (spacemacs/set-leader-keys-for-major-mode 'elixir-mode
+    "tb" 'exunit-verify-all
+    "ta" 'exunit-verify
+    "tk" 'exunit-rerun
+    "tt" 'exunit-verify-single))

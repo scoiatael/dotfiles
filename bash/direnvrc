@@ -2,34 +2,36 @@
 
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
-    if test -d $p;
+    if test -d "$p";
     then
-        PATH_add $p
+        PATH_add "$p"
     fi
 }
 
 function _scoiatael_launch_gpg_agent() {
-  gpgconf --launch gpg-agent
+    gpgconf --launch gpg-agent
 }
 
 
 function _scoiatael_init() {
     [ -z "$VERBOSE" ] || log_status "Start init.."
     export GOPATH=$HOME/go
-    PATH_add $GOPATH/bin
+    PATH_add "$GOPATH/bin"
 
-    PATH_add $HOME/.cargo/bin
-    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+    PATH_add "$HOME/.cargo/bin"
+    RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+    export RUST_SRC_PATH
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
     for p in /usr/local/bin /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin $HOME/dotfiles/bin /usr/local/opt/texinfo/bin;
     do
-        _scoiatael_maybe_PATH_add $p;
+        _scoiatael_maybe_PATH_add "$p";
     done
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
-    local ssh_agent="$(gpgconf --list-dirs agent-ssh-socket)"
-    if [ -z "$SSH_AUTH_SOCK" ] || [ $SSH_AUTH_SOCK != $ssh_agent ];
+    local ssh_agent
+    ssh_agent="$(gpgconf --list-dirs agent-ssh-socket)"
+    if [ -z "$SSH_AUTH_SOCK" ] || [ "$SSH_AUTH_SOCK" != "$ssh_agent" ];
     then
         _scoiatael_launch_gpg_agent;
         export SSH_AUTH_SOCK=$ssh_agent
@@ -45,27 +47,30 @@ function _scoiatael_init() {
     fi
 
     [ -z "$VERBOSE" ] || log_status "Loading opam.."
-    if which opam > /dev/null 2> /dev/null;
+    if command opam > /dev/null 2> /dev/null;
     then
-      eval $(opam config env --shell=bash)
+        eval "$(opam config env --shell=bash)"
     fi
 
     export NODE_VERSIONS="$HOME/.node"
-    mkdir -p $NODE_VERSIONS
+    mkdir -p "$NODE_VERSIONS"
+
+    export GTAGSLABEL=pygments
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
 _scoiatael_init > /dev/null
 
 use_ruby() {
-  local ruby_root=$HOME/.rubies/ruby-$1
-  load_prefix "$ruby_root"
-  layout_ruby
+    local ruby_root=$HOME/.rubies/ruby-$1
+    load_prefix "$ruby_root"
+    layout_ruby
 }
 
 use_go() {
-  export GOPATH="$PWD:$(go env GOPATH)"
-  PATH_add "$PWD/bin"
+    GOPATH="$PWD:$(go env GOPATH)"
+    export GOPATH
+    PATH_add "$PWD/bin"
 }
 
 export LANG=en_GB.utf-8
