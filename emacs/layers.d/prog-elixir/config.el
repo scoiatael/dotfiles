@@ -19,7 +19,8 @@
   (spacemacs/declare-prefix-for-mode 'elixir-mode
     "mt" "tests" "testing related functionality")
   (spacemacs/set-leader-keys-for-major-mode 'elixir-mode
-    "tb" 'exunit-verify-all
-    "ta" 'exunit-verify
+    "ta" 'exunit-verify-all
+    "tu" 'exunit-verify-all-in-umbrella
+    "tb" 'exunit-verify
     "tk" 'exunit-rerun
     "tt" 'exunit-verify-single))
