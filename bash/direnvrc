@@ -9,7 +9,11 @@ function _scoiatael_maybe_PATH_add() {
 }
 
 function _scoiatael_launch_gpg_agent() {
-    gpgconf --launch gpg-agent
+    if [ "Linux" = "$(uname)" ]; then
+        systemctl --user enable --now 'gpg-agent.socket'
+    else
+        gpgconf --launch gpg-agent
+    fi
 }
 
 
