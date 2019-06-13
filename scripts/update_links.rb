@@ -6,7 +6,7 @@ require_relative 'lib/linker'
 Linker.create! do
   link 'config/ranger', to: 'ranger'
   group 'fish' do
-    %w[config.fish fishfile].each do |file|
+    %w[config.fish].each do |file|
       link "config/fish/#{file}", to: "#{current_group}/#{file}"
     end
   end
@@ -68,6 +68,9 @@ Linker.create! do
       link "config/compton/compton.conf", to: "#{current_group}/compton.conf"
       link "config/termite/config", to: "#{current_group}/termite_config"
       link "config/i3/config", to: "#{current_group}/i3_config"
+      link "Xresources", to: "#{current_group}/Xresources"
     end
+
+    `xrdb -merge ~/.Xresources`
   end
 end
