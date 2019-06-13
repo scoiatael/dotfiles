@@ -233,6 +233,6 @@ bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id "compton -cC --config ~/.config/compton.conf/compton.conf"
 exec --no-startup-id nm-applet
-exec --no-startup-id "nitrogen --restore"
+exec --no-startup-id "feh --randomize --recursive ~/Documents/bg -d --bg-max"
 exec --no-startup-id "sleep 2s && kalu"
 exec --no-startup-id "setxkbmap -option caps:escape"
