@@ -47,7 +47,11 @@ This function should only modify configuration layer settings."
      shell-scripts
      (ranger :variables ranger-show-preview t)
      sql
-     (python :variables python-enable-yapf-format-on-save t)
+     lsp
+     dap
+     (python :variables
+             python-enable-yapf-format-on-save t
+             python-backend 'lsp)
      nginx
      emacs-lisp
      org
