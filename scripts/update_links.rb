@@ -59,7 +59,7 @@ Linker.create! do
 
   if darwin?
     group 'macos' do
-      links %w(skhdrc chunkwmrc)
+      links %w(skhdrc yabairc)
     end
   end
 
