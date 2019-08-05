@@ -35,6 +35,8 @@ This function should only modify configuration layer settings."
      prog-env
      prog-ruby
      prog-elixir
+     prog-python
+     erlang
      pretty-code
      prog-vcs
      prog-go
@@ -49,9 +51,6 @@ This function should only modify configuration layer settings."
      sql
      lsp
      dap
-     (python :variables
-             python-enable-yapf-format-on-save t
-             python-backend 'lsp)
      nginx
      emacs-lisp
      org
@@ -494,6 +493,9 @@ user code."
   (setq flycheck-gometalinter-fast t)
 
   (setq projectile-enable-caching t)
+
+  ;; Enable Left Alt for national symbols (important for polish users)
+  (setq ns-right-alternate-modifier nil)
   )
 
 (defun dotspacemacs/user-load ()
@@ -509,8 +511,9 @@ dump."
 layers configuration. You are free to put any user code."
   (remove-hook 'markdown-mode-hook 'spacemacs/activate-mmm-mode)
 
-  ;; Enable Left Alt for national symbols (important for polish users)
-  (setq ns-right-alternate-modifier nil)
+  (spacemacs/declare-prefix "o" "custom")
+  (spacemacs/set-leader-keys "od" 'base64-decode-region)
+  (spacemacs/set-leader-keys "oe" 'base64-encode-region)
 
   (spacemacs|diminish helm-mode)
   (spacemacs|diminish auto-dictionary-mode)
