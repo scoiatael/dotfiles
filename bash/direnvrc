@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export LC_ALL=en_GB.UTF-8
+
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
     if test -d "$p";
@@ -37,6 +39,7 @@ function _scoiatael_init() {
     ssh_agent="$(gpgconf --list-dirs agent-ssh-socket)"
     if [ -z "$SSH_AUTH_SOCK" ] || [ "$SSH_AUTH_SOCK" != "$ssh_agent" ];
     then
+        [ -z "$VERBOSE" ] || log_status "Agent dead or missing; starting new"
         _scoiatael_launch_gpg_agent;
         export SSH_AUTH_SOCK=$ssh_agent
     fi

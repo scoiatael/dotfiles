@@ -4,7 +4,6 @@ set fish_function_path $dotfiles_path/functions $fish_function_path
 fundle plugin 'edc/bass'
 fundle plugin 'laughedelic/pisces'
 fundle plugin 'oh-my-fish/plugin-bak'
-fundle plugin 'oh-my-fish/plugin-bundler'
 fundle plugin 'oh-my-fish/plugin-wttr'
 fundle plugin 'jethrokuan/z'
 fundle plugin 'jethrokuan/fzf'

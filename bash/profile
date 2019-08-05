@@ -1,2 +1,5 @@
 eval "$(direnv hook bash)"
 [ -d $HOME/.rvm/scripts ] && source $HOME/.rvm/scripts/rvm
+
+# added by travis gem
+[ -f /Users/lukaszczaplinski/.travis/travis.sh ] && source /Users/lukaszczaplinski/.travis/travis.sh
