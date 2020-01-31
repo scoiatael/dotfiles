@@ -120,3 +120,6 @@ GRTAGS
 
 # Visual Studio Code ElixirLS
 .elixir_ls
+
+# Direnv
+.envrc
