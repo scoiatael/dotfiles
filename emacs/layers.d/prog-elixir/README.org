@@ -1,2 +1,0 @@
-* My Elixir programming environment
-  Some simple customizations and additions I take for granted when writing Elixir

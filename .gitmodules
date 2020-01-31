@@ -16,9 +16,6 @@
 [submodule "spacemacs"]
 	path = spacemacs
 	url = https://github.com/syl20bnr/spacemacs
-[submodule "emacs/spacemacs.d"]
-	path = emacs/spacemacs.d
-	url = https://github.com/syl20bnr/spacemacs
 [submodule "haskell/structured-haskell-mode"]
 	path = haskell/structured-haskell-mode
 	url = https://github.com/chrisdone/structured-haskell-mode.git
@@ -43,3 +40,6 @@
 [submodule "linux/termite-color-switcher"]
 	path = linux/termite-color-switcher
 	url = https://github.com/NearHuscarl/termite-color-switcher.git
+[submodule "emacs/emacs.d"]
+	path = emacs/emacs.d
+	url = https://github.com/hlissner/doom-emacs
