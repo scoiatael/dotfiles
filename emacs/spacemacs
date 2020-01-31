@@ -34,20 +34,17 @@ This function should only modify configuration layer settings."
      prog-env
      prog-ruby
      prog-elixir
-     prog-python
      (clojure :variables
               clojure-enable-fancify-symbols t
               clojure-enable-sayid t
               clojure-enable-clj-refactor t)
      erlang
+     (python :variables python-formatter 'black)
      pretty-code
      prog-vcs
-     prog-go
      disable-mouse
      markdown
      kubernetes
-     (terraform :variables terraform-auto-format-on-save t)
-     evernote
      csv
      shell-scripts
      (ranger :variables ranger-show-preview t)
@@ -66,9 +63,7 @@ This function should only modify configuration layer settings."
      yaml
      docker
      systemd
-     rust
-     (haskell :variables haskell-enable-hindent t)
-     elm
+     puppet
      )
 
    ;; List of additional packages that will be installed without being
@@ -78,13 +73,13 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(vcl-mode kubernetes-helm)
+   dotspacemacs-additional-packages '()
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(alchemist)
+   dotspacemacs-excluded-packages '()
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -183,10 +178,9 @@ It should only modify the values of Spacemacs settings."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 10)
-                                (agenda . 2)
-                                (todos . 3))
-   ;; True if the home buffer should respond to resize events.
+                                (projects . 7))
+
+   ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
 
    ;; Default major mode for a new empty buffer. Possible values are mode
@@ -223,17 +217,11 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '(("Iosevka Custom" ;; macOS
+   dotspacemacs-default-font '(("FuraMono Nerd Font" ;; macOS
                                 :size 12
                                 :weight normal
                                 :width normal
-                                :powerline-scale 1.4
-                                )
-                               ("Hasklig" ;; ArchLinux
-                                :size 12
-                                :weight normal
-                                :width normal
-                                :powerline-scale 1.4
+                                :powerline-scale 1.1
                                 ))
   ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -297,7 +285,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil, the paste transient-state is enabled. While enabled, after you
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
    ;; elements in the `kill-ring'. (default nil)
-   dotspacemacs-enable-paste-transient-state 't
+   dotspacemacs-enable-paste-transient-state t
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
@@ -538,6 +526,7 @@ This function is called at the very end of Spacemacs initialization."
    '(vcl-mode projectile-rails inflections lsp-ui geeknote flycheck-golangci-lint feature-mode exunit eglot flymake jsonrpc company-lsp lsp-mode ht dash-functional yasnippet-snippets yapfify yaml-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org systemd symon string-inflection sql-indent splitjoin spaceline-all-the-icons solarized-theme smeargle seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs rbenv ranger rake rainbow-mode rainbow-identifiers rainbow-delimiters racer pytest pyenv-mode py-isort popwin pippel pipenv pip-requirements persp-mode password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file ob-elixir nginx-mode neotree nameless mwim move-text mmm-mode minitest markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum live-py-mode link-hint kubernetes-evil jinja2-mode intero insert-shebang indent-guide importmagic hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-rust flycheck-pos-tip flycheck-mix flycheck-haskell flycheck-gometalinter flycheck-elm flycheck-credo flycheck-bashate flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu elm-test-runner elm-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode dockerfile-mode docker disable-mouse direnv diminish diff-hl define-word dante cython-mode csv-mode counsel-projectile company-terraform company-statistics company-shell company-quickhelp company-go company-ghci company-ghc company-cabal company-ansible company-anaconda column-enforce-mode color-identifiers-mode cmm-mode clean-aindent-mode chruby centered-cursor-mode cargo bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible alchemist aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))
  '(safe-local-variable-values
    '((ansible::vault-password-file . "/keybase/private/scoiatael/bagend-local/vault-password")
+     (python-backend . lsp)
      (go-backend . go-mode)
      (go-backend . lsp)
      (elixir-enable-compilation-checking . t)
