@@ -4,4 +4,4 @@
 (defun scoiatael/helm-rg-project ()
   "Start helm-rg with empty suggestion list"
   (interactive)
-  (helm-rg ""))
+  (helm-projectile-rg ""))

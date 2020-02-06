@@ -51,6 +51,7 @@
 ;; they are implemented.
 
 (map! :leader
+      "c x" #'lsp-treemacs-errors-list
       "f d" #'dired-jump
       "/"   #'scoiatael/helm-rg-project
       "s c" #'evil-ex-nohighlight
@@ -61,6 +62,11 @@
 (map! :after python
       :map python-mode-map
       :localleader
+      :prefix "d"
+      :desc "Start debugging" "d" #'dap-debug
+      :desc "Debugger hydra" "h" #'dap-hydra
+      :desc "Debugger REPL" "r" #'dap-ui-repl
+      :desc "Stop debugger" "q" #'dap-delete-all-sessions
       :prefix "i"
       :desc "Remove obsolete imports" "d" #'scoiatael/python-remove-unused-imports)
 
@@ -114,3 +120,36 @@
  :after direnv
  :localleader
  :desc "Allow envrc" "a" #'direnv-allow)
+
+(use-package! dap-mode
+  :after lsp-mode
+  :preface
+  (setq dap-breakpoints-file (concat doom-etc-dir "dap-breakpoints")
+        dap-utils-extension-path (concat doom-etc-dir "dap-extension/"))
+  :config
+  (dap-mode 1)
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1)
+  (tooltip-mode 1)
+  (require 'dap-python)
+  (require 'dapui)
+  ;; (dap-register-debug-template
+  ;;  "Python :: pytest focused"
+  ;;  (list :type "python"
+  ;;        :args "-m focus -s"
+  ;;        :cwd nil
+  ;;        :program nil
+  ;;        :module "pytest"
+  ;;        :request "launch"
+  ;;        :name "Python :: pytest focused"))
+  ;; (add-hook 'dap-stopped-hook
+  ;;           (lambda (_arg) (call-interactively #'dap-hydra)))
+  (add-hook 'dap-stopped-hook
+            (lambda (_arg) (call-interactively #'dap-ui-repl)))
+  )
+
+(setq safe-local-variable-values
+      '((flycheck-puppet-lint-executable . "/Users/opera_user/Documents/puppet/.direnv/ruby/bin/puppet-lint")
+        (flycheck-puppet-parser-executable . "/Users/opera_user/Documents/puppet/.direnv/ruby/bin/puppet")))
+
+(setq desktop-restore-eager 3)

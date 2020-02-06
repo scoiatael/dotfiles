@@ -54,3 +54,5 @@
 (package! pipenv :disable t)
 
 (package! puppet-mode)
+
+(package! dap-mode)

@@ -44,7 +44,7 @@ class Link
   private
 
   def handle_existing(to)
-    puts `ls -l #{to}`
+    puts `ls -ld #{to}`
     if ask_if('remove')
       return File.delete(to)
     end

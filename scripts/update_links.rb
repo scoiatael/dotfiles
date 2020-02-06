@@ -44,8 +44,8 @@ Linker.create! do
   end
 
   group 'emacs' do
-    link 'emacs.d', to: "#{current_group}/spacemacs.d"
-    link 'spacemacs'
+    link 'emacs.d'
+    link 'config/doom' , to: "#{current_group}/doom.d"
   end
 
   group 'ssh' do
