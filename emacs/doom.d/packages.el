@@ -56,3 +56,5 @@
 (package! puppet-mode)
 
 (package! dap-mode)
+
+(package! nose :disable t)

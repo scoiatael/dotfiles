@@ -67,6 +67,8 @@
       :desc "Debugger hydra" "h" #'dap-hydra
       :desc "Debugger REPL" "r" #'dap-ui-repl
       :desc "Stop debugger" "q" #'dap-delete-all-sessions
+      :desc "Toggle breakpoint" "b" #'dap-breakpoint-toggle
+      :desc "Show locals" "l" #'dap-ui-locals
       :prefix "i"
       :desc "Remove obsolete imports" "d" #'scoiatael/python-remove-unused-imports)
 
@@ -155,3 +157,14 @@
 (setq desktop-restore-eager 3)
 
 (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
+
+(after! dap-mode
+  (dap-register-debug-template
+   "Python :: pytest focus"
+   (list :type "python"
+         :args "-m focus"
+         :cwd nil
+         :program nil
+         :module "pytest"
+         :request "launch"
+         :name "Python :: pytest focus")))
