@@ -153,3 +153,5 @@
         (flycheck-puppet-parser-executable . "/Users/opera_user/Documents/puppet/.direnv/ruby/bin/puppet")))
 
 (setq desktop-restore-eager 3)
+
+(add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
