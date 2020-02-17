@@ -1,7 +1,0 @@
-#!/bin/sh
-if which nvim > /dev/null;
-then
-    exec nvim $@
-else
-    exec vim $@
-fi

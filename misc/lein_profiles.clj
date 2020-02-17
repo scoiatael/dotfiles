@@ -1,2 +1,0 @@
-{:user  {:plugins  []}
- :repl {:plugins []}}
