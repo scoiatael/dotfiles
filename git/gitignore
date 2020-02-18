@@ -38,7 +38,7 @@ srecode-map.el
 .cask/
 
 # emacs sessions
-session\.*
+^session\.*
 
 # ctags
 TAGS
