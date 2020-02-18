@@ -171,3 +171,6 @@
          :module "pytest"
          :request "launch"
          :name "Python :: pytest focus")))
+
+(setq ns-right-alternate-modifier 'none)
+(setq mac-right-option-modifier nil)
