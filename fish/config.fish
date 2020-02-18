@@ -7,6 +7,7 @@ fundle plugin 'oh-my-fish/plugin-bak'
 fundle plugin 'oh-my-fish/plugin-wttr'
 fundle plugin 'jethrokuan/z'
 fundle plugin 'jethrokuan/fzf'
+fundle plugin 'aliz-ai/google-cloud-sdk-fish-completion'
 
 fundle init
 
@@ -16,28 +17,9 @@ set -q FZF_LEGACY_KEYBINDINGS; or set -U FZF_LEGACY_KEYBINDINGS 1
 set -q FZF_PREVIEW_FILE_CMD; or set -U FZF_PREVIEW_FILE_CMD "head -n 10"
 set -q FZF_PREVIEW_DIR_CMD; or set -U FZF_PREVIEW_DIR_CMD "ls"
 
-
-function random
-    set -q argv[1]; and set -l length $argv[1]; or set -l length 32
-    cat /dev/urandom | gtr -dc 'a-zA-Z0-9' | fold -w $length | head -n 1
-end
-
 function reset_gpg_agent
   gpgconf --kill gpg-agent
   gpgconf --launch gpg-agent
-end
-
-function install_node
-  set -l node_version $argv[1]
-  if test -z $node_version
-      set -l node_version (curl -s http://nodejs.org/dist/index.tab | head -n 2  | tail -n 1 | awk '{ print $1 }')
-  end
-  set -l install_dir $NODE_VERSIONS/node-$node_version
-  set -l node_url http://nodejs.org/dist/$node_version/node-$node_version-darwin-x64.tar.gz
-  echo "Installing node $node_version to $install_dir"
-  echo "   from $node_url"
-  mkdir -p $install_dir
-  curl -fsSL "$node_url" | tar xvz --strip 1 -C $install_dir
 end
 
 function _scoiatael_fish_init
@@ -61,10 +43,17 @@ function _scoiatael_fish_init
     alias b bundle
     alias gls "git status"
     alias g git
+
+
+    set -l iterm_integration_fish $HOME/.iterm2_shell_integration.fish
+    if test -f $iterm_integration_fish;
+      source $iterm_integration_fish
+    end
+
+    set -l gcloud_path_fish /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc
+    if test -f $gcloud_path_fish;
+      source $gcloud_path_fish
+    end
 end
 
 _scoiatael_fish_init >/dev/null
-
-if test -f $HOME/.iterm2_shell_integration.fish;
-  source $HOME/.iterm2_shell_integration.fish
-end

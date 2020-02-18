@@ -1,5 +1,4 @@
 #!/bin/bash
-
 export LC_ALL=en_GB.UTF-8
 
 function _scoiatael_maybe_PATH_add() {
@@ -24,12 +23,8 @@ function _scoiatael_init() {
     export GOPATH=$HOME/go
     PATH_add "$GOPATH/bin"
 
-    PATH_add "$HOME/.cargo/bin"
-    RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-    export RUST_SRC_PATH
-
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
-    for p in /usr/local/bin /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin $HOME/dotfiles/bin /usr/local/opt/texinfo/bin /usr/local/MacGPG2/bin;
+    for p in /usr/local/bin /usr/local/sbin $HOME/.local/bin $HOME/Library/Python/2.7/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin $HOME/dotfiles/bin /usr/local/opt/texinfo/bin /usr/local/MacGPG2/bin /opt/puppetlabs/pdk/bin;
     do
         _scoiatael_maybe_PATH_add "$p";
     done
@@ -52,33 +47,13 @@ function _scoiatael_init() {
             ssh-add
         fi
     fi
-
-    [ -z "$VERBOSE" ] || log_status "Loading opam.."
-    if command opam > /dev/null 2> /dev/null;
-    then
-        eval "$(opam config env --shell=bash)"
-    fi
-
-    export NODE_VERSIONS="$HOME/.node"
-    mkdir -p "$NODE_VERSIONS"
-
-    export GTAGSLABEL=pygments
+    PATH_add "$HOME/.emacs.d/bin"
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
 _scoiatael_init > /dev/null
 
-use_ruby() {
-    local ruby_root=$HOME/.rubies/ruby-$1
-    load_prefix "$ruby_root"
-    layout_ruby
-}
-
-use_go() {
-    GOPATH="$PWD:$(go env GOPATH)"
-    export GOPATH
-    PATH_add "$PWD/bin"
-}
+source $(asdf which direnv_use_asdf)
 
 export LANG=en_GB.utf-8
 source $(asdf which direnv_use_asdf)
