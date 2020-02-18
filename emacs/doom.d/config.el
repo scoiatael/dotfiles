@@ -66,7 +66,8 @@
       :desc "Start debugging" "d" #'dap-debug
       :desc "Debugger hydra" "h" #'dap-hydra
       :desc "Debugger REPL" "r" #'dap-ui-repl
-      :desc "Stop debugger" "q" #'dap-delete-all-sessions
+      :desc "Stop debugger" "q" #'dap-ui-delete-session
+      :desc "Disconnect all debuggers" "Q" #'dap-delete-all-sessions
       :desc "Toggle breakpoint" "b" #'dap-breakpoint-toggle
       :desc "Show locals" "l" #'dap-ui-locals
       :prefix "i"
