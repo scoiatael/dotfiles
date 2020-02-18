@@ -50,6 +50,8 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+(map! "M-'" #'+eshell/toggle)
+
 (map! :leader
       "c x" #'lsp-treemacs-errors-list
       "f d" #'dired-jump
