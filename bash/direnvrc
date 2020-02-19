@@ -1,5 +1,6 @@
 #!/bin/bash
 export LC_ALL=en_GB.UTF-8
+export LANG=en_GB.utf-8
 
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
@@ -24,10 +25,16 @@ function _scoiatael_init() {
     PATH_add "$GOPATH/bin"
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
-    for p in /usr/local/bin /usr/local/sbin $HOME/.local/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin /usr/local/opt/texinfo/bin /usr/local/MacGPG2/bin ~/.emacs.d/bin /opt/puppetlabs/pdk/bin;
-    do
-        _scoiatael_maybe_PATH_add "$p";
-    done
+    _scoiatael_maybe_PATH_add "/usr/local/bin"
+    _scoiatael_maybe_PATH_add "/usr/local/sbin"
+    _scoiatael_maybe_PATH_add "$HOME/.local/bin"
+    _scoiatael_maybe_PATH_add "/usr/local/opt/go/libexec/bin"
+    _scoiatael_maybe_PATH_add "$HOME/.cargo/bin"
+    _scoiatael_maybe_PATH_add "$GOPATH/bin"
+    _scoiatael_maybe_PATH_add "/usr/local/opt/texinfo/bin"
+    _scoiatael_maybe_PATH_add "/usr/local/MacGPG2/bin"
+    _scoiatael_maybe_PATH_add "~/.emacs.d/bin"
+    _scoiatael_maybe_PATH_add "/opt/puppetlabs/pdk/bin"
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent
@@ -39,21 +46,10 @@ function _scoiatael_init() {
         export SSH_AUTH_SOCK=$ssh_agent
     fi
 
-    [ -z "$VERBOSE" ] || log_status "Loading agent.."
-    if ! ssh-add -l | grep -v 'no identities';
-    then
-        if ! ssh-add -A 2> /dev/null;
-        then
-            ssh-add
-        fi
-    fi
     PATH_add "$HOME/.emacs.d/bin"
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
 _scoiatael_init > /dev/null
 
-source $(asdf which direnv_use_asdf)
-
-export LANG=en_GB.utf-8
 source $(asdf which direnv_use_asdf)
