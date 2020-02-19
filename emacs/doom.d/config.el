@@ -53,6 +53,7 @@
 (map! "M-'" #'+eshell/toggle)
 
 (map! :leader
+      "e"   #'ediff-files
       "c x" #'lsp-treemacs-errors-list
       "f d" #'dired-jump
       "/"   #'scoiatael/helm-rg-project
