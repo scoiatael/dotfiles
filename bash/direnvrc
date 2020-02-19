@@ -24,7 +24,7 @@ function _scoiatael_init() {
     PATH_add "$GOPATH/bin"
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
-    for p in /usr/local/bin /usr/local/sbin $HOME/.local/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin /usr/local/opt/texinfo/bin /usr/local/MacGPG2/bin /opt/puppetlabs/pdk/bin;
+    for p in /usr/local/bin /usr/local/sbin $HOME/.local/bin /usr/local/opt/go/libexec/bin $HOME/.cargo/bin $GOPATH/bin /usr/local/opt/texinfo/bin /usr/local/MacGPG2/bin ~/.emacs.d/bin /opt/puppetlabs/pdk/bin;
     do
         _scoiatael_maybe_PATH_add "$p";
     done
