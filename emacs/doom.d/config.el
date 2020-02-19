@@ -100,10 +100,7 @@
 (setq magit-repository-directories '(("~/Documents" . 2))
       magit-save-repository-buffers nil
       ;; Don't restore the wconf after quitting magit
-      magit-inhibit-save-previous-winconf t
-      transient-values '((magit-commit "--gpg-sign=DEB2867E60E7593C4C3EE576AD53A88A3E2D87BC")
-                         (magit-rebase "--autosquash" "--gpg-sign=DEB2867E60E7593C4C3EE576AD53A88A3E2D87BC")
-                         (magit-pull "--rebase" "--gpg-sign=DEB2867E60E7593C4C3EE576AD53A88A3E2D87BC")))
+      magit-inhibit-save-previous-winconf t)
 
 (after! direnv
    (advice-add 'python-mode :before #'direnv-update-environment))
