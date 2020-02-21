@@ -52,7 +52,12 @@
 
 (map! "M-'" #'+eshell/toggle)
 
+(defun scoiatael/insert-current-date () (interactive)
+    (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
+
 (map! :leader
+      "SPC" #'helm-M-x
+      "d"   #'scoiatael/insert-current-date
       "e"   #'ediff-files
       "c x" #'lsp-treemacs-errors-list
       "f d" #'dired-jump
@@ -172,3 +177,5 @@
 
 (setq ns-right-alternate-modifier 'none)
 (setq mac-right-option-modifier nil)
+
+(load-file "./custom.el")
