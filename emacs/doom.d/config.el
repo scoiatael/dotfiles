@@ -50,7 +50,10 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-(map! "M-'" #'+eshell/toggle)
+(map!
+ "M-'" #'+eshell/toggle
+ "M-j" #'next-buffer
+ "M-k" #'previous-buffer)
 
 (defun scoiatael/insert-current-date () (interactive)
     (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
@@ -108,7 +111,7 @@
       magit-inhibit-save-previous-winconf t)
 
 (after! direnv
-   (advice-add 'python-mode :before #'direnv-update-environment))
+  (add-hook! python-mode-hook #'direnv-update-environment))
 
 (map!
  :map puppet-mode-map
@@ -120,6 +123,7 @@
 
 (map!
  :map org-mode-map
+ :desc "Toggle fold" "TAB" #'org-cycle
  :localleader
  :desc "Insert date" "d" #'org-time-stamp)
 
@@ -141,17 +145,6 @@
   (tooltip-mode 1)
   (require 'dap-python)
   (require 'dapui)
-  ;; (dap-register-debug-template
-  ;;  "Python :: pytest focused"
-  ;;  (list :type "python"
-  ;;        :args "-m focus -s"
-  ;;        :cwd nil
-  ;;        :program nil
-  ;;        :module "pytest"
-  ;;        :request "launch"
-  ;;        :name "Python :: pytest focused"))
-  ;; (add-hook 'dap-stopped-hook
-  ;;           (lambda (_arg) (call-interactively #'dap-hydra)))
   (add-hook 'dap-stopped-hook
             (lambda (_arg) (call-interactively #'dap-ui-repl)))
   )
@@ -178,4 +171,4 @@
 (setq ns-right-alternate-modifier 'none)
 (setq mac-right-option-modifier nil)
 
-(load-file "./custom.el")
+(load-file (expand-file-name "./custom.el" (dir!)))

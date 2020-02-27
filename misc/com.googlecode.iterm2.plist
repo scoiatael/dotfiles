@@ -888,7 +888,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>1368 431 550 622 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 233 1920 825 0 0 1920 1057 </string>
+	<string>0 0 1440 878 0 0 1440 877 </string>
 	<key>NeverWarnAboutShortLivedSessions_7C30DFCB-2FCF-4DDD-A4B1-FBA1D44DB919</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_7C30DFCB-2FCF-4DDD-A4B1-FBA1D44DB919_selection</key>
@@ -1137,7 +1137,7 @@
 				<real>0.0</real>
 			</dict>
 			<key>Custom Command</key>
-			<string>Yes</string>
+			<string>No</string>
 			<key>Custom Directory</key>
 			<string>No</string>
 			<key>Default Bookmark</key>
@@ -1744,7 +1744,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>94B08D49-3DFE-4E9D-9982-536830DCE527</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>45</integer>
+	<integer>54</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2541,7 +2541,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-02-18T09:06:36Z</date>
+	<date>2020-02-21T09:12:22Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>

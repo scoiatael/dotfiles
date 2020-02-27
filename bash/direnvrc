@@ -2,11 +2,16 @@
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.utf-8
 
+source $(asdf which direnv_use_asdf)
+
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
-    if test -d "$p";
+    if test -d "$1";
     then
-        PATH_add "$p"
+        PATH_add "$1"
+        [ -z "$VERBOSE" ] || log_status "..ok"
+    else
+        [ -z "$VERBOSE" ] || log_status "..not found"
     fi
 }
 
@@ -25,31 +30,23 @@ function _scoiatael_init() {
     PATH_add "$GOPATH/bin"
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
-    _scoiatael_maybe_PATH_add "/usr/local/bin"
-    _scoiatael_maybe_PATH_add "/usr/local/sbin"
-    _scoiatael_maybe_PATH_add "$HOME/.local/bin"
-    _scoiatael_maybe_PATH_add "/usr/local/opt/go/libexec/bin"
-    _scoiatael_maybe_PATH_add "$HOME/.cargo/bin"
-    _scoiatael_maybe_PATH_add "$GOPATH/bin"
-    _scoiatael_maybe_PATH_add "/usr/local/opt/texinfo/bin"
-    _scoiatael_maybe_PATH_add "/usr/local/MacGPG2/bin"
-    _scoiatael_maybe_PATH_add "~/.emacs.d/bin"
-    _scoiatael_maybe_PATH_add "/opt/puppetlabs/pdk/bin"
+    _scoiatael_maybe_PATH_add "$HOME/.emacs.d/bin"
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent
     ssh_agent="$(gpgconf --list-dirs agent-ssh-socket)"
     if [ -z "$SSH_AUTH_SOCK" ] || [ "$SSH_AUTH_SOCK" != "$ssh_agent" ];
     then
-        [ -z "$VERBOSE" ] || log_status "Agent dead or missing; starting new"
-        _scoiatael_launch_gpg_agent;
+        if [ -S "$ssh_agent" ]; then
+            [ -z "$VERBOSE" ] || log_status "Agent already running"
+        else
+            _scoiatael_launch_gpg_agent;
+            [ -z "$VERBOSE" ] || log_status "Agent dead or missing; started new"
+        fi
         export SSH_AUTH_SOCK=$ssh_agent
     fi
 
-    PATH_add "$HOME/.emacs.d/bin"
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
 _scoiatael_init > /dev/null
-
-source $(asdf which direnv_use_asdf)
