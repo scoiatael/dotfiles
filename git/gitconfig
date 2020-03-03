@@ -48,3 +48,5 @@
 	includeIssuesSection = false
 [github]
 	user = scoiatael
+[status]
+	short = true
