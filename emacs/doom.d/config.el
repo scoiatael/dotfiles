@@ -97,6 +97,7 @@
 (setq org-directory "~/iCloud/org/"
       org-archive-location (concat org-directory "archive/%s::")
       org-ellipsis " ▼ "
+      org-clock-persist t
       org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷"))
 
 (add-hook! 'org-load-hook
@@ -105,13 +106,17 @@
 (after! org
   (add-to-list 'org-modules 'org-habit t))
 
+(map! :after org-mode
+      :map org-mode-map
+      :desc "toggle folds" "TAB" #'org-cycle)
+
 (setq magit-repository-directories '(("~/Documents" . 2))
       magit-save-repository-buffers nil
       ;; Don't restore the wconf after quitting magit
       magit-inhibit-save-previous-winconf t)
 
-(after! direnv
-  (add-hook! python-mode-hook #'direnv-update-environment))
+
+(add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)
 
 (map!
  :map puppet-mode-map
@@ -120,12 +125,6 @@
  :desc "Align block" "b" #'puppet-align-block
  :desc "Align class params" "p" #'scoiatael/puppet-align-parameters
  :desc "Toggle string quotes" "'" #'puppet-toggle-string-quotes)
-
-(map!
- :map org-mode-map
- :desc "Toggle fold" "TAB" #'org-cycle
- :localleader
- :desc "Insert date" "d" #'org-time-stamp)
 
 (map!
  :map direnv-envrc-mode-map
@@ -170,5 +169,9 @@
 
 (setq ns-right-alternate-modifier 'none)
 (setq mac-right-option-modifier nil)
+
+(after! python-mode
+  (setq python-shell-interpreter "python")
+  (setq lsp-python-ms-executable "python"))
 
 (load-file (expand-file-name "./custom.el" (dir!)))
