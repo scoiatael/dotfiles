@@ -170,8 +170,7 @@
 (setq ns-right-alternate-modifier 'none)
 (setq mac-right-option-modifier nil)
 
-(after! python-mode
-  (setq python-shell-interpreter "python")
-  (setq lsp-python-ms-executable "python"))
+(setq python-shell-interpreter "python")
+(setq lsp-python-ms-python-executable-cmd "python")
 
 (load-file (expand-file-name "./custom.el" (dir!)))
