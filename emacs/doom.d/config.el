@@ -173,4 +173,7 @@
 (setq python-shell-interpreter "python")
 (setq lsp-python-ms-python-executable-cmd "python")
 
+(setq lsp-rust-server 'rust-analyzer)
+(setq rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer" ))
+
 (load-file (expand-file-name "./custom.el" (dir!)))
