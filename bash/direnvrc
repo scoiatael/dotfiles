@@ -31,6 +31,7 @@ function _scoiatael_init() {
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
     _scoiatael_maybe_PATH_add "$HOME/.emacs.d/bin"
+    _scoiatael_maybe_PATH_add "$HOME/.asdf/shims"
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent
