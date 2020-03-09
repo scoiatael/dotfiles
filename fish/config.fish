@@ -34,8 +34,6 @@ function _scoiatael_fish_init
 
     set -U LESS '-R'
     export LESS
-    set -U LESSOPEN '|lesspipe.sh %s'
-    export LESSOPEN
 
     which direnv
     and eval (direnv hook fish)
