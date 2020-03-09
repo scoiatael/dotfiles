@@ -108,6 +108,7 @@
 
 (map! :after org-mode
       :map org-mode-map
+      :desc "dwim" "C-M-x" #'+org/dwim-at-point
       :desc "toggle folds" "TAB" #'org-cycle)
 
 (setq magit-repository-directories '(("~/Documents" . 2))
