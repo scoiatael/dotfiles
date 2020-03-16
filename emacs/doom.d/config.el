@@ -56,7 +56,7 @@
  "M-k" #'previous-buffer)
 
 (defun scoiatael/insert-current-date () (interactive)
-    (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
+    (insert (shell-command-to-string "date +%Y-%m-%d | xargs printf %s")))
 
 (map! :leader
       "SPC" #'helm-M-x
