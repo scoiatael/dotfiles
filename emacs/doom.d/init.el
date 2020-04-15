@@ -40,10 +40,10 @@
        (popup                     ; tame sudden yet inevitable temporary windows
         +all                      ; catch all popups that start with an asterix
         +defaults)                ; default popup rules
-       ;; pretty-code       ; replace bits of code with pretty symbols
+       (pretty-code +iosevka)      ; replace bits of code with pretty symbols
        ;;tabs              ; an tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
-       ;;unicode           ; extended unicode support for various languages
+       unicode           ; extended unicode support for various languages
        vc-gutter        ; vcs diff in the fringe
        vi-tilde-fringe  ; fringe tildes to mark beyond EOB
        window-select    ; visually switch windows

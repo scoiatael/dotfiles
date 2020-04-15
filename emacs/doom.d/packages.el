@@ -58,3 +58,5 @@
 (package! dap-mode)
 
 (package! nose :disable t)
+
+(package! groovy-mode)

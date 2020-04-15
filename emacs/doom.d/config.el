@@ -19,7 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "FuraMono Nerd Font" :size 12))
+(setq doom-font (font-spec :family "Iosevka" :size 12))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -112,9 +112,7 @@
       :desc "toggle folds" "TAB" #'org-cycle)
 
 (setq magit-repository-directories '(("~/Documents" . 2))
-      magit-save-repository-buffers nil
-      ;; Don't restore the wconf after quitting magit
-      magit-inhibit-save-previous-winconf t)
+      magit-save-repository-buffers nil)
 
 
 (add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)

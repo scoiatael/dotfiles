@@ -47,6 +47,8 @@ function _scoiatael_init() {
         export SSH_AUTH_SOCK=$ssh_agent
     fi
 
+    export CLOUDSDK_PYTHON=python
+
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
