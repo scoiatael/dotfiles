@@ -31,7 +31,7 @@ function fish_prompt
     if test "$PWD" = ~
         set base "$color3~"
         set glyph
-        
+
     else if pwd_is_home
         set dir
 
@@ -84,17 +84,9 @@ function fish_prompt
 
         if test "$branch_name" = "master"
             set branch_name
-            if git_is_stashed
-                set branch_name "{}"
-            end
         else
             set -l left_par "("
             set -l right_par ")"
-
-            if git_is_stashed
-                set left_par "{"
-                set right_par "}"
-            end
 
             set branch_name " $git_color$left_par$color2$branch_name$git_color$right_par"
         end

@@ -60,3 +60,5 @@
 (package! nose :disable t)
 
 (package! groovy-mode)
+
+(package! fish-mode)
