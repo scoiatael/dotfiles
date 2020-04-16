@@ -8,6 +8,12 @@ fundle plugin 'oh-my-fish/plugin-wttr'
 fundle plugin 'jethrokuan/z'
 fundle plugin 'jethrokuan/fzf'
 fundle plugin 'aliz-ai/google-cloud-sdk-fish-completion'
+fundle plugin 'fishpkg/fish-git-util'
+fundle plugin 'fishpkg/fish-pwd-is-home'
+fundle plugin 'fishpkg/fish-pwd-info'
+fundle plugin 'fishpkg/fish-host-info'
+fundle plugin 'fishpkg/fish-last-job-id'
+fundle plugin 'fishpkg/fish-humanize-duration'
 
 fundle init
 

@@ -1,142 +1,108 @@
-set -g pad " "
-
-## Function to show a segment
-function prompt_segment -d "Function to show a segment"
-  # Get colors
-  set -l bg $argv[1]
-  set -l fg $argv[2]
-
-  # Set 'em
-  set_color -b $bg
-  set_color $fg
-
-  # Print text
-  if [ -n "$argv[3]" ]
-    echo -n -s $argv[3]
-  end
-  set_color -b normal
-  set_color normal
-end
-
-## Function to show current status
-function show_status -d "Function to show the current status"
-  if [ $RETVAL -ne 0 ]
-    prompt_segment red white " ▲ "
-    set pad ""
-    end
-  if [ -n "$SSH_CLIENT" ]
-      prompt_segment blue white " SSH: "
-      set pad ""
-    end
-  set_color normal
-end
-
-## Show user if not default
-function show_user -d "Show user"
-  if [ "$USER" != "$default_user" -o -n "$SSH_CLIENT" ]
-    set -l host (hostname -s)
-    set -l who (whoami)
-    prompt_segment normal yellow " $who"
-
-    # Skip @ bit if hostname == username
-    if [ "$USER" != "$HOST" ]
-      prompt_segment normal white "@"
-      prompt_segment normal green "$host "
-      set pad ""
-    end
-    end
-end
-
-# Show directory
-function show_pwd -d "Show the current directory"
-  set -l pwd (prompt_pwd)
-  prompt_segment normal blue "$pad$pwd "
-end
-
-# Show prompt w/ privilege cue
-function show_prompt -d "Shows prompt with cue for current priv"
-  set -l uid (id -u $USER)
-    if [ $uid -eq 0 ]
-    prompt_segment red white "! "
-    set_color normal
-    echo -n -s " "
-  else
-    prompt_segment normal white "\$ "
-    end
-
-  set_color normal
-end
-
-function show_vi_status -d "Shows vi mode"
-  switch $fish_bind_mode
-    case default
-        prompt_segment blue black '[N]'
-    case insert
-        prompt_segment yellow black '[I]'
-    case visual
-        prompt_segment magenta black '[V]'
-  end
-  set_color normal
-end
-
-function show_git_status -d "Shows the current git status"
-    if command git rev-parse --is-inside-work-tree >/dev/null 2>&1
-        set -l dirty (command git status -s --ignore-submodules=dirty | wc -l | sed -e 's/^ *//' -e 's/ *$//' 2> /dev/null)
-        set -l ref (command git describe --tags --exact-match ^/dev/null ; or command git symbolic-ref --short HEAD 2> /dev/null ; or command git rev-parse --short HEAD 2> /dev/null)
-        set -l fish_prompt_git_status_ref_length 4
-        set -l short_ref (string replace -ar '(\.?[^/]{'"$fish_prompt_git_status_ref_length"'})[^/]*/' '$1/' $ref)
-
-        echo -n '('
-        if [ "$dirty" != "0" ]
-            set_color red
-        else
-            set_color cyan
-        end
-
-        echo -n "$short_ref"
-        set_color normal
-        echo -n ')'
-    end
-end
-
-function show_short_git_status -d "Shows the current git status with two dots"
-    if command git rev-parse --is-inside-work-tree >/dev/null 2>&1
-        set -l staged (command git diff --ignore-submodules=dirty --shortstat --staged | tee /dev/null | cut -c 1,2)
-        set -l dirty (command git diff --ignore-submodules=dirty --shortstat | tee /dev/null | cut -c 1,2)
-
-        if test -n "$dirty"
-            set_color red
-        else
-            set_color normal
-        end
-        echo -n "○"
-
-        if test -n "$staged"
-            set_color green
-        else
-            set_color normal
-        end
-        echo -n "○"
-        set_color normal
-    else
-        echo -n "··"
-    end
-end
-
-
-## SHOW PROMPT
+# Based on https://github.com/fishpkg/fish-prompt-mono
 function fish_prompt
-  set -g RETVAL $status
-  # show_status
-  echo -n ' '
-#  show_user
-  if test "$COLUMNS" -gt 90
-      show_pwd
-      show_git_status
-      echo '' # Break to multiline
-  end
-  functions --query iterm2_prompt_mark; and iterm2_prompt_mark
-  show_vi_status
-  show_short_git_status
-  show_prompt
+    set -l status_copy $status
+    set -l pwd_info (pwd_info "/")
+    set -l dir
+    set -l base
+    set -l color (set_color white)
+    set -l color2 (set_color normal)
+    set -l color3 (set_color $fish_color_command)
+    set -l color_error (set_color $fish_color_error)
+    set -l color_normal "$color2"
+
+    echo -sn " "
+
+    set -l glyph " $color2\$$color_normal"
+
+    if test 0 -eq (id -u "$USER")
+        echo -sn "$color_error# $color_normal"
+    end
+
+    if test ! -z "$SSH_CLIENT"
+        set -l color "$color2"
+
+        if test 0 -eq (id -u "$USER")
+            set color "$color_error"
+        end
+
+        echo -sn "$color"(host_info "user@")"$color_normal"
+    end
+
+    if test "$PWD" = ~
+        set base "$color3~"
+        set glyph
+        
+    else if pwd_is_home
+        set dir
+
+    else
+        if test "$PWD" = /
+            set glyph
+        else
+            set dir "/"
+        end
+
+        set base "$color_error/"
+    end
+
+    if test ! -z "$pwd_info[1]"
+        set base "$pwd_info[1]"
+    end
+
+    if test ! -z "$pwd_info[2]"
+        set dir "$dir$pwd_info[2]/"
+    end
+
+    echo -sn "$color2$dir$color$base$color_normal"
+
+    if test ! -z "$pwd_info[3]"
+        echo -sn "$color2/$pwd_info[3]"
+    end
+
+    if set branch_name (git_branch_name)
+        set -l git_color
+        set -l git_glyph "ǥ"
+
+        if git_is_staged
+            set git_color (set_color green)
+
+            if git_is_dirty
+                set git_glyph "$git_color$git_glyph$color_error$git_glyph"
+                set git_color "$color_error"
+            end
+
+        else if git_is_dirty
+            set git_color "$color_error"
+
+        else if git_is_touched
+            set git_color "$color_error"
+        else
+            set git_color "$color3"
+        end
+
+        set -l git_ahead (git_ahead " +" " -" " +-")
+
+        if test "$branch_name" = "master"
+            set branch_name
+            if git_is_stashed
+                set branch_name "{}"
+            end
+        else
+            set -l left_par "("
+            set -l right_par ")"
+
+            if git_is_stashed
+                set left_par "{"
+                set right_par "}"
+            end
+
+            set branch_name " $git_color$left_par$color2$branch_name$git_color$right_par"
+        end
+
+        echo -sn "$branch_name$git_color$git_ahead $git_glyph"
+    else
+        echo -sn "$color$glyph$color_normal"
+    end
+
+    echo -sn "$color_normal ࠱"
 end
