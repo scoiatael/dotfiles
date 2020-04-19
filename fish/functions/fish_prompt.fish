@@ -12,7 +12,7 @@ function fish_prompt
 
     echo -sn " "
 
-    set -l glyph " $color2\$$color_normal"
+    set -l glyph " $color2"λ"$color_normal"
 
     if test 0 -eq (id -u "$USER")
         echo -sn "$color_error# $color_normal"
@@ -30,11 +30,8 @@ function fish_prompt
 
     if test "$PWD" = ~
         set base "$color3~"
-        set glyph
-
     else if pwd_is_home
         set dir
-
     else
         if test "$PWD" = /
             set glyph
@@ -61,7 +58,7 @@ function fish_prompt
 
     if set branch_name (git_branch_name)
         set -l git_color
-        set -l git_glyph "ǥ"
+        set -l git_glyph "❂"
 
         if git_is_staged
             set git_color (set_color green)
@@ -80,7 +77,7 @@ function fish_prompt
             set git_color "$color3"
         end
 
-        set -l git_ahead (git_ahead " +" " -" " +-")
+        set -l git_ahead (git_ahead " ↑" " ↓" " ⮃")
 
         if test "$branch_name" = "master"
             set branch_name
@@ -96,5 +93,5 @@ function fish_prompt
         echo -sn "$color$glyph$color_normal"
     end
 
-    echo -sn "$color_normal ࠱"
+    echo -sn "$color_normal "
 end
