@@ -98,7 +98,7 @@
       org-archive-location (concat org-directory "archive/%s::")
       org-ellipsis " ▼ "
       org-clock-persist t
-      org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷"))
+      org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷"))
 
 (add-hook! 'org-load-hook
            #'scoiatael/set-org-todo-keywords)

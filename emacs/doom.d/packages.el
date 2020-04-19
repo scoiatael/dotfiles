@@ -62,3 +62,6 @@
 (package! groovy-mode)
 
 (package! fish-mode)
+
+(package! org-superstar-mode
+  :recipe (:host github :repo "integral-dw/org-superstar-mode"))
