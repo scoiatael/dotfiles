@@ -50,3 +50,5 @@
 	user = scoiatael
 [status]
 	short = true
+[pull]
+	rebase = true
