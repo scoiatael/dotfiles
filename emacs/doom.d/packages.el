@@ -65,3 +65,6 @@
 
 (package! org-superstar-mode
   :recipe (:host github :repo "integral-dw/org-superstar-mode"))
+
+(package! org-pretty-table
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
