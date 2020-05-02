@@ -166,10 +166,6 @@
          :request "launch"
          :name "Python :: pytest focus")))
 
-(use-package! org-pretty-table
-  :after org-mode
-  (global-org-pretty-table-mode))
-
 (setq ns-right-alternate-modifier 'none)
 (setq mac-right-option-modifier nil)
 
