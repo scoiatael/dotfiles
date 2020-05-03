@@ -52,4 +52,16 @@ function _scoiatael_init() {
     [ -z "$VERBOSE" ] || log_status "Done."
 }
 
+function use_sops() {
+    has sops || (log_status "Please install sops (https://github.com/mozilla/sops#download) first"; exit 1)
+
+    local SECRET_FILE
+    SECRET_FILE=".envrc.enc.yaml"
+    [ -f "$SECRET_FILE" ] || (log_status "$SECRET_FILE not found, not loading secrets"; exit 1)
+
+    # shellcheck disable=SC2154
+    direnv_load sops exec-env "$SECRET_FILE" "$direnv dump"
+    watch_file "$SECRET_FILE"
+}
+
 _scoiatael_init > /dev/null
