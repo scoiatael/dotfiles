@@ -123,3 +123,4 @@ GRTAGS
 
 # Direnv
 .envrc
+.envrc.enc*
