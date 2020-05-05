@@ -5,14 +5,15 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   lga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
   lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p
+
+  rbc = rebase --continue
+  rba = rebase --abort
+
   df = diff --color --color-words --abbrev
-  pr = pull --rebase
   su = submodule update --init --recursive
 
   ros = remote set-url origin
   r = remote -v
-
-  bc = checkout -b
 
   bms="! git branch --merged | grep -v '*'"
   bmc="! git branch --merged | grep -v '*' | xargs git branch -d"
@@ -52,3 +53,5 @@
 	short = true
 [pull]
 	rebase = true
+[rebase]
+	autoSquash = true
