@@ -59,12 +59,13 @@
     (insert (shell-command-to-string "date +%Y-%m-%d | xargs printf %s")))
 
 (map! :leader
+      "i u" #'counsel-unicode-char
       "SPC" #'helm-M-x
       "d"   #'scoiatael/insert-current-date
       "e"   #'ediff-files
       "c x" #'lsp-treemacs-errors-list
       "f d" #'dired-jump
-      "/"   #'scoiatael/helm-rg-project
+      "/"   #'+default/search-project
       "s c" #'evil-ex-nohighlight
       "w 2" #'split-window-below
       "w 3" #'split-window-right
@@ -174,5 +175,7 @@
 
 (setq lsp-rust-server 'rust-analyzer)
 (setq rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer" ))
+
+(setq web-mode-enable-engine-detection 't)
 
 (load-file (expand-file-name "./custom.el" (dir!)))
