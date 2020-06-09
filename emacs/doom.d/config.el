@@ -148,10 +148,6 @@
             (lambda (_arg) (call-interactively #'dap-ui-repl)))
   )
 
-(setq safe-local-variable-values
-      '((flycheck-puppet-lint-executable . "/Users/opera_user/Documents/puppet/.direnv/ruby/bin/puppet-lint")
-        (flycheck-puppet-parser-executable . "/Users/opera_user/Documents/puppet/.direnv/ruby/bin/puppet")))
-
 (setq desktop-restore-eager 3)
 
 (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
@@ -177,5 +173,13 @@
 (setq rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer" ))
 
 (setq web-mode-enable-engine-detection 't)
+
+(defun scoiatael/visualize-trailing-whitespace ()
+  "Visualize trailingwhitespace in current buffer"
+  (interactive)
+  (setq whitespace-style '(face trailing))
+  (whitespace-turn-on))
+
+(add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
 
 (load-file (expand-file-name "./custom.el" (dir!)))
