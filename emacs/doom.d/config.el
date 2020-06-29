@@ -51,6 +51,7 @@
 ;; they are implemented.
 
 (map!
+ "M-:" #'avy-goto-word-1
  "M-'" #'+eshell/toggle
  "M-j" #'next-buffer
  "M-k" #'previous-buffer)
@@ -70,6 +71,11 @@
       "w 2" #'split-window-below
       "w 3" #'split-window-right
       "a k" #'helm-show-kill-ring)
+
+;; Group helpful misc Emacs commands under "SPC-k"
+(map! :leader
+      :prefix "k"
+      )
 
 (map! :after python
       :map python-mode-map
@@ -181,5 +187,7 @@
   (whitespace-turn-on))
 
 (add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
+
+(add-load-path! "~/dotfiles/emacs/snippets")
 
 (load-file (expand-file-name "./custom.el" (dir!)))
