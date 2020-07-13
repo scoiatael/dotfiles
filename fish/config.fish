@@ -58,6 +58,10 @@ function _scoiatael_fish_init
     if test -f $gcloud_path_fish;
       source $gcloud_path_fish
     end
+
+    if which bat > /dev/null;
+      alias less="bat"
+    end
 end
 
 _scoiatael_fish_init >/dev/null

@@ -61,7 +61,7 @@
 
 (map! :leader
       "i u" #'counsel-unicode-char
-      "SPC" #'helm-M-x
+      "SPC" #'counsel-M-x
       "d"   #'scoiatael/insert-current-date
       "e"   #'ediff-files
       "c x" #'lsp-treemacs-errors-list
@@ -70,7 +70,8 @@
       "s c" #'evil-ex-nohighlight
       "w 2" #'split-window-below
       "w 3" #'split-window-right
-      "a k" #'helm-show-kill-ring)
+      "a k" #'helm-show-kill-ring
+      "s e" #'iedit-mode)
 
 ;; Group helpful misc Emacs commands under "SPC-k"
 (map! :leader
