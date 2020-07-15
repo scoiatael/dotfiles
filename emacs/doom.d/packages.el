@@ -70,3 +70,5 @@
   :recipe (:host github :repo "gregsexton/origami.el"))
 
 (package! docker-compose-mode)
+
+(package! systemd)
