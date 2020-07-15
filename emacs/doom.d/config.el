@@ -52,14 +52,13 @@
 
 (map!
  "M-:" #'avy-goto-word-1
- "M-'" #'+eshell/toggle
- "M-j" #'next-buffer
- "M-k" #'previous-buffer)
+ "M-'" #'+eshell/toggle)
 
 (defun scoiatael/insert-current-date () (interactive)
     (insert (shell-command-to-string "date +%Y-%m-%d | xargs printf %s")))
 
 (map! :leader
+      "R" #'org-roam-find-file
       "i u" #'counsel-unicode-char
       "SPC" #'counsel-M-x
       "d"   #'scoiatael/insert-current-date
@@ -189,6 +188,9 @@
 
 (add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
 
-(add-load-path! "~/dotfiles/emacs/snippets")
+(setq! +snippets-dir "~/dotfiles/emacs/snippets")
+
+(add-hook 'after-init-hook 'org-roam-mode)
+(setq org-roam-completion-system 'ivy)
 
 (load-file (expand-file-name "./custom.el" (dir!)))

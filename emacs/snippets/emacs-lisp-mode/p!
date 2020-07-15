@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name : Add new package
+# key : p!
+# condition: emacs-lisp
+# --
+
+(package! $0)

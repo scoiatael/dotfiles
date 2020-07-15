@@ -72,3 +72,5 @@
 (package! docker-compose-mode)
 
 (package! systemd)
+
+(package! org-roam)
