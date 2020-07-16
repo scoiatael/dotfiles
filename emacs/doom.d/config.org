@@ -144,8 +144,9 @@
 #+END_SRC
 ** Python
 #+BEGIN_SRC emacs-lisp
-(setq python-shell-interpreter "python")
-(setq lsp-python-ms-python-executable-cmd "python")
+(setq
+ python-shell-interpreter "python"
+ lsp-python-ms-python-executable-cmd "python")
 (add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)
 #+END_SRC
 *** DAP integration

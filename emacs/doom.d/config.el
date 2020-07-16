@@ -119,8 +119,9 @@
             (lambda (_arg) (call-interactively #'dap-ui-repl)))
   )
 
-(setq python-shell-interpreter "python")
-(setq lsp-python-ms-python-executable-cmd "python")
+(setq
+ python-shell-interpreter "python"
+ lsp-python-ms-python-executable-cmd "python")
 (add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)
 
 (after! dap-mode
