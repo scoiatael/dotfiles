@@ -35,6 +35,7 @@
 ;; Group helpful misc Emacs commands under "SPC-k"
 (map! :leader
       :prefix "k"
+      "d" #'server-edit
       )
 
 (use-package! evil-surround

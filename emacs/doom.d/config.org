@@ -1,3 +1,4 @@
+#+STARTUP: content
 * Doom emacs configuration
 ** Basic configuration
 #+BEGIN_SRC emacs-lisp
@@ -42,6 +43,7 @@
 ;; Group helpful misc Emacs commands under "SPC-k"
 (map! :leader
       :prefix "k"
+      "d" #'server-edit
       )
 #+END_SRC
 ** Packages
