@@ -19,6 +19,7 @@
 
 (map! :leader
       "R" #'org-roam-find-file
+      "A" #'org-todo-list
       "i u" #'counsel-unicode-char
       "SPC" #'counsel-M-x
       "d"   #'scoiatael/insert-current-date
