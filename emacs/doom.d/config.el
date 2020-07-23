@@ -11,7 +11,6 @@
 (setq mac-right-option-modifier nil)
 
 (map!
- "M-:" #'avy-goto-word-1
  "M-'" #'+eshell/toggle)
 
 (defun scoiatael/insert-current-date () (interactive)
@@ -20,13 +19,14 @@
 (map! :leader
       "R" #'org-roam-find-file
       "A" #'org-todo-list
-      "i u" #'counsel-unicode-char
+      "E"   #'ediff-files
       "SPC" #'counsel-M-x
-      "d"   #'scoiatael/insert-current-date
-      "e"   #'ediff-files
+      "/"   #'+default/search-project
+      "i u" #'counsel-unicode-char
+      "i d" #'scoiatael/insert-current-date
+      "j l" #'avy-goto-word-1
       "c x" #'lsp-treemacs-errors-list
       "f d" #'dired-jump
-      "/"   #'+default/search-project
       "s c" #'evil-ex-nohighlight
       "w 2" #'split-window-below
       "w 3" #'split-window-right
