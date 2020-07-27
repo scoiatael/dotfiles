@@ -62,6 +62,12 @@
   (define-key swiper-map (kbd "C-j") #'ivy-next-line)
   (define-key swiper-map (kbd "C-k") #'ivy-previous-line))
 #+END_SRC
+** Better ivy
+#+BEGIN_SRC emacs-lisp
+(setq ivy-use-selectable-prompt t
+      ivy-use-virtual-buffers t
+      enable-recursive-minibuffers t )
+#+END_SRC
 ** org
 #+BEGIN_SRC emacs-lisp
 (setq org-directory "~/org/"

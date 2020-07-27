@@ -48,6 +48,10 @@
   (define-key swiper-map (kbd "C-j") #'ivy-next-line)
   (define-key swiper-map (kbd "C-k") #'ivy-previous-line))
 
+(setq ivy-use-selectable-prompt t
+      ivy-use-virtual-buffers t
+      enable-recursive-minibuffers t )
+
 (setq org-directory "~/org/"
       org-archive-location (concat org-directory "archive/%s::")
       org-ellipsis " ▼ "
