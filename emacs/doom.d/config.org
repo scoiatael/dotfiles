@@ -216,6 +216,11 @@ often leaves trailing whitespace around -> show it!
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook 'org-roam-mode)
 (setq org-roam-completion-system 'ivy)
+
+(map!
+ :map #'org-roam-mode-map
+ :leader
+ "r i" #'org-roam-insert-immediate)
 #+END_SRC
 ** custom configuration
 on each machine I have little snippet to customize per this specific machine

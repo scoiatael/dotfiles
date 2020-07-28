@@ -173,4 +173,9 @@
 (add-hook 'after-init-hook 'org-roam-mode)
 (setq org-roam-completion-system 'ivy)
 
+(map!
+ :map #'org-roam-mode-map
+ :leader
+ "r i" #'org-roam-insert-immediate)
+
 (load-file (expand-file-name "./custom.el" (dir!)))

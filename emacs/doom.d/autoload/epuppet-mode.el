@@ -21,7 +21,17 @@
   :group 'epuppet-mode-faces)
 
 (defface epuppet-comment-face
-  '((t (:inherit font-lock-comment-face :background-color "honeydew")))
+  '((t (:inherit font-lock-comment-face :background "honeydew")))
+  "Face used to highlight epuppet template snippets"
+  :group 'epuppet-mode-faces)
+
+(defface epuppet-arg-face
+  '((t (:inherit font-lock-function-name-face :slant "italic")))
+  "Face used to highlight epuppet template snippets"
+  :group 'epuppet-mode-faces)
+
+(defface epuppet-error-face
+  '((t (:inherit font-lock-warning-face :background "red")))
   "Face used to highlight epuppet template snippets"
   :group 'epuppet-mode-faces)
 
@@ -42,8 +52,12 @@
     (insert "%")))
 
 (defvar epuppet-mode-font-lock-keywords
-  '(("<%.*?%>" . '(0 'epuppet-standard-face t))
-    ("<%#.*?%>" . '(0 'epuppet-comment-face t))))
+  '(("<%= .*?%>" . '(0 'epuppet-standard-face t))
+    ("<% .*?%>" . '(0 'epuppet-standard-face t))
+    ("<%#.*?%>" . '(0 'epuppet-comment-face t))
+    ("<%- |" . '(0 'epuppet-arg-face t))
+    ("| -%>" . '(0 'epuppet-arg-face t))
+    ("<%= \\(@[a-z_:]+\\)" . '(1 'epuppet-error-face t))))
 
 ;;;###autoload
 (define-minor-mode epuppet-mode
