@@ -26,7 +26,7 @@
   :group 'epuppet-mode-faces)
 
 (defface epuppet-arg-face
-  '((t (:inherit font-lock-function-name-face :slant "italic")))
+  '((t (:inherit font-lock-function-name-face :slant italic)))
   "Face used to highlight epuppet template snippets"
   :group 'epuppet-mode-faces)
 
