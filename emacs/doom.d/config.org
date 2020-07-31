@@ -39,6 +39,7 @@
       "w 2" #'split-window-below
       "w 3" #'split-window-right
       "a k" #'counsel-yank-pop
+      "f Y" #'scoiatael/yank-file-location
       "s e" #'iedit-mode)
 
 ;; Group helpful misc Emacs commands under "SPC-k"
