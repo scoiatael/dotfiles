@@ -1,9 +1,9 @@
 # -*- mode: snippet -*-
-# name : Define resource type
+# name : define
 # key : define
 # condition: puppet                                                                                                                                                                              
 # --
 # @summary
-define ${1:`(concat (file-name-nondirectory (directory-file-name (file-name-directory (parent-dir buffer-file-name)))) "::")`}${2:`(file-name-base)`} {
+define ${1:`(scoiatael/puppet-default-namespace)`}${2:`(file-name-base)`} {
        $0
 }

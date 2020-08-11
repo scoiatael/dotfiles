@@ -69,6 +69,9 @@
 (package! origami-mode
   :recipe (:host github :repo "gregsexton/origami.el"))
 
+(package! lsp-origami
+  :recipe (:host github :repo "emacs-lsp/lsp-origami"))
+
 (package! docker-compose-mode)
 
 (package! systemd)

@@ -24,7 +24,6 @@
 (map! :leader
       "R" #'org-roam-find-file
       "A" #'org-todo-list
-      "E"   #'ediff-files
       "SPC" #'counsel-M-x
       "/"   #'+default/search-project
       "i u" #'counsel-unicode-char
@@ -43,6 +42,8 @@
 (map! :leader
       :prefix "k"
       "d" #'server-edit
+      "e" #'ediff-files
+      "g" #'epa-encrypt-file
       )
 #+END_SRC
 ** Packages
@@ -51,6 +52,13 @@
 (use-package! evil-surround
   :config
     (global-evil-surround-mode 1))
+#+END_SRC
+*** origiami-mode for code folding
+#+BEGIN_SRC elisp
+(use-package origami
+  :config
+  (origami-mode 1)
+  (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable))
 #+END_SRC
 ** Swiper more like spacemacs
 #+BEGIN_SRC emacs-lisp

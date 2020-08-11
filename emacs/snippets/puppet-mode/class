@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# condition: puppet                                                                                              
+# --
+# @summary $3
+class ${1:`(scoiatael/puppet-default-namespace)`}${2:`(file-name-base)`} {
+    $0
+}

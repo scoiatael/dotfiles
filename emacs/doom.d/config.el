@@ -16,7 +16,6 @@
 (map! :leader
       "R" #'org-roam-find-file
       "A" #'org-todo-list
-      "E"   #'ediff-files
       "SPC" #'counsel-M-x
       "/"   #'+default/search-project
       "i u" #'counsel-unicode-char
@@ -35,6 +34,8 @@
 (map! :leader
       :prefix "k"
       "d" #'server-edit
+      "e" #'ediff-files
+      "g" #'epa-encrypt-file
       )
 
 (use-package! evil-surround
@@ -177,3 +178,8 @@
  "r i" #'org-roam-insert-immediate)
 
 (load-file (expand-file-name "./custom.el" (dir!)))
+
+(use-package origami
+  :config
+  (origami-mode 1)
+  (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable))

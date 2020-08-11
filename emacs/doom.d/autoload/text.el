@@ -3,12 +3,15 @@
 (defun scoiatael/yank (s)
   (message (kill-new s)))
 
+
+;;;###autoload
+(defun scoiatael/file-relative-name ()
+  (file-relative-name buffer-file-name (projectile-project-root)))
+
 ;;;###autoload
 (defun scoiatael/yank-file-location ()
   (interactive)
-  (let ((file-name (file-relative-name buffer-file-name (projectile-project-root)))
-        (line-num (line-number-at-pos)))
-    (scoiatael/yank (format "%s:%d" file-name line-num))))
+  (scoiatael/yank (format "%s:%d" (scoiatal/file-relative-name) (line-number-at-pos))))
 
 ;;;###autoload
 (defun scoiatael/yank-current-date ()
