@@ -58,6 +58,8 @@
 (use-package origami
   :config
   (origami-mode 1)
+  :after
+  (global-origami-mode)
   (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable))
 #+END_SRC
 ** Swiper more like spacemacs
