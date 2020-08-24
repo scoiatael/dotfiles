@@ -64,6 +64,10 @@
       org-clock-persist t
       org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷"))
 
+(use-package! org-superstar
+  :config
+  (add-hook! #'org-mode (org-superstar-mode 1)))
+
 (setq org-capture-templates
       '(("t" "todo" entry
          (file+headline +org-capture-todo-file "Inbox")
@@ -87,8 +91,8 @@
         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?\n %i\n %a" :heading "Changelog" :prepend t)))
 
 
-(add-hook! 'org-load-hook
-           #'scoiatael/set-org-todo-keywords)
+(add-hook! #'org-load
+           (scoiatael/set-org-todo-keywords))
 
 (after! org
   (add-to-list 'org-modules 'org-habit t))
