@@ -1,7 +1,10 @@
-#+STARTUP: content
-* Doom emacs configuration
-** Basic configuration
-#+BEGIN_SRC emacs-lisp
+(use-package origami
+  :config
+  (origami-mode 1)
+  :after
+  (global-origami-mode)
+  (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable))
+
 (setq
  doom-localleader-key ","
  user-full-name "Lukasz Czaplinski"
@@ -10,14 +13,10 @@
  display-line-numbers-type t)
 
 (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
-#+END_SRC
-** macOS
-#+BEGIN_SRC emacs-lisp
+
 (setq ns-right-alternate-modifier 'none)
 (setq mac-right-option-modifier nil)
-#+END_SRC
-** Global keymap
-#+BEGIN_SRC emacs-lisp
+
 (map!
  "M-'" #'+eshell/toggle)
 
@@ -45,39 +44,20 @@
       "e" #'ediff-files
       "g" #'epa-encrypt-file
       )
-#+END_SRC
-** Packages
-*** Surround for manipulating brackets
-#+BEGIN_SRC emacs-lisp
+
 (use-package! evil-surround
   :config
     (global-evil-surround-mode 1))
-#+END_SRC
-*** origiami-mode for code folding
-#+BEGIN_SRC elisp
-(use-package origami
-  :config
-  (origami-mode 1)
-  :after
-  (global-origami-mode)
-  (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable))
-#+END_SRC
-** Swiper more like spacemacs
-#+BEGIN_SRC emacs-lisp
 
 (after! swiper
   (define-key swiper-map (kbd "ESC") #'keyboard-quit)
   (define-key swiper-map (kbd "C-j") #'ivy-next-line)
   (define-key swiper-map (kbd "C-k") #'ivy-previous-line))
-#+END_SRC
-** Better ivy
-#+BEGIN_SRC emacs-lisp
+
 (setq ivy-use-selectable-prompt t
       ivy-use-virtual-buffers t
       enable-recursive-minibuffers t )
-#+END_SRC
-** org
-#+BEGIN_SRC emacs-lisp
+
 (setq org-directory "~/org/"
       org-archive-location (concat org-directory "archive/%s::")
       org-ellipsis " ▼ "
@@ -117,14 +97,10 @@
       :map org-mode-map
       :desc "dwim" "C-M-x" #'+org/dwim-at-point
       :desc "toggle folds" "TAB" #'org-cycle)
-#+END_SRC
-** magit
-#+BEGIN_SRC emacs-lisp
+
 (setq magit-repository-directories '(("~/Documents" . 2))
       magit-save-repository-buffers nil)
-#+END_SRC
-** Puppet
-#+BEGIN_SRC emacs-lisp
+
 (map!
  :map puppet-mode-map
  :after puppet-mode
@@ -132,17 +108,13 @@
  :desc "Align block" "b" #'puppet-align-block
  :desc "Align class params" "p" #'scoiatael/puppet-align-parameters
  :desc "Toggle string quotes" "'" #'puppet-toggle-string-quotes)
-#+END_SRC
-** direnv
-#+BEGIN_SRC emacs-lisp
+
 (map!
  :map direnv-envrc-mode-map
  :after direnv
  :localleader
  :desc "Allow envrc" "a" #'direnv-allow)
-#+END_SRC
-** DAP
-#+BEGIN_SRC emacs-lisp
+
 (use-package! dap-mode
   :after lsp-mode
   :preface
@@ -158,16 +130,12 @@
   (add-hook 'dap-stopped-hook
             (lambda (_arg) (call-interactively #'dap-ui-repl)))
   )
-#+END_SRC
-** Python
-#+BEGIN_SRC emacs-lisp
+
 (setq
  python-shell-interpreter "python"
  lsp-python-ms-python-executable-cmd "python")
 (add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)
-#+END_SRC
-*** DAP integration
-#+BEGIN_SRC emacs-lisp
+
 (after! dap-mode
   (dap-register-debug-template
    "Python :: pytest focus"
@@ -178,9 +146,7 @@
          :module "pytest"
          :request "launch"
          :name "Python :: pytest focus")))
-#+END_SRC
-*** Keymap
-#+BEGIN_SRC emacs-lisp
+
 (map! :after python
       :map python-mode-map
       :localleader
@@ -194,20 +160,12 @@
       :desc "Show locals" "l" #'dap-ui-locals
       :prefix "i"
       :desc "Remove obsolete imports" "d" #'scoiatael/python-remove-unused-imports)
-#+END_SRC
-** Rust
-#+BEGIN_SRC emacs-lisp
+
 (setq lsp-rust-server 'rust-analyzer)
 (setq rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer" ))
-#+END_SRC
-** web mode
-read engine from comment in first line of file
-#+BEGIN_SRC emacs-lisp
+
 (setq web-mode-enable-engine-detection 't)
-#+END_SRC
-** github-flavored markdown
-often leaves trailing whitespace around -> show it!
-#+BEGIN_SRC emacs-lisp
+
 (add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
 
 (defun scoiatael/visualize-trailing-whitespace ()
@@ -215,13 +173,9 @@ often leaves trailing whitespace around -> show it!
   (interactive)
   (setq whitespace-style '(face trailing))
   (whitespace-turn-on))
-#+END_SRC
-** custom personal snippets
-#+BEGIN_SRC emacs-lisp
+
 (setq! +snippets-dir "~/dotfiles/emacs/snippets")
-#+END_SRC
-** org-roam for personal wiki
-#+BEGIN_SRC emacs-lisp
+
 (add-hook 'after-init-hook 'org-roam-mode)
 (setq org-roam-completion-system 'ivy)
 
@@ -229,10 +183,5 @@ often leaves trailing whitespace around -> show it!
  :map #'org-roam-mode-map
  :leader
  "r i" #'org-roam-insert-immediate)
-#+END_SRC
-** custom configuration
-on each machine I have little snippet to customize per this specific machine
-e.g. set work email
-#+BEGIN_SRC emacs-lisp
+
 (load-file (expand-file-name "./custom.el" (dir!)))
-#+END_SRC
