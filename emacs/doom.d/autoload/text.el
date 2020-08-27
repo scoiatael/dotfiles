@@ -11,7 +11,7 @@
 ;;;###autoload
 (defun scoiatael/yank-file-location ()
   (interactive)
-  (scoiatael/yank (format "%s:%d" (scoiatal/file-relative-name) (line-number-at-pos))))
+  (scoiatael/yank (format "%s:%d" (scoiatael/file-relative-name) (line-number-at-pos))))
 
 ;;;###autoload
 (defun scoiatael/yank-current-date ()
