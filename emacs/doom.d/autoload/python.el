@@ -36,7 +36,6 @@
 (defun scoiatael/maybe-activate-virtualenv ()
   "Activate virtualenv if inside one"
   (interactive)
-  (message "Working on %s" (direnv--directory))
   (direnv-update-environment)
   (if-let ((virtualenv (getenv "VIRTUAL_ENV")))
       (progn
