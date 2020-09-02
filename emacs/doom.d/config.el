@@ -103,6 +103,7 @@
       :desc "toggle folds" "TAB" #'org-cycle)
 
 (setq magit-repository-directories '(("~/Documents" . 2))
+      magit-inhibit-save-previous-winconf t
       magit-save-repository-buffers nil)
 
 (map!
