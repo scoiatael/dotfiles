@@ -60,7 +60,7 @@ function _scoiatael_fish_init
     end
 
     if which bat > /dev/null;
-      alias less="bat"
+      alias less="bat -p"
     end
 end
 

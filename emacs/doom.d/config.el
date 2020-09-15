@@ -35,7 +35,11 @@
       "w 3" #'split-window-right
       "a k" #'counsel-yank-pop
       "f Y" #'scoiatael/yank-file-location
-      "s e" #'iedit-mode)
+      "s e" #'iedit-mode
+      "S n" #'smerge-next
+      "S p" #'smerge-prev
+      "S c" #'smerge-keep-current
+      )
 
 ;; Group helpful misc Emacs commands under "SPC-k"
 (map! :leader
