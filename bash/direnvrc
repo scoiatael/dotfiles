@@ -34,6 +34,7 @@ function _scoiatael_init() {
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
     _scoiatael_maybe_PATH_add "$HOME/.emacs.d/bin"
     _scoiatael_maybe_PATH_add "$HOME/.asdf/shims"
+    _scoiatael_maybe_PATH_add "$HOME/.local/bin"
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent
@@ -50,6 +51,8 @@ function _scoiatael_init() {
     fi
 
     export CLOUDSDK_PYTHON=python
+
+    if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
     [ -z "$VERBOSE" ] || log_status "Done."
 }
