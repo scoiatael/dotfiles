@@ -193,4 +193,7 @@
  :leader
  "r i" #'org-roam-insert-immediate)
 
+
+(add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
+
 (load-file (expand-file-name "./custom.el" (dir!)))
