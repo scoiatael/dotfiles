@@ -21,6 +21,7 @@
  "M-'" #'+eshell/toggle)
 
 (map! :leader
+      ">" #'spacemacs/alternate-buffer
       "R" #'org-roam-find-file
       "A" #'org-todo-list
       "SPC" #'counsel-M-x
