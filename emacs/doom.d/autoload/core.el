@@ -1,7 +1,7 @@
 ;;; ../../dotfiles/emacs/doom.d/autoload/core.el -*- lexical-binding: t; -*-
 
-;;;### https://github.com/syl20bnr/spacemacs/blob/c7a103a772d808101d7635ec10f292ab9202d9ee/core/core-funcs.el
-;;;autoload
+;; https://github.com/syl20bnr/spacemacs/blob/c7a103a772d808101d7635ec10f292ab9202d9ee/core/core-funcs.el
+;;;###autoload
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
 current window."
