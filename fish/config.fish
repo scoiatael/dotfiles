@@ -41,8 +41,7 @@ function _scoiatael_fish_init
     set -U LESS '-R'
     export LESS
 
-    which direnv
-    and eval (direnv hook fish)
+    eval (asdf exec direnv hook fish)
 
     alias b bundle
     alias gls "git status"
