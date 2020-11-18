@@ -24,6 +24,7 @@
       ">" #'spacemacs/alternate-buffer
       "R" #'org-roam-find-file
       "A" #'org-todo-list
+      "D" #'deadgrep
       "SPC" #'counsel-M-x
       "/"   #'+default/search-project
       "i u" #'counsel-unicode-char

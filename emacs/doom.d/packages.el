@@ -77,3 +77,5 @@
 (package! systemd)
 
 (package! org-roam)
+
+(package! deadgrep)

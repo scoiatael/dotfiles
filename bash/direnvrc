@@ -4,7 +4,7 @@ export LANG=en_GB.utf-8
 export EDITOR="emacsclient"
 export GIT_EDITOR="emacsclient"
 
-source $(asdf which direnv_use_asdf)
+source $(asdf direnv hook asdf)
 
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
