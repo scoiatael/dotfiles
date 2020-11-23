@@ -17,3 +17,8 @@
 (defun scoiatael/yank-current-date ()
   (interactive)
   (scoiatael/yank (shell-command-to-string "date +%Y-%m-%d | xargs printf %s")))
+
+;;;###autoload
+(defun scoiatael/json-to-yaml (start end)
+  (interactive (list (region-beginning) (region-end)))
+  (shell-command-on-region start end "ruby -e 'require \"yaml\"; require \"json\"; puts YAML.dump(JSON.parse($stdin.read))'" :replace t))

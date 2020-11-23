@@ -49,6 +49,7 @@
       "d" #'server-edit
       "e" #'ediff-files
       "g" #'epa-encrypt-file
+      "y" #'scoiatael/json-to-yaml
       )
 
 (use-package! evil-surround
