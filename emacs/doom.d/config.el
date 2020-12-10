@@ -47,7 +47,7 @@
 (map! :leader
       :prefix "k"
       "d" #'server-edit
-      "e" #'ediff-files
+      "e" #'ediff-buffers
       "g" #'epa-encrypt-file
       "y" #'scoiatael/json-to-yaml
       )
