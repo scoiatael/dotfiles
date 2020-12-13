@@ -4,7 +4,7 @@ export LANG=en_GB.utf-8
 export EDITOR="emacsclient"
 export GIT_EDITOR="emacsclient"
 
-source $(asdf direnv hook asdf)
+source "$(asdf direnv hook asdf)"
 
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
@@ -33,7 +33,6 @@ function _scoiatael_init() {
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
     _scoiatael_maybe_PATH_add "$HOME/.emacs.d/bin"
-    _scoiatael_maybe_PATH_add "$HOME/.asdf/shims"
     _scoiatael_maybe_PATH_add "$HOME/.local/bin"
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."

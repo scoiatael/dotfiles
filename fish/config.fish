@@ -24,8 +24,8 @@ set -q FZF_PREVIEW_FILE_CMD; or set -U FZF_PREVIEW_FILE_CMD "head -n 10"
 set -q FZF_PREVIEW_DIR_CMD; or set -U FZF_PREVIEW_DIR_CMD "ls"
 
 function reset_gpg_agent
-  gpgconf --kill gpg-agent
-  gpgconf --launch gpg-agent
+    gpgconf --kill gpg-agent
+    gpgconf --launch gpg-agent
 end
 
 function _scoiatael_fish_init
@@ -41,7 +41,9 @@ function _scoiatael_fish_init
     set -U LESS '-R'
     export LESS
 
-    eval (asdf exec direnv hook fish)
+    which asdf
+    and eval (asdf exec direnv hook fish)
+    and alias direnv "asdf exec direnv"
 
     alias b bundle
     alias gls "git status"
@@ -49,21 +51,21 @@ function _scoiatael_fish_init
 
 
     set -l iterm_integration_fish $HOME/.iterm2_shell_integration.fish
-    if test -f $iterm_integration_fish;
-      source $iterm_integration_fish
+    if test -f $iterm_integration_fish
+        source $iterm_integration_fish
     end
 
     set -l gcloud_path_fish /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc
-    if test -f $gcloud_path_fish;
-      source $gcloud_path_fish
+    if test -f $gcloud_path_fish
+        source $gcloud_path_fish
     end
 
-    if which bat > /dev/null;
-      alias less="bat -p"
+    if which bat >/dev/null
+        alias less="bat -p"
     end
 
-    if which colorls > /dev/null;
-      alias l="colorls"
+    if which colorls >/dev/null
+        alias l="colorls"
     end
 end
 
