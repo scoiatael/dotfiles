@@ -196,6 +196,10 @@
  :leader
  "r i" #'org-roam-insert-immediate)
 
+(map!
+ :map #'clojure-mode-map
+ :localleader
+ "r a r" #'cljr-add-require-to-ns)
 
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 

@@ -81,3 +81,5 @@
 (package! deadgrep)
 
 (package! vagrant-tramp)
+
+(package! clojure-snippets)
