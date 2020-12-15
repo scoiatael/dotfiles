@@ -10,7 +10,8 @@
  user-full-name "Lukasz Czaplinski"
  doom-font (font-spec :family "Iosevka" :size 12)
  doom-theme 'doom-one
- display-line-numbers-type t)
+ display-line-numbers-type t
+ comint-prompt-read-only nil)
 
 (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
 
@@ -144,9 +145,15 @@
   )
 
 (setq
- python-shell-interpreter "python"
- lsp-python-ms-python-executable-cmd "python")
+ python-shell-interpreter "python")
+
 (add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)
+(add-hook #'python-mode-hook #'evil-normal-state)
+
+(map!
+ :map python-pytest-mode-map
+ "q" #'bury-buffer
+ "G" #'+popup/raise)
 
 (after! dap-mode
   (dap-register-debug-template
