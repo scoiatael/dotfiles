@@ -210,4 +210,11 @@
 
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 
+(defun scoiatael/suppress-math-support-messages (old-fun format &rest args)
+  (if (string= format "markdown-mode math support enabled")
+      (ignore)
+    (apply old-fun format args)))
+
+(advice-add 'message :around #'scoiatael/suppress-math-support-messages)
+
 (load-file (expand-file-name "./custom.el" (dir!)))
