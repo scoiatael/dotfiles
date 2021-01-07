@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: puppet-task
+# key: ptask
+# --
+{
+  "description": "$0",
+  "parameters": {
+    "virtualenv": {
+      "type": "String[1]",
+      "description": "path to virtualenv"
+    },
+    "package": {
+      "type": "String[1]",
+      "description": "package to update"
+    }
+  },
+  "input_method": "environment"
+}
