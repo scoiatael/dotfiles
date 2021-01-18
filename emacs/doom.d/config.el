@@ -149,7 +149,8 @@
 
 (add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)
 (add-hook #'python-mode-hook #'evil-normal-state)
-(remove-hook #'python-mode-hook #'poetry-tracking-mode)
+(after! poetry
+  (remove-hook #'python-mode-hook #'poetry-tracking-mode))
 
 (map!
  :map python-pytest-mode-map
