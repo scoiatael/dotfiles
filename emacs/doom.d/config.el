@@ -197,9 +197,6 @@
 
 (setq! +snippets-dir "~/dotfiles/emacs/snippets")
 
-(add-hook 'after-init-hook 'org-roam-mode)
-(setq org-roam-completion-system 'ivy)
-
 (map!
  :map #'org-roam-mode-map
  :leader

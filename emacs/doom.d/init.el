@@ -146,6 +146,7 @@
         +jupyter        ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
         ;;+pomodoro        ; be fruitful with the tomato technique
+        +roam
         +present)    ; using org-mode for presentations
        ;; raku              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother

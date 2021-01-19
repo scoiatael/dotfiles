@@ -76,8 +76,6 @@
 
 (package! systemd)
 
-(package! org-roam)
-
 (package! deadgrep)
 
 (package! vagrant-tramp)

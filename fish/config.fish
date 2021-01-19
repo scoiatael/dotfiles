@@ -67,6 +67,8 @@ function _scoiatael_fish_init
     if which colorls >/dev/null
         alias l="colorls"
     end
+
+    alias clear='printf "\033c"'
 end
 
 _scoiatael_fish_init >/dev/null
