@@ -13,6 +13,8 @@ tramp
 recentf
 srecode-map.el
 .dir-locals.el
+.project
+.projectile
 
 # Org-mode
 .org-id-locations
@@ -124,3 +126,6 @@ GRTAGS
 # Direnv
 .envrc
 .envrc.enc*
+
+# Asdf-vm
+.tool-versions
