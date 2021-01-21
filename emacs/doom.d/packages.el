@@ -81,3 +81,5 @@
 (package! vagrant-tramp)
 
 (package! clojure-snippets)
+
+(package! gitlab-ci-mode)
