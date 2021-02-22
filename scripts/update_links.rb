@@ -13,6 +13,10 @@ Linker.create! do
   link 'profile', to: 'bash/profile'
   link 'bashrc', to: 'bash/profile'
   link 'direnvrc', to: 'bash/direnvrc'
+
+  link 'config/ion', to: 'experimental/ion'
+  link 'config/alacritty/alacritty.yml', to: 'experimental/alacritty.yml'
+
   touch 'envrc'
 
   group 'vim' do

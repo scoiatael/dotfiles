@@ -32,6 +32,7 @@ function _scoiatael_init() {
     PATH_add "$GOPATH/bin"
 
     [ -z "$VERBOSE" ] || log_status "Extending PATH.."
+    _scoiatael_maybe_PATH_add "/usr/local/MacGPG2/bin"
     _scoiatael_maybe_PATH_add "$HOME/.emacs.d/bin"
     _scoiatael_maybe_PATH_add "$HOME/.local/bin"
     _scoiatael_maybe_PATH_add "$HOME/.asdf/shims"
