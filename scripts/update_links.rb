@@ -16,6 +16,7 @@ Linker.create! do
 
   link 'config/ion', to: 'experimental/ion'
   link 'config/alacritty/alacritty.yml', to: 'experimental/alacritty.yml'
+  link 'tmux.conf', to: 'experimental/tmux/tmux.conf'
 
   touch 'envrc'
 

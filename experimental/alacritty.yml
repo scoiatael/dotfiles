@@ -111,7 +111,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: FuraMono Nerd Font
+    family: FiraMono Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -402,7 +402,7 @@ background_opacity: 0.98
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  #program: /Users/lukaszczaplinski/.local/bin/ion
+  program: /usr/local/bin/tmux
 #  args:
 #    - --login
 
@@ -415,7 +415,7 @@ shell:
 # Send ESC (\x1b) before characters when alt is pressed.
 #alt_send_esc: true
 
-#mouse:
+mouse:
   # Click settings
   #
   # The `double_click` and `triple_click` settings control the time
@@ -425,7 +425,7 @@ shell:
   #triple_click: { threshold: 300 }
 
   # If this is `true`, the cursor is temporarily hidden when typing.
-  #hide_when_typing: false
+  hide_when_typing: false
 
   #url:
     # URL launcher
@@ -680,7 +680,18 @@ shell:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
+  - { key: W,     mods: Command,       chars: "\x02\x78" }
+  - { key: T,     mods: Command,       chars: "\x02\x63" }
+  - { key: Key1,  mods: Command,       chars: "\x02\x31" }
+  - { key: Key2,  mods: Command,       chars: "\x02\x32" }
+  - { key: Key3,  mods: Command,       chars: "\x02\x33" }
+  - { key: Key4,  mods: Command,       chars: "\x02\x34" }
+  - { key: Key5,  mods: Command,       chars: "\x02\x35" }
+  - { key: Key6,  mods: Command,       chars: "\x02\x36" }
+  - { key: Key7,  mods: Command,       chars: "\x02\x37" }
+  - { key: Key8,  mods: Command,       chars: "\x02\x38" }
+  - { key: Key9,  mods: Command,       chars: "\x02\x39" }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
