@@ -83,3 +83,6 @@
 (package! clojure-snippets)
 
 (package! gitlab-ci-mode)
+
+(package! eruby-mode
+  :recipe (:host github :repo "petere/emacs-eruby-mode"))
