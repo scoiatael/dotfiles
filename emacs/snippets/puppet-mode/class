@@ -1,7 +1,6 @@
 # -*- mode: snippet -*-
-# name: class
-# key: class
-# condition: puppet                                                                                              
+# name: class-from-file
+# key: cf
 # --
 # @summary $3
 class ${1:`(scoiatael/puppet-default-namespace)`}${2:`(file-name-base)`} {

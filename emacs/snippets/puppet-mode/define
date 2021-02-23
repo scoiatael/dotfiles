@@ -1,7 +1,6 @@
 # -*- mode: snippet -*-
-# name : define
-# key : define
-# condition: puppet                                                                                                                                                                              
+# name : define-from-file
+# key : defi
 # --
 # @summary
 define ${1:`(scoiatael/puppet-default-namespace)`}${2:`(file-name-base)`} {
