@@ -8,7 +8,11 @@ Inspired by [Using GNU Stow to manage your dotfiles](http://brandon.invergo.net/
 
     brew install stow
 
-## Decide which groups to install
+## Install everything...
+
+    bash update.sh
+
+## ...or decide which groups to install
 
 ### Bash
 
@@ -42,7 +46,7 @@ Configuration for Bash with Direnv.
 
 ### vim
 
-    mkdir ~/.vim
+    mkdir -p ~/.vim/bundle
     cd vim && stow --dotfiles --adopt .
     cd vim-bundle && stow --dotfiles --adopt .
 
