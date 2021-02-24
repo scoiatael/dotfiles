@@ -1,7 +1,5 @@
 # Files i'm working on
 *.swp
-# and hidden
-.*
 # Ignore backups of files before installation
 *.bp
 *.bak

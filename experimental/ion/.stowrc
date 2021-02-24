@@ -1,0 +1,2 @@
+--ignore=stowrc
+--target=~/.config/ion

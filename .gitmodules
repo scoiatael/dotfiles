@@ -17,17 +17,17 @@
 	path = spacemacs
 	url = https://github.com/syl20bnr/spacemacs
 [submodule "vim/bundle/ctrlp.vim"]
-	path = vim/bundle/ctrlp.vim
+	path = vim-bundle/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
 [submodule "vim/bundle/vim-surround"]
-	path = vim/bundle/vim-surround
+	path = vim-bundle/vim-surround
 	url = git://github.com/tpope/vim-surround.git
 [submodule "vim/bundle/vim-pathogen"]
-	path = vim/bundle/vim-pathogen
+	path = vim-bundle/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
 [submodule "vim/bundle/vim-autoclose"]
-	path = vim/bundle/vim-autoclose
+	path = vim-bundle/vim-autoclose
 	url = https://github.com/Townk/vim-autoclose.git
 [submodule "emacs/emacs.d"]
-	path = emacs/emacs.d
+	path = emacs/dot-emacs.d
 	url = https://github.com/hlissner/doom-emacs

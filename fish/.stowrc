@@ -1,0 +1,3 @@
+--ignore=.stowrc
+--ignore=functions
+--target=~/.config/fish
