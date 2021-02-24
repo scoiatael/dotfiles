@@ -86,3 +86,8 @@
 
 (package! eruby-mode
   :recipe (:host github :repo "petere/emacs-eruby-mode"))
+
+(package! ion-mode
+  :recipe (:host github :repo "scoiatael/ion-mode")
+  ;; (:local-repo "/Users/lukaszczaplinski/Documents/ion-mode")
+  )

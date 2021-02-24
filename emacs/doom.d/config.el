@@ -57,6 +57,10 @@
   :config
     (global-evil-surround-mode 1))
 
+(use-package ion-mode
+  :mode (("\\.ion\\'" . ion-mode) ("/ion/initrc\\'" . ion-mode))
+  :config (add-to-list 'company-backends #'company-ion))
+
 (after! swiper
   (define-key swiper-map (kbd "ESC") #'keyboard-quit)
   (define-key swiper-map (kbd "C-j") #'ivy-next-line)
