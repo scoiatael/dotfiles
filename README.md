@@ -50,7 +50,9 @@ Configuration for Bash with Direnv.
     cd vim && stow --dotfiles --adopt .
     cd vim-bundle && stow --dotfiles --adopt .
 
-### Experimental
+## Experimental
+
+(installed separately)
 
 #### Ion
 
