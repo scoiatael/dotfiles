@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -exuo pipefail
 
-find . -name .stowrc -exec bash -c 'cd $(dirname {}) && stow --dotfiles --adopt .' \;
+fd -H --maxdepth 2 '.stowrc' -x bash -c "cd {//} && stow --dotfiles --adopt ." \; .
