@@ -58,3 +58,11 @@ Configuration for Bash with Direnv.
 
     mkdir -p ~/.config/ion
     cd experimental/ion && stow --dotfiles --adopt .
+
+## Platform-specific
+
+(installed separately)
+
+#### MacOS
+
+    cd platform-specific/macos && stow --dotfiles --adopt .
