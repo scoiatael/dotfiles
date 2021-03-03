@@ -220,4 +220,6 @@
 
 (advice-add 'message :around #'scoiatael/suppress-math-support-messages)
 
-(load-file (expand-file-name "./custom.el" (dir!)))
+(let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
+  (when (file-exists-p custom-config-file)
+    (load-file custom-config-file)))
