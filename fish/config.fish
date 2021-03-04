@@ -14,6 +14,7 @@ fundle plugin 'fishpkg/fish-pwd-info'
 fundle plugin 'fishpkg/fish-host-info'
 fundle plugin 'fishpkg/fish-last-job-id'
 fundle plugin 'fishpkg/fish-humanize-duration'
+fundle plugin 'limakzi/fisher-ranger-cd'
 
 fundle init
 
@@ -30,7 +31,7 @@ end
 
 function _scoiatael_fish_init
     set -U fish_greeting ""
-    set -U fish_key_bindings fish_hybrid_key_bindings
+    set -U fish_key_bindings fish_default_key_bindings
     function fish_mode_prompt
     end
 
