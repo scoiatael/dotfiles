@@ -220,6 +220,15 @@
 
 (advice-add 'message :around #'scoiatael/suppress-math-support-messages)
 
+(defvar scoiatael/+format-on-save-enabled-modes
+  nil)
+
+(defun scoiatael/toggle-format-on-save ()
+  (interactive)
+  (let ((oldvalue scoiatael/+format-on-save-enabled-modes))
+    (setq scoiatael/+format-on-save-enabled-modes +format-on-save-enabled-modes)
+    (setq +format-on-save-enabled-modes oldvalue)))
+
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))
