@@ -57,3 +57,5 @@
 	autoSquash = true
 [gpg]
 	program = gpg2
+[init]
+	defaultBranch = master
