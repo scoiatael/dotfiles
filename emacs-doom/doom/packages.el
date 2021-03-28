@@ -88,6 +88,8 @@
   :recipe (:host github :repo "petere/emacs-eruby-mode"))
 
 (package! ion-mode
-  :recipe (:host github :repo "scoiatael/ion-mode")
-  ;; (:local-repo "/Users/lukaszczaplinski/Documents/ion-mode")
-  )
+  :recipe (:host github :repo "scoiatael/ion-mode"))
+
+(package! elixir-mode
+  :recipe
+  (:host github :repo "https://github.com/elixir-editors/emacs-elixir"))
