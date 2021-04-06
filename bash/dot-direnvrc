@@ -1,8 +1,8 @@
 #!/bin/bash
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.utf-8
-export EDITOR="emacsclient"
-export GIT_EDITOR="emacsclient"
+export EDITOR="emacsclient -nw"
+export GIT_EDITOR="emacsclient -nw"
 
 source "$(asdf direnv hook asdf)"
 
