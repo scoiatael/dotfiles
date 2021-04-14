@@ -92,4 +92,4 @@
 
 (package! elixir-mode
   :recipe
-  (:host github :repo "https://github.com/elixir-editors/emacs-elixir"))
+  (:host github :repo "elixir-editors/emacs-elixir"))
