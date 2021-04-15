@@ -1,20 +1,21 @@
 set -l dotfiles_path "$HOME/dotfiles/fish"
 set fish_function_path $dotfiles_path/functions $fish_function_path
+set fish_complete_path $dotfiles_path/completions $fish_complete_path
 
-fundle plugin 'edc/bass'
-fundle plugin 'laughedelic/pisces'
-fundle plugin 'oh-my-fish/plugin-bak'
-fundle plugin 'oh-my-fish/plugin-wttr'
-fundle plugin 'jethrokuan/z'
-fundle plugin 'jethrokuan/fzf'
-fundle plugin 'aliz-ai/google-cloud-sdk-fish-completion'
-fundle plugin 'fishpkg/fish-git-util'
-fundle plugin 'fishpkg/fish-pwd-is-home'
-fundle plugin 'fishpkg/fish-pwd-info'
-fundle plugin 'fishpkg/fish-host-info'
-fundle plugin 'fishpkg/fish-last-job-id'
-fundle plugin 'fishpkg/fish-humanize-duration'
-fundle plugin 'limakzi/fisher-ranger-cd'
+fundle plugin edc/bass
+fundle plugin laughedelic/pisces
+fundle plugin oh-my-fish/plugin-bak
+fundle plugin oh-my-fish/plugin-wttr
+fundle plugin jethrokuan/z
+fundle plugin jethrokuan/fzf
+fundle plugin aliz-ai/google-cloud-sdk-fish-completion
+fundle plugin fishpkg/fish-git-util
+fundle plugin fishpkg/fish-pwd-is-home
+fundle plugin fishpkg/fish-pwd-info
+fundle plugin fishpkg/fish-host-info
+fundle plugin fishpkg/fish-last-job-id
+fundle plugin fishpkg/fish-humanize-duration
+fundle plugin limakzi/fisher-ranger-cd
 
 fundle init
 
@@ -22,7 +23,7 @@ set -q FZF_TMUX_HEIGHT; or set -U FZF_TMUX_HEIGHT "40%"
 set -q FZF_DEFAULT_OPTS; or set -U FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT"
 set -q FZF_LEGACY_KEYBINDINGS; or set -U FZF_LEGACY_KEYBINDINGS 1
 set -q FZF_PREVIEW_FILE_CMD; or set -U FZF_PREVIEW_FILE_CMD "head -n 10"
-set -q FZF_PREVIEW_DIR_CMD; or set -U FZF_PREVIEW_DIR_CMD "ls"
+set -q FZF_PREVIEW_DIR_CMD; or set -U FZF_PREVIEW_DIR_CMD ls
 
 function reset_gpg_agent
     gpgconf --kill gpg-agent
@@ -39,7 +40,7 @@ function _scoiatael_fish_init
         source $file
     end
 
-    set -U LESS '-R'
+    set -U LESS -R
     export LESS
 
     which asdf
