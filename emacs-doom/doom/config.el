@@ -18,6 +18,9 @@
 (setq ns-right-alternate-modifier 'none)
 (setq mac-right-option-modifier nil)
 
+(setenv "SSH_AUTH_SOCK"
+        (shell-command-to-string "gpgconf --list-dirs agent-ssh-socket | xargs echo -n"))
+
 (map!
  "M-'" #'+eshell/toggle)
 
