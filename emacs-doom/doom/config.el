@@ -216,6 +216,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 
+(after! lsp
+  (dolist (dir '("[/\\\\]\\.direnv"))
+    (push dir lsp-file-watch-ignored-directories)))
+
 (defun scoiatael/suppress-math-support-messages (old-fun format &rest args)
   (if (string= format "markdown-mode math support enabled")
       (ignore)
