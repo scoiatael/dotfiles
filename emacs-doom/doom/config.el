@@ -58,7 +58,7 @@
 
 (use-package! evil-surround
   :config
-    (global-evil-surround-mode 1))
+  (global-evil-surround-mode 1))
 
 (use-package ion-mode
   :mode (("\\.ion\\'" . ion-mode) ("/ion/initrc\\'" . ion-mode))
@@ -107,7 +107,7 @@
 
 
 (add-hook! #'org-load
-           (scoiatael/set-org-todo-keywords))
+  (scoiatael/set-org-todo-keywords))
 
 (after! org
   (add-to-list 'org-modules 'org-habit t))
@@ -217,6 +217,7 @@
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 
 (after! lsp
+  (setq lsp-enable-file-watchers nil)
   (dolist (dir '("[/\\\\]\\.direnv"))
     (push dir lsp-file-watch-ignored-directories)))
 
