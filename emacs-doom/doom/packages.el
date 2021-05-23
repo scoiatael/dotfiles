@@ -93,3 +93,6 @@
 (package! elixir-mode
   :recipe
   (:host github :repo "elixir-editors/emacs-elixir"))
+
+;; https://explog.in/notes/tmux.html#org9f807e7
+(package! emamux)

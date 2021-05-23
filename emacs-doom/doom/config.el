@@ -9,9 +9,9 @@
  doom-localleader-key ","
  user-full-name "Lukasz Czaplinski"
  doom-font (font-spec :family "Iosevka" :size 12)
- doom-theme 'doom-one
+doom-theme 'doom-one
  display-line-numbers-type t
- comint-prompt-read-only nil)
+comint-prompt-read-only nil)
 
 (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
 
@@ -236,6 +236,12 @@
   (let ((oldvalue scoiatael/+format-on-save-enabled-modes))
     (setq scoiatael/+format-on-save-enabled-modes +format-on-save-enabled-modes)
     (setq +format-on-save-enabled-modes oldvalue)))
+
+(use-package! emamux
+  :config
+  (map! :leader
+        (:prefix ("v" . "tmux pane")
+         :desc "Send command" :nv "c" #'emamux:send-command)))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
