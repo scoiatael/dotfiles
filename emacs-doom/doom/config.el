@@ -1,10 +1,3 @@
-(use-package origami
-  :config
-  (origami-mode 1)
-  :after
-  (global-origami-mode)
-  (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable))
-
 (setq
  doom-localleader-key ","
  user-full-name "Lukasz Czaplinski"
@@ -12,6 +5,8 @@
 doom-theme 'doom-one
  display-line-numbers-type t
 comint-prompt-read-only nil)
+
+(setq package-native-compile t)
 
 (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
 
@@ -55,6 +50,14 @@ comint-prompt-read-only nil)
       "g" #'epa-encrypt-file
       "y" #'scoiatael/json-to-yaml
       )
+
+(use-package! origami
+  :config
+  (origami-mode 1)
+  :after
+  (global-origami-mode)
+  (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable))
+
 
 (use-package! evil-surround
   :config
@@ -216,10 +219,18 @@ comint-prompt-read-only nil)
 
 (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
 
-(after! lsp
+(after! lsp-mode
   (setq lsp-enable-file-watchers nil)
   (dolist (dir '("[/\\\\]\\.direnv"))
-    (push dir lsp-file-watch-ignored-directories)))
+    (push dir lsp-file-watch-ignored-directories))
+ (add-to-list 'lsp-language-id-configuration '(puppet-mode . "puppet")))
+
+;; Add custom path for puppet-languageserver via
+;; (after! lsp-mode
+;;   (lsp-register-client
+;;    (make-lsp-client :new-connection (lsp-stdio-connection '("..some_dir../puppet-editor-services/puppet-languageserver" "--stdio"))
+;;                     :activation-fn (lsp-activate-on "puppet")
+;;                     :server-id 'puppet-languageserver)))
 
 (defun scoiatael/suppress-math-support-messages (old-fun format &rest args)
   (if (string= format "markdown-mode math support enabled")
