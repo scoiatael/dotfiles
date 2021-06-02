@@ -40,7 +40,9 @@ comint-prompt-read-only nil)
       "S n" #'smerge-next
       "S p" #'smerge-prev
       "S c" #'smerge-keep-current
+      "r R" (cmd! (counsel-projectile-find-file "README.md"))
       )
+
 
 ;; Group helpful misc Emacs commands under "SPC-k"
 (map! :leader
@@ -208,7 +210,7 @@ comint-prompt-read-only nil)
 (setq! +snippets-dir "~/dotfiles/emacs/snippets")
 
 (map!
- :map #'org-roam-mode-map
+ :map org-roam-mode-map
  :leader
  "r i" #'org-roam-insert-immediate)
 

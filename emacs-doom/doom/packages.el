@@ -96,3 +96,7 @@
 
 ;; https://explog.in/notes/tmux.html#org9f807e7
 (package! emamux)
+
+(package! magit-section
+          :recipe
+          (:repo "magit/magit"))
