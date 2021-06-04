@@ -18,3 +18,28 @@ current window."
                      (mapcar #'car (window-prev-buffers window)))
          ;; `other-buffer' honors `buffer-predicate' so no need to filter
          (other-buffer current-buffer t)))))
+
+;;;###autoload
+(defun scoiatael/visualize-trailing-whitespace ()
+  "Visualize trailingwhitespace in current buffer"
+  (interactive)
+  (setq whitespace-style '(face trailing))
+  (whitespace-turn-on))
+
+;;;###autoload
+(defun scoiatael/suppress-math-support-messages (old-fun format &rest args)
+  (if (string= format "markdown-mode math support enabled")
+      (ignore)
+    (apply old-fun format args)))
+
+(defvar scoiatael/+format-on-save-enabled-modes nil)
+
+;;;###autoload
+(defun scoiatael/toggle-format-on-save ()
+  (interactive)
+  (let ((oldvalue scoiatael/+format-on-save-enabled-modes))
+    (setq scoiatael/+format-on-save-enabled-modes +format-on-save-enabled-modes)
+    (setq +format-on-save-enabled-modes oldvalue)))
+
+;;;###autoload
+(defmacro scoiatael/defer (&rest body) `(run-at-time 1 nil (lambda () ,(cons 'progn body))))

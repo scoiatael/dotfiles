@@ -128,8 +128,8 @@
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp           ; ML stands for Microsoft's Language
        (go +lsp)    ; the hipster dialect
-       (haskell +lsp)  ; a language that's lazier than I am
-       hy                ; readability of scheme w/ speed of python
+       ;; (haskell +lsp)  ; a language that's lazier than I am
+       ;; hy                ; readability of scheme w/ speed of python
        ;;idris             ;
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
        (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here))))))
@@ -142,7 +142,7 @@
        ;;lua               ; one-based indices? one-based indices
        markdown      ; writing docs for people to ignore
        ;; nim               ; python + lisp at the speed of c
-       nix               ; I hereby declare "nix geht mehr!"
+       ;; nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org          ; organize your plain life in plain text
         ;; +dragndrop   ; drag & drop files/images into org buffers
@@ -150,6 +150,7 @@
         +jupyter        ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
         ;;+pomodoro        ; be fruitful with the tomato technique
+        +pretty
         +roam
         +present)    ; using org-mode for presentations
        ;; raku              ; write code no one else can comprehend

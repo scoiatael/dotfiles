@@ -63,9 +63,6 @@
 
 (package! fish-mode)
 
-(package! org-superstar-mode
-  :recipe (:host github :repo "integral-dw/org-superstar-mode"))
-
 (package! origami-mode
   :recipe (:host github :repo "gregsexton/origami.el"))
 
