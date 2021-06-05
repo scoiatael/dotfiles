@@ -96,4 +96,4 @@
 
 (package! magit-section
           :recipe
-          (:repo "magit/magit"))
+          (:repo "magit/magit" :host github))
