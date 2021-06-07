@@ -81,6 +81,9 @@
 (after! poetry
   (remove-hook #'python-mode-hook #'poetry-tracking-mode))
 
+(after! projectile
+  (add-hook #'projectile-after-switch-project-hook #'+tmux/cd-to-project))
+
 (after! dap-mode
   (dap-register-debug-template
    "Python :: pytest focus"
