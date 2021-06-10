@@ -40,7 +40,7 @@
       (progn
         (message "Found virtualenv: %s" virtualenv)
         (setq-local python-shell-interpreter (format "%s/bin/python" virtualenv))
-        (setq-local lsp-python-ms-python-executable-cmd  (format "%s/bin/python" virtualenv))
+        (setq-local lsp-pyright-venv-path virtualenv)
         (pythonic-activate virtualenv)
         (force-mode-line-update))
   (message "No virtualenv found")))

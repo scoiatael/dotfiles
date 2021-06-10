@@ -95,6 +95,9 @@
          :request "launch"
          :name "Python :: pytest focus")))
 
+(after! projectile
+  (pushnew! projectile-project-root-files ".envrc"))
+
 (map!
  :map python-pytest-mode-map
  "q" #'bury-buffer
