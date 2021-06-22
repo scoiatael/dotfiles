@@ -97,3 +97,5 @@
 (package! magit-section
           :recipe
           (:repo "magit/magit" :host github))
+
+(package! xonsh-mode)

@@ -235,6 +235,9 @@
          :desc "Open new window in cd" :nv "n" #'emamux:new-window
          :desc "Send command" :nv "c" #'emamux:send-command)))
 
+(use-package! xonsh-mode
+  :init (add-to-list 'auto-mode-alist '("\\.xsh\\'" . xonsh-mode)))
+
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))

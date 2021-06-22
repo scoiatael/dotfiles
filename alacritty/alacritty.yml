@@ -402,11 +402,11 @@ background_opacity: 0.98
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  program: /usr/local/bin/fish
+  program: /bin/bash
   args:
     - --login
     - -c
-    - tmux
+    - unset SHELL; . $(brew --prefix asdf)/asdf.sh; tmux
 
 # Startup directory
 #
