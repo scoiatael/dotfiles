@@ -1,0 +1,9 @@
+from prompt_toolkit.keys import Keys
+$PROMPT = '{CYAN}{cwd} {INTENSE_WHITE}λ{RESET} '
+# XONSH WEBCONFIG START
+$XONSH_COLOR_STYLE = 'stata-dark'
+# XONSH WEBCONFIG END
+$fzf_history_binding = Keys.ControlR
+$fzf_ssh_binding = Keys.ControlS
+xontrib load abbrevs direnv docker_tabcomplete fzf-widgets pipeliner ssh_agent fzf-widgets
+execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
