@@ -103,7 +103,11 @@
  "q" #'bury-buffer
  "G" #'+popup/raise)
 
-(map! "M-'" #'+eshell/toggle)
+(map! "M-'" #'+eshell/toggle
+      "C-h" #'evil-window-left
+      "C-j" #'evil-window-bottom
+      "C-k" #'evil-window-top
+      "C-l" #'evil-window-right)
 
 (map! :leader
       ">" #'spacemacs/alternate-buffer
