@@ -37,6 +37,7 @@ function _scoiatael_init() {
     _scoiatael_maybe_PATH_add "$HOME/.local/bin"
     _scoiatael_maybe_PATH_add "$HOME/.asdf/shims"
     _scoiatael_maybe_PATH_add "/usr/local/opt/sqlite/bin"
+    _scoiatael_maybe_PATH_add "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent
