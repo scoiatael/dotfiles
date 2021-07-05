@@ -108,7 +108,8 @@
       "C-h" #'evil-window-left
       "C-j" #'evil-window-bottom
       "C-k" #'evil-window-top
-      "C-l" #'evil-window-right)
+      "C-l" #'evil-window-right
+      "C-c s" #'ssh)
 
 (map! :leader
       ">" #'spacemacs/alternate-buffer
@@ -241,7 +242,10 @@
          :desc "Send command" :nv "c" #'emamux:send-command)))
 
 (use-package! xonsh-mode
-  :init (add-to-list 'auto-mode-alist '("\\.xsh\\'" . xonsh-mode)))
+  :mode ("\\.xsh\\'" . xonsh-mode))
+
+(use-package! neale-ssh
+  :commands (ssh))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)

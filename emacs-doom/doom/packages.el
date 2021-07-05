@@ -99,3 +99,6 @@
           (:repo "magit/magit" :host github))
 
 (package! xonsh-mode)
+
+(package! neale-ssh
+  :recipe (:repo "nealey/neale-ssh.el" :host github))
