@@ -7,3 +7,36 @@ $fzf_history_binding = Keys.ControlR
 $fzf_ssh_binding = Keys.ControlS
 xontrib load abbrevs direnv docker_tabcomplete fzf-widgets pipeliner ssh_agent fzf-widgets
 execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
+
+def __mvbak(args: list[str]):
+    """mv path to bak file"""
+    if len(args) != 1:
+        print("need one argument.")
+        return
+    path = args[0]
+    date = $(date +%Y%m%dT%H%M).strip()
+    dst = path + '.bak.' + date
+    while pf'{dst}'.exists():
+        date = $(date +%y%m%dt%h%m%s).strip()
+        dst = path + '.bak.' + date
+        sleep 1
+    mv @(path) @(dst)
+
+aliases["mvbak"] = __mvbak
+
+def __unbak(args: list[str]):
+    """reverse mv path to bak file"""
+    if len(args) != 1:
+        print("need one argument.")
+        return
+    path = pf'{args[0]}'
+    if not path.exists():
+        options = list(path.parent.glob(str(path.name) + '.bak.*'))
+        if not options:
+            print(f"Missing {args[0]}")
+            return
+        path = options[0]
+    dst = str(path).split('.bak.')[0]
+    mv @(path) @(dst)
+
+aliases["unbak"] = __unbak
