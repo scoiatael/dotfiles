@@ -1,0 +1,2 @@
+--target=~/.elvish
+--ignore=.stowrc

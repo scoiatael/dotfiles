@@ -247,6 +247,9 @@
 (use-package! neale-ssh
   :commands (ssh))
 
+(use-package! elvish-mode
+  :mode ("\\.elv" . elvish-mode))
+
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))

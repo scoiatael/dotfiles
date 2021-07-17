@@ -102,3 +102,5 @@
 
 (package! neale-ssh
   :recipe (:repo "nealey/neale-ssh.el" :host github))
+
+(package! elvish-mode)
