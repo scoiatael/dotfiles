@@ -1,5 +1,5 @@
-if (not (test -f $HOME/.elvish/lib/direnv.elv)) {
-  direnv hook elvish > $HOME/.elvish/lib/direnv.elv
+if (not ?(test -f ~/.elvish/lib/direnv.elv)) {
+  direnv hook elvish > ~/.elvish/lib/direnv.elv
 }
 use direnv
 
@@ -7,11 +7,22 @@ eval (zoxide init elvish | slurp)
 
 use epm
 epm:install github.com/zzamboni/elvish-themes&silent-if-installed=$true
+epm:install github.com/zzamboni/elvish-modules&silent-if-installed=$true
+
+use github.com/zzamboni/elvish-modules/bang-bang
 
 use github.com/zzamboni/elvish-themes/chain
+chain:prompt-segments = [ su git-combined arrow ]
+chain:rprompt-segments = [ dir ]
+chain:glyph[arrow] = "λ"
+chain:glyph[chain] = " "
 chain:init
 
-fn ls [@a]{ e:exa $@a }
+fn ls [@a]{ e:ls -G $@a }
+if (which exa) {
+    # Cannot use fn here, since it'd declare function in local scope.
+    ls~ = [@a]{ e:exa $@a }
+}
 
 edit:insert:binding[Ctrl-L] = { clear > /dev/tty; edit:redraw &full=$true }
 edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
