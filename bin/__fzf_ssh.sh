@@ -4,7 +4,8 @@ HOST=$(
     awk '{ split($1, A, ","); print(A[1]) }' <"$HOME/.ssh/known_hosts" |
         fzf-tmux-popup \
             --preview 'host {}' \
-            --preview-window "bottom:1:wrap"
+            --layout=reverse \
+            --preview-window "top:3:wrap"
 )
 
 tmux rename-window $HOST

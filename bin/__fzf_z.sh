@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 DIR=$(
-    zoxide query |
+    zoxide query -l |
         fzf-tmux-popup \
             --preview 'exa -ld --git {}' \
-            --preview-window "bottom:1:wrap"
+            --preview-window "top:3:wrap"
 )
 
 cd "$DIR" || exit 1
