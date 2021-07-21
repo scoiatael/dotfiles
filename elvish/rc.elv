@@ -46,3 +46,5 @@ bolt-completions = [
   &plan= (comp:subcommands $bolt-plan-completions) ]
 
 edit:completion:arg-completer[bolt] = (comp:subcommands $bolt-completions)
+
+use str
