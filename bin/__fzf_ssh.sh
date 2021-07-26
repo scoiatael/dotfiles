@@ -9,4 +9,4 @@ HOST=$(
 )
 
 tmux rename-window $HOST
-exec ssh "$HOST"
+ssh "$HOST" || sleep 60
