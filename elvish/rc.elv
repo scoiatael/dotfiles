@@ -32,13 +32,13 @@ edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
 use github.com/zzamboni/elvish-completions/comp
 
 bolt-task-completions = [
-  &run= (comp:sequence &opts={ bolt task run -h | comp:extract-opts } [ { bolt task show --format=json | jq -r '.tasks | map(.[0]) | join("\n")' } ] )
-  &show= (comp:sequence &opts={ bolt task show -h | comp:extract-opts } [ { bolt task show --format=json | jq -r '.tasks | map(.[0]) | join("\n")' } ] )
+  &run= (comp:sequence &opts={ bolt task run -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .task_cache.json } ] )
+  &show= (comp:sequence &opts={ bolt task show -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .task_cache.json } ] )
 ]
 
 bolt-plan-completions = [
-  &run= (comp:sequence &opts={ bolt plan run -h | comp:extract-opts } [ { bolt plan show --format=json | jq -r '.plans | map(.[0]) | join("\n")' } ] )
-  &show= (comp:sequence &opts={ bolt plan show -h | comp:extract-opts } [ { bolt plan show --format=json | jq -r '.plans | map(.[0]) | join("\n")' } ] )
+  &run= (comp:sequence &opts={ bolt plan run -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .plan_cache.json } ] )
+  &show= (comp:sequence &opts={ bolt plan show -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .plan_cache.json } ] )
 ]
 
 bolt-completions = [
