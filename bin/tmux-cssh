@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+HOST="$1"
+shift
+HOSTS="$@"
+TMUX_SESSION="tmux-cssh"
+
+set -xuo pipefail
+
+tmux new-session -s "${TMUX_SESSION}" -d "ssh ${HOST}"
+
+for HOST in ${HOSTS}; do
+    tmux split-window -t "${TMUX_SESSION}" -d "ssh ${HOST}"
+    # We have to reset the layout after each new pane otherwise the panes
+    # quickly become too small to spawn any more
+    tmux select-layout -t "${TMUX_SESSION}" tiled
+done
