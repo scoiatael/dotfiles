@@ -14,5 +14,12 @@ if test -z "$HOST"; then
     exit 1
 fi
 
-tmux rename-window $HOST
+function join_by { local IFS="$1"; shift; echo "$*"; }
+
+IFS=. read -ra ARR <<<"$HOST"
+BASE="$ARR"
+DOMAIN=("${ARR[@]:1}")
+DOMAIN=$(join_by $'\n' "${DOMAIN[@]}" | tac | cut -c 1| tr "\n" '.')
+
+tmux rename-window "$DOMAIN$BASE"
 ssh "$HOST" || sleep 60
