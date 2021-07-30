@@ -3,7 +3,8 @@
 DIR=$(
     zoxide query -l |
         fzf-tmux-popup \
-            --preview 'exa -ld --git {}' \
+            --preview 'echo {}; exa {}' \
+            --layout=reverse \
             --preview-window "top:3:wrap"
 )
 
