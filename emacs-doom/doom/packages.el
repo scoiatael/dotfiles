@@ -104,3 +104,6 @@
   :recipe (:repo "nealey/neale-ssh.el" :host github))
 
 (package! elvish-mode)
+
+;; Horrible performance on macOS.
+(package! company-shell :disable t)

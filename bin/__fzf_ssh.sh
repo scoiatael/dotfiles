@@ -8,5 +8,11 @@ HOST=$(
             --preview-window "top:3:wrap"
 )
 
+test -z "$HOST" && (
+    echo "No host specified"
+    sleep 1
+    exit 1
+)
+
 tmux rename-window $HOST
 ssh "$HOST" || sleep 60
