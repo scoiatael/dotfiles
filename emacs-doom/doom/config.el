@@ -5,8 +5,10 @@
       display-line-numbers-type t
       comint-prompt-read-only nil
       package-native-compile t
+      gcmh-high-cons-threshold (* 512 1024 1024)  ; 0.5GiB
       ns-right-alternate-modifier 'none
       mac-right-option-modifier nil)
+
 
 (setq python-shell-interpreter "python")
 
@@ -123,7 +125,7 @@
       "c x" #'lsp-treemacs-errors-list
       "w 2" #'split-window-below
       "w 3" #'split-window-right
-      "a k" #'counsel-yank-pop
+      "f k" #'counsel-yank-pop
       "f d" #'dired-jump
       "f Y" #'scoiatael/yank-file-location
       "s c" #'evil-ex-nohighlight

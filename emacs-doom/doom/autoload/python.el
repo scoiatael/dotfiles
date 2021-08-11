@@ -40,6 +40,7 @@
       (progn
         (message "Found virtualenv: %s" virtualenv)
         (setq-local python-shell-interpreter (format "%s/bin/python" virtualenv))
+        (setq-local pyimport-pyflakes-path (format "%s/bin/pyflakes" virtualenv))
         (setq-local lsp-pyright-venv-path virtualenv)
         (pythonic-activate virtualenv)
         (force-mode-line-update))

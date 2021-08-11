@@ -26,3 +26,6 @@ evaluate-commands kaktree--display
 set-option global kaktree__onscreen true
 
 map global normal <c-p> ': fzf-mode<ret>'
+
+add-highlighter global/ wrap
+add-highlighter global/ number-lines
