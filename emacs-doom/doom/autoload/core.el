@@ -43,3 +43,9 @@ current window."
 
 ;;;###autoload
 (defmacro scoiatael/defer (&rest body) `(run-at-time 1 nil (lambda () ,(cons 'progn body))))
+
+;;;###autoload
+(defun scoiatael/add-project ()
+  (interactive)
+  (f-touch ".project")
+  (projectile-add-known-project default-directory))
