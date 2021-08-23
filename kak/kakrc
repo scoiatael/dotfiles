@@ -22,10 +22,10 @@ plug "lePerdu/kakboard" %{
     hook global WinCreate .* %{ kakboard-enable }
 }
 
-evaluate-commands kaktree--display
-set-option global kaktree__onscreen true
+plug "sjjf/puppet-kak"
 
 map global normal <c-p> ': fzf-mode<ret>'
+map global normal <c-r> ': kaktree-toggle<ret>'
 
 add-highlighter global/ wrap
 add-highlighter global/ number-lines
