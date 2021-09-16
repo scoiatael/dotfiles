@@ -19,13 +19,11 @@
        ;;japanese
 
        :completion
-       company ; the ultimate code completion backend
+       (company +childframe) ; the ultimate code completion backend
        ;; helm             ; the *other* search engine for love and life
-       ;;ido               ; the other *other* search engine...
-       ;; (ivy
-       ;;  +fuzzy
-       ;;  +prescient)               ; a search engine for love and life
-       vertico
+       ;; ido               ; the other *other* search engine...
+       ivy                                 ; a search engine for love and life
+       ;; vertico
 
        :emacs
        (undo +tree)
@@ -48,10 +46,11 @@
         +all                      ; catch all popups that start with an asterix
         +defaults)                ; default popup rules
        (ligatures +iosevka)       ; replace bits of code with pretty symbols
-       ;;tabs              ; an tab bar for Emacs
-       ;; treemacs          ; a project drawer, like neotree but cooler
+       ;; tabs              ; an tab bar for Emacs
+       ;; treemacs
+                                        ; a project drawer, like neotree but cooler
        unicode          ; extended unicode support for various languages
-       ;; vc-gutter        ; vcs diff in the fringe
+       vc-gutter        ; vcs diff in the fringe
        vi-tilde-fringe  ; fringe tildes to mark beyond EOB
        window-select    ; visually switch windows
        workspaces       ; tab emulation, persistence & separate workspaces
@@ -63,11 +62,11 @@
        fold                             ; (nigh) universal code folding
        (format +onsave)                 ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
-       lispy          ; vim for lisp, for people who don't like vim
-       ;; multiple-cursors  ; editing in many places at once
-       ;;objed             ; text object editing for the innocent
-       ;;parinfer          ; turn lisp into python, sort of
-       rotate-text               ; cycle region at point between text candidates
+       ;; lispy          ; vim for lisp, for people who don't like vim
+       multiple-cursors  ; editing in many places at once
+       ;; objed             ; text object editing for the innocent
+       (parinfer +rust)          ; turn lisp into python, sort of
+       rotate-text ; cycle region at point between text candidates
        snippets                  ; my elves. They type so I don't have to
        word-wrap                 ; soft wrapping with language-aware indent
 
@@ -84,7 +83,7 @@
        ;; vterm             ; another terminals in Emacs
 
        :checkers
-       syntax                        ; tasing you for every semicolon you forget
+       (syntax +childframe)                        ; tasing you for every semicolon you forget
        spell                         ; tasing you for misspelling mispelling
        grammar                       ; tasing grammar mistake every you make
 
@@ -97,9 +96,9 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)       ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
-       (lookup                  ; helps you navigate your code and documentation
+       (lookup)                  ; helps you navigate your code and documentation
         ;; +docsets
-        )                               ; ...or in Dash docsets locally
+                                       ; ...or in Dash docsets locally
        (lsp +peek)
        magit                    ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs

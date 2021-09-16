@@ -14,7 +14,7 @@
 
 (setq ivy-use-selectable-prompt t
       ivy-use-virtual-buffers t
-      enable-recursive-minibuffers t )
+      enable-recursive-minibuffers t)
 
 (setq org-directory "~/org/"
       org-archive-location (concat org-directory "archive/%s::")
@@ -49,7 +49,7 @@
       magit-save-repository-buffers nil)
 
 (setq lsp-rust-server 'rust-analyzer)
-(setq rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer" ))
+(setq rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer"))
 
 (setq web-mode-enable-engine-detection 't)
 
@@ -78,6 +78,7 @@
 (after! org
   (add-to-list 'org-modules 'org-habit t)
   (add-hook! #'org-load
+    (undo-tree-mode)
     (scoiatael/set-org-todo-keywords)))
 
 (after! poetry

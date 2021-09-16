@@ -1,15 +1,14 @@
 #!/bin/bash
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.utf-8
-export EDITOR="emacsclient"
-export GIT_EDITOR="emacsclient"
+export EDITOR="emacsclient -c"
+export GIT_EDITOR="emacsclient -c"
 
 source "$(asdf direnv hook asdf)"
 
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
-    if test -d "$1";
-    then
+    if test -d "$1"; then
         PATH_add "$1"
         [ -z "$VERBOSE" ] || log_status "..ok"
     else
@@ -24,7 +23,6 @@ function _scoiatael_launch_gpg_agent() {
         gpgconf --launch gpg-agent
     fi
 }
-
 
 function _scoiatael_init() {
     [ -z "$VERBOSE" ] || log_status "Start init.."
@@ -43,12 +41,11 @@ function _scoiatael_init() {
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent
     ssh_agent="$(gpgconf --list-dirs agent-ssh-socket)"
-    if [ -z "$SSH_AUTH_SOCK" ] || [ "$SSH_AUTH_SOCK" != "$ssh_agent" ];
-    then
+    if [ -z "$SSH_AUTH_SOCK" ] || [ "$SSH_AUTH_SOCK" != "$ssh_agent" ]; then
         if [ -S "$ssh_agent" ]; then
             [ -z "$VERBOSE" ] || log_status "Agent already running"
         else
-            _scoiatael_launch_gpg_agent;
+            _scoiatael_launch_gpg_agent
             [ -z "$VERBOSE" ] || log_status "Agent dead or missing; started new"
         fi
         export SSH_AUTH_SOCK=$ssh_agent
@@ -62,15 +59,21 @@ function _scoiatael_init() {
 }
 
 function use_sops() {
-    has sops || (log_status "Please install sops (https://github.com/mozilla/sops#download) first"; exit 1)
+    has sops || (
+        log_status "Please install sops (https://github.com/mozilla/sops#download) first"
+        exit 1
+    )
 
     local SECRET_FILE
     SECRET_FILE=".envrc.enc.yaml"
-    [ -f "$SECRET_FILE" ] || (log_status "$SECRET_FILE not found, not loading secrets"; exit 1)
+    [ -f "$SECRET_FILE" ] || (
+        log_status "$SECRET_FILE not found, not loading secrets"
+        exit 1
+    )
 
     # shellcheck disable=SC2154
     direnv_load sops exec-env "$SECRET_FILE" "$direnv dump"
     watch_file "$SECRET_FILE"
 }
 
-_scoiatael_init > /dev/null
+_scoiatael_init >/dev/null
