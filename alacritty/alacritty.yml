@@ -401,12 +401,12 @@ background_opacity: 0.98
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-shell:
-  program: /bin/bash
-  args:
-    - --login
-    - -c
-    - unset SHELL; . $(brew --prefix asdf)/asdf.sh; env TMUX_COLORTAG_TAG_ONLY=yes tmux new-session -A -s 0
+# shell:
+#   program: /bin/bash
+#   args:
+#     - --login
+#     - -c
+#     - unset SHELL; . $(brew --prefix asdf)/asdf.sh; env TMUX_COLORTAG_TAG_ONLY=yes tmux new-session -A -s 0
 
 # Startup directory
 #

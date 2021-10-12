@@ -1,9 +1,22 @@
+fn tmux-start {
+  if ?(test -z $E:TMUX) {
+    # Not inside tmux, let's amend that
+    if ?(tmux ls > /dev/null 2> /dev/null) {
+      exec tmux attach
+    } else {
+      exec tmux
+    }
+  }
+}
+
 if (not ?(test -f ~/.elvish/lib/direnv.elv)) {
   direnv hook elvish > ~/.elvish/lib/direnv.elv
 }
 use direnv
 
 eval (zoxide init elvish | slurp)
+
+tmux-start
 
 use epm
 epm:install github.com/zzamboni/elvish-themes&silent-if-installed=$true
