@@ -71,6 +71,7 @@
 
 (after! lsp-mode
   (setq lsp-enable-file-watchers nil)
+  (setq lsp-ui-sideline-show-hover 't)
   (dolist (dir '("[/\\\\]\\.direnv"))
     (push dir lsp-file-watch-ignored-directories))
   (add-to-list 'lsp-language-id-configuration '(puppet-mode . "puppet")))
