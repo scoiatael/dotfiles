@@ -100,6 +100,11 @@
          :request "launch"
          :name "Python :: pytest focus")))
 
+(after! yasnippet
+  (add-hook! 'snippet-mode
+             (ws-butler-mode -1)
+             (whitespace-newline-mode)))
+
 (after! projectile
   (pushnew! projectile-project-root-files ".envrc"))
 

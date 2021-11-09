@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: newline
+# key: \
+# condition: t
+# --
+\
+  && 
