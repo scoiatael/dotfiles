@@ -66,6 +66,10 @@ fn unmvbak [path]{
 edit:insert:binding[Ctrl-L] = { clear > /dev/tty; edit:redraw &full=$true }
 edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
+edit:insert:binding[Alt-m] = $edit:-instant:start~
+edit:insert:binding[Alt-d] = $edit:kill-small-word-right~
+
+edit:prompt-stale-transform = [x]{ styled $x "bright-black" }
 
 use github.com/zzamboni/elvish-completions/comp
 
@@ -84,3 +88,23 @@ bolt-completions = [
   &plan= (comp:subcommands $bolt-plan-completions) ]
 
 edit:completion:arg-completer[bolt] = (comp:subcommands $bolt-completions)
+
+use github.com/zzamboni/elvish-modules/alias
+
+alias:new dfc e:dfc -p -/dev/disk1s4,devfs,map,com.apple.TimeMachine
+alias:new cat bat
+alias:new more bat --paging always
+alias:new v vagrant
+
+E:MANPAGER = "sh -c 'col -bx | bat -l man -p'"
+
+use github.com/xiaq/edit.elv/smart-matcher
+smart-matcher:apply
+
+use github.com/zzamboni/elvish-completions/git git-completions
+
+use github.com/zzamboni/elvish-modules/long-running-notifications
+# remember to `brew install terminal-notifier`
+
+use github.com/zzamboni/elvish-modules/util-edit
+util-edit:electric-delimiters
