@@ -105,6 +105,7 @@ use github.com/zzamboni/elvish-completions/git git-completions
 
 use github.com/zzamboni/elvish-modules/long-running-notifications
 # remember to `brew install terminal-notifier`
+long-running-notifications:threshold = 30
 
 use github.com/zzamboni/elvish-modules/util-edit
 util-edit:electric-delimiters
