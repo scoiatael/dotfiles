@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: tracer
+# key: tracer
+# condition: t
+# --
+from opentelemetry import trace
+
+tracer = trace.get_tracer(__name__)

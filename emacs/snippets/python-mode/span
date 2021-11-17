@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: start_with_current_span
+# key: span
+# condition: t
+# --
+with tracer.start_as_current_span(""):
+  
