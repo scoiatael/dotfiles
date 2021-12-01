@@ -107,3 +107,10 @@
 
 ;; Horrible performance on macOS.
 (package! company-shell :disable t)
+
+;; https://www.masteringemacs.org/article/tree-sitter-complications-of-parsing-languages
+(package! tree-sitter)
+(package! tree-sitter-langs)
+(package! combobulate
+  :recipe
+  (:repo "mickeynp/combobulate" :host github))

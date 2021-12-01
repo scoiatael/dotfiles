@@ -259,6 +259,15 @@
 (use-package! elvish-mode
   :mode ("\\.elv" . elvish-mode))
 
+(use-package! tree-sitter)
+(use-package! tree-sitter-langs)
+(use-package! combobulate
+  ;; Ensure `combobulate-mode` is activated when you launch a mode it supports
+  :hook ((python-mode . combobulate-mode)))
+         ;; (js-mode . combobulate-mode)))
+         ;; (typescript-mode . combobulate-mode)
+
+
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))
