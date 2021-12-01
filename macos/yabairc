@@ -44,4 +44,7 @@ yabai -m config left_padding 2
 yabai -m config right_padding 2
 yabai -m config window_gap 3
 
+# General app settings
+yabai -m rule --add app="^Bitwarden$" manage=off grid=128:128:16:16:96:96
+
 echo "yabai configuration loaded.."
