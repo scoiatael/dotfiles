@@ -1,3 +1,4 @@
+# -*- mode: gitconfig -*-
 [core]
 	editor = vim
 	excludesfile = ~/dotfiles/git/gitignore
