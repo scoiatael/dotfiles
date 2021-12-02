@@ -62,6 +62,8 @@
          (shell-command-to-string "gpgconf --list-dirs agent-ssh-socket | xargs echo -n"))
 
  (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
+ (add-to-list 'auto-mode-alist '("poetry.lock\\'" . conf-mode))
+
  (advice-add 'message :around #'scoiatael/suppress-math-support-messages)
 
  (add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
