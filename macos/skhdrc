@@ -98,6 +98,8 @@ shift + cmd - l : yabai -m window --warp east
 # balance size of windows
 cmd + ctrl - 0 : yabai -m space --balance
 
+cmd - 0x2F : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Alacritty") | .id')
+
 # make floating window fill screen
 # shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
 
