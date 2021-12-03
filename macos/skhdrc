@@ -99,6 +99,8 @@ shift + cmd - l : yabai -m window --warp east
 cmd + ctrl - 0 : yabai -m space --balance
 
 cmd - 0x2F : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Alacritty") | .id')
+cmd + ctrl - 1 : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Emacs") | .id')
+cmd + ctrl - 2 : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Firefox") | .id')
 
 # make floating window fill screen
 # shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
@@ -113,9 +115,9 @@ cmd - 0x2F : yabai -m window --focus $(yabai -m query --windows | jq '.[] | sele
 #                   yabai -m space --focus "${index}"
 
 # fast focus desktop
-cmd + ctrl - x : yabai -m space --focus recent
-cmd + ctrl - 1 : yabai -m space --focus 1
-cmd + ctrl - 2 : yabai -m space --focus 2
+# cmd + ctrl - x : yabai -m space --focus recent
+# cmd + ctrl - 1 : yabai -m space --focus 1
+# cmd + ctrl - 2 : yabai -m space --focus 2
 
 # send window to desktop and follow focus
 # shift + cmd - z : yabai -m window --space next; yabai -m space --focus next
