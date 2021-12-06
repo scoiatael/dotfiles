@@ -695,7 +695,6 @@ key_bindings:
   - { key: Key8, mods: Command, chars: "\x02\x38" }
   - { key: Key9, mods: Command, chars: "\x02\x39" }
 
-  - { key: Comma, mods: Command, action: Hide }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }

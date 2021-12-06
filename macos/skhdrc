@@ -98,7 +98,7 @@ shift + cmd - l : yabai -m window --warp east
 # balance size of windows
 cmd + ctrl - 0 : yabai -m space --balance
 
-cmd - 0x2F : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Alacritty") | .id')
+cmd - 0x2F : elvish ~/dotfiles/bin/__hide_show_alacritty.sh
 cmd + ctrl - 1 : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Emacs") | .id')
 cmd + ctrl - 2 : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Firefox") | .id')
 
