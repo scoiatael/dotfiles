@@ -124,9 +124,10 @@
 
 (map! :leader
       ">" #'spacemacs/alternate-buffer
-      "R" #'org-roam-find-file
+      "R" #'org-roam-node-find
       "A" #'org-todo-list
       "D" #'deadgrep
+      "Q" #'org-roam-buffer-toggle
       "SPC" #'counsel-M-x
       "/"   #'+default/search-project
       "i u" #'counsel-unicode-char
@@ -153,6 +154,10 @@
       "l" #'avy-goto-word-1
       "n" #'avy-goto-line)
 
+(map! :map magit-mode-map
+      :leader
+      "F" #'forge-browse-dwim)
+
 (map! :map magit-unmerged-section-map
       :leader
       :prefix "S"
@@ -163,6 +168,7 @@
 
 (map! :after org-mode
       :map org-mode-map
+      "Q" #'org-roam-buffer-toggle
       :desc "dwim" "C-M-x" #'+org/dwim-at-point
       :desc "toggle folds" "TAB" #'org-cycle)
 
