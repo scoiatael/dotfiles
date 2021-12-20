@@ -114,3 +114,7 @@
 (package! combobulate
   :recipe
   (:repo "mickeynp/combobulate" :host github))
+
+(package! dired-git-info
+          :recipe
+          (:repo "clemera/dired-git-info" :host github))
