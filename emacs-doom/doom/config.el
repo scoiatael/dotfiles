@@ -68,8 +68,9 @@
 
  (add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
 
- (add-hook #'python-mode-hook #'scoiatael/maybe-activate-virtualenv)
- (add-hook #'python-mode-hook #'evil-normal-state))
+ (add-hook! python-mode #'scoiatael/maybe-activate-virtualenv
+                         #'evil-normal-state
+                         #'lispyville-mode))
 
 (after! lsp-mode
   (setq lsp-enable-file-watchers nil)
