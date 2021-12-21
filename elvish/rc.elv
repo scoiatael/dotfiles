@@ -14,7 +14,10 @@ if (not ?(test -f ~/.elvish/lib/direnv.elv)) {
 }
 use direnv
 
-eval (zoxide init elvish | slurp)
+if (not ?(test -f ~/.elvish/lib/zoxide.elv)) {
+  zoxide init elvish > ~/.elvish/lib/zoxide.elv
+}
+use zoxide
 
 tmux-start
 
@@ -25,22 +28,24 @@ epm:install github.com/zzamboni/elvish-completions&silent-if-installed=$true
 
 use github.com/zzamboni/elvish-modules/bang-bang
 
+use github.com/zzamboni/elvish-modules/util
+
 use github.com/zzamboni/elvish-themes/chain
-chain:prompt-segments = [ su git-combined arrow ]
-chain:rprompt-segments = [ dir ]
-chain:glyph[arrow] = "λ"
-chain:glyph[chain] = " "
+set chain:prompt-segments = [ su git-combined arrow ]
+set chain:rprompt-segments = [ dir ]
+set chain:glyph[arrow] = "λ"
+set chain:glyph[chain] = " "
 chain:init
 
 use str
 
-fn ls [@a]{ e:ls -G $@a }
+fn ls {|@a| e:ls -G $@a }
 if (which exa) {
     # Cannot use fn here, since it'd declare function in local scope.
-    ls~ = [@a]{ e:exa $@a }
+    set ls~ = {|@a| e:exa $@a }
 }
 
-fn mvbak [path]{
+fn mvbak {|path|
   var ts = (e:date +%Y%m%dT%H%M | str:trim (one) "\n")
   var dst = (str:join "" ["." $path '.bak.' $ts])
   var c = 0
@@ -51,7 +56,7 @@ fn mvbak [path]{
   e:mv $path $dst
 }
 
-fn unmvbak [path]{
+fn unmvbak {|path|
   var dst src
   if ?(test -f $path) {
     set src = $path
@@ -63,31 +68,31 @@ fn unmvbak [path]{
   e:mv $src $dst
 }
 
-edit:insert:binding[Ctrl-L] = { clear > /dev/tty; edit:redraw &full=$true }
-edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
-edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
-edit:insert:binding[Alt-m] = $edit:-instant:start~
-edit:insert:binding[Alt-d] = $edit:kill-small-word-right~
+set edit:insert:binding[Ctrl-L] = { clear > /dev/tty; edit:redraw &full=$true }
+set edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
+set edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
+set edit:insert:binding[Alt-m] = $edit:-instant:start~
+set edit:insert:binding[Alt-d] = $edit:kill-small-word-right~
 
-edit:prompt-stale-transform = [x]{ styled $x "bright-black" }
+set edit:prompt-stale-transform = {|x| styled $x "bright-black" }
 
 use github.com/zzamboni/elvish-completions/comp
 
-bolt-task-completions = [
+var bolt-task-completions = [
   &run= (comp:sequence &opts={ bolt task run -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .task_cache.json } ] )
   &show= (comp:sequence &opts={ bolt task show -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .task_cache.json } ] )
 ]
 
-bolt-plan-completions = [
+var bolt-plan-completions = [
   &run= (comp:sequence &opts={ bolt plan run -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .plan_cache.json } ] )
   &show= (comp:sequence &opts={ bolt plan show -h | comp:extract-opts } [ { jq -r 'keys | join("\n")' .plan_cache.json } ] )
 ]
 
-bolt-completions = [
+var bolt-completions = [
   &task= (comp:subcommands $bolt-task-completions)
   &plan= (comp:subcommands $bolt-plan-completions) ]
 
-edit:completion:arg-completer[bolt] = (comp:subcommands $bolt-completions)
+set edit:completion:arg-completer[bolt] = (comp:subcommands $bolt-completions)
 
 use github.com/zzamboni/elvish-modules/alias
 
@@ -96,7 +101,7 @@ alias:new cat bat
 alias:new more bat --paging always
 alias:new v vagrant
 
-E:MANPAGER = "sh -c 'col -bx | bat -l man -p'"
+set E:MANPAGER = "sh -c 'col -bx | bat -l man -p'"
 
 use github.com/xiaq/edit.elv/smart-matcher
 smart-matcher:apply
@@ -105,8 +110,8 @@ use github.com/zzamboni/elvish-completions/git git-completions
 
 use github.com/zzamboni/elvish-modules/long-running-notifications
 # remember to `brew install terminal-notifier`
-long-running-notifications:threshold = 30
-long-running-notifications:never-notify = [ vi vim emacs nano less more bat cat ssh python ipython irb pry flask lima ]
+set long-running-notifications:threshold = 30
+set long-running-notifications:never-notify = [ vi vim emacs nano less more bat cat ssh python ipython irb pry flask lima ]
 
 use github.com/zzamboni/elvish-modules/util-edit
 util-edit:electric-delimiters
