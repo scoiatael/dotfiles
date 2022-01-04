@@ -72,6 +72,13 @@
                          #'evil-normal-state
                          #'lispyville-mode))
 
+;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
+(after! smartparens
+  (dolist (char '("f" "r"))
+    (sp-local-pair '(python-mode) (concat char "'") "'")
+    (sp-local-pair '(python-mode) (concat char "\"") "\""))
+  (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
+
 (after! lsp-mode
   (setq lsp-enable-file-watchers nil)
   (setq lsp-ui-sideline-show-hover 't)
