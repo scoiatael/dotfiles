@@ -1,19 +1,19 @@
-#!/usr/bin/env bash
+#!/usr/bin/env elvish
 
-DIR=$(
+use re
+
+# https://github.com/zzamboni/elvish-themes/blob/master/chain.elv#L195
+fn -prompt-pwd {
+  var tmp = (tilde-abbr $pwd)
+  re:replace '(\.?[^/]{3})[^/]*/' '$1/' $tmp
+}
+
+var DIR = (
     zoxide query -l |
-        fzf-tmux-popup \
-            --preview 'echo {}; exa {}' \
-            --layout=reverse \
-            --preview-window "top:3:wrap"
+        fzf-tmux-popup --preview 'echo {}; exa {}' --layout=reverse --preview-window "top:3:wrap"
 )
 
-if test -z "$DIR"; then
-    echo "No directory specified"
-    sleep 1
-    exit 1
-fi
+cd $DIR
 
-cd "$DIR" || exit 1
-tmux rename-window "$(dirname $DIR | sed "s|$HOME|~|" | sed -E 's/([^\/])[A-Za-z_]+/\1/g')/$(basename $DIR)"
-exec $SHELL
+tmux rename-window (-prompt-pwd)
+exec (get-env SHELL)
