@@ -1,8 +1,8 @@
 #!/usr/bin/env elvish
 
-var ALACRITTY_FOCUSED = (yabai -m query --windows | jq '.[] | select(.app=="Alacritty") | .focused')
+var ALACRITTY_FOCUSED = (yabai -m query --windows | jq '.[] | select(.app=="Alacritty") | ."has-focus"')
 var ALACRITTY_ID = (yabai -m query --windows | jq '.[] | select(.app=="Alacritty") | .id')
-if ?(test 1 -eq $ALACRITTY_FOCUSED) {
+if (==s true $ALACRITTY_FOCUSED) {
   yabai -m window --minimize $ALACRITTY_ID
   exec yabai -m window --focus last
 } else {
