@@ -14,9 +14,10 @@ var HOST = (
 )
 
 var BASE = (str:split "." $HOST | take 1)
-var DOMAIN = (str:split "." $HOST | drop 1 | tac | cut -c 1 | tr "\n")
+var DOMAIN = (str:split "." $HOST | drop 1 | to-lines | tac | cut -c 1 | str:join ".")
 
-tmux rename-window $DOMAIN$BASE
-if (not ?(ssh $HOST)) {
+tmux rename-window $DOMAIN.$BASE
+try { ssh $HOST } except e {
+    put $e
     sleep 60
 }
