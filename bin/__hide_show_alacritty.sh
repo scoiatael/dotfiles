@@ -1,4 +1,4 @@
-#!/usr/bin/env elvish
+#!/usr/bin/env elvish -norc
 
 use github.com/zzamboni/elvish-modules/util
 
