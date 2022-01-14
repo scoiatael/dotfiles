@@ -79,13 +79,6 @@
     (sp-local-pair '(python-mode) (concat char "\"") "\""))
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
 
-(after! lsp-mode
-  (setq lsp-enable-file-watchers nil)
-  (setq lsp-ui-sideline-show-hover 't)
-  (dolist (dir '("[/\\\\]\\.direnv"))
-    (push dir lsp-file-watch-ignored-directories))
-  (add-to-list 'lsp-language-id-configuration '(puppet-mode . "puppet")))
-
 (after! org
   (add-to-list 'org-modules 'org-habit t)
   (add-hook! #'org-load
@@ -251,14 +244,6 @@
             (add-hook 'dap-stopped-hook
                       (lambda (_arg) (call-interactively #'dap-ui-repl)))))
 
-
-;; Add custom path for puppet-languageserver via
-;; (after! lsp-mode
-;;   (lsp-register-client
-;;    (make-lsp-client :new-connection (lsp-stdio-connection '("..some_dir../puppet-editor-services/puppet-languageserver" "--stdio"))
-;;                     :activation-fn (lsp-activate-on "puppet")
-;;                     :server-id 'puppet-languageserver)))
-
 (use-package! emamux
   :config
   (map! :leader
@@ -282,6 +267,30 @@
   :hook ((python-mode . combobulate-mode)))
          ;; (js-mode . combobulate-mode)))
          ;; (typescript-mode . combobulate-mode)
+
+;; Enable LSP for Puppet if puppet-editor-services is installed
+(defvar scoiatael/puppet-editor-services nil "Set this to path to puppet-editor-services/puppet-languageserver")
+
+(defun scoiatael/puppet-lsp-connection (port)
+  (when scoiatael/puppet-editor-services
+    `(,scoiatael/puppet-editor-services
+      "--port" ,(number-to-string port)
+      "-c"
+      "--debug=STDOUT"
+      "--timeout=0")))
+
+(use-package! puppet-mode
+  :config
+  (when (featurep! :tools lsp)
+    (require 'lsp)
+    (add-hook 'puppet-mode-hook #'lsp)
+    (add-to-list 'lsp-language-id-configuration '(puppet-mode . "puppet"))
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-tcp-connection 'scoiatael/puppet-lsp-connection)
+                      :activation-fn (lsp-activate-on "puppet")
+                      :major-modes '(puppet-mode)
+                      :server-id 'puppet-languageserver))))
+
 
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
