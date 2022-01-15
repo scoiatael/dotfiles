@@ -23,6 +23,7 @@ current window."
 (defun scoiatael/visualize-trailing-whitespace ()
   "Visualize trailingwhitespace in current buffer"
   (interactive)
+  (require 'whitespace)
   (setq whitespace-style '(face trailing))
   (whitespace-turn-on))
 
