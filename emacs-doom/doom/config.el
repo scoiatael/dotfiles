@@ -271,12 +271,11 @@
 ;; Enable LSP for Puppet if puppet-editor-services is installed
 (defvar scoiatael/puppet-editor-services nil "Set this to path to puppet-editor-services/puppet-languageserver")
 
-(defun scoiatael/puppet-lsp-connection (port)
+(defun scoiatael/puppet-lsp-connection ()
   (when scoiatael/puppet-editor-services
     `(,scoiatael/puppet-editor-services
-      "--port" ,(number-to-string port)
       "-c"
-      "--debug=STDOUT"
+      "--stdio"
       "--timeout=0")))
 
 (use-package! puppet-mode
@@ -286,7 +285,7 @@
     (add-hook 'puppet-mode-hook #'lsp)
     (add-to-list 'lsp-language-id-configuration '(puppet-mode . "puppet"))
     (lsp-register-client
-     (make-lsp-client :new-connection (lsp-tcp-connection 'scoiatael/puppet-lsp-connection)
+     (make-lsp-client :new-connection (lsp-stdio-connection 'scoiatael/puppet-lsp-connection)
                       :activation-fn (lsp-activate-on "puppet")
                       :major-modes '(puppet-mode)
                       :server-id 'puppet-languageserver))))
