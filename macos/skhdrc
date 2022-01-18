@@ -162,3 +162,6 @@ cmd + shift - return  : yabai -m window --toggle split
 # alt - p : yabai -m window --toggle sticky;\
 #           yabai -m window --toggle topmost;\
 #           yabai -m window --toggle pip
+
+# https://github.com/koekeishiya/yabai/wiki/Tips-and-tricks#quickly-restart-the-yabai-launch-agent
+cmd + shift - c : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
