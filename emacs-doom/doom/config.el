@@ -276,6 +276,7 @@
     `(,scoiatael/puppet-editor-services
       "-c"
       "--stdio"
+      "--debug=/tmp/emacs_puppet-editor-services.log"
       "--timeout=0")))
 
 (use-package! puppet-mode
