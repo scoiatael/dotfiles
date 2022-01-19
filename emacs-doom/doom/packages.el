@@ -118,3 +118,5 @@
 (package! dired-git-info
           :recipe
           (:repo "clemera/dired-git-info" :host github))
+
+(package! devdocs)

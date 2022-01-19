@@ -42,6 +42,6 @@
         (setq-local python-shell-interpreter (format "%s/bin/python" virtualenv))
         (setq-local pyimport-pyflakes-path (format "%s/bin/pyflakes" virtualenv))
         (setq-local lsp-pyright-venv-path virtualenv)
-        (pythonic-activate virtualenv)
-        (force-mode-line-update))
-  (message "No virtualenv found")))
+        (pythonic-activate virtualenv))
+        ; (setq-local devdocs-current-docs '("python~3.9")) TODO
+    (message "No virtualenv found")))

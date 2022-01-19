@@ -291,7 +291,10 @@
                       :major-modes '(puppet-mode)
                       :server-id 'puppet-languageserver))))
 
-
+(use-package! devdocs
+  :config
+  (set-lookup-handlers! 'lsp-mode       ; override lsp-mode defaults which set lsp-describe-thing-at-point
+    :documentation #'devdocs-lookup))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
