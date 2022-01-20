@@ -72,6 +72,10 @@
                          #'evil-normal-state
                          #'lispyville-mode))
 
+(after! ivy
+  (advice-add 'ivy-next-line :after #'ivy-call-and-recenter)
+  (advice-add 'ivy-prev-line :after #'ivy-call-and-recenter))
+
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
 (after! smartparens
   (dolist (char '("f" "r"))
