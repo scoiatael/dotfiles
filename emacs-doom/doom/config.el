@@ -300,6 +300,8 @@
   (set-lookup-handlers! 'lsp-mode       ; override lsp-mode defaults which set lsp-describe-thing-at-point
     :documentation #'devdocs-lookup))
 
+(use-package! ob-http)
+
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))

@@ -120,3 +120,5 @@
           (:repo "clemera/dired-git-info" :host github))
 
 (package! devdocs)
+
+(package! ob-http)
