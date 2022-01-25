@@ -1,2 +1,2 @@
---target=~/.config/karabiner/assets/complex_modifications
+--target=~/.config/
 --ignore=.stowrc
