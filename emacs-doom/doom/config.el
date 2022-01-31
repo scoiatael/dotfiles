@@ -85,6 +85,10 @@
     (undo-tree-mode)
     (scoiatael/set-org-todo-keywords)))
 
+(after! org-roam
+  (remove-hook #'org-roam-find-file-hook
+    #'+org-roam-open-with-buffer-maybe-h))
+
 (after! poetry
   (remove-hook #'python-mode-hook #'poetry-tracking-mode))
 
