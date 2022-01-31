@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: filetags
+# key: tags
+# --
+#+filetags: :configuration:lang
