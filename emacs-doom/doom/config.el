@@ -111,6 +111,9 @@
 (after! projectile
   (pushnew! projectile-project-root-files ".envrc"))
 
+(after! lsp-mode
+  (pushnew! lsp-file-watch-ignored-directories "[/\\\\]\\.direnv\\'" "[/\\\\]dist\\'"))
+
 (map!
  :map python-pytest-mode-map
  "q" #'bury-buffer
