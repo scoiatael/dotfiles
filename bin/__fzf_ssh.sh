@@ -5,7 +5,7 @@ use str
 use github.com/zzamboni/elvish-modules/util
 
 var HOST = (
-    cat /Users/opera_user/.ssh/known_hosts |
+    cat  ~/.ssh/known_hosts |
     each { |x| re:split "[, ]" $x | take 1 } |
     util:select { |x| and (str:contains $x ".") (not (re:match '([0-9]{1,3}\.){3}[0-9]{1,3}' $x)) } |
     order |
