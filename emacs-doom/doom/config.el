@@ -305,6 +305,9 @@
 
 (use-package! ob-http)
 
+
+(load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
+
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))
