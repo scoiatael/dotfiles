@@ -83,6 +83,12 @@ cmd - j : yabai -m window --focus south
 cmd - k : yabai -m window --focus north
 cmd - l : yabai -m window --focus east
 
+# colemak-dh
+cmd - m : yabai -m window --focus west
+cmd - n : yabai -m window --focus south
+cmd - e : yabai -m window --focus north
+cmd - i : yabai -m window --focus east
+
 # swap managed window
 ctrl + cmd - h : yabai -m window --swap west
 ctrl + cmd - j : yabai -m window --swap south
