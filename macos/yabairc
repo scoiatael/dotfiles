@@ -47,6 +47,7 @@ yabai -m config window_gap 3
 # General app settings
 yabai -m rule --add app="^Bitwarden$" manage=off grid=128:128:16:16:96:96
 yabai -m rule --add app="^Alacritty$" manage=off grid=128:128:1:1:126:126
+yabai -m rule --add app="^Wally$" manage=off grid=128:128:1:1:126:126
 yabai -m rule --add app="^Alfred Preferences$" manage=off grid=128:128:16:16:96:96
 yabai -m rule --add app="^Karabiner-Elements$" manage=off grid=128:128:16:16:96:96
 
