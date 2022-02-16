@@ -151,6 +151,12 @@
       "r R" (cmd! (counsel-projectile-find-file "README.md")))
 
 (map! :leader
+      "w <left>" #'evil-window-left
+      "w <right>" #'evil-window-right
+      "w <up>" #'evil-window-up
+      "w <down>" #'evil-window-down)
+
+(map! :leader
       :prefix "k"
       "d" #'server-edit
       "e" #'ediff-buffers
@@ -161,10 +167,6 @@
       :prefix "j"
       "l" #'avy-goto-word-1
       "n" #'avy-goto-line)
-
-(map! :map magit-mode-map
-      :leader
-      "F" #'forge-browse-dwim)
 
 (map! :map magit-unmerged-section-map
       :leader
