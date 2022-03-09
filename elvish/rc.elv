@@ -9,10 +9,14 @@ fn tmux-start {
   }
 }
 
+# https://asdf-vm.com/guide/getting-started.html#_3-install-asdf
+set-env ASDF_DIR "/opt/asdf-vm"
+set-env ASDF_DATA_DIR $E:HOME'/.asdf'
 if (not ?(test -f ~/.elvish/lib/asdf.elv)) {
   cp /opt/asdf-vm/asdf.elv ~/.elvish/lib/asdf.elv
 }
-use asdf
+use asdf _asdf; var asdf~ = $_asdf:asdf~
+set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
 
 if (not ?(test -f ~/.elvish/lib/direnv.elv)) {
   direnv hook elvish > ~/.elvish/lib/direnv.elv
@@ -23,6 +27,8 @@ if (not ?(test -f ~/.elvish/lib/zoxide.elv)) {
   zoxide init elvish > ~/.elvish/lib/zoxide.elv
 }
 use zoxide
+set before-chdir = [{|_| edit:add-var oldpwd $pwd }]
+set after-chdir = [{|_| zoxide add -- $pwd }]
 
 set-env TMUX_COLORTAG_TAG_ONLY yes
 set-env TMUX_COLORTAG_USE_POWERLINE yes
