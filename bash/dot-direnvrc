@@ -4,8 +4,6 @@ export LANG=en_GB.utf-8
 export EDITOR="emacsclient -c"
 export GIT_EDITOR="emacsclient -c"
 
-source "$(asdf direnv hook asdf)"
-
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
     if test -d "$1"; then
@@ -34,9 +32,12 @@ function _scoiatael_init() {
     _scoiatael_maybe_PATH_add "$HOME/.emacs.d/bin"
     _scoiatael_maybe_PATH_add "$HOME/.local/bin"
     _scoiatael_maybe_PATH_add "$HOME/.asdf/shims"
+    _scoiatael_maybe_PATH_add "/opt/asdf-vm/bin"
     _scoiatael_maybe_PATH_add "$HOME/dotfiles/bin"
     _scoiatael_maybe_PATH_add "/usr/local/opt/sqlite/bin"
     _scoiatael_maybe_PATH_add "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"
+
+    source "$(asdf direnv hook asdf)"
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent

@@ -1,6 +1,6 @@
 (setq doom-localleader-key ","
       user-full-name "Lukasz Czaplinski"
-      doom-font (font-spec :family "Iosevka" :size 12)
+      doom-font (font-spec :family "Iosevka" :size 20)
       doom-theme 'doom-one
       display-line-numbers-type t
       comint-prompt-read-only nil
@@ -307,7 +307,6 @@
 
 (use-package! ob-http)
 (use-package! jq-mode)
-
 
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 

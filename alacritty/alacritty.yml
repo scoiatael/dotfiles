@@ -61,7 +61,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: buttonless
+  decorations: none
 
   # Startup Mode (changes require restart)
   #
@@ -111,7 +111,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: FiraMono Nerd Font
+    #    family: FiraMono Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -150,7 +150,7 @@ font:
   #style: Bold Italic
 
   # Point size
-  size: 11.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -170,10 +170,10 @@ font:
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
   # it is recommended to set `use_thin_strokes` to `false`.
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 # If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: false
 
 # Colors (Tomorrow Night)
 #colors:
@@ -339,7 +339,7 @@ draw_bold_text_with_bright_colors: true
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.98
+window_opacity: 0.98
 
 #selection:
 # This string contains all characters that are used as separators for

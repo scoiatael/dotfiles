@@ -9,6 +9,11 @@ fn tmux-start {
   }
 }
 
+if (not ?(test -f ~/.elvish/lib/asdf.elv)) {
+  cp /opt/asdf-vm/asdf.elv ~/.elvish/lib/asdf.elv
+}
+use asdf
+
 if (not ?(test -f ~/.elvish/lib/direnv.elv)) {
   direnv hook elvish > ~/.elvish/lib/direnv.elv
 }
@@ -19,12 +24,16 @@ if (not ?(test -f ~/.elvish/lib/zoxide.elv)) {
 }
 use zoxide
 
+set-env TMUX_COLORTAG_TAG_ONLY yes
+set-env TMUX_COLORTAG_USE_POWERLINE yes
+set-env TMUX_COLORTAG_ROUNDED_POWERLINE yes
 tmux-start
 
 use epm
 epm:install github.com/zzamboni/elvish-themes&silent-if-installed=$true
 epm:install github.com/zzamboni/elvish-modules&silent-if-installed=$true
 epm:install github.com/zzamboni/elvish-completions&silent-if-installed=$true
+epm:install github.com/xiaq/edit.elv&silent-if-installed=$true
 
 use github.com/zzamboni/elvish-modules/bang-bang
 
@@ -100,6 +109,7 @@ alias:new dfc e:dfc -p -/dev/disk1s4,devfs,map,com.apple.TimeMachine
 alias:new cat bat
 alias:new more bat --paging always
 alias:new v vagrant
+alias:new do doas -u (id -nu)-docker
 
 set E:MANPAGER = "sh -c 'col -bx | bat -l man -p'"
 
