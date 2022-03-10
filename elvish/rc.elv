@@ -30,10 +30,12 @@ use zoxide
 set before-chdir = [{|_| edit:add-var oldpwd $pwd }]
 set after-chdir = [{|_| zoxide add -- $pwd }]
 
-set-env TMUX_COLORTAG_TAG_ONLY yes
-set-env TMUX_COLORTAG_USE_POWERLINE yes
-set-env TMUX_COLORTAG_ROUNDED_POWERLINE yes
-tmux-start
+if (!=s vscode $E:TERM_PROGRAM) {
+  set-env TMUX_COLORTAG_TAG_ONLY yes
+  set-env TMUX_COLORTAG_USE_POWERLINE yes
+  set-env TMUX_COLORTAG_ROUNDED_POWERLINE yes
+  tmux-start
+}
 
 use epm
 epm:install github.com/zzamboni/elvish-themes&silent-if-installed=$true
