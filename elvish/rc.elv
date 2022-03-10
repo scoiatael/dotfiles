@@ -119,6 +119,10 @@ alias:new more bat --paging always
 alias:new v vagrant
 alias:new do doas -u (id -nu)-docker
 
+fn aws-do {|creds @rest|
+  aws-vault exec $creds -- doas -u (id -nu)-docker $@rest
+}
+
 set E:MANPAGER = "sh -c 'col -bx | bat -l man -p'"
 
 use github.com/xiaq/edit.elv/smart-matcher

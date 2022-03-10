@@ -3,6 +3,7 @@ export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.utf-8
 export EDITOR="emacsclient -c"
 export GIT_EDITOR="emacsclient -c"
+export SAM_CLI_TELEMETRY=0
 
 function _scoiatael_maybe_PATH_add() {
     [ -z "$VERBOSE" ] || log_status "Trying dir $1.."
