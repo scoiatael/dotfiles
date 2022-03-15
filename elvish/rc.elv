@@ -123,6 +123,18 @@ fn aws-do {|creds @rest|
   aws-vault exec $creds -- doas -u (id -nu)-docker $@rest
 }
 
+fn aws-prepare {
+  mkdir -p .aws-sam/build
+  chmod g+w .aws-sam
+  chmod g+w .aws-sam/build
+
+  touch .aws-sam/build.toml
+  chmod g+w .aws-sam/build.toml
+
+  touch samconfig.toml
+  chmod g+w samconfig.toml
+}
+
 set E:MANPAGER = "sh -c 'col -bx | bat -l man -p'"
 
 use github.com/xiaq/edit.elv/smart-matcher
