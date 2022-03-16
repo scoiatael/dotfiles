@@ -19,7 +19,7 @@ use asdf _asdf; var asdf~ = $_asdf:asdf~
 set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
 
 if (not ?(test -f ~/.elvish/lib/direnv.elv)) {
-  direnv hook elvish > ~/.elvish/lib/direnv.elv
+  asdf exec direnv hook elvish > ~/.elvish/lib/direnv.elv
 }
 use direnv
 
