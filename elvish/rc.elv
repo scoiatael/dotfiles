@@ -12,20 +12,11 @@ fn tmux-start {
 # https://asdf-vm.com/guide/getting-started.html#_3-install-asdf
 set-env ASDF_DIR "/opt/asdf-vm"
 set-env ASDF_DATA_DIR $E:HOME'/.asdf'
-if (not ?(test -f ~/.elvish/lib/asdf.elv)) {
-  cp /opt/asdf-vm/asdf.elv ~/.elvish/lib/asdf.elv
-}
 use asdf _asdf; var asdf~ = $_asdf:asdf~
 set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
 
-if (not ?(test -f ~/.elvish/lib/direnv.elv)) {
-  asdf exec direnv hook elvish > ~/.elvish/lib/direnv.elv
-}
 use direnv
 
-if (not ?(test -f ~/.elvish/lib/zoxide.elv)) {
-  zoxide init elvish > ~/.elvish/lib/zoxide.elv
-}
 use zoxide
 set before-chdir = [{|_| edit:add-var oldpwd $pwd }]
 set after-chdir = [{|_| zoxide add -- $pwd }]
