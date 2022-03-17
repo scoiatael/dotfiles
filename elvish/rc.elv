@@ -10,7 +10,11 @@ fn tmux-start {
 }
 
 # https://asdf-vm.com/guide/getting-started.html#_3-install-asdf
-set-env ASDF_DIR "/opt/asdf-vm"
+if ?(test -d /opt/asdf-vm) { # macOS, Arch
+  set-env ASDF_DIR /opt/asdf-vm
+} elif ?(test -d /run/current-system/sw/share/asdf-vm/) { # nixOS
+  set-env ASDF_DIR /run/current-system/sw/share/asdf-vm
+}
 set-env ASDF_DATA_DIR $E:HOME'/.asdf'
 use asdf _asdf; var asdf~ = $_asdf:asdf~
 set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
