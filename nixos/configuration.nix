@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -118,8 +118,13 @@
     extraGroups = [
       "docker" # Enable ‘docker’ for the user.
     ];
+    home = "/home/docker";
+    createHome = true;
   };
   users.groups.lczaplinski = {}; # Create shared group between main user and -docker one
+  system.activationScripts.shareHome = lib.stringAfter [ "users" ] ''
+    chmod g+rwx /home/lczaplinski
+  '';
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
