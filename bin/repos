@@ -1,0 +1,14 @@
+#!/usr/bin/env elvish
+use str
+
+var @repos = (cat repos.txt)
+
+for r $repos {
+  var @host_path = (str:split ":" $r)
+  var @proto_host = (str:split "@" $host_path[0])
+  var host = $proto_host[1]
+  var path = $host_path[1]
+  var dirs = $host/(dirname $path)
+  mkdir -p $dirs
+  git clone $r $host"/"$path
+}

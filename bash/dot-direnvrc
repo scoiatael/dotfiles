@@ -40,6 +40,8 @@ function _scoiatael_init() {
 
     source "$(asdf direnv hook asdf)"
 
+    [ "$(uname)" == "Linux" ] && export AWS_VAULT_BACKEND=kwallet # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
+
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."
     local ssh_agent
     ssh_agent="$(gpgconf --list-dirs agent-ssh-socket)"
