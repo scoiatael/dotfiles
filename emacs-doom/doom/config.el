@@ -1,6 +1,6 @@
 (setq doom-localleader-key ","
       user-full-name "Lukasz Czaplinski"
-      doom-font (font-spec :family "Iosevka" :size 20)
+      doom-font (font-spec :family "Iosevka" :size 12)
       doom-theme 'doom-one
       display-line-numbers-type t
       comint-prompt-read-only nil
