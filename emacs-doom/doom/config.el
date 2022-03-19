@@ -116,7 +116,7 @@
   (pushnew! projectile-project-root-files ".envrc"))
 
 (after! lsp-mode
-  (pushnew! lsp-file-watch-ignored-directories "[/\\\\]\\.direnv\\'" "[/\\\\]dist\\'"))
+  (pushnew! lsp-file-watch-ignored-directories "[/\\\\]\\.direnv\\'" "[/\\\\]db\\'" "[/\\\\]tmp\\'" "[/\\\\]dist\\'"))
 
 (map!
  :map python-pytest-mode-map
@@ -306,6 +306,7 @@
     :documentation #'devdocs-lookup))
 
 (use-package! ob-http)
+(use-package! jq-mode)
 
 
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))

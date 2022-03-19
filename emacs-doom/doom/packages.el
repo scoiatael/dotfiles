@@ -122,3 +122,5 @@
 (package! devdocs)
 
 (package! ob-http)
+
+(package! jq-mode)
