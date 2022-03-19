@@ -1,7 +1,7 @@
 # -*- mode: gitconfig -*-
 [core]
 	editor = vim
-	excludesfile = ~/dotfiles/git/gitignore
+	excludesfile = ~/dotfiles/config/gitignore
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   lga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all

@@ -53,7 +53,7 @@
 
 (setq web-mode-enable-engine-detection 't)
 
-(setq! +snippets-dir "~/dotfiles/emacs/snippets")
+(setq! +snippets-dir "~/dotfiles/emacs-snippets")
 
 (scoiatael/defer
  (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)

@@ -2,16 +2,18 @@ fn tmux-start {
   if ?(test -z $E:TMUX) {
     # Not inside tmux, let's amend that
     if ?(tmux ls > /dev/null 2> /dev/null) {
-      exec tmux attach
+      exec asdf exec direnv exec ~ tmux attach
     } else {
-      exec tmux
+      exec asdf exec direnv exec ~ tmux
     }
   }
 }
 
 # https://asdf-vm.com/guide/getting-started.html#_3-install-asdf
-if ?(test -d /opt/asdf-vm) { # macOS, Arch
+if ?(test -d /opt/asdf-vm) { # Arch
   set-env ASDF_DIR /opt/asdf-vm
+} elif ?(test -d  /usr/local/opt/asdf/libexec ) {
+  set-env ASDF_DIR /usr/local/opt/asdf/libexec
 } elif ?(test -d /run/current-system/sw/share/asdf-vm/) { # nixOS
   set-env ASDF_DIR /run/current-system/sw/share/asdf-vm
 }
@@ -20,10 +22,7 @@ use asdf _asdf; var asdf~ = $_asdf:asdf~
 set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
 
 use direnv
-
 use zoxide
-set before-chdir = [{|_| edit:add-var oldpwd $pwd }]
-set after-chdir = [{|_| zoxide add -- $pwd }]
 
 if (!=s vscode $E:TERM_PROGRAM) {
   set-env TMUX_COLORTAG_TAG_ONLY yes
