@@ -101,6 +101,11 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  # https://nixos.wiki/wiki/Printing - for shairport
+  services.avahi.enable = true;
+  services.avahi.publish.enable = true;
+  services.avahi.publish.userServices = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lczaplinski = {
     isNormalUser = true;
@@ -201,8 +206,17 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall = {
+    allowedTCPPorts = [ 6001 ];
+
+    allowedUDPPortRanges = [
+      { from = 6001; to = 6199; } # shairport
+    ];
+
+    allowedUDPPorts = [
+      5353 # avahi
+    ];
+  };
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
