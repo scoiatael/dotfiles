@@ -5,10 +5,11 @@
       display-line-numbers-type t
       comint-prompt-read-only nil
       package-native-compile t
-      gcmh-high-cons-threshold (* 512 1024 1024)  ; 0.5GiB
+      gcmh-high-cons-threshold (* 512 1024 1024) ; 0.5GiB
       ns-right-alternate-modifier 'none
-      mac-right-option-modifier nil)
-
+      mac-right-option-modifier nil
+      x-meta-keysym 'super
+      x-super-keysym 'meta)
 
 (setq python-shell-interpreter "python")
 
