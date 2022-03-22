@@ -7,9 +7,7 @@
       package-native-compile t
       gcmh-high-cons-threshold (* 512 1024 1024) ; 0.5GiB
       ns-right-alternate-modifier 'none
-      mac-right-option-modifier nil
-      x-meta-keysym 'super
-      x-super-keysym 'meta)
+      mac-right-option-modifier nil)
 
 (setq python-shell-interpreter "python")
 
