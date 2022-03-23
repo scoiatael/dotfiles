@@ -1,25 +1,29 @@
-fn tmux-start {
-  if ?(test -z $E:TMUX) {
-    # Not inside tmux, let's amend that
-    if ?(tmux ls > /dev/null 2> /dev/null) {
-      exec asdf exec direnv exec ~ tmux attach
-    } else {
-      exec asdf exec direnv exec ~ tmux
-    }
-  }
+fn exec-tmux { |@args|
+  exec direnv exec ~ tmux $@args
 }
-
 # https://asdf-vm.com/guide/getting-started.html#_3-install-asdf
 if ?(test -d /opt/asdf-vm) { # Arch
   set-env ASDF_DIR /opt/asdf-vm
 } elif ?(test -d  /usr/local/opt/asdf/libexec ) {
   set-env ASDF_DIR /usr/local/opt/asdf/libexec
-} elif ?(test -d /run/current-system/sw/share/asdf-vm/) { # nixOS
-  set-env ASDF_DIR /run/current-system/sw/share/asdf-vm
 }
-set-env ASDF_DATA_DIR $E:HOME'/.asdf'
-use asdf _asdf; var asdf~ = $_asdf:asdf~
-set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
+if ?(test -n $E:ASDF_DIR) {
+  set-env ASDF_DATA_DIR $E:HOME'/.asdf'
+  use asdf _asdf; var asdf~ = $_asdf:asdf~
+  set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
+  set exec-tmux~ = fn { |@a| exec asdf exec direnv exec ~ tmux $@a }
+}
+
+fn tmux-start {
+  if ?(test -z $E:TMUX) {
+    # Not inside tmux, let's amend that
+    if ?(tmux ls > /dev/null 2> /dev/null) {
+      exec-tmux attach
+    } else {
+      exec-tmux
+    }
+  }
+}
 
 use direnv
 use zoxide
@@ -143,3 +147,10 @@ set long-running-notifications:never-notify = [ vi vim emacs nano less more bat 
 
 use github.com/zzamboni/elvish-modules/util-edit
 util-edit:electric-delimiters
+
+use github.com/zzamboni/elvish-modules/dir
+edit:insert:binding[Alt-b] = $dir:left-word-or-prev-dir~
+edit:insert:binding[Alt-f] = $dir:right-word-or-next-dir~
+edit:insert:binding[Alt-i] = $dir:history-chooser~
+alias:new cd "use github.com/zzamboni/elvish-modules/dir; dir:cd"
+
