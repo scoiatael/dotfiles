@@ -149,8 +149,8 @@ use github.com/zzamboni/elvish-modules/util-edit
 util-edit:electric-delimiters
 
 use github.com/zzamboni/elvish-modules/dir
-edit:insert:binding[Alt-b] = $dir:left-word-or-prev-dir~
-edit:insert:binding[Alt-f] = $dir:right-word-or-next-dir~
-edit:insert:binding[Alt-i] = $dir:history-chooser~
-alias:new cd "use github.com/zzamboni/elvish-modules/dir; dir:cd"
+set edit:insert:binding[Alt-b] = $dir:left-word-or-prev-dir~
+set edit:insert:binding[Alt-f] = $dir:right-word-or-next-dir~
+set edit:insert:binding[Alt-i] = $dir:history-chooser~
+fn cd { |@a| dir:cd $@a }
 
