@@ -149,7 +149,6 @@
     stow
     shairport-sync
     elvish
-    asdf-vm
     zoxide
     exa
     go
@@ -161,16 +160,17 @@
     bat
     gparted
     aws-vault
-    clang
     google-cloud-sdk
     awscli
     aws-sam-cli
     htop
-    gnumake
-    binutils
     fzf
     python3Minimal
-    zlib
+    vscode
+    ark
+    direnv nix-direnv 
+    sd
+    keybase-gui
   ];
 
   fonts.fonts = with pkgs; [
@@ -194,6 +194,17 @@
     enableSSHSupport = true;
   };
   programs.ssh.startAgent = false;
+
+  # https://github.com/nix-community/nix-direnv#via-configurationnix-in-nixos
+  # at least until I have home-manager working properly :)
+  # nix options for derivations to persist garbage collection
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
+  environment.pathsToLink = [
+    "/share/nix-direnv"
+  ];
 
   # List services that you want to enable:
 
