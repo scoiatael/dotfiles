@@ -9,6 +9,15 @@ for r $repos {
   var host = $proto_host[1]
   var path = $host_path[1]
   var dirs = $host/(dirname $path)
-  mkdir -p $dirs
-  git clone $r $host"/"$path
+  var target = $host"/"$path
+  if ?(test -e $target) {
+    echo $target exists
+  } else {
+    mkdir -p $dirs
+    git clone $r $target
+  }
 }
+
+# Local Variables:
+# mode: elvish
+# End:
