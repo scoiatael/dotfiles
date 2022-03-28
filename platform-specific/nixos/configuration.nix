@@ -171,6 +171,7 @@
     direnv nix-direnv 
     sd
     keybase-gui
+    wally-cli
   ];
 
   fonts.fonts = with pkgs; [
@@ -212,6 +213,8 @@
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
   services.pcscd.enable = true;
+
+  services.keybase.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
