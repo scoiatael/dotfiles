@@ -4,17 +4,18 @@ use str
 var @repos = (cat repos.txt)
 
 for r $repos {
-  var @host_path = (str:split ":" $r)
-  var @proto_host = (str:split "@" $host_path[0])
-  var host = $proto_host[1]
-  var path = $host_path[1]
-  var dirs = $host/(dirname $path)
-  var target = $host"/"$path
-  if ?(test -e $target) {
-    echo $target exists
+  var path = (str:trim-prefix $r "https://")
+  if (str:has-prefix $r "git@") {
+    var @host_path = (str:split ":" $r)
+    var host = (str:trim-prefix $host_path[0] "git@")
+    set path = $host/$host_path[1]
+  }
+  var dirs = (dirname $path)
+  if ?(test -e $path) {
+    echo $path exists
   } else {
     mkdir -p $dirs
-    git clone $r $target
+    git clone $r $path
   }
 }
 
