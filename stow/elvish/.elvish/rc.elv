@@ -35,11 +35,18 @@ if (!=s vscode $E:TERM_PROGRAM) {
   tmux-start
 }
 
-use epm
-epm:install github.com/zzamboni/elvish-themes&silent-if-installed=$true
-epm:install github.com/zzamboni/elvish-modules&silent-if-installed=$true
-epm:install github.com/zzamboni/elvish-completions&silent-if-installed=$true
-epm:install github.com/xiaq/edit.elv&silent-if-installed=$true
+# NOTE: epm:install &silent-if-installed=true _still_ does connection over internet. Which means no net = no shell. Bad idea.
+fn _lazy_install { |@pkgs|
+  use epm
+  peach { |pkg| if (not (epm:is-installed $pkg)) { epm:install $pkg } } $@pkgs
+}
+
+_lazy_install [
+  github.com/zzamboni/elvish-themes
+  github.com/zzamboni/elvish-modules
+  github.com/zzamboni/elvish-completions
+  github.com/xiaq/edit.elv
+]
 
 use github.com/zzamboni/elvish-modules/bang-bang
 
@@ -54,7 +61,7 @@ chain:init
 
 use str
 
-fn ls {|@a| e:ls -G $@a }
+fn ls {|@a| e:ls $@a }
 if (which exa) {
     # Cannot use fn here, since it'd declare function in local scope.
     set ls~ = {|@a| e:exa $@a }
@@ -83,9 +90,22 @@ fn unmvbak {|path|
   e:mv $src $dst
 }
 
+fn _edit_prompt {
+  var tmp = (mktemp "_edit_prompt.XXXXXXXXXX.elv")
+  chmod 600 $tmp
+  try {
+    echo $edit:current-command > $tmp
+    edit $tmp
+    set edit:current-command = (e:cat $tmp | str:join "\n")
+  } finally {
+    rm $tmp
+  }
+}
+
 set edit:insert:binding[Ctrl-L] = { clear > /dev/tty; edit:redraw &full=$true }
 set edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 set edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
+set edit:insert:binding[Ctrl-X] = { _edit_prompt }
 set edit:insert:binding[Alt-m] = $edit:-instant:start~
 set edit:insert:binding[Alt-d] = $edit:kill-small-word-right~
 
