@@ -193,4 +193,100 @@
     ];
     delta.enable = true;
   };
+  home.packages = with pkgs; [
+    neofetch
+    gnutar
+    rclone
+    procs
+    tokei
+    du-dust
+    fd
+    jq
+    ripgrep
+  ];
+
+  programs = {
+    zellij = {
+      enable = true;
+    };
+    starship = {
+      enable = true;
+      settings = {
+        format = ''$username$hostname$directory$git_branch$git_state$git_status$cmd_duration$line_break$character'';
+
+        directory.style = "blue";
+
+        character = {
+          success_symbol = "[❯](purple)";
+          error_symbol = "[❯](red)";
+          vicmd_symbol = "[❮](green)";
+        };
+
+        git_branch = {
+          format = "[$branch]($style)";
+          style = "bright-black";
+        };
+
+        git_status = {
+          format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
+          style = "cyan";
+          conflicted = "​";
+          untracked = "​";
+          modified = "​";
+          staged = "​";
+          renamed = "​";
+          deleted = "​";
+          stashed = "≡";
+        };
+
+        git_state = {
+          format = ''\([$state( $progress_current/$progress_total)]($style)\) '';
+          style = "bright-black";
+        };
+
+        cmd_duration = {
+          format = "[$duration]($style) ";
+          style = "yellow";
+        };
+
+      };
+    };
+    nushell = {
+      package = (with import <unstable> {}; nushell); # Need nushell 0.60.0+ for starship
+      enable = true;
+      settings = {
+        startup = [
+        ];
+      };
+    };
+    dircolors = {
+      enable = true;
+    };
+    bat = {
+      enable = true;
+    };
+    exa = {
+      enable = true;
+      enableAliases = true;
+    };
+    broot = {
+      enable = true;
+    };
+    helix = {
+      enable = true;
+    };
+    fzf = {
+      enable = true;
+    };
+    zoxide = {
+      enable = true;
+    };
+  };
+  xdg.configFile."nu/config.nu" = { # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
+    text = ''
+      mkdir ~/.cache/starship
+      starship init nu | save ~/.cache/starship/init.nu
+      source ~/.cache/starship/init.nu
+    '';
+  };
 }
