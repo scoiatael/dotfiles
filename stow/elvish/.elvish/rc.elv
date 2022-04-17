@@ -11,7 +11,7 @@ if ?(test -n $E:ASDF_DIR) {
   set-env ASDF_DATA_DIR $E:HOME'/.asdf'
   use asdf _asdf; var asdf~ = $_asdf:asdf~
   set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
-  set exec-tmux~ = fn { |@a| exec asdf exec direnv exec ~ tmux $@a }
+  set exec-tmux~ = { |@a| exec asdf exec direnv exec ~ tmux $@a }
 }
 
 fn tmux-start {
