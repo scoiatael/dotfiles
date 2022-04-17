@@ -23,7 +23,7 @@ fn tmux-start {
   }
 }
 
-var ssh_agent = "~/.gnupg/S.gpg-agent.ssh"
+var ssh_agent = $E:HOME"/.gnupg/S.gpg-agent.ssh"
 if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
   # Not inside tmux, let's amend that
   set-env LC_ALL en_GB.UTF-8

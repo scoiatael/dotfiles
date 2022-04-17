@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
   programs.git = {
     enable = true;
     aliases = {
@@ -216,7 +221,7 @@
     starship = {
       enable = true;
       settings = {
-        format = ''$cmd_duration$line_break$username$git_state$git_status$character'';
+        format = ''$cmd_duration$username$git_state$git_status$character'';
         right_format = ''$directory$git_branch'';
 
         directory.style = "blue";
@@ -275,6 +280,15 @@
     };
     helix = {
       enable = true;
+      package = (with import <unstable> {}; helix);
+      settings = {
+        theme = "monokai_pro_machine";
+        keys.normal = {
+          space.space = "file_picker";
+          space.w = ":w";
+          space.q = ":q";
+        };
+      };
     };
     fzf = {
       enable = true;
@@ -289,8 +303,33 @@
       };
       stdlib = "source ~/dotfiles/config/direnvrc";
     };
+    emacs = {
+      enable = true;
+      package = pkgs.emacsNativeComp;
+    };
+    tmux = {
+      enable = true;
+      extraConfig = "source-file ~/dotfiles/config/tmux.conf";
+      plugins = with pkgs; [
+        tmuxPlugins.yank
+        tmuxPlugins.jump
+        tmuxPlugins.sensible
+        tmuxPlugins.extrakto
+        tmuxPlugins.tmux-fzf
+        tmuxPlugins.open
+        tmuxPlugins.prefix-highlight
+        tmuxPlugins.sidebar
+      ];
+      tmuxinator.enable = true;
+      keyMode = "vi";
+      escapeTime = 0;
+      # it might consume lots of RAM... YES. Please. I'm not using Chrome nor Java, so eat all of it.
+      historyLimit = 500000;
+      prefix = "C-Space";
+    };
   };
-  home.file.".envrc".text = "";
+  home.file.".envrc".text = ""; # for direnv to load in HOME
+  home.file.".tmux/plugins/tmux-colortag".source = builtins.fetchGit { url = "https://github.com/scoiatael/tmux-colortag.git"; };
   xdg.configFile."nu/config.nu".text = # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
     ''
       mkdir ~/.cache/starship

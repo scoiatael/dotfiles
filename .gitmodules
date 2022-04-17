@@ -31,6 +31,3 @@
 [submodule "emacs/emacs.d"]
 	path = stow/emacs/.emacs.d
 	url = https://github.com/hlissner/doom-emacs
-[submodule "tmux-plugins/tpm"]
-	path = stow/tmux/.tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm
