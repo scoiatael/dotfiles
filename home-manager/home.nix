@@ -216,13 +216,14 @@
     starship = {
       enable = true;
       settings = {
-        format = ''$username$hostname$directory$git_branch$git_state$git_status$cmd_duration$line_break$character'';
+        format = ''$cmd_duration$line_break$username$git_state$git_status$character'';
+        right_format = ''$directory$git_branch'';
 
         directory.style = "blue";
 
         character = {
-          success_symbol = "[❯](purple)";
-          error_symbol = "[❯](red)";
+          success_symbol = "[λ](purple)";
+          error_symbol = "[λ](red)";
           vicmd_symbol = "[❮](green)";
         };
 

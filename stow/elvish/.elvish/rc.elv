@@ -78,14 +78,7 @@ use github.com/zzamboni/elvish-modules/bang-bang
 
 use github.com/zzamboni/elvish-modules/util
 
-use github.com/zzamboni/elvish-themes/chain
-set chain:prompt-segments = [ su git-combined arrow ]
-set chain:rprompt-segments = [ dir ]
-set chain:glyph[arrow] = "λ"
-set chain:glyph[chain] = " "
-chain:init
-
-use str
+use starship
 
 fn ls {|@a| e:ls $@a }
 if (has-external exa) {
