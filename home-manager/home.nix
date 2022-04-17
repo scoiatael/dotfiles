@@ -259,10 +259,6 @@
     nushell = {
       package = (with import <unstable> {}; nushell); # Need nushell 0.60.0+ for starship
       enable = true;
-      settings = {
-        startup = [
-        ];
-      };
     };
     dircolors = {
       enable = true;
@@ -291,14 +287,14 @@
       nix-direnv = {
         enable = true;
       };
-      stdlib = "source ~/.direnvrc";
+      stdlib = "source ~/dotfiles/config/direnvrc";
     };
   };
-  xdg.configFile."nu/config.nu" = { # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
-    text = ''
+  home.file.".envrc".text = "";
+  xdg.configFile."nu/config.nu".text = # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
+    ''
       mkdir ~/.cache/starship
       starship init nu | save ~/.cache/starship/init.nu
       source ~/.cache/starship/init.nu
     '';
-  };
 }
