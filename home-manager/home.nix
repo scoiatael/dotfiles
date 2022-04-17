@@ -215,16 +215,17 @@
   ];
 
   programs = {
-    zellij = {
-      enable = true;
-    };
     starship = {
       enable = true;
+      package = (with import <unstable> {}; starship);
       settings = {
-        format = ''$cmd_duration$username$git_state$git_status$character'';
-        right_format = ''$directory$git_branch'';
+        format = ''$cmd_duration$username(\[$git_status\])$character'';
+        right_format = ''$git_branch(\[$git_state\])ǂ$directory'';
 
-        directory.style = "blue";
+        directory = {
+          style = "blue";
+          truncate_to_repo = false;
+        };
 
         character = {
           success_symbol = "[λ](purple)";
@@ -238,19 +239,12 @@
         };
 
         git_status = {
-          format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
+          format = "[$ahead_behind$staged$modified]($style)";
           style = "cyan";
-          conflicted = "​";
-          untracked = "​";
-          modified = "​";
-          staged = "​";
-          renamed = "​";
-          deleted = "​";
-          stashed = "≡";
         };
 
         git_state = {
-          format = ''\([$state( $progress_current/$progress_total)]($style)\) '';
+          format = ''\([$state( $progress_current/$progress_total)]($style)\)'';
           style = "bright-black";
         };
 
@@ -318,7 +312,6 @@
         tmuxPlugins.tmux-fzf
         tmuxPlugins.open
         tmuxPlugins.prefix-highlight
-        tmuxPlugins.sidebar
       ];
       tmuxinator.enable = true;
       keyMode = "vi";
