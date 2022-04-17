@@ -281,6 +281,13 @@
     zoxide = {
       enable = true;
     };
+    direnv = {
+      enable = true;
+      nix-direnv = {
+        enable = true;
+      };
+      stdlib = "source ~/.direnvrc";
+    };
   };
   xdg.configFile."nu/config.nu" = { # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
     text = ''

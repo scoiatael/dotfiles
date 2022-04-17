@@ -38,12 +38,6 @@ function _scoiatael_init() {
     _scoiatael_maybe_PATH_add "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"
     _scoiatael_maybe_PATH_add "/usr/local/bin"
 
-    if (test -n "$ASDF_DIR"); then
-        _scoiatael_maybe_PATH_add "$HOME/.asdf/shims"
-        _scoiatael_maybe_PATH_add "/opt/asdf-vm/bin"
-        source "$(asdf direnv hook asdf)"
-    fi
-
     [ "$(uname)" == "Linux" ] && export AWS_VAULT_BACKEND=kwallet # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
 
     [ -z "$VERBOSE" ] || log_status "Starting GPG agent.."

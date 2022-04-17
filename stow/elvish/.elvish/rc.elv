@@ -1,18 +1,6 @@
 fn exec-tmux { |@args|
   exec direnv exec ~ tmux $@args
 }
-# https://asdf-vm.com/guide/getting-started.html#_3-install-asdf
-if ?(test -d /opt/asdf-vm) { # Arch
-  set-env ASDF_DIR /opt/asdf-vm
-} elif ?(test -d  /usr/local/opt/asdf/libexec ) {
-  set-env ASDF_DIR /usr/local/opt/asdf/libexec
-}
-if ?(test -n $E:ASDF_DIR) {
-  set-env ASDF_DATA_DIR $E:HOME'/.asdf'
-  use asdf _asdf; var asdf~ = $_asdf:asdf~
-  set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~
-  set exec-tmux~ = { |@a| exec asdf exec direnv exec ~ tmux $@a }
-}
 
 fn tmux-start {
   if ?(test -z $E:TMUX) {
@@ -62,7 +50,7 @@ chain:init
 use str
 
 fn ls {|@a| e:ls $@a }
-if (which exa) {
+if (has-external exa) {
     # Cannot use fn here, since it'd declare function in local scope.
     set ls~ = {|@a| e:exa $@a }
 }
