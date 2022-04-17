@@ -1,27 +1,65 @@
-fn exec-tmux { |@args|
-  exec direnv exec ~ tmux $@args
-}
+use str
 
+var extra_paths = (str:join ":" [
+  $E:HOME/.nix-profile/bin
+  $E:GOPATH/bin
+  /usr/local/MacGPG2/bin
+  $E:HOME/.emacs.d/bin
+  $E:HOME/.local/bin
+  $E:HOME/dotfiles/bin
+  $E:HOME/.cargo/bin
+  /usr/local/opt/sqlite/bin
+  /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin
+  /usr/local/bin
+  $E:PATH
+])
+
+set-env PATH $extra_paths
 fn tmux-start {
-  if ?(test -z $E:TMUX) {
-    # Not inside tmux, let's amend that
-    if ?(tmux ls > /dev/null 2> /dev/null) {
-      exec-tmux attach
-    } else {
-      exec-tmux
-    }
+  if ?(e:tmux ls > /dev/null 2> /dev/null) {
+    exec tmux attach
+  } else {
+    exec tmux
   }
 }
 
-use direnv
-use zoxide
+var ssh_agent = "~/.gnupg/S.gpg-agent.ssh"
+if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
+  # Not inside tmux, let's amend that
+  set-env LC_ALL en_GB.UTF-8
+  set-env LANG en_GB.UTF-8
+  set-env EDITOR "emacsclient -c"
+  set-env GIT_EDITOR $E:EDITOR
+  set-env SAM_CLI_TELEMETRY 0
+  set-env CLOUDSDK_PYTHON python
+  set-env SSH_AUTH_SOCK $ssh_agent
+  set-env GOPATH $E:HOME/go
 
-if (!=s vscode $E:TERM_PROGRAM) {
+
   set-env TMUX_COLORTAG_TAG_ONLY yes
   set-env TMUX_COLORTAG_USE_POWERLINE yes
   set-env TMUX_COLORTAG_ROUNDED_POWERLINE yes
   tmux-start
 }
+
+fn __launch_gpg_agent {
+  gpgconf --launch gpg-agent
+}
+
+if (==s Linux (uname)) {
+  set __launch_gpg_agent~ = {
+    systemctl --user enable --now 'gpg-agent.socket'
+  }
+
+  set-env AWS_VAULT_BACKEND kwallet # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
+}
+
+if (==s E:SSH_AUTH_SOCK "") {
+  __launch_gpg_agent
+}
+
+use direnv
+use zoxide
 
 # NOTE: epm:install &silent-if-installed=true _still_ does connection over internet. Which means no net = no shell. Bad idea.
 fn _lazy_install { |@pkgs|

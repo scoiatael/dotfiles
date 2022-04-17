@@ -193,6 +193,7 @@
     ];
     delta.enable = true;
   };
+
   home.packages = with pkgs; [
     neofetch
     gnutar
@@ -203,6 +204,9 @@
     fd
     jq
     ripgrep
+    python38 # for tmux-colortag
+    coreutils-full # for tmux-colortag
+    bash # for tmux-colortag
   ];
 
   programs = {

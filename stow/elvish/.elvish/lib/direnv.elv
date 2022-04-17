@@ -1,7 +1,7 @@
 ## hook for direnv
 set @edit:before-readline = $@edit:before-readline {
 	try {
-		var m = [(~/.nix-profile/bin/direnv export elvish | from-json)]
+		var m = [(e:direnv export elvish | from-json)]
 		if (> (count $m) 0) {
 			set m = (all $m)
 			keys $m | each {|k|
