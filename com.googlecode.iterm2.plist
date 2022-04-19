@@ -1923,7 +1923,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Draw Powerline Glyphs</key>
-			<false/>
+			<true/>
 			<key>Enable Triggers in Interactive Apps</key>
 			<false/>
 			<key>Flashing Bell</key>
@@ -2477,9 +2477,9 @@
 			<key>Transparency</key>
 			<real>0.071823445431472038</real>
 			<key>Unicode Normalization</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>Unicode Version</key>
-			<integer>8</integer>
+			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
 			<true/>
 			<key>Use Bold Font</key>

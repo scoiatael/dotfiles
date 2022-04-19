@@ -221,6 +221,7 @@
       settings = {
         format = ''$cmd_duration$username(\[$git_status\])$character'';
         right_format = ''$git_branch(\[$git_state\])ǂ$directory'';
+        command_timeout = 90;
 
         directory = {
           style = "blue";
@@ -241,6 +242,11 @@
         git_status = {
           format = "[$ahead_behind$staged$modified]($style)";
           style = "cyan";
+          conflicted = "[䷅](red)";
+          untracked = "[·](grey)";
+          modified = "[·](yellow)";
+          stashed = ""; # not interesting, keep empty
+          staged = "[·](green)";
         };
 
         git_state = {
@@ -249,7 +255,7 @@
         };
 
         cmd_duration = {
-          format = "[$duration]($style) ";
+          format = "[  $duration\n]($style)";
           style = "yellow";
         };
 
