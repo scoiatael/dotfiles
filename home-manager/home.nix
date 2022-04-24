@@ -212,6 +212,7 @@
     python38 # for tmux-colortag
     coreutils-full # for tmux-colortag
     bash # for tmux-colortag
+    fpp # for tmux-fpp
   ];
 
   programs = {
@@ -324,6 +325,10 @@
             set-option -g status-right-length 80
             set-option -g status-position bottom
           '';
+        }
+        {
+          plugin = tmuxPlugins.fpp;
+          extraConfig = "set -g @fpp-key 'X'";
         }
       ];
       tmuxinator.enable = true;
