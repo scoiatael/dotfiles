@@ -213,6 +213,7 @@
     coreutils-full # for tmux-colortag
     bash # for tmux-colortag
     fpp # for tmux-fpp
+    units
   ];
 
   programs = {
