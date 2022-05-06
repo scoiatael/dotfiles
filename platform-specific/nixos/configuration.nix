@@ -52,6 +52,9 @@
       { startGid = 100000; count = 65536; }
     ];
   };
+  users.extraUsers.root.shell = pkgs.bash;
+  users.defaultUserShell = pkgs.zsh;
+
 
   networking.hostName = "r-work-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -133,11 +136,9 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  environment.systemPackages = (with pkgs; [
     wget
     firefox
-    emacsGcc
     yakuake
     yubioath-desktop
     git
@@ -168,11 +169,19 @@
     python3Minimal
     vscode
     ark
-    direnv nix-direnv 
     sd
     keybase-gui
-    wally-cli
-  ];
+    helix
+    zsh
+    thunderbird
+    gpgme # for signing mail messages
+    birdtray
+    libsForQt5.bismuth
+    libsForQt5.kwallet
+    libsForQt5.kate
+  ]);
+  # https://discourse.nixos.org/t/plasma-wayland-session-not-available-from-sddm/13447
+  services.xserver.displayManager.sddm.settings.Wayland.SessionDir = "${pkgs.plasma5Packages.plasma-workspace}/share/wayland-sessions";
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
@@ -182,9 +191,6 @@
   nixpkgs.config.allowUnfree = true; 
 
   nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -202,7 +208,10 @@
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
+    experimental-features = nix-command flakes
   '';
+  # https://nixos.wiki/wiki/Flakes
+  nix.package = pkgs.nixFlakes; # or versioned attributes like nix_2_7
   environment.pathsToLink = [
     "/share/nix-direnv"
   ];
@@ -233,6 +242,21 @@
   };
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  
+  # https://nixos.wiki/wiki/Accelerated_Video_Playback
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  };
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

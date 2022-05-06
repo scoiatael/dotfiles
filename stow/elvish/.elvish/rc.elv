@@ -32,7 +32,6 @@ if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
   set-env GIT_EDITOR $E:EDITOR
   set-env SAM_CLI_TELEMETRY 0
   set-env CLOUDSDK_PYTHON python
-  set-env SSH_AUTH_SOCK $ssh_agent
   set-env GOPATH $E:HOME/go
 
 
@@ -56,6 +55,7 @@ if (==s Linux (uname)) {
 
 if (==s E:SSH_AUTH_SOCK "") {
   __launch_gpg_agent
+  set-env SSH_AUTH_SOCK $ssh_agent
 }
 
 use direnv

@@ -6,8 +6,12 @@
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
     }))
   ];
+  programs.gpg = {
+    enable = true;
+  };
   programs.git = {
     enable = true;
+    lfs.enable = true;
     aliases = {
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       lga = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all";
@@ -33,6 +37,8 @@
 
       cb="checkout -b";
       co="checkout";
+
+      s="status";
     };
     ignores = [
       # Source https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
@@ -214,6 +220,8 @@
     bash # for tmux-colortag
     fpp # for tmux-fpp
     units
+    tig
+    lsof
   ];
 
   programs = {
