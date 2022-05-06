@@ -39,6 +39,11 @@
       co="checkout";
 
       s="status";
+      search="!git rev-list --all | xargs git grep -F";
+      last="log -1 HEAD --stat";
+      continue="!$HOME/dotfiles/bin/__git_continue.sh";
+      br="branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
+      l1="rev-parse --short HEAD";
     };
     ignores = [
       # Source https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
