@@ -155,6 +155,7 @@ alias:new cat bat
 alias:new more bat --paging always
 alias:new v vagrant
 alias:new do doas -u (id -nu)-docker
+alias:new mux tmuxinator
 
 fn aws-do {|creds @rest|
   aws-vault exec $creds -- doas -u (id -nu)-docker $@rest
@@ -178,6 +179,7 @@ use github.com/xiaq/edit.elv/smart-matcher
 smart-matcher:apply
 
 use github.com/zzamboni/elvish-completions/git git-completions
+git-completions:init
 
 use github.com/zzamboni/elvish-modules/long-running-notifications
 # remember to `brew install terminal-notifier`
