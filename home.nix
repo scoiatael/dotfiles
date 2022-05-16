@@ -227,6 +227,7 @@
     units
     tig
     lsof
+    ruby_3_0
   ];
 
   programs = {
