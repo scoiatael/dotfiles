@@ -228,6 +228,8 @@
     tig
     lsof
     ruby_3_0
+    meld
+    sops
   ];
 
   programs = {
