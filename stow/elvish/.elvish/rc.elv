@@ -53,7 +53,7 @@ if (==s Linux (uname)) {
   set-env AWS_VAULT_BACKEND kwallet # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
 }
 
-if (==s E:SSH_AUTH_SOCK "") {
+if (or (==s $E:SSH_AUTH_SOCK "") (str:has-prefix $E:SSH_AUTH_SOCK "/private/tmp/com.apple.launchd")) {
   __launch_gpg_agent
   set-env SSH_AUTH_SOCK $ssh_agent
 }
