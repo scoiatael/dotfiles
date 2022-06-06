@@ -88,10 +88,14 @@ if (has-external exa) {
 
 fn mvbak {|path|
   var ts = (e:date +%Y%m%dT%H%M | str:trim (one) "\n")
-  var dst = (str:join "" ["." $path '.bak.' $ts])
+  var base = (str:join "" [$path '.bak.' $ts])
+  if (not (str:has-prefix $path ".")) {
+    set base = (str:join "" ["." $base])
+  }
+  var dst = $base
   var c = 0
   while ?(test -f $dst) {
-    set dst = (str:join "" ["." $path '.bak.' $ts '_' (to-string $c)])
+    set dst = (str:join "" [$base '_' (to-string $c)])
     set c = (+ $c 1)
   }
   e:mv $path $dst

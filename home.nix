@@ -233,6 +233,20 @@
   ];
 
   programs = {
+    alacritty = {
+      enable = true;
+    };
+    qutebrowser = {
+      enable = true;
+      searchEngines =  {
+          w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
+          aw = "https://wiki.archlinux.org/?search={}";
+          nw = "https://nixos.wiki/index.php?search={}";
+          g = "https://www.google.com/search?hl=en&q={}";
+          nix = "https://search.nixos.org/packages?query={}";
+          kagi = "https://kagi.com/search?q={}";
+        };
+    };
     starship = {
       enable = true;
       package = (with import <unstable> {}; starship);
