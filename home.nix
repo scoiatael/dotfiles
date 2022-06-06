@@ -230,6 +230,7 @@
     ruby_3_0
     meld
     sops
+    libnotify
   ];
 
   programs = {
