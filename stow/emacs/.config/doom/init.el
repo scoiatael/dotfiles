@@ -17,37 +17,37 @@
 (doom! :input
        ;;chinese
        ;;japanese
+       ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
        (company +childframe) ; the ultimate code completion backend
        ;; helm             ; the *other* search engine for love and life
        ;; ido               ; the other *other* search engine...
-       (ivy +childframe)                                 ; a search engine for love and life
-       ;; vertico
-
-       :emacs
-       (undo +tree)
+       ;; (ivy +childframe)                                 ; a search engine for love and life
+       (vertico +icons)
 
        :ui
        ;;deft              ; notational velocity for Emacs
        doom                             ; what makes DOOM look the way it does
        doom-dashboard                   ; a nifty splash screen for Emacs
        ;; doom-quit              ; DOOM quit-message prompts when you quit Emacs
-       ;;fill-column       ; a `fill-column' indicator
+       ;;(emoji +unicode)  ; 🙂
        hl-todo                ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
+       minimap           ; show a map of the code on the side
        (modeline
         +light)    ; snazzy, Atom-inspired modeline, plus API
        nav-flash   ; blink the current line after jumping
-       ;;neotree           ; a project drawer, like NERDTree for vim
+       ;; neotree           ; a project drawer, like NERDTree for vim
        ophints                    ; highlight the region an operation acts on
        (popup                     ; tame sudden yet inevitable temporary windows
         +all                      ; catch all popups that start with an asterix
         +defaults)                ; default popup rules
        (ligatures +iosevka)       ; replace bits of code with pretty symbols
        ;; tabs              ; an tab bar for Emacs
-       ;; treemacs
+       treemacs
+       window-select     ; visually switch windows
                                         ; a project drawer, like neotree but cooler
        unicode          ; extended unicode support for various languages
        vc-gutter        ; vcs diff in the fringe
@@ -75,6 +75,7 @@
        electric                   ; smarter, keyword-based electric-indent
        ibuffer                    ; interactive buffer management
        vc                         ; version-control and Emacs, sitting in a tree
+       (undo +tree)
 
        :term
        eshell                  ; a consistent, cross-platform shell (WIP)
@@ -111,7 +112,8 @@
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
-       ;; macos                            ; MacOS-specific commands
+       (:if IS-MAC macos)  ; improve compatibility with macOS
+       tty
 
        :lang
        ;;agda              ; types of types of types of types...
