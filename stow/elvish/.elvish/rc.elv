@@ -28,7 +28,7 @@ if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
   # Not inside tmux, let's amend that
   set-env LC_ALL en_GB.UTF-8
   set-env LANG en_GB.UTF-8
-  set-env EDITOR "emacsclient -c"
+  set-env EDITOR "emacsclient -t"
   set-env GIT_EDITOR $E:EDITOR
   set-env SAM_CLI_TELEMETRY 0
   set-env CLOUDSDK_PYTHON python
@@ -160,6 +160,7 @@ alias:new more bat --paging always
 alias:new v vagrant
 alias:new do doas -u (id -nu)-docker
 alias:new mux tmuxinator
+alias:new nix-do doas bash -c 'cd /etc/nixos; bash'
 
 fn aws-do {|creds @rest|
   aws-vault exec $creds -- doas -u (id -nu)-docker $@rest
