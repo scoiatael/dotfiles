@@ -395,4 +395,9 @@
       starship init nu | save ~/.cache/starship/init.nu
       source ~/.cache/starship/init.nu
     '';
+
+  home.file.".elvish/rc.elv".source = ~/dotfiles/config/elvish/rc.elv;
+  home.file.".elvish/lib/direnv.elv".source = ~/dotfiles/config/elvish/lib/direnv.elv;
+  home.file.".elvish/lib/zoxide.elv".source = ~/dotfiles/config/elvish/lib/zoxide.elv;
+  home.file.".elvish/lib/starship.elv".source = ~/dotfiles/config/elvish/lib/starship.elv;
 }
