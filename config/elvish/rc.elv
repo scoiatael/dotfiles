@@ -34,7 +34,6 @@ if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
   set-env CLOUDSDK_PYTHON python
   set-env GOPATH $E:HOME/go
 
-
   set-env TMUX_COLORTAG_TAG_ONLY yes
   set-env TMUX_COLORTAG_USE_POWERLINE yes
   set-env TMUX_COLORTAG_ROUNDED_POWERLINE yes

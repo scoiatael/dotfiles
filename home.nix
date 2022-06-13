@@ -388,7 +388,10 @@
   };
 
   home.file.".envrc".text = ""; # for direnv to load in HOME
+  home.file.".direnvrc".source = ~/dotfiles/config/direnvrc; # for direnv to load in HOME
+
   home.file.".tmux/plugins/tmux-colortag".source = builtins.fetchGit { url = "https://github.com/scoiatael/tmux-colortag.git"; };
+
   xdg.configFile."nu/config.nu".text = # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
     ''
       mkdir ~/.cache/starship
@@ -400,4 +403,15 @@
   home.file.".elvish/lib/direnv.elv".source = ~/dotfiles/config/elvish/lib/direnv.elv;
   home.file.".elvish/lib/zoxide.elv".source = ~/dotfiles/config/elvish/lib/zoxide.elv;
   home.file.".elvish/lib/starship.elv".source = ~/dotfiles/config/elvish/lib/starship.elv;
+
+  home.file.".config/doom".source = ~/dotfiles/config/doom;
+  home.file.".emacs.d".source = builtins.fetchGit { url = "https://github.com/doomemacs/doomemacs.git"; };
+
+  # current .emacs.d/.local is read-only (nix!)
+  # and elvish/rc.elv is NOT read on login shells
+  # TODO: find a better alternative ;)
+  home.file.".config/plasma-workspace/env/doomlocaldir.sh".text =
+    ''
+      export DOOMLOCALDIR="~/.emacs.local"
+    '';
 }
