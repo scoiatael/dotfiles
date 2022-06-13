@@ -23,6 +23,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "mem_sleep_default=deep" ];
+  boot.kernel.sysctl."net.core.rmem_max" = 2500000;
 
   security.sudo.enable = false;
   security.doas = {
@@ -54,7 +55,6 @@
   };
   users.extraUsers.root.shell = pkgs.bash;
   users.defaultUserShell = pkgs.zsh;
-
 
   networking.hostName = "r-work-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -144,11 +144,11 @@
     git
     slack
     ripgrep
+    lsof
     fd
     tmux
     zoom-us
     stow
-    shairport-sync
     elvish
     zoxide
     exa
@@ -159,6 +159,7 @@
     signal-desktop
     kgpg
     bat
+    du-dust
     gparted
     aws-vault
     google-cloud-sdk
@@ -174,17 +175,22 @@
     helix
     zsh
     thunderbird
-    gpgme # for signing mail messages
     birdtray
-    libsForQt5.bismuth
     libsForQt5.kwallet
     libsForQt5.kate
+    libsForQt5.krdc
+    nssmdns
+    shairport-sync
+    cool-retro-term
+    libsForQt5.bismuth
+  ]) ++ (with import <unstable> {}; [
   ]);
   # https://discourse.nixos.org/t/plasma-wayland-session-not-available-from-sddm/13447
   services.xserver.displayManager.sddm.settings.Wayland.SessionDir = "${pkgs.plasma5Packages.plasma-workspace}/share/wayland-sessions";
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    cozette
   ];
 
   # SLACK!
@@ -230,7 +236,10 @@
 
   # Open ports in the firewall.
   networking.firewall = {
-    allowedTCPPorts = [ 6001 ];
+    allowedTCPPorts = [
+       6001 # shairport
+       631 # avahi
+       ];
 
     allowedUDPPortRanges = [
       { from = 6001; to = 6199; } # shairport
@@ -238,6 +247,7 @@
 
     allowedUDPPorts = [
       5353 # avahi
+      631 # avahi
     ];
   };
   # Or disable the firewall altogether.

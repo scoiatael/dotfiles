@@ -231,6 +231,8 @@
     meld
     sops
     libnotify
+    asciinema
+    janet
   ];
 
   programs = {
@@ -247,12 +249,14 @@
           nix = "https://search.nixos.org/packages?query={}";
           k = "https://kagi.com/search?q={}";
           DEFAULT = "https://kagi.com/search?q={}";
+          m = "https://melpa.org/#/?q={}";
+          b = "https://search.brave.com/search?q={}";
         };
       settings = {
         url.start_pages = "https://kagi.com";
         url.default_page = "https://kagi.com";
-        colors.hints.bg = "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(255, 247, 133), stop:1 rgb(255, 197, 66))";
-        colors.webpage.darkmode.enabled = true;
+        # colors.hints.bg = "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(255, 247, 133), stop:1 rgb(255, 197, 66))";
+        # colors.webpage.darkmode.enabled = true;
         content.cookies.accept = "no-3rdparty";
         content.default_encoding = "utf-8";
         hints.uppercase = true;
@@ -382,6 +386,7 @@
       prefix = "C-Space";
     };
   };
+
   home.file.".envrc".text = ""; # for direnv to load in HOME
   home.file.".tmux/plugins/tmux-colortag".source = builtins.fetchGit { url = "https://github.com/scoiatael/tmux-colortag.git"; };
   xdg.configFile."nu/config.nu".text = # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
