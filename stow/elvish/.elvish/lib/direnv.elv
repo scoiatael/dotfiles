@@ -12,7 +12,7 @@ set @edit:before-readline = $@edit:before-readline {
 				}
 			}
 		}
-	} except e {
+	} catch e {
 		echo $e
 	}
 }
