@@ -124,3 +124,7 @@
 (package! ob-http)
 
 (package! jq-mode)
+
+(package! ts-comint)
+(package! repl-toggle)
+(package! fullframe)

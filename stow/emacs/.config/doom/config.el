@@ -307,6 +307,24 @@
 (use-package! ob-http)
 (use-package! jq-mode)
 
+(use-package! ts-comint
+  :config
+  (add-hook 'typescript-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-x C-e") 'ts-send-last-sexp)
+              (local-set-key (kbd "C-M-x") 'ts-send-last-sexp-and-go)
+              (local-set-key (kbd "C-c b") 'ts-send-buffer)
+              (local-set-key (kbd "C-c C-b") 'ts-send-buffer-and-go)
+              (local-set-key (kbd "C-c l") 'ts-load-file-and-go)))
+  ;; when configuring all repl toggle mapping
+  (setq rtog/mode-repl-alist '((typescript-mode . run-ts)))
+  ;; or later
+  (push '(typescript-mode . run-ts) rtog/mode-repl-alist))
+
+(use-package! fullframe
+  :config
+  (fullframe magit-status magit-mode-quit-window))
+
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
