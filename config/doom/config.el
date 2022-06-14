@@ -135,7 +135,7 @@
       "A" #'org-todo-list
       "D" #'deadgrep
       "Q" #'org-roam-buffer-toggle
-      "SPC" #'counsel-M-x
+      "SPC" #'execute-extended-command-for-buffer
       "/"   #'+default/search-project
       "i u" #'counsel-unicode-char
       "i d" #'scoiatael/yank-current-date
