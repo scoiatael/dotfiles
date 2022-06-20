@@ -88,15 +88,13 @@
   :recipe (:host github :repo "scoiatael/ion-mode"))
 
 (package! elixir-mode
-  :recipe
-  (:host github :repo "elixir-editors/emacs-elixir"))
+  :recipe (:host github :repo "elixir-editors/emacs-elixir"))
 
 ;; https://explog.in/notes/tmux.html#org9f807e7
 (package! emamux)
 
 (package! magit-section
-          :recipe
-          (:repo "magit/magit" :host github))
+          :recipe (:repo "magit/magit" :host github))
 
 (package! xonsh-mode)
 
@@ -112,12 +110,11 @@
 (package! tree-sitter)
 (package! tree-sitter-langs)
 (package! combobulate
-  :recipe
-  (:repo "mickeynp/combobulate" :host github))
+  :recipe (:repo "mickeynp/combobulate" :host github))
 
 (package! dired-git-info
-          :recipe
-          (:repo "clemera/dired-git-info" :host github))
+          :pin "91d57e3a4c5104c66a3abc18e281ee55e8979176"
+          :recipe (:repo "clemera/dired-git-info" :host github))
 
 (package! devdocs)
 
@@ -128,3 +125,5 @@
 (package! ts-comint)
 (package! repl-toggle)
 (package! fullframe)
+
+(package! vertico-posframe)

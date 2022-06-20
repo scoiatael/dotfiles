@@ -1,4 +1,6 @@
 (setq doom-localleader-key ","
+      ;; .emacs.d/ is RO thanks to home-manager :)
+      doom-local-dir (file-truename "~/.emacs.local/")
       user-full-name "Lukasz Czaplinski"
       doom-font (font-spec :family "Iosevka" :size 12)
       doom-theme 'doom-one
@@ -7,6 +9,7 @@
       package-native-compile t
       gcmh-high-cons-threshold (* 512 1024 1024) ; 0.5GiB
       ns-right-alternate-modifier 'none
+      lsp-use-plists t
       mac-right-option-modifier nil)
 
 (setq python-shell-interpreter "python")
@@ -128,6 +131,9 @@
       "C-k" #'evil-window-top
       "C-l" #'evil-window-right
       "C-c s" #'ssh)
+
+(map! :v
+      "v" #'er/expand-region)
 
 (map! :leader
       ">" #'spacemacs/alternate-buffer
@@ -324,6 +330,13 @@
 (use-package! fullframe
   :config
   (fullframe magit-status magit-mode-quit-window))
+
+(use-package! vertico-posframe
+  :config
+  (vertico-posframe-mode 1)
+  (setq vertico-posframe-parameters
+        '((left-fringe . 8)
+          (right-fringe . 8))))
 
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
