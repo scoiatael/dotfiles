@@ -405,13 +405,17 @@
   home.file.".elvish/lib/starship.elv".source = ~/dotfiles/config/elvish/lib/starship.elv;
 
   home.file.".config/doom".source = ~/dotfiles/config/doom;
-  home.file.".emacs.d".source = builtins.fetchGit { url = "https://github.com/doomemacs/doomemacs.git"; };
-
-  # current .emacs.d/.local is read-only (nix!)
-  # and elvish/rc.elv is NOT read on login shells
-  # TODO: find a better alternative ;)
-  home.file.".config/plasma-workspace/env/doomlocaldir.sh".text =
+  home.file.".emacs.doom".source = builtins.fetchGit { url = "https://github.com/doomemacs/doomemacs.git"; };
+  home.file.".emacs.d/early-init.el".text =
     ''
+    (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
+    (load (concat (expand-file-name (file-name-as-directory "~/.emacs.doom/")) "early-init.el") nil 'nomessage)
+    '';
+
+  home.file.".zprofile".text =
+    ''
+      export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
       export DOOMLOCALDIR="~/.emacs.local"
+      export EMACSDIR="~/.emacs.doom"
     '';
 }

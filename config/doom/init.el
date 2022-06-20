@@ -20,7 +20,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       (company +childframe) ; the ultimate code completion backend
+       (company +childframe)            ; the ultimate code completion backend
        ;; helm             ; the *other* search engine for love and life
        ;; ido               ; the other *other* search engine...
        ;; (ivy +childframe)                                 ; a search engine for love and life
@@ -35,10 +35,10 @@
        hl-todo                ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
-       minimap           ; show a map of the code on the side
+       minimap                          ; show a map of the code on the side
        (modeline
-        +light)    ; snazzy, Atom-inspired modeline, plus API
-       nav-flash   ; blink the current line after jumping
+        +light)   ; snazzy, Atom-inspired modeline, plus API
+       nav-flash  ; blink the current line after jumping
        ;; neotree           ; a project drawer, like NERDTree for vim
        ophints                    ; highlight the region an operation acts on
        (popup                     ; tame sudden yet inevitable temporary windows
@@ -47,7 +47,7 @@
        (ligatures +iosevka)       ; replace bits of code with pretty symbols
        ;; tabs              ; an tab bar for Emacs
        treemacs
-       window-select     ; visually switch windows
+       window-select    ; visually switch windows
                                         ; a project drawer, like neotree but cooler
        unicode          ; extended unicode support for various languages
        vc-gutter        ; vcs diff in the fringe
@@ -62,11 +62,11 @@
        fold                             ; (nigh) universal code folding
        (format +onsave)                 ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
-       lispy          ; vim for lisp, for people who don't like vim
-       multiple-cursors  ; editing in many places at once
+       lispy                       ; vim for lisp, for people who don't like vim
+       multiple-cursors            ; editing in many places at once
        ;; objed             ; text object editing for the innocent
        ;; (parinfer +rust)          ; turn lisp into python, sort of
-       rotate-text ; cycle region at point between text candidates
+       rotate-text               ; cycle region at point between text candidates
        snippets                  ; my elves. They type so I don't have to
        word-wrap                 ; soft wrapping with language-aware indent
 
@@ -84,7 +84,7 @@
        ;; vterm             ; another terminals in Emacs
 
        :checkers
-       (syntax +childframe)                        ; tasing you for every semicolon you forget
+       (syntax +childframe)          ; tasing you for every semicolon you forget
        spell                         ; tasing you for misspelling mispelling
        grammar                       ; tasing grammar mistake every you make
 
@@ -97,11 +97,11 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)       ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
-       (lookup)                  ; helps you navigate your code and documentation
-        ;; +docsets
-                                       ; ...or in Dash docsets locally
+       (lookup)                 ; helps you navigate your code and documentation
+       ;; +docsets
+                                        ; ...or in Dash docsets locally
        (lsp +peek)
-       (magit +forge)                    ; a git porcelain for Emacs
+       (magit +forge)           ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
@@ -112,7 +112,7 @@
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
-       (:if IS-MAC macos)  ; improve compatibility with macOS
+       (:if IS-MAC macos)               ; improve compatibility with macOS
        tty
 
        :lang
@@ -146,8 +146,8 @@
        ;;ledger            ; an accounting system in Emacs
        ;;lua               ; one-based indices? one-based indices
        markdown      ; writing docs for people to ignore
-       nim               ; python + lisp at the speed of c
-       nix               ; I hereby declare "nix geht mehr!"
+       nim           ; python + lisp at the speed of c
+       nix           ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org          ; organize your plain life in plain text
         ;; +dragndrop   ; drag & drop files/images into org buffers
