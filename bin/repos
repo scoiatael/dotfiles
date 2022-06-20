@@ -1,7 +1,7 @@
 #!/usr/bin/env elvish
 use str
 
-var @repos = (cat repos.txt)
+var @repos = (cat (or $args[0] repos.txt))
 
 for r $repos {
   var path = (str:trim-prefix $r "https://")
