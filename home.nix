@@ -214,7 +214,6 @@
     neofetch
     gnutar
     rclone
-    procs
     tokei
     du-dust
     fd
@@ -230,9 +229,7 @@
     ruby_3_0
     meld
     sops
-    libnotify
     asciinema
-    janet
   ];
 
   programs = {
@@ -240,7 +237,7 @@
       enable = true;
     };
     qutebrowser = {
-      enable = true;
+      # enable = true; broken on macOS -> enable via ./home-manager/linux.nix
       searchEngines =  {
           w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
           aw = "https://wiki.archlinux.org/?search={}";

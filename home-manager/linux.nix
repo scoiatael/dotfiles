@@ -17,4 +17,10 @@
   services.emacs = {
     enable = true;
   };
+  home.packages = with pkgs; [
+    janet # broken on macOS
+    procs # broken on macOS
+    libnotify # doesn't work on macOS
+  ];
+  programs.qutebrowser.enable = true;
 }
