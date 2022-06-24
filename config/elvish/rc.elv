@@ -5,6 +5,7 @@ var extra_paths = (str:join ":" [
   $E:GOPATH/bin
   /usr/local/MacGPG2/bin
   $E:HOME/.emacs.d/bin
+  $E:HOME/.emacs.doom/bin
   $E:HOME/.local/bin
   $E:HOME/dotfiles/bin
   $E:HOME/.cargo/bin
