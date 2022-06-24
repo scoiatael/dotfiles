@@ -229,7 +229,8 @@
     ruby_3_0
     meld
     sops
-    asciinema
+    viddy
+    recutils
   ];
 
   programs = {
