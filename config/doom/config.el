@@ -338,6 +338,8 @@
         '((left-fringe . 8)
           (right-fringe . 8))))
 
+(use-package! coffee-mode)
+
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))

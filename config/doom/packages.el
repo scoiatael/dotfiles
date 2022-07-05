@@ -127,3 +127,5 @@
 (package! fullframe)
 
 (package! vertico-posframe)
+
+(package! coffee-mode)
