@@ -24,16 +24,19 @@ fn tmux-start {
   }
 }
 
+set-env LC_ALL en_GB.UTF-8
+set-env LANG en_GB.UTF-8
+set-env EDITOR "emacsclient -t"
+set-env GIT_EDITOR $E:EDITOR
+set-env SAM_CLI_TELEMETRY 0
+set-env CLOUDSDK_PYTHON python
+set-env GOPATH $E:HOME/go
+set-env DOOMLOCALDIR $E:HOME/.emacs.local
+set-env LSP_USE_PLISTS true
+
 var ssh_agent = $E:HOME"/.gnupg/S.gpg-agent.ssh"
 if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
   # Not inside tmux, let's amend that
-  set-env LC_ALL en_GB.UTF-8
-  set-env LANG en_GB.UTF-8
-  set-env EDITOR "emacsclient -t"
-  set-env GIT_EDITOR $E:EDITOR
-  set-env SAM_CLI_TELEMETRY 0
-  set-env CLOUDSDK_PYTHON python
-  set-env GOPATH $E:HOME/go
 
   set-env TMUX_COLORTAG_TAG_ONLY yes
   set-env TMUX_COLORTAG_USE_POWERLINE yes

@@ -407,6 +407,7 @@
   home.file.".emacs.d/early-init.el".text =
     ''
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
+    (setenv "LSP_USE_PLISTS" "true")
     (load (concat (expand-file-name (file-name-as-directory "~/.emacs.doom/")) "early-init.el") nil 'nomessage)
     '';
 
