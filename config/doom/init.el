@@ -104,7 +104,7 @@
                                         ; ...or in Dash docsets locally
        tree-sitter       ; syntax and parsing, sitting in a tree...
        (lsp +peek)
-       (magit +forge)           ; a git porcelain for Emacs
+       magit           ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements

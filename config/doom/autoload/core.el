@@ -50,3 +50,10 @@ current window."
   (interactive)
   (f-touch ".project")
   (projectile-add-known-project default-directory))
+
+
+;;;###autoload
+(defun scoiatael/find-project ()
+  (interactive)
+  (+workspace/new)
+  (find-file "~/Documents/Git"))

@@ -18,6 +18,9 @@
       ivy-use-virtual-buffers t
       enable-recursive-minibuffers t)
 
+(setq-hook! '(typescript-mode-hook)
+  +format-with-lsp nil)
+
 (setq org-directory "~/org/"
       org-archive-location (concat org-directory "archive/%s::")
       org-ellipsis " ▼ "
@@ -278,9 +281,9 @@
 (use-package! tree-sitter-langs)
 (use-package! combobulate
   ;; Ensure `combobulate-mode` is activated when you launch a mode it supports
-  :hook ((python-mode . combobulate-mode)))
+  :hook ((python-mode . combobulate-mode)
          ;; (js-mode . combobulate-mode)))
-         ;; (typescript-mode . combobulate-mode)
+         (typescript-mode . combobulate-mode)))
 
 ;; Enable LSP for Puppet if puppet-editor-services is installed
 (defvar scoiatael/puppet-editor-services nil "Set this to path to puppet-editor-services/puppet-languageserver")

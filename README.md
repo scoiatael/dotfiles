@@ -1,13 +1,12 @@
 ## My configuration files.
 
-Inspired by [Using GNU Stow to manage your dotfiles](http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html).
+Managed by [home-manager](https://github.com/nix-community/home-manager).
 
-## Get stow
+Simply add import to your [~/.config/nixpkgs/home.nix](~/.config/nixpkgs/home.nix):
 
-### macOS
+    imports = [
+        "~/dotfiles/home.nix"
+        "~/dotfiles/home-manager/linux.nix"
+    ];
 
-    brew install stow
-
-## Install everything...
-
-    cd stow && stow *
+and `home-manager switch` :)
