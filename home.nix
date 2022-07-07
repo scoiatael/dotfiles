@@ -231,6 +231,13 @@
     sops
     viddy
     recutils
+    aspell
+    aspellDicts.pl
+    aspellDicts.cs
+    aspellDicts.en
+    aspellDicts.en-science
+    aspellDicts.en-computers
+    ispell
   ];
 
   programs = {
