@@ -58,7 +58,7 @@
 
 (setq web-mode-enable-engine-detection 't)
 
-(setq! +snippets-dir "~/dotfiles/emacs-snippets")
+(setq! +snippets-dir (file-truename "~/dotfiles/emacs-snippets"))
 
 (scoiatael/defer
  (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
@@ -74,8 +74,8 @@
  (add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
 
  (add-hook! python-mode #'scoiatael/maybe-activate-virtualenv
-                         #'evil-normal-state
-                         #'lispyville-mode))
+            #'evil-normal-state
+            #'lispyville-mode))
 
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
 (after! smartparens
