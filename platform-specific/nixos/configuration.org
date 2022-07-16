@@ -8,7 +8,7 @@
 :END:
 ** preamble
 #+begin_src nix
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, grub2-themes, ... }:
 
 let
 # bash script to let dbus know about important env variables and
@@ -52,6 +52,7 @@ in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      grub2-themes.nixosModule
     ];
 #+end_src
 ** boot
@@ -65,6 +66,8 @@ in {
       device = "nodev";
       efiSupport = true;
       enableCryptodisk = true;
+      font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
+      fontSize = 20;
   };
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -236,7 +239,6 @@ xdg.portal = {
   wlr.enable = true;
   # gtk portal needed to make gtk apps happy
   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  gtkUsePortal = true;
 };
 #+end_src
 ** users
@@ -314,7 +316,6 @@ xdg.portal = {
     shairport-sync
     vokoscreen-ng
     mpv
-    arcan.ffmpeg
     shotcut
     sx
     du-dust
@@ -395,5 +396,26 @@ TODO: do I still need those?
 
 ** the end
 #+begin_src nix
+}
+#+end_src
+* ~flake.nix~
+https://nixos.wiki/wiki/Flakes#Using_nix_flakes_with_NixOS
+:PROPERTIES:
+:header-args:nix: :tangle "/su::/etc/nixos/flake.nix"  :mkdirp yes :comments no
+:header-args: :mkdirp yes :comments no
+:END:
+#+begin_src nix
+{
+  inputs.nixpkgs.url = github:NixOS/nixpkgs;
+  inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
+  inputs.grub2-themes.url = github:vinceliuice/grub2-themes;
+
+  outputs = { self, nixpkgs, ... }@attrs: {
+    nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = attrs;
+        modules = [ ./configuration.nix ];
+    };
+  };
 }
 #+end_src
