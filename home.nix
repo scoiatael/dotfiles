@@ -358,7 +358,7 @@
     };
     emacs = {
       enable = true;
-      package = pkgs.emacsNativeComp;
+      package = pkgs.emacsPgtkNativeComp;
     };
     tmux = {
       enable = true;
