@@ -21,6 +21,7 @@
         janet # broken on macOS
         procs # broken on macOS
         libnotify # doesn't work on macOS
+        lm_sensors # for temp display in i3status-rust?
     ] ++ (with pkgs; [
         (nerdfonts.override { fonts = [
                                   "JetBrainsMono"  # needed for rofi theme
@@ -93,10 +94,10 @@
                 position = "top";
                 workspaceButtons = true;
                 workspaceNumbers = true;
-                statusCommand = "${pkgs.i3status}/bin/i3status";
+                statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
                 fonts = {
                     names = [ "JetBrainsMono Nerd Font" ];
-                    size = 8.0;
+                    size = 9.0;
                 };
                 trayOutput = "primary";
                 colors = {
@@ -134,13 +135,82 @@
     };
     programs.mako = {
         enable = true;
-        font = "JetBrainsMono Nerd Font 9";
+        font = "JetBrainsMono Nerd Font 10";
         backgroundColor = "#1E1D2F";
         textColor = "#D9E0EE";
         defaultTimeout = 5000;
     };
     programs.waybar = {
         enable = true;
+    };
+    programs.i3status-rust = {
+        enable = true;
+        bars = {
+            default = {
+                settings = {
+                    icons = { name = "material-nf"; };
+                    theme = { name = "slick"; };
+                    block = [
+                        { block = "uptime"; }
+                        {
+                            block = "disk_space";
+                            path = "/";
+                            alias = "/";
+                            info_type = "available";
+                            unit = "GB";
+                            interval = 60;
+                            warning = 20.0;
+                            alert = 10.0;
+                        }
+                        {
+                            block = "memory";
+                            display_type = "memory";
+                            format_mem = "{mem_used_percents}";
+                            format_swap = "{swap_used_percents}";
+                        }
+                        {
+                            block = "cpu";
+                            interval = 1;
+                        }
+                        {
+                            block = "temperature";
+                            collapsed = true;
+                            interval = 10;
+                            format = "{min} min, {max} max, {average} avg";
+                        }
+                        {
+                            block = "load";
+                            interval = 1;
+                            format = "{1m}";
+                        }
+                        { block = "sound"; }
+                        {
+                            block = "battery";
+                            interval = 10;
+                            format = "{percentage:6#100} {percentage} {time}";
+                        }
+                        {
+                            block = "backlight";
+                            minimum = 15;
+                            maximum = 100;
+                            cycle = [100  50  0  50];
+                        }
+                        {
+                            block = "networkmanager";
+                            on_click = "alacritty -e nmtui";
+                            interface_name_exclude = ["br\\-[0-9a-f]{12}"  "docker\\d+"];
+                            interface_name_include = [];
+                            ap_format = "{ssid^10}";
+                        }
+                        {
+                            block = "time";
+                            interval = 60;
+                            format = "%a %d/%m %R";
+                        }
+                    ];
+                };
+            };
+        };
     };
     programs.rofi =      let
         # Use `mkLiteral` for string-like values that should show without
