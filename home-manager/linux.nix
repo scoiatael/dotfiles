@@ -187,13 +187,13 @@
                         {
                             block = "battery";
                             interval = 10;
-                            format = "{percentage:6#100} {percentage} {time}";
+                            format = "{percentage} {time}";
                         }
                         {
                             block = "backlight";
                             minimum = 15;
                             maximum = 100;
-                            cycle = [100  50  0  50];
+                            cycle = [100 75 50 25 0 25 50 75];
                         }
                         {
                             block = "networkmanager";
