@@ -240,9 +240,18 @@
     ispell
   ];
 
+
   programs = {
     alacritty = {
       enable = true;
+      settings = {
+        font = {
+          normal = {
+            family = "JetBrainsMono Nerd Font";
+          };
+          size = 9;
+        };
+      };
     };
     qutebrowser = {
       # enable = true; broken on macOS -> enable via ./home-manager/linux.nix

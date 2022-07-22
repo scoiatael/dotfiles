@@ -40,11 +40,14 @@
             gtk = true;
             base = true;
         };
-        extraConfig = ''
+        extraConfig =
+            let
+                swaylock = ''bash -c "swaylock -f --image $(shuf -e -n 1 ~/Wallpapers/*)"'';
+            in ''
     ### Output configuration
     #
     # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-    output * bg /run/current-system/sw/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+    output * bg ~/Wallpapers/82bfba84-4d9d-4c7b-bd5c-19d1bb3aee1a.jpg fill
     #
     # Example configuration:
     #
@@ -52,16 +55,24 @@
     #
     # You can get the names of your outputs by running: swaymsg -t get_outputs
     output  'Acer Technologies XB271HK #ASOP6fQBuwTd' scale 1.8
-    output 'Unknown 0x095F 0x00000000' scale 1.8
+
+    set $laptop 'Unknown 0x095F 0x00000000'
+    output $laptop scale 1.8
+    bindswitch --reload --locked lid:on output $laptop disable
+    bindswitch --reload --locked lid:off output $laptop enable
+    exec_always ~/dotiles/bin/__sway_reset_outputs.sh
+
 
     ### Idle configuration
     #
     # Example configuration:
     #
     exec swayidle -w \
-            timeout 300 'swaylock -f -c 000000' \
+            timeout 300 '${swaylock}' \
             timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-            before-sleep 'swaylock -f -c 000000'
+            timeout 1200 'systemctl suspend' \
+            before-sleep '${swaylock}'
+
     #
     # This will lock your screen after 300 seconds of inactivity, then turn off
     # your displays after another 300 seconds, and turn your screens back on when
@@ -77,7 +88,7 @@
     input "type:keyboard" {
         xkb_layout pl
         xkb_variant ,nodeadkeys
-        xkb_options caps:swapescape
+        xkb_options caps:escape_shifted_capslock
     }
 
     # https://dev.gnupg.org/T6041
@@ -87,6 +98,7 @@
     '';
         config = {
             modifier = "Mod4";
+            terminal = "${pkgs.alacritty}/bin/alacritty";
             menu = "rofi -no-lazy-grab -show drun";
             bars =  [{
                 mode = "dock";
@@ -177,6 +189,7 @@
                             collapsed = true;
                             interval = 10;
                             format = "{min} min, {max} max, {average} avg";
+                            warning = 90; # i7 11th gen is running kinda hot.
                         }
                         {
                             block = "load";
@@ -223,11 +236,11 @@
     in {
         enable = true;
         extraConfig = {
-            modi = "drun,ssh,windowcd,combi,keys,filebrowser";
+            modi = "drun,ssh,filebrowser";
             lines = 5;
             font = "JetBrainsMono Nerd Font 14";
             show-icons = true;
-            icon-theme = "Oranchelo";
+            icon-theme = "Papirus";
             drun-display-format = "{icon} {name}";
             location = 0;
             disable-history = false;
@@ -260,6 +273,7 @@
                 border = mkLiteral "3px";
                 border-color = mkLiteral "@border-col";
                 background-color = mkLiteral "@bg-col";
+                border-radius = mkLiteral "0.1em";
             };
 
             mainbox = {
