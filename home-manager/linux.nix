@@ -62,6 +62,9 @@
     bindswitch --reload --locked lid:off output $laptop enable
     exec_always ~/dotiles/bin/__sway_reset_outputs.sh
 
+    bindsym Ctrl+Left workspace prev
+    bindsym Ctrl+Right workspace next
+    bindsym Mod4+Ctrl+L '${swaylock}'
 
     ### Idle configuration
     #
@@ -93,6 +96,13 @@
 
     # https://dev.gnupg.org/T6041
     for_window [app_id="pinentry-qt"] floating enable
+
+    for_window [class="^Zoom"] floating enable
+
+    bar swaybar_command waybar
+
+    # https://github.com/swaywm/sway/issues/4112
+    seat seat0 xcursor_theme Adwaita
 
     include /etc/sway/config.d/*
     '';
@@ -154,7 +164,28 @@
     };
     programs.waybar = {
         enable = true;
+        settings = {
+          mainBar = {
+            layer = "bottom";
+            position = "bottom";
+            height = 30;
+            modules-left = ["idle_inhibitor" ];
+            modules-center = ["sway/window"];
+            modules-right = ["tray"];
+            "idle_inhibitor" = {
+                "format"= "{icon}";
+                "format-icons"= {
+                    "activated" = "";
+                    "deactivated"= "";
+                };
+            };
+            "sway/window" = {
+                icon = true;
+            };
+          };
+        };
     };
+
     programs.i3status-rust = {
         enable = true;
         bars = {
@@ -207,6 +238,12 @@
                             minimum = 15;
                             maximum = 100;
                             cycle = [100 75 50 25 0 25 50 75];
+                        }
+                        {
+                            block = "custom";
+                            command = ''swaymsg -t get_outputs | jq 'map(select(.name=="eDP-1")) | if .[0].active then {"text": "ON"} else {"text": "OFF"} end' '';
+                            on_click = "~/dotiles/bin/__sway_reset_outputs.sh";
+                            json = true;
                         }
                         {
                             block = "networkmanager";

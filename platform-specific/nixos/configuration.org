@@ -241,6 +241,7 @@ configure-qt = pkgs.writeTextFile {
         export QT_QPA_PLATFORM=wayland
         export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
         export QT_QPA_PLATFORMTHEME=qt5ct
+        export MOZ_ENABLE_WAYLAND=1
         '';
 };
 
@@ -259,6 +260,7 @@ configure-gtk = pkgs.writeTextFile {
     datadir = "${schema}/share/gsettings-schemas/${schema.name}";
   in ''
         export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+        export XDG_CURRENT_DESKTOP=Unity
         gnome_schema=org.gnome.desktop.interface
         gsettings set $gnome_schema gtk-theme 'Dracula'
         '';
@@ -351,6 +353,13 @@ in
     weylus
     powertop
     cpupower-gui
+    # For waybar tray support
+    libappindicator
+    libappindicator-gtk3
+    # modify external screen brightness
+    brightnessctl
+    # soundcontrol
+    pavucontrol
   ]) ++ (with import <unstable> {}; [
   ]);
 
