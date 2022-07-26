@@ -129,3 +129,5 @@
 (package! vertico-posframe)
 
 (package! coffee-mode)
+
+(package! ox-slack)
