@@ -424,8 +424,9 @@
     ''
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "LSP_USE_PLISTS" "true")
-    (load (concat (expand-file-name (file-name-as-directory "~/.emacs.doom/")) "early-init.el") nil 'nomessage)
-    '';
+    (setq user-emacs-directory (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
+    (load (concat user-emacs-directory "early-init.el") nil 'nomessage)
+   '';
 
   home.file.".zprofile".text =
     ''
