@@ -272,7 +272,6 @@ xdg.portal = {
     htop
     fzf
     python3Minimal
-    vscode
     ark
     sd
     keybase-gui

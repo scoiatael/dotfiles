@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+      ~/dotfiles/home-manager/electron.nix
+  ];
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
@@ -398,6 +401,17 @@
       # it might consume lots of RAM... YES. Please. I'm not using Chrome nor Java, so eat all of it.
       historyLimit = 500000;
       prefix = "C-Space";
+    };
+    vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+      userSettings =  {
+        "update.channel" = "none";
+        "[nix]"."editor.tabSize" = 2;
+        "workbench.startupEditor" = "none";
+        "editor.fontFamily" = "JetBrainsMono Nerd Font";
+        "editor.fontSize" = 12;
+      };
     };
   };
 
