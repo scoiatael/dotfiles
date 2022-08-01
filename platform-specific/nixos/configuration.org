@@ -298,10 +298,12 @@ xdg.portal = {
     libappindicator-gtk3
     # modify external screen brightness
     brightnessctl
+    ddcutil
     # soundcontrol
     pavucontrol
     # gsettings
     glib
+    nwg-launchers
   ]) ++ (with import <unstable> {}; [
   ]);
 
@@ -360,6 +362,12 @@ TODO: do I still need those?
     ];
   };
  #+end_src
+
+
+** ddcutil:
+#+begin_src nix
+hardware.i2c.enable = true;
+#+end_src
 
 ** system version
 #+begin_src nix

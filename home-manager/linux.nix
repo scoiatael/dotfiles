@@ -177,11 +177,22 @@
             layer = "bottom";
             position = "bottom";
             height = 30;
-            modules-left = ["idle_inhibitor" ];
+            modules-left = ["custom/shutdown" "idle_inhibitor" "custom/ddcutil" ];
             modules-center = ["sway/window"];
             modules-right = ["tray"];
+            "custom/shutdown" = {
+                "format" = "";
+                "interval" = "once";
+                "on-click" = "nwgbar";
+            };
+            "custom/ddcutil" = {
+                "format" = "{}% {icon}";
+                "interval" = 10;
+                "format-icons" = [""  ""  ""];
+                "exec" = "ddcutil getvcp 10 | awk '{ print $9 }' | cut -d, -f1";
+            };
             "idle_inhibitor" = {
-                "format"= "{icon}";
+                "format"= "{icon} ";
                 "format-icons"= {
                     "activated" = "";
                     "deactivated"= "";
@@ -192,6 +203,50 @@
             };
           };
         };
+        style = ''
+            * {
+                font-size: 13px;
+                font-family: 'JetBrainsMono Nerd Font';
+            }
+            window#waybar {
+                background: rgba(43, 48, 59, 0.5);
+                border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+                color: white;
+            }
+
+            tooltip {
+                background: rgba(43, 48, 59, 0.5);
+                border: 1px solid rgba(100, 114, 125, 0.5);
+            }
+
+            tooltip label {
+                color: white;
+            }
+
+            #idle_inhibitor,
+            #custom-ddcutil,
+            #custom-shutdown {
+                padding: 0 0;
+                margin: 0 0;
+                min-width: 2.5em;
+            }
+
+            #idle_inhibitor {
+                background-color: #2d3436;
+            }
+
+            #idle_inhibitor.activated {
+                background-color: #ecf0f1;
+                color: #2d3436;
+            }
+
+            #custom-ddcutil {
+                background-color: #f1c40f;
+                color: #000000;
+                min-width: 4em;
+            }
+
+        '';
     };
 
     programs.i3status-rust = {
