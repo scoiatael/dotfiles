@@ -203,3 +203,21 @@ set edit:insert:binding[Alt-f] = $dir:right-word-or-next-dir~
 set edit:insert:binding[Alt-i] = $dir:history-chooser~
 fn cd { |@a| dir:cd $@a }
 
+use github.com/zzamboni/elvish-completions/comp
+
+set edit:completion:arg-completer[cd] = (comp:sequence [ {|stem|
+      comp:files $stem &dirs-only
+}])
+
+if (has-external command-not-found) {
+  set edit:after-command = (assoc $edit:after-command 0 { |args|
+      var error = $args[error]
+      var src = $args[src]
+      if (not (is $error $nil)) {
+        # NOTE: this might change soon in new Elvish: https://elv.sh/ref/language.html#exception
+        if (str:has-prefix (repr $error[reason]) "<unknown exec:") {
+          command-not-found $src[code]
+        }
+      }
+  })
+}
