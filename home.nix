@@ -241,8 +241,8 @@
     aspellDicts.en-science
     aspellDicts.en-computers
     ispell
+    hyperfine
   ];
-
 
   programs = {
     alacritty = {

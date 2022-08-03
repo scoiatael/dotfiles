@@ -1,8 +1,8 @@
 #!/usr/bin/env elvish
 # inspired by https://github.com/ahghanbari/External_monitor_brightness/blob/main/screen.sh
 
-if (not (has-external xrandr)) {
-    echo "install xrandr"
+if (not (has-external ddcutil)) {
+    echo "install ddcutil"
     exit 127
 }
 
@@ -11,23 +11,27 @@ if (not (has-external notify-send)) {
     exit 127
 }
 
-var br = (xrandr --prop --verbose | grep -A10 " connected primary" | grep "Brightness" | awk '{ print $2 }')
-var dev = (xrandr --prop --verbose | grep " connected primary" | awk '{ print $1 }')
+try {
+    var raw = (ddcutil getvcp 10 | awk '{ print $9 }' | cut -d, -f1 | one)
+    var br = (exact-num $raw)
+    fn setvcp {
+        ddcutil setvcp 10 $br
+        notify-send -i monitor -t 300 "Brightness: " $br
+    }
 
-fn round2 { |num|
-    use math
+    if (> (count $args) 0) {
+        if (==s $args[0] up ) {
+            set br = (+ $br 10)
+            setvcp
+        }
 
-    put (/ (math:round (* $num 10)) 10)
+        if (==s $args[0] down ) {
+            set br = (- $br 10)
+            setvcp
+        }
+    }
+
+    put [ &percentage=(to-string $br) ] | to-json | jq --unbuffered --compact-output '.'
+} catch {
+    put [ &percentage="0" ] | to-json | jq --unbuffered --compact-output '.'
 }
-
-if (==s $args[0] up ) {
-    set br = (round2 (+ $br 0.1))
-}
-
-if (==s $args[0] down ) {
-    set br = (round2 (- $br 0.1))
-}
-
-echo "Brightness: " $br
-xrandr --output $dev --brightness $br
-notify-send -i monitor -t 300 "Brightness: " $br

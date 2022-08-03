@@ -299,6 +299,7 @@ xdg.portal = {
     # modify external screen brightness
     brightnessctl
     ddcutil
+    ddcui
     # soundcontrol
     pavucontrol
     # gsettings

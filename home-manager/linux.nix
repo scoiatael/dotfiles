@@ -181,19 +181,23 @@
             modules-center = ["sway/window"];
             modules-right = ["tray"];
             "custom/shutdown" = {
-                "format" = "";
-                "interval" = "once";
-                "on-click" = "nwgbar";
+                format = "";
+                interval = "once";
+                on-click = "nwgbar";
             };
             "custom/ddcutil" = {
-                "format" = "{}% {icon}";
-                "interval" = 10;
-                "format-icons" = [""  ""  ""];
-                "exec" = "ddcutil getvcp 10 | awk '{ print $9 }' | cut -d, -f1";
+                format = "{percentage}% {icon}";
+                interval = 60;
+                format-icons = [""  ""  ""];
+                json = true;
+                exec = ~/dotfiles/bin/monitor.sh;
+                on-scroll-up = "${~/dotfiles/bin/monitor.sh} up";
+                on-scroll-down = "${~/dotfiles/bin/monitor.sh} down";
+                on-click = "ddcui";
             };
-            "idle_inhibitor" = {
-                "format"= "{icon} ";
-                "format-icons"= {
+            idle_inhibitor = {
+                format= "{icon} ";
+                format-icons= {
                     "activated" = "";
                     "deactivated"= "";
                 };
