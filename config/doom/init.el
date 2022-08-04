@@ -44,7 +44,7 @@
        (popup                     ; tame sudden yet inevitable temporary windows
         +all                      ; catch all popups that start with an asterix
         +defaults)                ; default popup rules
-       (ligatures +iosevka)       ; replace bits of code with pretty symbols
+       (ligatures +iosevka +fira)       ; replace bits of code with pretty symbols
        ;; tabs              ; an tab bar for Emacs
        treemacs
        window-select    ; visually switch windows
