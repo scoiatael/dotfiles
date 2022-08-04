@@ -1,13 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, emacs-overlay, ... }:
 
 {
-  imports = [
-      ~/dotfiles/home-manager/electron.nix
-  ];
   nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
+    emacs-overlay.overlay
   ];
   programs.gpg = {
     enable = true;
@@ -242,6 +237,7 @@
     aspellDicts.en-computers
     ispell
     hyperfine
+    nixfmt
   ];
 
   programs = {
@@ -282,7 +278,6 @@
     };
     starship = {
       enable = true;
-      package = (with import <unstable> {}; starship);
       settings = {
         format = ''$cmd_duration$username(\[$git_status\])$character'';
         right_format = ''$git_branch(\[$git_state\])ǂ$directory'';
@@ -327,7 +322,6 @@
       };
     };
     nushell = {
-      package = (with import <unstable> {}; nushell); # Need nushell 0.60.0+ for starship
       enable = true;
     };
     dircolors = {
@@ -345,7 +339,6 @@
     };
     helix = {
       enable = true;
-      package = (with import <unstable> {}; helix);
       settings = {
         theme = "monokai_pro_machine";
         keys.normal = {

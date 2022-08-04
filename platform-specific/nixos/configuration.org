@@ -192,6 +192,7 @@ TODO: 22.05 introduced native support, no need to roll own user :)
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.desktopManager.lxqt.enable = true;
 #+end_src
 *** Sway
 https://nixos.wiki/wiki/Sway
@@ -222,6 +223,7 @@ xdg.portal = {
       "wheel" # Enable ‘sudo’ for the user.
       "networkmanager" # https://nixos.org/manual/nixos/stable/index.html#sec-networking
       "users"
+      "i2c" # use ddcutil
     ];
     shell = pkgs.elvish;
     group = "lczaplinski";
@@ -305,8 +307,11 @@ xdg.portal = {
     # gsettings
     glib
     nwg-launchers
-  ]) ++ (with import <unstable> {}; [
-  ]);
+    # Sway nice-to-haves
+    wl-clipboard
+    nm-tray
+    adwaita-qt
+  ])
 
   # SLACK!
   nixpkgs.config.allowUnfree = true;

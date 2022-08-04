@@ -25,6 +25,7 @@
     ] ++ (with pkgs; [
         (nerdfonts.override { fonts = [
                                   "JetBrainsMono"  # needed for rofi theme
+                                  "FiraCode"
                               ]; })
     ]);
     fonts.fontconfig.enable = true; # required to autoload fonts from packages
@@ -194,6 +195,7 @@
                 on-scroll-up = "${~/dotfiles/bin/monitor.sh} up";
                 on-scroll-down = "${~/dotfiles/bin/monitor.sh} down";
                 on-click = "ddcui";
+                exec-if = "ddcutil detect | grep XB271HK";
             };
             idle_inhibitor = {
                 format= "{icon} ";
@@ -453,4 +455,11 @@
         };
         terminal = "${pkgs.alacritty}/bin/alacritty";
     };
+
+  home.file.".pam_environment".text = ''
+    GDK_BACKEND=wayland
+    QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+    _JAVA_AWT_WM_NONREPARENTING=1
+    QT_QPA_PLATFORMTHEME="qt5ct"
+    '';
 }
