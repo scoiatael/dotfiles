@@ -4,7 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     emacs-overlay = {
-      url = "github:nix-community/emacs-overlay/e911c43b99c7b9c94ee408c38b0c6e2c6a01132e";
+      url =
+        "github:nix-community/emacs-overlay/e911c43b99c7b9c94ee408c38b0c6e2c6a01132e";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -27,6 +28,7 @@
           ./modules/home.nix
           ./modules/electron.nix
           ./modules/linux.nix
+          ./modules/rclone-gdrive-mount.nix
           {
             home = {
               username = "lczaplinski";
