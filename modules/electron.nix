@@ -13,7 +13,7 @@ in {
   xdg.configFile."electron16-flags.conf".source = electronFlags;
   xdg.configFile."code-flags.conf".source = electronFlags;
   xdg.configFile."codium-flags.conf".source = electronFlags;
-
+    
   # https://github.com/microsoft/vscode/issues/109176
   home.file.".local/bin/code" = {
     text =  ''

@@ -1,19 +1,18 @@
 { config, lib, pkgs, emacs-overlay, ... }:
 
 {
-  nixpkgs.overlays = [
-    emacs-overlay.overlay
-  ];
-  programs.gpg = {
-    enable = true;
-  };
+  nixpkgs.overlays = [ emacs-overlay.overlay ];
+  programs.gpg = { enable = true; };
   programs.git = {
     enable = true;
     lfs.enable = true;
     aliases = {
-      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-      lga = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all";
-      lgd = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p";
+      lg =
+        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      lga =
+        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all";
+      lgd =
+        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p";
 
       rbc = "rebase --continue";
       rba = "rebase --abort";
@@ -24,36 +23,37 @@
       ros = "remote set-url origin";
       r = "remote -v";
 
-      bms="! git branch --merged | grep -v '*'";
-      bmc="! git branch --merged | grep -v '*' | xargs git branch -d";
+      bms = "! git branch --merged | grep -v '*'";
+      bmc = "! git branch --merged | grep -v '*' | xargs git branch -d";
 
       la = "config --get-regexp alias";
       cm = "checkout master";
-      cmp ="! git checkout master && git pull --rebase";
+      cmp = "! git checkout master && git pull --rebase";
 
       prune = "remote prune origin";
 
-      cb="checkout -b";
-      co="checkout";
+      cb = "checkout -b";
+      co = "checkout";
 
-      s="status";
-      search="!git rev-list --all | xargs git grep -F";
-      last="log -1 HEAD --stat";
-      continue="!$HOME/dotfiles/bin/__git_continue.sh";
-      br="branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
-      l1="rev-parse --short HEAD";
+      s = "status";
+      search = "!git rev-list --all | xargs git grep -F";
+      last = "log -1 HEAD --stat";
+      continue = "!$HOME/dotfiles/bin/__git_continue.sh";
+      br =
+        "branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
+      l1 = "rev-parse --short HEAD";
     };
     ignores = [
       # Source https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
       "*~"
-      "\#*\#"
+      "#*#"
       "/.emacs.desktop"
       "/.emacs.desktop.lock"
       "/TODO.org"
       "*.elc"
       "auto-save-list"
       "tramp"
-      ".\#*"
+      ".#*"
       "recentf"
       "srecode-map.el"
       ".dir-locals.el"
@@ -84,7 +84,7 @@
       ".cask/"
 
       # emacs sessions
-      "^session\.*"
+      "^session.*"
 
       # ctags
       "TAGS"
@@ -185,12 +185,12 @@
       magit.hideCampaign = true;
       diff.sopsdiffer.textconv = "sops -d";
       magithub = {
-          online = false;
-          status = {
-            includeStatusHeader = false;
-            includePullRequestsSection = false;
-            includeIssuesSection = false;
-          };
+        online = false;
+        status = {
+          includeStatusHeader = false;
+          includePullRequestsSection = false;
+          includeIssuesSection = false;
+        };
       };
       github.user = "scoiatael";
       status.short = true;
@@ -202,9 +202,7 @@
       signByDefault = true;
       key = "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
-    includes = [
-      { path = "~/.gitconfig_custom"; }
-    ];
+    includes = [{ path = "~/.gitconfig_custom"; }];
     delta.enable = true;
   };
 
@@ -238,6 +236,7 @@
     ispell
     hyperfine
     nixfmt
+    file
   ];
 
   programs = {
@@ -245,26 +244,25 @@
       enable = true;
       settings = {
         font = {
-          normal = {
-            family = "JetBrainsMono Nerd Font";
-          };
+          normal = { family = "JetBrainsMono Nerd Font"; };
           size = 9;
         };
       };
     };
     qutebrowser = {
       # enable = true; broken on macOS -> enable via ./home-manager/linux.nix
-      searchEngines =  {
-          w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
-          aw = "https://wiki.archlinux.org/?search={}";
-          nw = "https://nixos.wiki/index.php?search={}";
-          g = "https://www.google.com/search?hl=en&q={}";
-          nix = "https://search.nixos.org/packages?query={}";
-          k = "https://kagi.com/search?q={}";
-          DEFAULT = "https://kagi.com/search?q={}";
-          m = "https://melpa.org/#/?q={}";
-          b = "https://search.brave.com/search?q={}";
-        };
+      searchEngines = {
+        w =
+          "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
+        aw = "https://wiki.archlinux.org/?search={}";
+        nw = "https://nixos.wiki/index.php?search={}";
+        g = "https://www.google.com/search?hl=en&q={}";
+        nix = "https://search.nixos.org/packages?query={}";
+        k = "https://kagi.com/search?q={}";
+        DEFAULT = "https://kagi.com/search?q={}";
+        m = "https://melpa.org/#/?q={}";
+        b = "https://search.brave.com/search?q={}";
+      };
       settings = {
         url.start_pages = "https://kagi.com";
         url.default_page = "https://kagi.com";
@@ -279,8 +277,8 @@
     starship = {
       enable = true;
       settings = {
-        format = ''$cmd_duration$username(\[$git_status\])$character'';
-        right_format = ''$git_branch(\[$git_state\])ǂ$directory'';
+        format = "$cmd_duration$username(\\[$git_status\\])$character";
+        right_format = "$git_branch(\\[$git_state\\])ǂ$directory";
         command_timeout = 90;
 
         directory = {
@@ -310,33 +308,27 @@
         };
 
         git_state = {
-          format = ''\([$state( $progress_current/$progress_total)]($style)\)'';
+          format = "\\([$state( $progress_current/$progress_total)]($style)\\)";
           style = "bright-black";
         };
 
         cmd_duration = {
-          format = "[  $duration\n]($style)";
+          format = ''
+            [  $duration
+            ]($style)'';
           style = "yellow";
         };
 
       };
     };
-    nushell = {
-      enable = true;
-    };
-    dircolors = {
-      enable = true;
-    };
-    bat = {
-      enable = true;
-    };
+    nushell = { enable = true; };
+    dircolors = { enable = true; };
+    bat = { enable = true; };
     exa = {
       enable = true;
       enableAliases = true;
     };
-    broot = {
-      enable = true;
-    };
+    broot = { enable = true; };
     helix = {
       enable = true;
       settings = {
@@ -348,17 +340,11 @@
         };
       };
     };
-    fzf = {
-      enable = true;
-    };
-    zoxide = {
-      enable = true;
-    };
+    fzf = { enable = true; };
+    zoxide = { enable = true; };
     direnv = {
       enable = true;
-      nix-direnv = {
-        enable = true;
-      };
+      nix-direnv = { enable = true; };
       stdlib = "source ~/dotfiles/config/direnvrc";
     };
     emacs = {
@@ -398,7 +384,7 @@
     vscode = {
       enable = true;
       package = pkgs.vscodium;
-      userSettings =  {
+      userSettings = {
         "update.channel" = "none";
         "[nix]"."editor.tabSize" = 2;
         "workbench.startupEditor" = "none";
@@ -409,9 +395,12 @@
   };
 
   home.file.".envrc".text = ""; # for direnv to load in HOME
-  home.file.".direnvrc".source = ~/dotfiles/config/direnvrc; # for direnv to load in HOME
+  home.file.".direnvrc".source =
+    ~/dotfiles/config/direnvrc; # for direnv to load in HOME
 
-  home.file.".tmux/plugins/tmux-colortag".source = builtins.fetchGit { url = "https://github.com/scoiatael/tmux-colortag.git"; };
+  home.file.".tmux/plugins/tmux-colortag".source = builtins.fetchGit {
+    url = "https://github.com/scoiatael/tmux-colortag.git";
+  };
 
   xdg.configFile."nu/config.nu".text = # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
     ''
@@ -421,24 +410,26 @@
     '';
 
   home.file.".elvish/rc.elv".source = ~/dotfiles/config/elvish/rc.elv;
-  home.file.".elvish/lib/direnv.elv".source = ~/dotfiles/config/elvish/lib/direnv.elv;
-  home.file.".elvish/lib/zoxide.elv".source = ~/dotfiles/config/elvish/lib/zoxide.elv;
-  home.file.".elvish/lib/starship.elv".source = ~/dotfiles/config/elvish/lib/starship.elv;
+  home.file.".elvish/lib/direnv.elv".source =
+    ~/dotfiles/config/elvish/lib/direnv.elv;
+  home.file.".elvish/lib/zoxide.elv".source =
+    ~/dotfiles/config/elvish/lib/zoxide.elv;
+  home.file.".elvish/lib/starship.elv".source =
+    ~/dotfiles/config/elvish/lib/starship.elv;
 
   home.file.".config/doom".source = ~/dotfiles/config/doom;
-  home.file.".emacs.doom".source = builtins.fetchGit { url = "https://github.com/doomemacs/doomemacs.git"; };
-  home.file.".emacs.d/early-init.el".text =
-    ''
+  home.file.".emacs.doom".source =
+    builtins.fetchGit { url = "https://github.com/doomemacs/doomemacs.git"; };
+  home.file.".emacs.d/early-init.el".text = ''
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "LSP_USE_PLISTS" "true")
     (setq user-emacs-directory (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
     (load (concat user-emacs-directory "early-init.el") nil 'nomessage)
-   '';
+  '';
 
-  home.file.".zprofile".text =
-    ''
-      export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
-      export DOOMLOCALDIR="~/.emacs.local"
-      export EMACSDIR="~/.emacs.doom"
-    '';
+  home.file.".zprofile".text = ''
+    export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
+    export DOOMLOCALDIR="~/.emacs.local"
+    export EMACSDIR="~/.emacs.doom"
+  '';
 }
