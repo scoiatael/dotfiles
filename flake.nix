@@ -30,7 +30,10 @@
           ./modules/electron.nix
           ./modules/linux.nix
           ./modules/rclone-gdrive-mount.nix
-          ./modules/persway.nix
+          ./modules/sway.nix
+          ./modules/git.nix
+          ./modules/emacs.nix
+          ./modules/tmux.nix
           {
             home = {
               username = "lczaplinski";
