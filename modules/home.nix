@@ -237,6 +237,7 @@
     hyperfine
     nixfmt
     file
+    imagemagick
   ];
 
   programs = {
