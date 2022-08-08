@@ -12,6 +12,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    persway.url = "github:johnae/persway";
   };
 
   outputs = { nixpkgs, home-manager, ... }@attrs:
@@ -29,6 +30,7 @@
           ./modules/electron.nix
           ./modules/linux.nix
           ./modules/rclone-gdrive-mount.nix
+          ./modules/persway.nix
           {
             home = {
               username = "lczaplinski";

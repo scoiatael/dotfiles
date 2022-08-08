@@ -311,7 +311,9 @@ xdg.portal = {
     wl-clipboard
     nm-tray
     adwaita-qt
-  ])
+    # Screenshotting under sway
+    sway-contrib.grimshot
+  ]);
 
   # SLACK!
   nixpkgs.config.allowUnfree = true;
