@@ -106,7 +106,12 @@
       # https://dev.gnupg.org/T6041
       for_window [app_id="pinentry-qt"] floating enable
 
-      for_window [class="^Zoom"] floating enable
+      # NOTE: zoom doesn't set class nor app id.
+      # main window is 'Zoom - X account'
+      # meeting window is 'Zoom Meeting'
+      # settings window is 'Settings'. duh.
+      for_window [title="^Zoom"] floating enable
+      for_window [title="^Zoom"] border csd
 
       bar swaybar_command waybar
 
