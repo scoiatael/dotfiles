@@ -184,9 +184,9 @@ in {
         };
         "custom/ddcutil" = {
           format = "{percentage}% {icon}";
-          interval = 60;
+          interval = 10;
           format-icons = [ "" "" "" ];
-          json = true;
+          return-type = "json";
           exec = ~/dotfiles/bin/monitor.sh;
           on-scroll-up = "${~/dotfiles/bin/monitor.sh} up";
           on-scroll-down = "${~/dotfiles/bin/monitor.sh} down";
