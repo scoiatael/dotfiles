@@ -129,7 +129,7 @@
     direnv = {
       enable = true;
       nix-direnv = { enable = true; };
-      stdlib = "source ~/dotfiles/config/direnvrc";
+      stdlib = "source ${../config/direnvrc}";
     };
     vscode = {
       enable = true;
@@ -146,7 +146,7 @@
 
   home.file.".envrc".text = ""; # for direnv to load in HOME
   home.file.".direnvrc".source =
-    ~/dotfiles/config/direnvrc; # for direnv to load in HOME
+    ../config/direnvrc; # for direnv to load in HOME
 
   xdg.configFile."nu/config.nu".text = # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
     ''
@@ -155,13 +155,11 @@
       source ~/.cache/starship/init.nu
     '';
 
-  home.file.".elvish/rc.elv".source = ~/dotfiles/config/elvish/rc.elv;
-  home.file.".elvish/lib/direnv.elv".source =
-    ~/dotfiles/config/elvish/lib/direnv.elv;
-  home.file.".elvish/lib/zoxide.elv".source =
-    ~/dotfiles/config/elvish/lib/zoxide.elv;
+  home.file.".elvish/rc.elv".source = ../config/elvish/rc.elv;
+  home.file.".elvish/lib/direnv.elv".source = ../config/elvish/lib/direnv.elv;
+  home.file.".elvish/lib/zoxide.elv".source = ../config/elvish/lib/zoxide.elv;
   home.file.".elvish/lib/starship.elv".source =
-    ~/dotfiles/config/elvish/lib/starship.elv;
+    ../config/elvish/lib/starship.elv;
 
   home.file.".zprofile".text = ''
     export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels

@@ -187,9 +187,9 @@ in {
           interval = 10;
           format-icons = [ "" "" "" ];
           return-type = "json";
-          exec = ~/dotfiles/bin/monitor.sh;
-          on-scroll-up = "${~/dotfiles/bin/monitor.sh} up";
-          on-scroll-down = "${~/dotfiles/bin/monitor.sh} down";
+          exec = ../bin/monitor.sh;
+          on-scroll-up = "${../bin/monitor.sh} up";
+          on-scroll-down = "${../bin/monitor.sh} down";
           on-click = "ddcui";
           # exec-if = "bash -c 'ddcutil detect | grep VCP'";
         };
