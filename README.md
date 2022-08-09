@@ -2,11 +2,6 @@
 
 Managed by [home-manager](https://github.com/nix-community/home-manager).
 
-Simply add import to your [~/.config/nixpkgs/home.nix](~/.config/nixpkgs/home.nix):
+Now using [flakes!](https://nix-community.github.io/home-manager/index.html#sec-flakes-standalone)
 
-    imports = [
-        "~/dotfiles/home.nix"
-        "~/dotfiles/home-manager/linux.nix"
-    ];
-
-and `home-manager switch` :)
+Simply `home-manager switch --flake 'path:dotfiles#framework'` - or roll your own :)
