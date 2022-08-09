@@ -1,26 +1,29 @@
 { config, lib, pkgs, persway, ... }:
 # https://github.com/johnae/nixos-configuration/blob/b10bedaf0dc66bba527a2d825fe5f4b687a1cbe2/home/sway.nix
 let
-  swayservice = Description: ExecStart: {
+  swayservice = Description: Service: {
     Unit = {
       inherit Description;
       After = "sway-session.target";
       BindsTo = "sway-session.target";
     };
 
-    Service = {
-      Type = "simple";
-      inherit ExecStart;
-    };
+    Service = { Type = "simple"; } // Service;
 
     Install = { WantedBy = [ "sway-session.target" ]; };
   };
+  swayr = "${pkgs.swayr}/bin/swayr";
 in {
   nixpkgs.overlays = [ persway.overlays.default ];
 
   systemd.user.services = {
-    persway =
-      swayservice "Small Sway IPC Deamon" "${pkgs.persway}/bin/persway -aw";
+    persway = swayservice "Small Sway IPC Deamon" {
+      ExecStart = "${pkgs.persway}/bin/persway -aw";
+    };
+    swayrd = swayservice "A window-switcher & more for sway" {
+      ExecStart = "${pkgs.swayr}/bin/swayrd";
+      Environment = [ "PATH=${pkgs.wofi}/bin" ];
+    };
   };
 
   wayland.windowManager.sway.swaynag = { enable = true; };
@@ -63,7 +66,10 @@ in {
 
       bindsym Ctrl+Left workspace prev
       bindsym Ctrl+Right workspace next
-      bindsym Mod4+Ctrl+L '${swaylock}'
+      bindsym Mod4+Ctrl+L exec ${swaylock}
+      bindsym Alt+Tab exec ${swayr} switch-window
+      bindsym Mod4+Tab exec ${swayr} switch-workspace
+      bindsym Mod4+c exec ${swayr} execute-swaymsg-command
 
       ### Idle configuration
       #
