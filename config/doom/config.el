@@ -73,6 +73,11 @@
 
  (add-hook! #'gfm-mode #'scoiatael/visualize-trailing-whitespace)
 
+ ;; https://github.com/doomemacs/doomemacs/issues/3900#issuecomment-769556912
+ (advice-add 'format-all-buffer :around #'envrc-propagate-environment)
+ (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)
+ (advice-add '+format-buffer-h :around #'envrc-propagate-environment)
+
  (add-hook! python-mode #'scoiatael/maybe-activate-virtualenv
             #'evil-normal-state
             #'lispyville-mode))
