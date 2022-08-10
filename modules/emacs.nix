@@ -28,6 +28,7 @@ in {
   };
 
   home.file.".config/doom".source = ../config/doom;
+  home.file.".emacs.doom".source = doomDir;
   home.file.".emacs.d/early-init.el".text = ''
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "LSP_USE_PLISTS" "true")
