@@ -22,6 +22,8 @@
     file
     imagemagick
     yarn # for yarn create
+    unzip
+    zip
   ];
 
   programs = {
