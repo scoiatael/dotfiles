@@ -130,4 +130,6 @@
 
 (package! coffee-mode)
 
+(package! list-unicode-display)
+
 (package! ox-slack)

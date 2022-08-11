@@ -60,6 +60,11 @@
 
 (setq! +snippets-dir (file-truename "~/dotfiles/emacs-snippets"))
 
+(after! git-gutter
+  (setq! git-gutter:deleted-sign "˗"
+         git-gutter:added-sign "·"
+         git-gutter:modified-sign "˃"))
+
 (scoiatael/defer
  (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
 
@@ -151,12 +156,11 @@
       "Q" #'org-roam-buffer-toggle
       "SPC" #'execute-extended-command-for-buffer
       "/"   #'+default/search-project
-      "i u" #'counsel-unicode-char
+      "i u" #'list-unicode-display
       "i d" #'scoiatael/yank-current-date
       "c x" #'lsp-treemacs-errors-list
       "w 2" #'split-window-below
       "w 3" #'split-window-right
-      "f k" #'counsel-yank-pop
       "f d" #'dired-jump
       "f Y" #'scoiatael/yank-file-location
       "s c" #'evil-ex-nohighlight
@@ -350,6 +354,7 @@
 
 (use-package! ox-slack)
 
+(use-package! list-unicode-display)
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
