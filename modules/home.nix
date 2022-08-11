@@ -21,6 +21,7 @@
     hyperfine
     file
     imagemagick
+    yarn # for yarn create
   ];
 
   programs = {
