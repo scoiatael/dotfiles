@@ -109,8 +109,12 @@ in {
       # main window is 'Zoom - X account'
       # meeting window is 'Zoom Meeting'
       # settings window is 'Settings'. duh.
-      for_window [title="^Zoom"] floating enable
-      for_window [title="^Zoom"] border csd
+      # ...and of course waiting window is '.zoom '
+      for_window [title="^\.?[Zz]oom"] floating enable
+      for_window [title="^\.?[Zz]oom"] border normal
+      # and if the app is not on when you join it's even worse.
+      for_window [title="^join"] floating enable
+      for_window [title="^join"] border normal
 
       bar swaybar_command waybar
 
