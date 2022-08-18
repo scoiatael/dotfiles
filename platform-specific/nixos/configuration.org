@@ -371,6 +371,20 @@ TODO: do I still need those?
   };
  #+end_src
 
+** Environment variables
+*** For Elecron
+https://nixos.wiki/wiki/Slack#Wayland
+https://nixos.wiki/wiki/Visual_Studio_Code#Wayland
+#+begin_src nix
+environment.sessionVariables.NIXOS_OZONE_WL = "1";
+#+end_src
+*** For Sway
+#+begin_src nix
+environment.sessionVariables = {
+  QT_QPA_PLATFORMTHEME = "qt5ct";
+  MOZ_ENABLE_WAYLAND = "1";
+};
+#+end_src
 
 ** ddcutil:
 #+begin_src nix

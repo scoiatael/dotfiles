@@ -145,6 +145,9 @@
       "C-l" #'evil-window-right
       "C-c s" #'ssh)
 
+(map! :n "[p" (cmd! (newline) (yank-pop))
+      :n "]p" (cmd! (save-excursion (line-move -1) (newline) (yank-pop))))
+
 (map! :v
       "v" #'er/expand-region)
 

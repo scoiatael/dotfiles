@@ -217,7 +217,7 @@ if (has-external command-not-found) {
         # NOTE: this might change soon in new Elvish: https://elv.sh/ref/language.html#exception
         if (str:has-prefix (repr $error[reason]) "<unknown exec:") {
           try {
-            command-not-found (str:trim $src[code] "\n")
+            command-not-found (put $src[code] | str:split ' ' (one) | take 1 | str:trim (one) "\n")
           } catch {
             # on nixOS it always return 127 for some reason
           }
