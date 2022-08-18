@@ -24,6 +24,9 @@ in {
       ExecStart = "${pkgs.swayr}/bin/swayrd";
       Environment = [ "PATH=${pkgs.wofi}/bin" ];
     };
+    mako = swayservice "Lightweight notification daemon for Wayland" {
+      ExecStart = "${pkgs.mako}/bin/mako";
+    };
   };
 
   wayland.windowManager.sway.swaynag = { enable = true; };
