@@ -4,7 +4,6 @@
   programs.gpg = { enable = true; };
 
   home.packages = with pkgs; [
-    neofetch
     gnutar
     tokei
     du-dust
@@ -27,7 +26,15 @@
     bind # for dig
     pwgen
     entr
+    rnix-lsp # LSP for nix?!
+    (nerdfonts.override {
+      fonts = [
+        "JetBrainsMono" # needed for rofi theme
+        "FiraCode"
+      ];
+    })
   ];
+  fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
   programs = {
     alacritty = {

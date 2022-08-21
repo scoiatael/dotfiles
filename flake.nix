@@ -17,15 +17,9 @@
   };
 
   outputs = { nixpkgs, home-manager, ... }@attrs:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
+     {
       homeConfigurations.framework = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [
           ./modules/home.nix
           ./modules/electron.nix
@@ -44,9 +38,24 @@
             programs.home-manager.enable = true;
           }
         ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+        extraSpecialArgs = attrs;
+      };
+      homeConfigurations.macos = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-darwin;
+        modules = [
+          ./modules/home.nix
+          ./modules/git.nix
+          ./modules/emacs.nix
+          ./modules/tmux.nix
+          {
+            home = {
+              username = "lukaszczaplinski";
+              homeDirectory = "/Users/lukaszczaplinski";
+              stateVersion = "22.05";
+            };
+            programs.home-manager.enable = true;
+          }
+        ];
         extraSpecialArgs = attrs;
       };
     };
