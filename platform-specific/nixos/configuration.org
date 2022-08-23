@@ -130,6 +130,18 @@ TODO: 22.05 introduced native support, no need to roll own user :)
 #+begin_src nix
   # List services that you want to enable:
 
+  # https://github.com/NixOS/nixpkgs/issues/126681
+  services.interception-tools = {
+    enable = true;
+    plugins = [ pkgs.interception-tools-plugins.caps2esc ];
+    udevmonConfig = ''
+      - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
+        DEVICE:
+          EVENTS:
+            EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
+    '';
+  };
+
   # https://nixos.wiki/wiki/Yubikey
   services.udev.packages = [ pkgs.yubikey-personalization ];
 

@@ -99,7 +99,7 @@ in {
       input "type:keyboard" {
           xkb_layout pl
           xkb_variant ,nodeadkeys
-          xkb_options caps:escape_shifted_capslock
+          xkb_options caps:ctrl_modifier
       }
 
       # https://dev.gnupg.org/T6041
