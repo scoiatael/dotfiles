@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: section
+# uuid: 61ed0353-7b96-40f1-aa00-3c3d4e37345e
+# key: <s
+# condition: t
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+- echo -e "\e[0Ksection_start:\`date +%s\`:${1:$(s-lower-camel-case yas-text)}\r\e[0K$1"
+`yas-selected-text`$0
+- echo -e "\e[0Ksection_end:\`date +%s\`:${1:$(s-lower-camel-case yas-text)}\r\e[0K"
