@@ -37,13 +37,6 @@ in {
       base = true;
     };
     package = null;
-    extraSessionCommands = ''
-      export XDG_CURRENT_DESKTOP=Unity
-      export QT_QPA_PLATFORM=wayland
-      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-      export QT_QPA_PLATFORMTHEME=qt5ct
-      export MOZ_ENABLE_WAYLAND=1
-    '';
     systemdIntegration = true;
     extraConfig = let
       swaylock =
