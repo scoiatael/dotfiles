@@ -336,16 +336,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1657831026,
-        "narHash": "sha256-tzBHHKBRWKSM3spMUA7zAMwuVS999XT16ZMoYyl6GSA=",
-        "owner": "johnae",
+        "lastModified": 1661275639,
+        "narHash": "sha256-WfD1DjG9udF6U1XOgL0hwu/Bxt4Z2mxtSysqlIig1LQ=",
+        "owner": "scoiatael",
         "repo": "persway",
-        "rev": "79849ac6ef72512318f16c2c7e7aa242dbc3efbc",
+        "rev": "f54ef7dbe5f04b43c901f767eb5230db98b9e0ed",
         "type": "github"
       },
       "original": {
-        "owner": "johnae",
+        "owner": "scoiatael",
         "repo": "persway",
+        "rev": "f54ef7dbe5f04b43c901f767eb5230db98b9e0ed",
         "type": "github"
       }
     },

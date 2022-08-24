@@ -12,7 +12,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    persway.url = "github:johnae/persway";
+    persway.url =
+      "github:scoiatael/persway/f54ef7dbe5f04b43c901f767eb5230db98b9e0ed";
   };
 
   outputs = { nixpkgs, home-manager, ... }@attrs:

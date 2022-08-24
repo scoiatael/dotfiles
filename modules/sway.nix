@@ -18,7 +18,7 @@ in {
 
   systemd.user.services = {
     persway = swayservice "Small Sway IPC Deamon" {
-      ExecStart = "${pkgs.persway}/bin/persway -a";
+      ExecStart = "${pkgs.persway}/bin/persway -aw";
     };
     swayrd = swayservice "A window-switcher & more for sway" {
       ExecStart = "${pkgs.swayr}/bin/swayrd";
