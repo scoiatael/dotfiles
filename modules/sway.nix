@@ -182,7 +182,7 @@ in {
         height = 30;
         modules-left = [ "custom/shutdown" "idle_inhibitor" "custom/ddcutil" ];
         modules-center = [ "sway/window" ];
-        modules-right = [ "tray" ];
+        modules-right = [ "tray" "clock" ];
         "custom/shutdown" = {
           format = "";
           interval = "once";
@@ -207,6 +207,11 @@ in {
           };
         };
         "sway/window" = { icon = true; };
+        clock = {
+          interval = 60;
+          format = "{:| %a %F [W%V] | %H:%M}";
+          max-length = 40;
+        };
       };
     };
     style = ''
@@ -252,6 +257,11 @@ in {
           min-width: 4em;
       }
 
+      #clock {
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+
     '';
   };
 
@@ -263,7 +273,7 @@ in {
           icons = { name = "material-nf"; };
           theme = { name = "slick"; };
           block = [
-            { block = "uptime"; }
+            # { block = "uptime"; }
             {
               block = "disk_space";
               path = "/";
@@ -308,13 +318,13 @@ in {
               maximum = 100;
               cycle = [ 100 75 50 25 0 25 50 75 ];
             }
-            {
-              block = "custom";
-              command = ''
-                swaymsg -t get_outputs | jq 'map(select(.name=="eDP-1")) | if .[0].active then {"text": "ON"} else {"text": "OFF"} end' '';
-              on_click = "~/dotiles/bin/__sway_reset_outputs.sh";
-              json = true;
-            }
+            # {
+            #   block = "custom";
+            #   command = ''
+            #     swaymsg -t get_outputs | jq 'map(select(.name=="eDP-1")) | if .[0].active then {"text": "ON"} else {"text": "OFF"} end' '';
+            #   on_click = "~/dotiles/bin/__sway_reset_outputs.sh";
+            #   json = true;
+            # }
             {
               block = "networkmanager";
               on_click = "alacritty -e nmtui";
@@ -322,11 +332,11 @@ in {
               interface_name_include = [ ];
               ap_format = "{ssid^10}";
             }
-            {
-              block = "time";
-              interval = 60;
-              format = "%a %d/%m %R";
-            }
+            # {
+            #   block = "time";
+            #   interval = 60;
+            #   format = "%a %d/%m %R";
+            # }
           ];
         };
       };
