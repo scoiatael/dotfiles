@@ -405,6 +405,28 @@ environment.sessionVariables = {
 hardware.i2c.enable = true;
 #+end_src
 
+** WiFi hacks
+#+begin_src nix
+environment.etc."NetworkManager/dispatcher.d/99-wlan" = {
+  text = ''
+    #!${pkgs.bash}/bin/bash
+    wired_interfaces="en.*|eth.*"
+    if [[ "$1" =~ $wired_interfaces ]]; then
+        case "$2" in
+            up)
+                nmcli radio wifi off
+                ;;
+            down)
+                nmcli radio wifi on
+                ;;
+        esac
+    fi
+    '';
+
+    mode = "0550";
+};
+#+end_src
+
 ** system version
 #+begin_src nix
   # This value determines the NixOS release from which the default
