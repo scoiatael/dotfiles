@@ -375,7 +375,7 @@ in {
       "*" = {
         bg-col = mkLiteral "#1E1D2F";
         bg-col-light = mkLiteral "#1E1D2F";
-        border-color = mkLiteral "#1E1D2F";
+        border-col = mkLiteral "#1E1D2F";
         selected-col = mkLiteral "#1E1D2F";
         blue = mkLiteral "#7aa2f7";
         grey = mkLiteral "#D9E0EE";
