@@ -1,6 +1,12 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  gitAlias = builtins.fetchGit {
+    url = "https://github.com/GitAlias/gitalias";
+    rev = "3cec0549a5a11771f7e2afa71f2ba6fa047181f7";
+
+  };
+in {
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -200,7 +206,10 @@
       signByDefault = true;
       key = "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
-    includes = [{ path = "~/.gitconfig_custom"; }];
+    includes = [
+      { path = "~/.gitconfig_custom"; }
+      { path = "${gitAlias}/gitalias.txt"; }
+    ];
     delta.enable = true;
   };
 }
