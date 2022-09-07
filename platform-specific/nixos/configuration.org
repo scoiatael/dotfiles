@@ -261,7 +261,6 @@ xdg.portal = {
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
     wget
-    firefox
     librewolf-wayland
     yakuake
     yubioath-desktop
@@ -291,7 +290,7 @@ xdg.portal = {
     keybase-gui
     helix
     zsh
-    thunderbird
+    thunderbird-bin-unwrapped
     birdtray
     libsForQt5.kwallet
     libsForQt5.kate
