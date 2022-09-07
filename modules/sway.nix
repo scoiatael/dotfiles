@@ -41,6 +41,8 @@ in {
     extraConfig = let
       swaylock =
         ''bash -c "swaylock -f --image $(shuf -e -n 1 ~/Wallpapers/*)"'';
+      prtScreen =
+        ''bash -c "grimshot save area Screenshot_$(date +%Y%m%d_%H%M%S).png"'';
     in ''
       ### Output configuration
       #
@@ -66,6 +68,9 @@ in {
       bindsym Alt+Tab exec ${swayr} switch-window
       bindsym Mod4+Tab exec ${swayr} switch-workspace
       bindsym Mod4+c exec ${swayr} execute-swaymsg-command
+      bindsym Print exec ${prtScreen}
+      bindsym Mod4+P exec ${prtScreen}
+      bindsym Mod4+Ctrl+P exec grimshot copy area
 
       ### Idle configuration
       #
