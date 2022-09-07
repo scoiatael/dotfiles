@@ -182,7 +182,7 @@ in {
         height = 30;
         modules-left = [ "custom/shutdown" "idle_inhibitor" "custom/ddcutil" ];
         modules-center = [ "sway/window" ];
-        modules-right = [ "tray" "clock" ];
+        modules-right = [ "tray" ];
         "custom/shutdown" = {
           format = "";
           interval = "once";
@@ -206,11 +206,9 @@ in {
             "deactivated" = "";
           };
         };
-        "sway/window" = { icon = true; };
-        clock = {
-          interval = 60;
-          format = "{:| %a %F [W%V] | %H:%M}";
-          max-length = 40;
+        "sway/window" = {
+          icon = true;
+          max-length = 120;
         };
       };
     };
@@ -332,11 +330,11 @@ in {
               interface_name_include = [ ];
               ap_format = "{ssid^10}";
             }
-            # {
-            #   block = "time";
-            #   interval = 60;
-            #   format = "%a %d/%m %R";
-            # }
+            {
+              block = "time";
+              interval = 60;
+              format = "%a %d/%m %R";
+            }
           ];
         };
       };
