@@ -47,7 +47,7 @@ in {
       ### Output configuration
       #
       # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-      output * bg ~/Wallpapers/82bfba84-4d9d-4c7b-bd5c-19d1bb3aee1a.jpg fill
+      output * bg ~/Wallpapers/da9d95cf-f3e7-4031-9500-2250d16d0572.jpg fill
       #
       # Example configuration:
       #
@@ -218,7 +218,7 @@ in {
           font-family: 'JetBrainsMono Nerd Font';
       }
       window#waybar {
-          background: rgba(43, 48, 59, 0.5);
+          background: rgba(43, 48, 59, 0.8);
           border-bottom: 3px solid rgba(100, 114, 125, 0.5);
           color: white;
       }
