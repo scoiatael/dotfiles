@@ -367,6 +367,16 @@ TODO: do I still need those?
     "/share/nix-direnv"
   ];
 #+end_src
+** storage optimisations
+https://nixos.wiki/wiki/Storage_optimization
+#+begin_src nix
+nix.settings.auto-optimise-store = true;
+nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 7d";
+};
+#+end_src
 ** openGL
 #+begin_src nix
   # https://nixos.wiki/wiki/Accelerated_Video_Playback
