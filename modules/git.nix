@@ -210,6 +210,6 @@ in {
       { path = "~/.gitconfig_custom"; }
       { path = "${gitAlias}/gitalias.txt"; }
     ];
-    delta.enable = true;
+    difftastic.enable = true;
   };
 }
