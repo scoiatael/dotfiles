@@ -24,6 +24,8 @@
     yarn # for yarn create
     unzip
     zip
+    bind # for dig
+    pwgen
   ];
 
   programs = {
