@@ -87,19 +87,6 @@ in {
       # your displays after another 300 seconds, and turn your screens back on when
       # resumed. It will also lock your screen before your computer goes to sleep.
 
-      input "type:touchpad" {
-          dwt enabled
-          tap enabled
-          natural_scroll enabled
-          middle_emulation enabled
-      }
-      #
-      input "type:keyboard" {
-          xkb_layout pl
-          xkb_variant ,nodeadkeys
-          xkb_options caps:ctrl_modifier
-      }
-
       # https://dev.gnupg.org/T6041
       for_window [app_id="pinentry-qt"] floating enable
 
@@ -115,9 +102,6 @@ in {
       for_window [title="^join"] border normal
 
       bar swaybar_command waybar
-
-      # https://github.com/swaywm/sway/issues/4112
-      seat seat0 xcursor_theme Adwaita
 
       include /etc/sway/config.d/*
     '';
@@ -135,7 +119,7 @@ in {
           "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
         fonts = {
           names = [ "JetBrainsMono Nerd Font" ];
-          size = 9.0;
+          size = 9.6;
         };
         trayOutput = "primary";
         colors = {
@@ -187,7 +171,7 @@ in {
         height = 30;
         modules-left = [ "custom/shutdown" "idle_inhibitor" "custom/ddcutil" ];
         modules-center = [ "sway/window" ];
-        modules-right = [ "tray" ];
+        modules-right = [ "tray" "network" ];
         "custom/shutdown" = {
           format = "";
           interval = "once";
@@ -214,6 +198,17 @@ in {
         "sway/window" = {
           icon = true;
           max-length = 120;
+        };
+        "network" = {
+          "format" = "{ifname}";
+          "format-wifi" = "{essid} ({signalStrength}%) ";
+          "format-ethernet" = "{ipaddr}/{cidr} ";
+          "format-disconnected" = "";
+          "tooltip-format" = "{ifname} via {gwaddr} ";
+          "tooltip-format-wifi" = "{essid} ({signalStrength}%) ";
+          "tooltip-format-ethernet" = "{ifname} ";
+          "max-length" = 50;
+          "on-click" = "alacritty -e nmtui";
         };
       };
     };
@@ -265,6 +260,10 @@ in {
         padding-right: 1em;
       }
 
+      #network {
+        padding-left: 1em;
+        padding-right: 1em;
+      }
     '';
   };
 
@@ -328,13 +327,13 @@ in {
             #   on_click = "~/dotiles/bin/__sway_reset_outputs.sh";
             #   json = true;
             # }
-            {
-              block = "networkmanager";
-              on_click = "alacritty -e nmtui";
-              interface_name_exclude = [ "br\\-[0-9a-f]{12}" "docker\\d+" ];
-              interface_name_include = [ ];
-              ap_format = "{ssid^10}";
-            }
+            # {
+            #   block = "networkmanager";
+            #   on_click = "alacritty -e nmtui";
+            #   interface_name_exclude = [ "br\\-[0-9a-f]{12}" "docker\\d+" ];
+            #   interface_name_include = [ ];
+            #   ap_format = "{ssid^10}";
+            # }
             {
               block = "time";
               interval = 60;
