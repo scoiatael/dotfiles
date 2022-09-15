@@ -133,3 +133,8 @@
 (package! list-unicode-display)
 
 (package! ox-slack)
+
+(package! vlang-mode
+  :recipe (:host github :repo "Naheel-Azawy/vlang-mode"))
+
+;;

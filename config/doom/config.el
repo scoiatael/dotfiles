@@ -358,6 +358,9 @@
 (use-package! ox-slack)
 
 (use-package! list-unicode-display)
+
+(use-package! vlang-mode)
+
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))

@@ -160,7 +160,9 @@ use github.com/zzamboni/elvish-modules/alias
 alias:new dfc e:dfc -p -/dev/disk1s4,devfs,map,com.apple.TimeMachine
 alias:new cat bat
 alias:new more bat --paging always
-alias:new v vagrant
+if (and (has-external vagrant ) (not (has-external v))) {
+  alias:new v vagrant
+}
 alias:new do doas -u (id -nu)-docker
 alias:new mux tmuxinator
 alias:new nix-do doas bash -c 'cd /etc/nixos; bash'
