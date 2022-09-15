@@ -26,6 +26,7 @@
     zip
     bind # for dig
     pwgen
+    entr
   ];
 
   programs = {
