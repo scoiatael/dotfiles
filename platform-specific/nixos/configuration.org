@@ -265,6 +265,12 @@ xdg.portal = {
   environment.systemPackages = (with pkgs; [
     wget
     librewolf-wayland
+    thunderbird-wayland
+     # for testing
+    ungoogled-chromium
+    opera
+    firefox-esr
+    # ENDOF
     yakuake
     yubioath-desktop
     slack
@@ -293,20 +299,14 @@ xdg.portal = {
     keybase-gui
     helix
     zsh
-    thunderbird-bin-unwrapped
-    birdtray
     libsForQt5.kwallet
     libsForQt5.kate
     libsForQt5.krdc
     libsForQt5.bismuth
     libsForQt5.qt5ct
     shairport-sync
-    vokoscreen-ng
     mpv
     shotcut
-    sx
-    du-dust
-    weylus
     powertop
     cpupower-gui
     # For waybar tray support
