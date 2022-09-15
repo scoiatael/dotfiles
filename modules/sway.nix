@@ -41,8 +41,8 @@ in {
     extraConfig = let
       swaylock =
         ''bash -c "swaylock -f --image $(shuf -e -n 1 ~/Wallpapers/*)"'';
-      prtScreen =
-        ''bash -c "grimshot save area Screenshot_$(date +%Y%m%d_%H%M%S).png"'';
+      prtScreen = ''
+        bash -c "grimshot save area ~/GDrive/Screenshots/Screenshot_$(date +%Y%m%d_%H%M%S).png"'';
     in ''
       ### Output configuration
       #
