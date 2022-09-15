@@ -27,7 +27,7 @@
        (vertico +icons)
 
        :ui
-       ;;deft              ; notational velocity for Emacs
+       deft              ; notational velocity for Emacs
        doom                             ; what makes DOOM look the way it does
        doom-dashboard                   ; a nifty splash screen for Emacs
        ;; doom-quit              ; DOOM quit-message prompts when you quit Emacs
@@ -44,7 +44,7 @@
        (popup                     ; tame sudden yet inevitable temporary windows
         +all                      ; catch all popups that start with an asterix
         +defaults)                ; default popup rules
-       (ligatures +iosevka +fira)       ; replace bits of code with pretty symbols
+       ligatures       ; replace bits of code with pretty symbols
        ;; tabs              ; an tab bar for Emacs
        treemacs
        window-select    ; visually switch windows
@@ -90,7 +90,7 @@
 
        :tools
        ansible
-       ;; debugger          ; FIXME stepping through code, to help you add bugs
+       (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
        direnv
        docker
        editorconfig      ; let someone else argue about tabs vs spaces
