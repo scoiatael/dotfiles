@@ -1,89 +1,139 @@
-{ pkgs ? import (fetchTarball {
-  name = "nixos-unstable-2022-08-09";
-  url =
-    "https://github.com/NixOS/nixpkgs/archive/12363fb6d89859a37cd7e27f85288599f13e49d9.tar.gz";
-  sha256 = "sha256:1rjf0difaznpaq8aal3hc8dzk04x3pwz7pr8ak9svjnn3ysqwl89";
-}) { } }:
-pkgs.stdenv.mkDerivation rec {
-  pname = "emacs-mac";
-  version = "0.1.0";
+{ lib, stdenv, fetchurl, ncurses, pkg-config, texinfo, libxml2, gnutls, gettext
+, autoconf, automake, jansson, darwin # These may be optional
+}:
 
-  src = pkgs.fetchgit {
-    url = "https://bitbucket.org/mituharu/emacs-mac.git";
-    rev = "3ff676c2f98cb6c47fecb37f31a589a910dd3876";
-    sha256 = "sha256-v353wmeRKLYsktJWsCHkFWLynPcWpDlu8FdUNEhYVcI=";
+stdenv.mkDerivation rec {
+  pname = "emacs";
+  version = "28.1";
+
+  emacsName = "emacs-${version}";
+  macportVersion = "9.0";
+  name = "emacs-mac-${version}-${macportVersion}";
+
+  src = fetchurl {
+    url = "mirror://gnu/emacs/${emacsName}.tar.xz";
+    sha256 = "1qbmmmhnjhn4lvzsnyk7l5ganbi6wzbm38jc1a7hhyh3k78b7c98";
   };
 
-  buildInputs = with pkgs; [
-    zlib
+  macportSrc = fetchurl {
+    url =
+      "ftp://ftp.math.s.chiba-u.ac.jp/emacs/${emacsName}-mac-${macportVersion}.tar.gz";
+    sha256 = "10gyynz8wblz6r6dkk12m98kjbsmdwcbrhxpmsjylmdqmjxhlj4m";
+    name =
+      "${emacsName}-mac-${macportVersion}.tar.xz"; # It's actually compressed with xz, not gz
+  };
+
+  hiresSrc = fetchurl {
+    url = "ftp://ftp.math.s.chiba-u.ac.jp/emacs/emacs-hires-icons-3.0.tar.gz";
+    sha256 = "0f2wzdw2a3ac581322b2y79rlj3c9f33ddrq9allj97r1si6v5xk";
+  };
+
+  enableParallelBuilding = true;
+
+  nativeBuildInputs = [ pkg-config autoconf automake ];
+
+  buildInputs = [
     ncurses
     libxml2
     gnutls
     texinfo
     gettext
     jansson
-  ];
-  nativeBuildInputs = with pkgs; [
-    pkg-config
-    makeWrapper
-    autoconf
-    automake
-
-    libgccjit
-    zlib
-    libjpeg
-    libungif
-    libtiff
-    ncurses
+    darwin.apple_sdk.frameworks.AppKit
+    darwin.apple_sdk.frameworks.Carbon
+    darwin.apple_sdk.frameworks.Cocoa
+    darwin.apple_sdk.frameworks.IOKit
+    darwin.apple_sdk.frameworks.OSAKit
+    darwin.apple_sdk.frameworks.Quartz
+    darwin.apple_sdk.frameworks.QuartzCore
+    darwin.apple_sdk.frameworks.WebKit
+    darwin.apple_sdk.frameworks.ImageCaptureCore
+    darwin.apple_sdk.frameworks.GSS
+    darwin.apple_sdk.frameworks.ImageIO # may be optional
   ];
 
-  pathPhase = ''
-    echo 'foo'
-          exit 1
-            bash autogen.sh
+  postUnpack = ''
+    mv $sourceRoot $name
+    tar xf $macportSrc -C $name --strip-components=1
+    mv $name $sourceRoot
+
+    # extract retina image resources
+    tar xfv $hiresSrc --strip 1 -C $sourceRoot
+  '';
+
+  postPatch = ''
+    patch -p1 < patch-mac
+    substituteInPlace lisp/international/mule-cmds.el \
+      --replace /usr/share/locale ${gettext}/share/locale
+
+    # use newer emacs icon
+    cp nextstep/Cocoa/Emacs.base/Contents/Resources/Emacs.icns mac/Emacs.app/Contents/Resources/Emacs.icns
+
+    # Fix sandbox impurities.
+    substituteInPlace Makefile.in --replace '/bin/pwd' 'pwd'
+    substituteInPlace lib-src/Makefile.in --replace '/bin/pwd' 'pwd'
+
+    # Reduce closure size by cleaning the environment of the emacs dumper
+    substituteInPlace src/Makefile.in \
+      --replace 'RUN_TEMACS = ./temacs' 'RUN_TEMACS = env -i ./temacs'
   '';
 
   configureFlags = [
-    "LDFLAGS=-L${pkgs.ncurses.out}/lib-l${pkgs.zlib.out}/include"
-    "--disable-build-details" # for a (more) reproducible build
+    "LDFLAGS=-L${ncurses.out}/lib"
+    "--with-xml2=yes"
+    "--with-gnutls=yes"
+    "--with-mac"
     "--with-modules"
-    "--with-mac-metal"
-    "--with-json"
-    "--with-zlib"
-    "--with-native-compilation=no"
-    "--with-x-toolkit=no"
     "--enable-mac-app=$$out/Applications"
   ];
 
-  installTargets = [ "tags" "install" ];
+  CFLAGS = "-O3";
+  LDFLAGS = "-O3 -L${ncurses.out}/lib";
+
   postInstall = ''
-    mkdir -p $out/share/emacs/site-lisp
-    cp ./site-start.el $out/share/emacs/site-lisp/site-start.el
-    $out/bin/emacs --batch -f batch-byte-compile $out/share/emacs/site-lisp/site-start.el
-    siteVersionDir=`ls $out/share/emacs | grep -v site-lisp | head -n 1`
-    rm -r $out/share/emacs/$siteVersionDir/site-lisp
-
-    mkdir -p $out/Applications
-    mv mac/Emacs.app $out/Applications
-
-    ln -snf $out/lib/emacs/*/native-lisp $out/Applications/Emacs.app/Contents/native-lisp
-
-    echo "Generating native-compiled trampolines..."
-    # precompile trampolines in parallel, but avoid spawning one process per trampoline.
-    # 1000 is a rough lower bound on the number of trampolines compiled.
-    $out/bin/emacs --batch --eval "(mapatoms (lambda (s) \
-      (when (subr-primitive-p (symbol-function s)) (print s))))" \
-      | xargs -n $((1000/NIX_BUILD_CORES + 1)) -P $NIX_BUILD_CORES \
-        $out/bin/emacs --batch -l comp --eval "(while argv \
-          (comp-trampoline-compile (intern (pop argv))))"
-    mkdir -p $out/share/emacs/native-lisp
-    $out/bin/emacs --batch \
-      --eval "(add-to-list 'native-comp-eln-load-path \"$out/share/emacs/native-lisp\")" \
-      -f batch-native-compile $out/share/emacs/site-lisp/site-start.el
+    mkdir -p $out/share/emacs/site-lisp/
+    cp ${./site-start.el} $out/share/emacs/site-lisp/site-start.el
   '';
 
-  NATIVE_FULL_AOT = "1";
-  LIBRARY_PATH = "${pkgs.stdenv.cc.libc}/lib";
+  # fails with:
 
-  LDFLAGS = "-L${pkgs.libgccjit.out}/lib/libgccjit.so";
+  # Ran 3870 tests, 3759 results as expected, 6 unexpected, 105 skipped
+  # 5 files contained unexpected results:
+  #   lisp/url/url-handlers-test.log
+  #   lisp/simple-tests.log
+  #   lisp/files-x-tests.log
+  #   lisp/cedet/srecode-utest-template.log
+  #   lisp/net/tramp-tests.log
+  doCheck = false;
+
+  meta = with lib; {
+    description = "The extensible, customizable text editor";
+    homepage = "https://www.gnu.org/software/emacs/";
+    license = licenses.gpl3Plus;
+    maintainers = with maintainers; [ jwiegley matthewbauer ];
+    platforms = platforms.darwin;
+
+    longDescription = ''
+      GNU Emacs is an extensible, customizable text editor—and more.  At its
+      core is an interpreter for Emacs Lisp, a dialect of the Lisp
+      programming language with extensions to support text editing.
+
+      The features of GNU Emacs include: content-sensitive editing modes,
+      including syntax coloring, for a wide variety of file types including
+      plain text, source code, and HTML; complete built-in documentation,
+      including a tutorial for new users; full Unicode support for nearly all
+      human languages and their scripts; highly customizable, using Emacs
+      Lisp code or a graphical interface; a large number of extensions that
+      add other functionality, including a project planner, mail and news
+      reader, debugger interface, calendar, and more.  Many of these
+      extensions are distributed with GNU Emacs; others are available
+      separately.
+
+      This is the "Mac port" addition to GNU Emacs. This provides a native
+      GUI support for Mac OS X 10.6 - 10.12. Note that Emacs 23 and later
+      already contain the official GUI support via the NS (Cocoa) port for
+      Mac OS X 10.4 and later. So if it is good enough for you, then you
+      don't need to try this.
+    '';
+  };
 }
