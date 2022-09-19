@@ -166,6 +166,7 @@ if (and (has-external vagrant ) (not (has-external v))) {
 alias:new do doas -u (id -nu)-docker
 alias:new mux tmuxinator
 alias:new nix-do doas bash -c 'cd /etc/nixos; bash'
+alias:new nix-test nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'
 
 fn aws-do {|creds @rest|
   aws-vault exec $creds -- doas -u (id -nu)-docker $@rest

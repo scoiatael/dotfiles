@@ -22,10 +22,7 @@ in {
     clang
   ];
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacsPgtkNativeComp;
-  };
+  programs.emacs.enable = true;
 
   home.file.".config/doom".source = ../config/doom;
   home.file.".emacs.doom".source = doomDir;

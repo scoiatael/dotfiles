@@ -16,47 +16,51 @@
       "github:scoiatael/persway/f54ef7dbe5f04b43c901f767eb5230db98b9e0ed";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@attrs:
-     {
-      homeConfigurations.framework = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [
-          ./modules/home.nix
-          ./modules/electron.nix
-          ./modules/linux.nix
-          ./modules/rclone-gdrive-mount.nix
-          ./modules/sway.nix
-          ./modules/git.nix
-          ./modules/emacs.nix
-          ./modules/tmux.nix
-          {
-            home = {
-              username = "lczaplinski";
-              homeDirectory = "/home/lczaplinski";
-              stateVersion = "21.11";
-            };
-            programs.home-manager.enable = true;
-          }
-        ];
-        extraSpecialArgs = attrs;
-      };
-      homeConfigurations.macos = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-darwin;
-        modules = [
-          ./modules/home.nix
-          ./modules/git.nix
-          ./modules/emacs.nix
-          ./modules/tmux.nix
-          {
-            home = {
-              username = "lukaszczaplinski";
-              homeDirectory = "/Users/lukaszczaplinski";
-              stateVersion = "22.05";
-            };
-            programs.home-manager.enable = true;
-          }
-        ];
-        extraSpecialArgs = attrs;
-      };
+  outputs = { nixpkgs, home-manager, ... }@attrs: {
+    homeConfigurations.framework = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [
+        ./modules/home.nix
+        ./modules/electron.nix
+        ./modules/linux.nix
+        ./modules/rclone-gdrive-mount.nix
+        ./modules/sway.nix
+        ./modules/git.nix
+        ./modules/emacs.nix
+        ./modules/tmux.nix
+        ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsPgtkNativeComp; })
+        {
+          home = {
+            username = "lczaplinski";
+            homeDirectory = "/home/lczaplinski";
+            stateVersion = "21.11";
+          };
+          programs.home-manager.enable = true;
+        }
+      ];
+      extraSpecialArgs = attrs;
     };
+    homeConfigurations.macos = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-darwin;
+      modules = [
+        ./modules/home.nix
+        ./modules/git.nix
+        ./modules/emacs.nix
+        ./modules/tmux.nix
+        ({ pkgs, ... }: {
+          # programs.emacs.package = pkgs.callPackage ./packages/emacs-mac { };
+          programs.emacs.package = pkgs.emacsMacport;
+        })
+        {
+          home = {
+            username = "lukaszczaplinski";
+            homeDirectory = "/Users/lukaszczaplinski";
+            stateVersion = "22.05";
+          };
+          programs.home-manager.enable = true;
+        }
+      ];
+      extraSpecialArgs = attrs;
+    };
+  };
 }
