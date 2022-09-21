@@ -33,10 +33,15 @@
         "FiraCode"
       ];
     })
+    (callPackage ../packages/ternimal { })
   ];
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
   programs = {
+    kitty = {
+      enable = true;
+      settings = { font = "JetBrainsMono Nerd Font"; };
+    };
     alacritty = {
       enable = true;
       settings = {
@@ -118,7 +123,6 @@
 
       };
     };
-    nushell = { enable = true; };
     dircolors = { enable = true; };
     bat = { enable = true; };
     exa = {
@@ -160,13 +164,6 @@
   home.file.".envrc".text = ""; # for direnv to load in HOME
   home.file.".direnvrc".source =
     ../config/direnvrc; # for direnv to load in HOME
-
-  xdg.configFile."nu/config.nu".text = # Add "source ~/.config/nu/config.nu" to end of $nu.config-path
-    ''
-      mkdir ~/.cache/starship
-      starship init nu | save ~/.cache/starship/init.nu
-      source ~/.cache/starship/init.nu
-    '';
 
   home.file.".elvish/rc.elv".source = ../config/elvish/rc.elv;
   home.file.".elvish/lib/direnv.elv".source = ../config/elvish/lib/direnv.elv;
