@@ -72,6 +72,18 @@ in {
       bindsym Mod4+P exec ${prtScreen}
       bindsym Mod4+Ctrl+P exec grimshot copy area
 
+      # https://wiki.archlinux.org/title/sway#Custom_keybindings
+      bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+      bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+      bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+      bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+      bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+      bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+      # bindsym XF86AudioPlay exec playerctl play-pause
+      # bindsym XF86AudioNext exec playerctl next
+      # bindsym XF86AudioPrev exec playerctl previous
+      # bindsym XF86Search exec $menu
+
       ### Idle configuration
       #
       # Example configuration:
