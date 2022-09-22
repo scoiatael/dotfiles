@@ -137,4 +137,8 @@
 (package! vlang-mode
   :recipe (:host github :repo "Naheel-Azawy/vlang-mode"))
 
+(package! nix-update
+  :recipe (:host github :repo "jwiegley/nix-update-el"))
+
+(package! meson-mode)
 ;;

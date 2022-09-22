@@ -361,6 +361,16 @@
 
 (use-package! vlang-mode)
 
+(use-package! nix-update
+  :config
+  (add-hook 'nix-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-. u" 'nix-update-fetch)))))
+
+(use-package! meson-mode
+  :config
+  (add-hook 'meson-mode-hook 'company-mode))
+
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
