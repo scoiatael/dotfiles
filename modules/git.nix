@@ -4,7 +4,6 @@ let
   gitAlias = builtins.fetchGit {
     url = "https://github.com/GitAlias/gitalias";
     rev = "3cec0549a5a11771f7e2afa71f2ba6fa047181f7";
-
   };
 in {
   programs.git = {

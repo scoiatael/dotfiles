@@ -89,33 +89,6 @@ if (has-external exa) {
     set ls~ = {|@a| e:exa $@a }
 }
 
-fn mvbak {|path|
-  var ts = (e:date +%Y%m%dT%H%M | str:trim (one) "\n")
-  var base = (str:join "" [$path '.bak.' $ts])
-  if (not (str:has-prefix $path ".")) {
-    set base = (str:join "" ["." $base])
-  }
-  var dst = $base
-  var c = 0
-  while ?(test -f $dst) {
-    set dst = (str:join "" [$base '_' (to-string $c)])
-    set c = (+ $c 1)
-  }
-  e:mv $path $dst
-}
-
-fn unmvbak {|path|
-  var dst src
-  if ?(test -f $path) {
-    set src = $path
-    set dst = [(str:split "." $path)][1]
-  } else {
-    set dst = $path
-    set src = [(echo .$path.bak.* | str:split " " (all))][0]
-  }
-  e:mv $src $dst
-}
-
 fn _edit_prompt {
   var tmp = (mktemp "_edit_prompt.XXXXXXXXXX.elv")
   chmod 600 $tmp

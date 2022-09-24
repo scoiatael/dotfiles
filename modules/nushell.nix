@@ -1,22 +1,43 @@
 { config, lib, pkgs, ... }:
 
 let
-  configPath =
-    if pkgs.stdenv.isDarwin then "Library/Application Support/nushell" else "";
+  macConfigPath = "Library/Application Support/nushell";
+  system = if pkgs.stdenv.isDarwin then "macos" else "framework";
 in {
   programs.nushell = {
     enable = true;
-    configFile = ''
-      mkdir ~/.cache/starship
-      starship init nu | save ~/.cache/starship/init.nu
-      source ~/.cache/starship/init.nu
-    '';
+    configFile = {
+      text = ''
+        let-env config = {
+          filesize_metric: false
+          table_mode: rounded
+          use_ls_colors: true
+          show_banner: false
+        }
+        # https://raw.githubusercontent.com/nushell/nu_scripts/main/direnv/config.nu
+        let-env config = ($env.config | upsert hooks {
+          pre_prompt: { code: 'load-env (let direnv = (direnv export json | from json); if ($direnv | length) > 0 { $direnv } else { {} })' }
+        })
+        alias hmr = home-manager switch --flake "path:${config.home.homeDirectory}/dotfiles#${system}"
+        alias l = ^exa
+        alias ll = l -l
 
-    envFile = ''
-      # env -> empty for now
+        source ~/dotfiles/config/nushell/starship.nu
+      '';
+    };
+    envFile = {
+      text = ''
+        let-env FOO = 'BAR'
+      '';
+    };
+  };
+
+  home.file = lib.optionalAttrs pkgs.stdenv.isDarwin {
+    "${macConfigPath}/config.nu".text = ''
+      source  ~/.config/nushell/config.nu
+    '';
+    "${macConfigPath}/env.nu".text = ''
+      source  ~/.config/nushell/env.nu
     '';
   };
-} // lib.optionalAttrs pkgs.stdenv.isDarwin {
-  home.file."${configPath}/config.nu".source = "~/.config/nushell/config.nu";
-  home.file."${configPath}/env.nu".source = "~/.config/nushell/config.nu";
 }

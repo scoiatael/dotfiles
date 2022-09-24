@@ -1,0 +1,18 @@
+#!/usr/bin/env elvish
+
+use str
+
+var path = $args[0]
+var dst src
+if ?(test -f $path) {
+set src = $path
+set dst = [(str:split "." $path)][1]
+} else {
+set dst = $path
+set src = [(echo .$path.bak.* | str:split " " (all))][0]
+}
+e:mv $src $dst
+
+# ;; Local Variables:
+# ;; mode: elvish
+# ;; End:

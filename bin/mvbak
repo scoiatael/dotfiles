@@ -1,0 +1,21 @@
+#!/usr/bin/env elvish
+
+use str
+
+var path = $args[0]
+var ts = (e:date +%Y%m%dT%H%M | str:trim (one) "\n")
+var base = (str:join "" [$path '.bak.' $ts])
+if (not (str:has-prefix $path ".")) {
+set base = (str:join "" ["." $base])
+}
+var dst = $base
+var c = 0
+while ?(test -f $dst) {
+set dst = (str:join "" [$base '_' (to-string $c)])
+set c = (+ $c 1)
+}
+e:mv $path $dst
+
+# ;; Local Variables:
+# ;; mode: elvish
+# ;; End:

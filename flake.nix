@@ -47,6 +47,7 @@
         ./modules/git.nix
         ./modules/emacs.nix
         ./modules/tmux.nix
+        ./modules/nushell.nix
         ({ pkgs, ... }: {
           # programs.emacs.package = pkgs.callPackage ./packages/emacs-mac { };
           programs.emacs.package = pkgs.emacsMacport;
