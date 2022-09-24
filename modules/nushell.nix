@@ -23,6 +23,7 @@ in {
         alias ll = l -l
 
         source ~/dotfiles/config/nushell/starship.nu
+        source ~/dotfiles/config/nushell/zoxide.nu
       '';
     };
     envFile = {
