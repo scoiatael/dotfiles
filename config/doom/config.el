@@ -1,33 +1,29 @@
-(setq doom-localleader-key ","
-      ;; .emacs.d/ is RO thanks to home-manager :)
-      doom-local-dir (file-truename "~/.emacs.local/")
-      user-full-name "Lukasz Czaplinski"
-      doom-font (font-spec :family "Iosevka" :size 12)
-      doom-theme 'doom-one
-      display-line-numbers-type t
-      comint-prompt-read-only nil
-      package-native-compile t
-      gcmh-high-cons-threshold (* 512 1024 1024) ; 0.5GiB
-      ns-right-alternate-modifier 'none
-      lsp-use-plists t
-      mac-right-option-modifier nil)
+(setq-default
+ doom-localleader-key ","
+ ;; .emacs.d/ is RO thanks to home-manager :)
+ doom-local-dir (file-truename "~/.emacs.local/")
+ user-full-name "Lukasz Czaplinski"
+ doom-font (font-spec :family "Iosevka" :size 13)
+ doom-theme 'doom-one
+ display-line-numbers-type t
+ comint-prompt-read-only nil
+ package-native-compile t
+ gcmh-high-cons-threshold (* 512 1024 1024) ; 0.5GiB
+ ns-right-alternate-modifier 'none
+ lsp-use-plists t
+ mac-right-option-modifier nil)
 
-(setq python-shell-interpreter "python")
+(setq-default python-shell-interpreter "python")
 
-(setq ivy-use-selectable-prompt t
+(setq-default ivy-use-selectable-prompt t
       ivy-use-virtual-buffers t
       enable-recursive-minibuffers t)
 
-(setq-hook! '(typescript-mode-hook)
+(setq-hook!
+    '(typescript-mode-hook)
   +format-with-lsp nil)
 
-(setq org-directory "~/org/"
-      org-archive-location (concat org-directory "archive/%s::")
-      org-ellipsis " ▼ "
-      org-clock-persist t
-      org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷"))
-
-(setq org-capture-templates
+(setq-default org-capture-templates
       '(("t" "todo" entry
          (file+headline +org-capture-todo-file "Inbox")
          "* TODO %?\n%i\n%a" :prepend t)
@@ -49,16 +45,23 @@
         ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %?\n %i\n %a" :heading "Notes" :prepend t)
         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?\n %i\n %a" :heading "Changelog" :prepend t)))
 
-(setq magit-repository-directories '(("~/Documents" . 2))
-      magit-inhibit-save-previous-winconf t
-      magit-save-repository-buffers nil)
+(setq-default
+ magit-repository-directories '(("~/Documents" . 2))
+ magit-inhibit-save-previous-winconf t
+ magit-save-repository-buffers nil)
 
-(setq lsp-rust-server 'rust-analyzer)
-(setq rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer"))
+(setq-default lsp-rust-server 'rust-analyzer)
+(setq-default rustic-analyzer-command (concat doom-etc-dir "lsp/rust-analyzer"))
 
-(setq web-mode-enable-engine-detection 't)
+(setq-default web-mode-enable-engine-detection 't)
 
-(setq! +snippets-dir (file-truename "~/dotfiles/emacs-snippets"))
+(setq-default +snippets-dir (file-truename "~/dotfiles/emacs-snippets"))
+
+(after! git-gutter
+  (setq-default
+   git-gutter:deleted-sign "˗"
+   git-gutter:added-sign "·"
+   git-gutter:modified-sign "˃"))
 
 (scoiatael/defer
  (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
@@ -78,9 +81,11 @@
  (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)
  (advice-add '+format-buffer-h :around #'envrc-propagate-environment)
 
- (add-hook! python-mode #'scoiatael/maybe-activate-virtualenv
-            #'evil-normal-state
-            #'lispyville-mode))
+ (after! 'python
+   (add-hook! python-mode
+              #'scoiatael/maybe-activate-virtualenv
+              #'evil-normal-state
+              #'lispyville-mode)))
 
 (after! eshell
   (require 'em-smart)
@@ -89,36 +94,37 @@
   (setq eshell-smart-space-goes-to-end t)
   (add-to-list 'eshell-modules-list 'eshell-smart))
 
-(after! git-gutter
-  (setq! git-gutter:deleted-sign "˗"
-         git-gutter:added-sign "·"
-         git-gutter:modified-sign "˃"))
-
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
-(after! smartparens
+(after! 'smartparens
   (dolist (char '("f" "r"))
     (sp-local-pair '(python-mode) (concat char "'") "'")
     (sp-local-pair '(python-mode) (concat char "\"") "\""))
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
 
-(after! org
+(after! 'org
+  (setq-default
+   org-directory "~/Dropbox/org/"
+   org-archive-location (concat org-directory "archive/%s::")
+   org-ellipsis " ▼ "
+   org-clock-persist t
+   org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷"))
   (add-to-list 'org-modules 'org-habit t)
   (add-hook! #'org-load
     (undo-tree-mode)
     (scoiatael/set-org-todo-keywords)))
 
-(after! org-roam
+(after! 'org-roam
   (remove-hook #'org-roam-find-file-hook
     #'+org-roam-open-with-buffer-maybe-h))
 
-(after! poetry
+(after! 'poetry
   (remove-hook #'python-mode-hook #'poetry-tracking-mode))
 
 ;; TODO: upsert project space in tmux instead of cd
 ;; (after! projectile
 ;;   (add-hook #'projectile-after-switch-project-hook #'+tmux/cd-to-project))
 
-(after! dap-mode
+(after! 'dap-mode
   (dap-register-debug-template
    "Python :: pytest focus"
    (list :type "python"
@@ -129,27 +135,28 @@
          :request "launch"
          :name "Python :: pytest focus")))
 
-(after! yasnippet
+(after! 'yasnippet
   (add-hook! 'snippet-mode
              (ws-butler-mode -1)
              (whitespace-newline-mode)))
 
-(after! projectile
+(after! 'projectile
   (pushnew! projectile-project-root-files ".envrc"))
 
-(after! lsp-mode
+(after! 'lsp-mode
   (pushnew! lsp-file-watch-ignored-directories "[/\\\\]\\.direnv\\'" "[/\\\\]db\\'" "[/\\\\]tmp\\'" "[/\\\\]dist\\'"))
 
-(map!
- :map python-pytest-mode-map
- "q" #'bury-buffer
- "G" #'+popup/raise)
+;; (map!
+;;  :map python-pytest-mode-map
+;;  "q" #'bury-buffer
+;;  "G" #'+popup/raise)
 
 (map! "M-'" #'+eshell/toggle
       "C-c s" #'ssh)
 
-(map! :n "[p" (cmd! (newline) (yank-pop))
-      :n "]p" (cmd! (save-excursion (line-move -1) (newline) (yank-pop))))
+
+(map! :n "[p" (cmd! (newline) (evil-paste-after))
+      :n "]p" (cmd! (save-excursion (line-move -1) (newline) (evil-paste-after))))
 
 (map! :v
       "v" #'er/expand-region)
@@ -379,3 +386,7 @@
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))
+
+;; Local Variables:
+;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
+;; End:
