@@ -16,11 +16,13 @@ in {
         }
         # https://raw.githubusercontent.com/nushell/nu_scripts/main/direnv/config.nu
         let-env config = ($env.config | upsert hooks {
-          pre_prompt: { code: 'load-env (let direnv = (direnv export json | from json); if ($direnv | length) > 0 { $direnv } else { {} })' }
+          pre_prompt: { code: 'load-env (let direnv = (~/.nix-profile/bin/direnv export json | from json); if ($direnv | length) > 0 { $direnv } else { {} })' }
         })
         alias hmr = home-manager switch --flake "path:${config.home.homeDirectory}/dotfiles#${system}"
         alias l = ^exa
         alias ll = l -l
+
+        alias nix-test = nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'
 
         source ~/dotfiles/config/nushell/starship.nu
         source ~/dotfiles/config/nushell/zoxide.nu
