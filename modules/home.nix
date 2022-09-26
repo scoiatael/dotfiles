@@ -34,6 +34,7 @@
       ];
     })
     (callPackage ../packages/ternimal { })
+    janet
   ];
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
