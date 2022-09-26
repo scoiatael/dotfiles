@@ -60,11 +60,6 @@
 
 (setq! +snippets-dir (file-truename "~/dotfiles/emacs-snippets"))
 
-(after! git-gutter
-  (setq! git-gutter:deleted-sign "˗"
-         git-gutter:added-sign "·"
-         git-gutter:modified-sign "˃"))
-
 (scoiatael/defer
  (add-hook 'prog-mode-hook #'turn-on-visual-line-mode)
 
@@ -86,6 +81,18 @@
  (add-hook! python-mode #'scoiatael/maybe-activate-virtualenv
             #'evil-normal-state
             #'lispyville-mode))
+
+(after! eshell
+  (require 'em-smart)
+  (setq eshell-where-to-jump 'begin)
+  (setq eshell-review-quick-commands nil)
+  (setq eshell-smart-space-goes-to-end t)
+  (add-to-list 'eshell-modules-list 'eshell-smart))
+
+(after! git-gutter
+  (setq! git-gutter:deleted-sign "˗"
+         git-gutter:added-sign "·"
+         git-gutter:modified-sign "˃"))
 
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
 (after! smartparens
@@ -139,10 +146,6 @@
  "G" #'+popup/raise)
 
 (map! "M-'" #'+eshell/toggle
-      "C-h" #'evil-window-left
-      "C-j" #'evil-window-bottom
-      "C-k" #'evil-window-top
-      "C-l" #'evil-window-right
       "C-c s" #'ssh)
 
 (map! :n "[p" (cmd! (newline) (yank-pop))
@@ -156,8 +159,6 @@
       "R" #'org-roam-node-find
       "A" #'org-todo-list
       "D" #'deadgrep
-      "Q" #'org-roam-buffer-toggle
-      "SPC" #'execute-extended-command-for-buffer
       "/"   #'+default/search-project
       "i u" #'list-unicode-display
       "i d" #'scoiatael/yank-current-date
@@ -370,6 +371,8 @@
 (use-package! meson-mode
   :config
   (add-hook 'meson-mode-hook 'company-mode))
+
+(use-package! literate-calc-mode)
 
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 

@@ -141,4 +141,8 @@
   :recipe (:host github :repo "jwiegley/nix-update-el"))
 
 (package! meson-mode)
+
+;; https://github.com/sulami/literate-calc-mode.el
+(package! literate-calc-mode)
+
 ;;
