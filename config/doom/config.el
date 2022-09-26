@@ -365,7 +365,7 @@
   :config
   (add-hook 'nix-mode-hook
             (lambda ()
-              (local-set-key (kbd "C-. u" 'nix-update-fetch)))))
+              (local-set-key (kbd "C-. u") 'nix-update-fetch))))
 
 (use-package! meson-mode
   :config
