@@ -24,7 +24,7 @@
        ;; helm             ; the *other* search engine for love and life
        ;; ido               ; the other *other* search engine...
        ;; (ivy +childframe)                                 ; a search engine for love and life
-       (vertico +icons)
+       (vertico)
 
        :ui
        deft              ; notational velocity for Emacs
