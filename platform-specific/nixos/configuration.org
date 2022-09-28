@@ -128,6 +128,19 @@ TODO: 22.05 introduced native support, no need to roll own user :)
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
+  console = {
+    earlySetup = true;
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-m32n.psf.gz";
+    packages = with pkgs; [ terminus_font ];
+    keyMap = "us";
+    #TODO: https://github.com/coderonline/base16-vtrgb/blob/master/consolecolors/base16-nord.vga
+    colors = [
+        "002b36" "dc322f" "859900" "b58900"
+        "268bd2" "d33682" "2aa198" "eee8d5"
+        "002b36" "cb4b16" "586e75" "657b83"
+        "839496" "6c71c4" "93a1a1" "fdf6e3"
+      ];
+  };
 #+end_src
 ** services
 #+begin_src nix
@@ -189,25 +202,24 @@ TODO: 22.05 introduced native support, no need to roll own user :)
 #+end_src
 
 ** Windowing system
-#+begin_src nix
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "xf86videointel" ];
-    modules = [ pkgs.xf86_input_wacom ];
-    # Configure keymap in X11
-    layout = "pl";
-    xkbOptions = "caps:escape";
-    # Enable touchpad support (enabled default in most desktopManager).
-    libinput.enable = true;
-  };
-#+end_src
-*** Plasma + SDDM
+*** Display Manager
 #+begin_src nix
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
   # services.xserver.desktopManager.lxqt.enable = true;
+  # disable the default
+  services.xserver.displayManager.lightdm.enable = false;
+  services.greetd = {
+    settings = {
+      default_session = {
+        # command =
+        #   "${pkgs.greetd.greetd}/bin/agreety --cmd ${pkgs.sway}/bin/sway";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway --remember --remember-session --user-menu --user-menu-max-uid 5000";
+      };
+    };
+    enable = true;
+  };
 #+end_src
 *** Sway
 https://nixos.wiki/wiki/Sway
@@ -220,7 +232,6 @@ programs.sway = {
 
 # https://nixos.wiki/wiki/GNOME
 programs.dconf.enable = true;
-
 
 xdg.portal = {
   enable = true;
