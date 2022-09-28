@@ -89,9 +89,9 @@
 
 (after! eshell
   (require 'em-smart)
-  (setq eshell-where-to-jump 'begin)
-  (setq eshell-review-quick-commands nil)
-  (setq eshell-smart-space-goes-to-end t)
+  (setq-default eshell-where-to-jump 'begin
+                eshell-review-quick-commands nil
+                eshell-smart-space-goes-to-end t)
   (add-to-list 'eshell-modules-list 'eshell-smart))
 
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
@@ -277,7 +277,7 @@
             (dap-tooltip-mode 1)
             (tooltip-mode 1)
             (require 'dap-python)
-            (require 'dapui)
+            ;;(require 'dapui)
             (add-hook 'dap-stopped-hook
                       (lambda (_arg) (call-interactively #'dap-ui-repl)))))
 

@@ -4,8 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     emacs-overlay = {
-      url =
-        "github:nix-community/emacs-overlay/e911c43b99c7b9c94ee408c38b0c6e2c6a01132e";
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -28,7 +27,9 @@
         ./modules/git.nix
         ./modules/emacs.nix
         ./modules/tmux.nix
-        ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsPgtkNativeComp; })
+        ({ pkgs, ... }: {
+          programs.emacs.package = pkgs.emacsPgtk.override {};
+        })
         {
           home = {
             username = "lczaplinski";

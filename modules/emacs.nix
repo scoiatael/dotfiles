@@ -1,9 +1,10 @@
 { config, lib, pkgs, emacs-overlay, ... }:
 
 let
-  doomDir = builtins.fetchGit {
-    url = "https://github.com/doomemacs/doomemacs.git";
-    rev = "b06fd63dcb686045d0c105f93e07f80cb8de6800";
+  doomDir = builtins.fetchTarball {
+    url =
+      "https://github.com/doomemacs/doomemacs/archive/5a5195b84d2fade4de1d55ec5441277a0e2cc591.tar.gz";
+    sha256 = "0hajb96qx6hyavmaa8p41ml83waqmrwaph2aa8akyrgpapglf464";
   };
 in {
   nixpkgs.overlays = [ emacs-overlay.overlay ];

@@ -13,7 +13,7 @@
 ;;
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
-
+;;
 (doom! :input
        ;;chinese
        ;;japanese
@@ -23,8 +23,8 @@
        (company +childframe)            ; the ultimate code completion backend
        ;; helm             ; the *other* search engine for love and life
        ;; ido               ; the other *other* search engine...
-       ;; (ivy +childframe)                                 ; a search engine for love and life
-       (vertico)
+       (ivy +childframe)                                 ; a search engine for love and life
+       ;; (vertico +childframe)
 
        :ui
        deft              ; notational velocity for Emacs
@@ -84,13 +84,13 @@
        ;; vterm             ; another terminals in Emacs
 
        :checkers
-       (syntax +childframe)          ; tasing you for every semicolon you forget
+       ;;(syntax +childframe)          ; tasing you for every semicolon you forget
        spell                         ; tasing you for misspelling mispelling
        grammar                       ; tasing grammar mistake every you make
 
        :tools
        ansible
-       (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
+       ;;(debugger +lsp)          ; FIXME stepping through code, to help you add bugs
        direnv
        docker
        editorconfig      ; let someone else argue about tabs vs spaces
@@ -103,7 +103,7 @@
         +docsets)                 ; helps you navigate your code and documentation
                                         ; ...or in Dash docsets locally
        tree-sitter       ; syntax and parsing, sitting in a tree...
-       (lsp +peek)
+       (lsp +peek +eglot)
        magit           ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -195,3 +195,7 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+(defadvice! fixed-doom-module-list (fn &rest args)
+  :around #'doom-module-list
+  (nreverse (apply fn args)))

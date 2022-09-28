@@ -158,7 +158,14 @@
         "workbench.startupEditor" = "none";
         "editor.fontFamily" = "JetBrainsMono Nerd Font";
         "editor.fontSize" = 12;
+        "workbench.colorTheme" = "GitHub Dark Dimmed";
+        "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
       };
+      extensions = [
+        pkgs.vscode-extensions.bbenoist.nix
+        pkgs.vscode-extensions.github.github-vscode-theme
+        pkgs.vscode-extensions.esbenp.prettier-vscode
+      ];
     };
   };
 

@@ -18,6 +18,7 @@ in {
               --vfs-cache-max-age 48h \
               --vfs-read-chunk-size 10M \
               --vfs-read-chunk-size-limit 512M \
+              --no-modtime \
               --buffer-size 512M
         '';
         ExecStop = "/run/wrappers/bin/fusermount -u ${mountdir}";
