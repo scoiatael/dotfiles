@@ -187,7 +187,8 @@ in {
         "custom/shutdown" = {
           format = "";
           interval = "once";
-          on-click = "nwgbar";
+          on-click =
+            "swaynag -t warning -m 'Do you really want to shut down?' -B 'Yes' 'systemctl poweroff'";
         };
         "custom/ddcutil" = {
           format = "{percentage}% {icon}";

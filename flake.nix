@@ -27,8 +27,9 @@
         ./modules/git.nix
         ./modules/emacs.nix
         ./modules/tmux.nix
+        ./modules/newm.nix
         ({ pkgs, ... }: {
-          programs.emacs.package = pkgs.emacsPgtk.override {};
+          programs.emacs.package = pkgs.emacsPgtk.override { };
         })
         {
           home = {

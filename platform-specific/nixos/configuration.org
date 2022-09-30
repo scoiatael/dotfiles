@@ -8,7 +8,7 @@
 :END:
 ** preamble
 #+begin_src nix
-{ config, lib, pkgs, grub2-themes, ... }:
+{ config, lib, pkgs, grub2-themes, newm, ... }:
 
 {
   imports =
@@ -16,6 +16,10 @@
       ./hardware-configuration.nix
       grub2-themes.nixosModule
     ];
+
+  nixpkgs.overlays = [
+    (final: prev: { newm = newm.packages.x86_64-linux.newm; })
+  ];
 #+end_src
 ** boot
 #+begin_src nix
@@ -206,7 +210,7 @@ TODO: 22.05 introduced native support, no need to roll own user :)
 #+begin_src nix
   # Enable the Plasma 5 Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
   # services.xserver.desktopManager.lxqt.enable = true;
   # disable the default
   services.xserver.displayManager.lightdm.enable = false;
@@ -215,7 +219,20 @@ TODO: 22.05 introduced native support, no need to roll own user :)
       default_session = {
         # command =
         #   "${pkgs.greetd.greetd}/bin/agreety --cmd ${pkgs.sway}/bin/sway";
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway --remember --remember-session --user-menu --user-menu-max-uid 5000";
+
+        command = let
+          xcfg = config.services.xserver;
+          dmcfg = xcfg.displayManager;
+        in toString [
+          "${pkgs.greetd.tuigreet}/bin/tuigreet"
+          "--time"
+          "--cmd /run/current-system/sw/bin/start-newm"
+          "--remember"
+          "--remember-session"
+          "--user-menu"
+          "--user-menu-max-uid 5000"
+          "--sessions ${dmcfg.sessionData.desktops}/share/xsessions:${dmcfg.sessionData.desktops}/share/wayland-sessions"
+        ];
       };
     };
     enable = true;
@@ -274,6 +291,8 @@ xdg.portal = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
+    git
+    pkgs.newm
     wget
     librewolf-wayland
     thunderbird-wayland
@@ -331,7 +350,6 @@ xdg.portal = {
     pavucontrol
     # gsettings
     glib
-    nwg-launchers
     # Sway nice-to-haves
     wl-clipboard
     nm-tray
@@ -355,11 +373,11 @@ TODO: do I still need those?
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-  programs.ssh.startAgent = false;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+  # programs.ssh.startAgent = false;
  #+end_src
 
 ** nix-direnv
@@ -447,6 +465,14 @@ environment.etc."NetworkManager/dispatcher.d/99-wlan" = {
     mode = "0550";
 };
 #+end_src
+** gtklock
+#+begin_src nix
+environment.etc."pam.d/gtklock" = {
+  text = "auth include login";
+  mode = "0550";
+};
+
+#+end_src
 
 ** system version
 #+begin_src nix
@@ -464,16 +490,20 @@ environment.etc."NetworkManager/dispatcher.d/99-wlan" = {
 }
 #+end_src
 * ~flake.nix~
-https://nixos.wiki/wiki/Flakes#Using_nix_flakes_with_NixOS
 :PROPERTIES:
 :header-args:nix: :tangle "/su::/etc/nixos/flake.nix"  :mkdirp yes :comments no
 :header-args: :mkdirp yes :comments no
 :END:
+https://nixos.wiki/wiki/Flakes#Using_nix_flakes_with_NixOS
 #+begin_src nix
 {
   inputs.nixpkgs.url = github:NixOS/nixpkgs;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
   inputs.grub2-themes.url = github:vinceliuice/grub2-themes;
+  inputs.newm = {
+    url = github:jbuchermn/newm;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = { self, nixpkgs, ... }@attrs: {
     nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {
