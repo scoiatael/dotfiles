@@ -8,10 +8,10 @@ pkgs.stdenv.mkDerivation rec {
   pname = "gtklock";
   version = "0.1.0";
 
-  src = pkgs.fetchgit {
-    url = "https://github.com/jovanlanik/gtklock";
-    rev = "19e9e2451f5cd24e047e3c7ba7c7965791254e3b";
-    sha256 = "sha256-ora5opyw2fctxCHgBLtYAncJZz0Wta/XFEOLmE40r9Y=";
+  src = fetchTarball {
+    url =
+      "https://github.com/jovanlanik/gtklock/archive/9d48fdb92ae3e482142b92184ca52f680185bff8.tar.gz";
+    sha256 = "1a8vx6k7wfdjyz4fz1xf76xdlzmx15b4g36ichj9995170q74cdq";
   };
 
   buildInputs = [ pkgs.gtk-layer-shell pkgs.gtk3 pkgs.linux-pam ];
