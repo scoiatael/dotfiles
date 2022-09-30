@@ -23,28 +23,6 @@
     '(typescript-mode-hook)
   +format-with-lsp nil)
 
-(setq-default org-capture-templates
-      '(("t" "todo" entry
-         (file+headline +org-capture-todo-file "Inbox")
-         "* TODO %?\n%i\n%a" :prepend t)
-        ("n" "note" entry
-         (file+headline +org-capture-notes-file "Inbox")
-         "* %u %?\n%i\n%a" :prepend t)
-        ("p" "Templates for projects")
-        ("pt" "Project-local todo" entry
-         (file+headline +org-capture-project-todo-file "Inbox")
-         "* TODO %?\n%i\n%a" :prepend t)
-        ("pn" "Project-local notes" entry
-         (file+headline +org-capture-project-notes-file "Inbox")
-         "* %U %?\n%i\n%a" :prepend t)
-        ("pc" "Project-local changelog" entry
-         (file+headline +org-capture-project-changelog-file "Unreleased")
-         "* %U %?\n%i\n%a" :prepend t)
-        ("o" "Centralized templates for projects")
-        ("ot" "Project todo" entry #'+org-capture-central-project-todo-file "* TODO %?\n %i\n %a" :heading "Tasks" :prepend nil)
-        ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %?\n %i\n %a" :heading "Notes" :prepend t)
-        ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?\n %i\n %a" :heading "Changelog" :prepend t)))
-
 (setq-default
  magit-repository-directories '(("~/Documents" . 2))
  magit-inhibit-save-previous-winconf t
@@ -81,7 +59,7 @@
  (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)
  (advice-add '+format-buffer-h :around #'envrc-propagate-environment)
 
- (after! 'python
+ (after! python
    (add-hook! python-mode
               #'scoiatael/maybe-activate-virtualenv
               #'evil-normal-state
@@ -101,13 +79,14 @@
     (sp-local-pair '(python-mode) (concat char "\"") "\""))
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
 
-(after! 'org
-  (setq-default
+(setq-default
    org-directory "~/Dropbox/org/"
    org-archive-location (concat org-directory "archive/%s::")
    org-ellipsis " ▼ "
    org-clock-persist t
    org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷"))
+
+(after! org
   (add-to-list 'org-modules 'org-habit t)
   (add-hook! #'org-load
     (undo-tree-mode)
