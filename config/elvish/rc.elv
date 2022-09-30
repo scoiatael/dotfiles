@@ -34,7 +34,6 @@ set-env GOPATH $E:HOME/go
 set-env DOOMLOCALDIR $E:HOME/.emacs.local
 set-env LSP_USE_PLISTS true
 
-var ssh_agent = $E:HOME"/.gnupg/S.gpg-agent.ssh"
 if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
   # Not inside tmux, let's amend that
 
@@ -44,21 +43,15 @@ if (and (!=s vscode $E:TERM_PROGRAM) ?(test -z $E:TMUX)) {
   tmux-start
 }
 
-fn __launch_gpg_agent {
-  gpgconf --launch gpg-agent
-}
-
 if (==s Linux (uname)) {
-  set __launch_gpg_agent~ = {
-    systemctl --user enable --now 'gpg-agent.socket'
-  }
 
+  set-env SSH_AUTH_SOCK (systemctl --user status gpg-agent-ssh.socket | grep Listen: | awk '{ print $2 }')
   set-env AWS_VAULT_BACKEND kwallet # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
-}
-
-if (or (==s $E:SSH_AUTH_SOCK "") (str:has-prefix $E:SSH_AUTH_SOCK "/private/tmp/com.apple.launchd")) {
-  __launch_gpg_agent
-  set-env SSH_AUTH_SOCK $ssh_agent
+} else {
+  if (or (==s $E:SSH_AUTH_SOCK "") (str:has-prefix $E:SSH_AUTH_SOCK "/private/tmp/com.apple.launchd")) {
+    gpgconf --launch gpg-agent
+    set-env SSH_AUTH_SOCK $E:HOME"/.gnupg/S.gpg-agent.ssh"
+  }
 }
 
 use direnv
@@ -140,6 +133,7 @@ alias:new do doas -u (id -nu)-docker
 alias:new mux tmuxinator
 alias:new nix-do doas bash -c 'cd /etc/nixos; bash'
 alias:new nix-test nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'
+alias:new hmr home-manager switch --flake 'path:'$E:HOME'/dotfiles#framework'
 
 fn aws-do {|creds @rest|
   aws-vault exec $creds -- doas -u (id -nu)-docker $@rest
