@@ -167,8 +167,6 @@ TODO: 22.05 introduced native support, no need to roll own user :)
 
   services.pcscd.enable = true;
 
-  services.keybase.enable = true;
-
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 

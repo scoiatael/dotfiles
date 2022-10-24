@@ -6,6 +6,7 @@
     enableSshSupport = true;
     pinentryFlavor = "qt";
   };
+  services.keybase.enable = true;
   services.syncthing = {
     enable = true;
     # tray = {
