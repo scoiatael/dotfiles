@@ -148,7 +148,6 @@
       "/"   #'+default/search-project
       "i u" #'list-unicode-display
       "i d" #'scoiatael/yank-current-date
-      "c x" #'lsp-treemacs-errors-list
       "w 2" #'split-window-below
       "w 3" #'split-window-right
       "f d" #'dired-jump
