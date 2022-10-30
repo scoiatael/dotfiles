@@ -2,8 +2,10 @@
 
 let
   macConfigPath = "Library/Application Support/nushell";
-  system = if pkgs.stdenv.isDarwin then "macos" else "framework";
-  ssh_auth_sock = if pkgs.stdenv.isDarwin then "${config.home.homeDirectory}/.gnupg/S.gpg-agent.ssh" else "..."; # TODO
+  ssh_auth_sock = if pkgs.stdenv.isDarwin then
+    "${config.home.homeDirectory}/.gnupg/S.gpg-agent.ssh"
+  else
+    "..."; # TODO
 in {
   programs.nushell = {
     enable = true;
@@ -19,7 +21,7 @@ in {
         let-env config = ($env.config | upsert hooks {
           pre_prompt: { code: 'load-env (let direnv = (~/.nix-profile/bin/direnv export json | from json); if ($direnv | length) > 0 { $direnv } else { {} })' }
         })
-        alias hmr = home-manager switch --flake "path:${config.home.homeDirectory}/dotfiles#${system}"
+        alias hmr = home-manager switch --flake "path:${config.home.homeDirectory}/dotfiles"
         alias l = ^exa
         alias ll = l -l
 
@@ -31,7 +33,22 @@ in {
     };
     envFile = {
       text = ''
-        let-env SSH_AUTH_SOCK =  "${ssh_auth_sock}" 
+        let-env SSH_AUTH_SOCK =  "${ssh_auth_sock}"
+        let-env ENV_CONVERSIONS = {
+          "PATH": {
+            from_string: { |s| $s | split row (char esep) }
+            to_string: { |v| $v | str collect (char esep) }
+          }
+          "Path": {
+            from_string: { |s| $s | split row (char esep) }
+            to_string: { |v| $v | str collect (char esep) }
+          }
+        }
+        let-env PATH = ($env.PATH
+          | append '/usr/local/bin'
+          | append '${config.home.homeDirectory}/.emacs.doom/bin'
+          | append '${config.home.homeDirectory}/.emacs.d/bin'
+          | append '${config.home.homeDirectory}/dotfiles/bin')
       '';
     };
   };

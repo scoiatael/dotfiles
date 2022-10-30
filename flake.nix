@@ -45,29 +45,30 @@
       ];
       extraSpecialArgs = attrs;
     };
-    homeConfigurations.LsMBP = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-darwin;
-      modules = [
-        ./modules/home.nix
-        ./modules/git.nix
-        ./modules/emacs.nix
-        ./modules/tmux.nix
-        ./modules/nushell.nix
-        ({ pkgs, ... }: {
-          # programs.emacs.package = pkgs.callPackage ./packages/emacs-mac { };
-          programs.emacs.package = pkgs.emacsMacport;
-        })
-        {
-          home = {
-            username = "lukaszczaplinski";
-            homeDirectory = "/Users/lukaszczaplinski";
-            stateVersion = "22.05";
-          };
-          programs.home-manager.enable = true;
-        }
-      ];
-      extraSpecialArgs = attrs;
-    };
+    homeConfigurations.lukaszczaplinski =
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-darwin;
+        modules = [
+          ./modules/home.nix
+          ./modules/git.nix
+          ./modules/emacs.nix
+          ./modules/tmux.nix
+          ./modules/nushell.nix
+          ({ pkgs, ... }: {
+            # programs.emacs.package = pkgs.callPackage ./packages/emacs-mac { };
+            programs.emacs.package = pkgs.emacsMacport;
+          })
+          {
+            home = {
+              username = "lukaszczaplinski";
+              homeDirectory = "/Users/lukaszczaplinski";
+              stateVersion = "22.05";
+            };
+            programs.home-manager.enable = true;
+          }
+        ];
+        extraSpecialArgs = attrs;
+      };
     darwinConfigurations.LsMBP = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [ ./modules/darwin.nix ];
