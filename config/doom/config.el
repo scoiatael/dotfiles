@@ -354,9 +354,9 @@
             (lambda ()
               (local-set-key (kbd "C-. u") 'nix-update-fetch))))
 
-(use-package! meson-mode
-  :config
-  (add-hook 'meson-mode-hook 'company-mode))
+;; (use-package! meson-mode
+;;   :config
+;;   (add-hook 'meson-mode-hook 'company-mode))
 
 (use-package! literate-calc-mode)
 
