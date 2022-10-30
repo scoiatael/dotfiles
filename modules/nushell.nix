@@ -3,6 +3,7 @@
 let
   macConfigPath = "Library/Application Support/nushell";
   system = if pkgs.stdenv.isDarwin then "macos" else "framework";
+  ssh_auth_sock = if pkgs.stdenv.isDarwin then "${config.home.homeDirectory}/.gnupg/S.gpg-agent.ssh" else "..."; # TODO
 in {
   programs.nushell = {
     enable = true;
@@ -30,7 +31,7 @@ in {
     };
     envFile = {
       text = ''
-        let-env FOO = 'BAR'
+        let-env SSH_AUTH_SOCK =  "${ssh_auth_sock}" 
       '';
     };
   };
