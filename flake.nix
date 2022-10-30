@@ -13,9 +13,12 @@
     };
     persway.url =
       "github:scoiatael/persway/f54ef7dbe5f04b43c901f767eb5230db98b9e0ed";
+    macNixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
+    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "macNixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@attrs: {
+  outputs = { nixpkgs, home-manager, darwin, ... }@attrs: {
     homeConfigurations.framework = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       modules = [
@@ -42,7 +45,7 @@
       ];
       extraSpecialArgs = attrs;
     };
-    homeConfigurations.macos = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.LsMBP = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-darwin;
       modules = [
         ./modules/home.nix
@@ -64,6 +67,10 @@
         }
       ];
       extraSpecialArgs = attrs;
+    };
+    darwinConfigurations.LsMBP = darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
+      modules = [ ./modules/darwin.nix ];
     };
   };
 }
