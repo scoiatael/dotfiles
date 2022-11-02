@@ -53,9 +53,9 @@
 (package! evil-surround)
 (package! pipenv :disable t)
 
-(package! puppet-mode)
+(package! docker-tramp :disable t)
 
-(package! dap-mode)
+(package! puppet-mode)
 
 (package! nose :disable t)
 
@@ -75,8 +75,6 @@
 
 (package! deadgrep)
 
-(package! vagrant-tramp)
-
 (package! clojure-snippets)
 
 (package! gitlab-ci-mode)
@@ -84,22 +82,11 @@
 (package! eruby-mode
   :recipe (:host github :repo "petere/emacs-eruby-mode"))
 
-(package! ion-mode
-  :recipe (:host github :repo "scoiatael/ion-mode"))
-
 (package! elixir-mode
   :recipe (:host github :repo "elixir-editors/emacs-elixir"))
 
-;; https://explog.in/notes/tmux.html#org9f807e7
-(package! emamux)
-
 (package! magit-section
           :recipe (:repo "magit/magit" :host github))
-
-(package! xonsh-mode)
-
-(package! neale-ssh
-  :recipe (:repo "nealey/neale-ssh.el" :host github))
 
 (package! elvish-mode)
 
@@ -116,17 +103,9 @@
           :pin "91d57e3a4c5104c66a3abc18e281ee55e8979176"
           :recipe (:repo "clemera/dired-git-info" :host github))
 
-(package! devdocs)
-
 (package! ob-http)
 
 (package! jq-mode)
-
-(package! ts-comint)
-(package! repl-toggle)
-(package! fullframe)
-
-(package! vertico-posframe)
 
 (package! coffee-mode)
 
@@ -141,8 +120,5 @@
   :recipe (:host github :repo "jwiegley/nix-update-el"))
 
 (package! meson-mode)
-
-;; https://github.com/sulami/literate-calc-mode.el
-(package! literate-calc-mode)
 
 ;;

@@ -238,40 +238,6 @@
   :after evil
   :config (global-evil-surround-mode 1))
 
-(use-package ion-mode
-  :mode (("\\.ion\\'" . ion-mode) ("/ion/initrc\\'" . ion-mode))
-  :config (add-to-list 'company-backends #'company-ion))
-
-;; (use-package! org-superstar
-;;   :config (add-hook! #'org-mode #'org-superstar-mode))
-
-(use-package! dap-mode
-  :after lsp-mode
-  :init (setq dap-breakpoints-file (concat doom-etc-dir "dap-breakpoints")
-              dap-utils-extension-path (concat doom-etc-dir "dap-extension/"))
-  :config (progn
-            (dap-mode 1)
-            (dap-ui-mode 1)
-            (dap-tooltip-mode 1)
-            (tooltip-mode 1)
-            (require 'dap-python)
-            ;;(require 'dapui)
-            (add-hook 'dap-stopped-hook
-                      (lambda (_arg) (call-interactively #'dap-ui-repl)))))
-
-(use-package! emamux
-  :config
-  (map! :leader
-        (:prefix ("v" . "tmux pane")
-         :desc "Open new window in cd" :nv "n" #'emamux:new-window
-         :desc "Send command" :nv "c" #'emamux:send-command)))
-
-(use-package! xonsh-mode
-  :mode ("\\.xsh\\'" . xonsh-mode))
-
-(use-package! neale-ssh
-  :commands (ssh))
-
 (use-package! elvish-mode
   :mode ("\\.elv" . elvish-mode))
 
@@ -306,38 +272,8 @@
                       :major-modes '(puppet-mode)
                       :server-id 'puppet-languageserver))))
 
-(use-package! devdocs
-  :config
-  (set-lookup-handlers! 'lsp-mode       ; override lsp-mode defaults which set lsp-describe-thing-at-point
-    :documentation #'devdocs-lookup))
-
 (use-package! ob-http)
 (use-package! jq-mode)
-
-(use-package! ts-comint
-  :config
-  (add-hook 'typescript-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-x C-e") 'ts-send-last-sexp)
-              (local-set-key (kbd "C-M-x") 'ts-send-last-sexp-and-go)
-              (local-set-key (kbd "C-c b") 'ts-send-buffer)
-              (local-set-key (kbd "C-c C-b") 'ts-send-buffer-and-go)
-              (local-set-key (kbd "C-c l") 'ts-load-file-and-go)))
-  ;; when configuring all repl toggle mapping
-  (setq rtog/mode-repl-alist '((typescript-mode . run-ts)))
-  ;; or later
-  (push '(typescript-mode . run-ts) rtog/mode-repl-alist))
-
-(use-package! fullframe
-  :config
-  (fullframe magit-status magit-mode-quit-window))
-
-(use-package! vertico-posframe
-  :config
-  (vertico-posframe-mode 1)
-  (setq vertico-posframe-parameters
-        '((left-fringe . 8)
-          (right-fringe . 8))))
 
 (use-package! coffee-mode)
 
@@ -356,8 +292,6 @@
 ;; (use-package! meson-mode
 ;;   :config
 ;;   (add-hook 'meson-mode-hook 'company-mode))
-
-(use-package! literate-calc-mode)
 
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
