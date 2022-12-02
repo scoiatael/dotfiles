@@ -121,4 +121,6 @@
 
 (package! meson-mode)
 
+(package! ligature)
+
 ;;

@@ -293,6 +293,9 @@
 ;;   :config
 ;;   (add-hook 'meson-mode-hook 'company-mode))
 
+(use-package! ligature
+  :config (global-ligature-mode t))
+
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))

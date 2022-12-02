@@ -4,6 +4,7 @@
   programs.gpg = { enable = true; };
 
   home.packages = with pkgs; [
+    httpie
     dive
     gnutar
     tokei
@@ -28,6 +29,7 @@
     pwgen
     entr
     rnix-lsp # LSP for nix?!
+    yubikey-manager
     (nerdfonts.override {
       fonts = [
         "JetBrainsMono" # needed for rofi theme
@@ -166,6 +168,7 @@
         pkgs.vscode-extensions.bbenoist.nix
         pkgs.vscode-extensions.github.github-vscode-theme
         pkgs.vscode-extensions.esbenp.prettier-vscode
+        pkgs.vscode-extensions.mattn.lisp
       ];
     };
   };

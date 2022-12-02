@@ -8,7 +8,7 @@
 :END:
 ** preamble
 #+begin_src nix
-{ config, lib, pkgs, grub2-themes, newm, ... }:
+{ config, lib, pkgs, grub2-themes, ... }:
 
 {
   imports =
@@ -16,10 +16,6 @@
       ./hardware-configuration.nix
       grub2-themes.nixosModule
     ];
-
-  nixpkgs.overlays = [
-    (final: prev: { newm = newm.packages.x86_64-linux.newm; })
-  ];
 #+end_src
 ** boot
 #+begin_src nix
@@ -213,48 +209,6 @@ TODO: 22.05 introduced native support, no need to roll own user :)
   # services.xserver.desktopManager.lxqt.enable = true;
   # disable the default
   # services.xserver.displayManager.lightdm.enable = false;
-  services.greetd = {
-    settings = {
-      default_session = {
-        # command =
-        #   "${pkgs.greetd.greetd}/bin/agreety --cmd ${pkgs.sway}/bin/sway";
-
-        command = let
-          xcfg = config.services.xserver;
-          dmcfg = xcfg.displayManager;
-        in toString [
-          "${pkgs.greetd.tuigreet}/bin/tuigreet"
-          "--time"
-          "--cmd /run/current-system/sw/bin/start-newm"
-          "--remember"
-          "--remember-session"
-          "--user-menu"
-          "--user-menu-max-uid 5000"
-          "--sessions ${dmcfg.sessionData.desktops}/share/xsessions:${dmcfg.sessionData.desktops}/share/wayland-sessions"
-        ];
-      };
-    };
-    enable = true;
-  };
-#+end_src
-*** Sway
-https://nixos.wiki/wiki/Sway
-https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/programs/sway.nix
-#+begin_src nix
-programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-};
-
-# https://nixos.wiki/wiki/GNOME
-programs.dconf.enable = true;
-
-xdg.portal = {
-  enable = true;
-  wlr.enable = true;
-  # gtk portal needed to make gtk apps happy
-  extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-};
 #+end_src
 ** users
 #+begin_src nix
@@ -291,17 +245,13 @@ xdg.portal = {
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
     git
-    pkgs.newm
     wget
     librewolf-wayland
     thunderbird-wayland
      # for testing
     ungoogled-chromium
-    opera
-    firefox-esr
     # ENDOF
     yakuake
-    yubioath-desktop
     slack
     lsof
     fd
@@ -333,6 +283,7 @@ xdg.portal = {
     libsForQt5.krdc
     libsForQt5.bismuth
     libsForQt5.qt5ct
+    libsForQt5.powerdevil
     shairport-sync
     mpv
     shotcut
@@ -433,7 +384,6 @@ environment.sessionVariables.NIXOS_OZONE_WL = "1";
 *** For Sway
 #+begin_src nix
 environment.sessionVariables = {
-  QT_QPA_PLATFORMTHEME = "qt5ct";
   MOZ_ENABLE_WAYLAND = "1";
 };
 #+end_src
@@ -441,6 +391,10 @@ environment.sessionVariables = {
 ** ddcutil:
 #+begin_src nix
 hardware.i2c.enable = true;
+#+end_src
+** bluetooth
+#+begin_src nix
+hardware.bluetooth.enable = true;
 #+end_src
 
 ** WiFi hacks
@@ -499,10 +453,6 @@ https://nixos.wiki/wiki/Flakes#Using_nix_flakes_with_NixOS
   inputs.nixpkgs.url = github:NixOS/nixpkgs;
   inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
   inputs.grub2-themes.url = github:vinceliuice/grub2-themes;
-  inputs.newm = {
-    url = github:jbuchermn/newm;
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
 
   outputs = { self, nixpkgs, ... }@attrs: {
     nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {

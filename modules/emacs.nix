@@ -3,8 +3,8 @@
 let
   doomDir = builtins.fetchTarball {
     url =
-      "https://github.com/doomemacs/doomemacs/archive/5a5195b84d2fade4de1d55ec5441277a0e2cc591.tar.gz";
-    sha256 = "0hajb96qx6hyavmaa8p41ml83waqmrwaph2aa8akyrgpapglf464";
+      "https://github.com/doomemacs/doomemacs/archive/d5ccac5d71c819035fa251f01d023b3f94b4fba4.tar.gz";
+    sha256 = "1hrhh3fa98nc9dc1a4x7slakmf3gfrqrcx4d4vg65rd8rb9wn37c";
   };
 in {
   nixpkgs.overlays = [ emacs-overlay.overlay ];
@@ -29,9 +29,6 @@ in {
   home.file.".emacs.doom".source = doomDir;
   home.file.".emacs.d/early-init.el".text = ''
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
-    (setenv "LSP_USE_PLISTS" "true")
-    (setq user-emacs-directory (expand-file-name (file-name-as-directory "${doomDir}")))
-    (load (concat user-emacs-directory "early-init.el") nil 'nomessage)
+    (load (concat (expand-file-name (file-name-as-directory "${doomDir}")) "early-init.el") nil 'nomessage)
   '';
-
 }

@@ -11,8 +11,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    persway.url =
-      "github:scoiatael/persway/f54ef7dbe5f04b43c901f767eb5230db98b9e0ed";
     macNixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "macNixpkgs";
@@ -26,14 +24,10 @@
         ./modules/electron.nix
         ./modules/linux.nix
         ./modules/rclone-gdrive-mount.nix
-        ./modules/sway.nix
         ./modules/git.nix
         ./modules/emacs.nix
         ./modules/tmux.nix
-        ./modules/newm.nix
-        ({ pkgs, ... }: {
-          programs.emacs.package = pkgs.emacsPgtk.override { };
-        })
+        ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsGit; })
         {
           home = {
             username = "lczaplinski";
@@ -54,10 +48,7 @@
           ./modules/emacs.nix
           ./modules/tmux.nix
           ./modules/nushell.nix
-          ({ pkgs, ... }: {
-            # programs.emacs.package = pkgs.callPackage ./packages/emacs-mac { };
-            programs.emacs.package = pkgs.emacsMacport;
-          })
+          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
           {
             home = {
               username = "lukaszczaplinski";

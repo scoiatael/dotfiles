@@ -44,7 +44,7 @@
        (popup                     ; tame sudden yet inevitable temporary windows
         +all                      ; catch all popups that start with an asterix
         +defaults)                ; default popup rules
-       ligatures       ; replace bits of code with pretty symbols
+       ;; ligatures       ; replace bits of code with pretty symbols
        ;; tabs              ; an tab bar for Emacs
        treemacs
        window-select    ; visually switch windows
@@ -195,7 +195,3 @@
        :config
        ;;literate
        (default +bindings +smartparens))
-
-(defadvice! fixed-doom-module-list (fn &rest args)
-  :around #'doom-module-list
-  (nreverse (apply fn args)))
