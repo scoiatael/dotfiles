@@ -82,6 +82,7 @@
     };
     starship = {
       enable = true;
+      enableNushellIntegration = false; # broken as of 2022/12/03
       settings = {
         format = "$cmd_duration$username(\\[$git_status\\])$character";
         right_format = "$git_branch(\\[$git_state\\])ǂ$directory";
