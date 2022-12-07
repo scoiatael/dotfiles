@@ -23,11 +23,15 @@ in {
     clang
   ];
 
-  programs.emacs.enable = true;
+  programs.emacs = {
+    enable = true;
+    extraPackages = epkgs: [ epkgs.vterm ];
+  };
 
   home.file.".config/doom".source = ../config/doom;
   home.file.".emacs.doom".source = doomDir;
   home.file.".emacs.d/early-init.el".text = ''
+    (load "${config.home.homeDirectory}/.nix-profile/share/emacs/site-lisp/site-start.el" nil 'nomessage)
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
     (load (concat (expand-file-name (file-name-as-directory "${doomDir}")) "early-init.el") nil 'nomessage)

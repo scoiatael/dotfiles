@@ -23,8 +23,8 @@
        (company +childframe)            ; the ultimate code completion backend
        ;; helm             ; the *other* search engine for love and life
        ;; ido               ; the other *other* search engine...
-       (ivy +childframe)                                 ; a search engine for love and life
-       ;; (vertico +childframe)
+       ;; (ivy +childframe)                                 ; a search engine for love and life
+       (vertico +childframe)
 
        :ui
        deft              ; notational velocity for Emacs
@@ -78,10 +78,10 @@
        (undo +tree)
 
        :term
-       eshell                  ; a consistent, cross-platform shell (WIP)
+       ;; eshell                  ; a consistent, cross-platform shell (WIP)
        ;; shell             ; a terminal REPL for Emacs
        ;; term              ; terminals in Emacs
-       ;; vterm             ; another terminals in Emacs
+       vterm             ; another terminals in Emacs
 
        :checkers
        ;;(syntax +childframe)          ; tasing you for every semicolon you forget

@@ -59,6 +59,8 @@
  (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)
  (advice-add '+format-buffer-h :around #'envrc-propagate-environment)
 
+ (advice-add 'scoiatael/maybe-activate-virtualenv :around #'envrc-propagate-environment)
+
  (after! python
    (add-hook! python-mode
               #'scoiatael/maybe-activate-virtualenv
@@ -130,7 +132,7 @@
 ;;  "q" #'bury-buffer
 ;;  "G" #'+popup/raise)
 
-(map! "M-'" #'+eshell/toggle
+(map! "M-'" #'+vterm/toggle
       "C-c s" #'ssh)
 
 
