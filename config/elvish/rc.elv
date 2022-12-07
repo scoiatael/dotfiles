@@ -34,7 +34,7 @@ set-env GOPATH $E:HOME/go
 set-env DOOMLOCALDIR $E:HOME/.emacs.local
 set-env LSP_USE_PLISTS true
 
-if (and (!=s vscode $E:TERM_PROGRAM) (!=s "vterm" $E:INSIDE_EMACS) ?(test -z $E:TMUX)) {
+if (and (!=s vscode $E:TERM_PROGRAM) (not (str:contains $E:INSIDE_EMACS "term")) ?(test -z $E:TMUX)) {
   # Not inside tmux, let's amend that
 
   set-env TMUX_COLORTAG_TAG_ONLY yes

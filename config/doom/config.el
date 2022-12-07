@@ -132,7 +132,7 @@
 ;;  "q" #'bury-buffer
 ;;  "G" #'+popup/raise)
 
-(map! "M-'" #'+vterm/toggle
+(map! "M-'" #'+term/toggle
       "C-c s" #'ssh)
 
 

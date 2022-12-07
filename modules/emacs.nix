@@ -25,7 +25,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [ epkgs.vterm ];
+    # extraPackages = epkgs: [ epkgs.vterm ]; TODO: breaks brackets in emacs?!!?
   };
 
   home.file.".config/doom".source = ../config/doom;
