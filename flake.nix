@@ -27,7 +27,7 @@
         ./modules/git.nix
         ./modules/emacs.nix
         ./modules/tmux.nix
-        ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsGit; })
+        ({ pkgs, ... }: { programs.emacs.package = pkgs.emacs; })
         {
           home = {
             username = "lczaplinski";
