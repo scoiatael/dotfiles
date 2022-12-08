@@ -13,6 +13,11 @@
  lsp-use-plists t
  mac-right-option-modifier nil)
 
+;; ok, this is weird: looks like vterm exposes some bug in fontification in show-parens mode
+;; https://github.com/doomemacs/doomemacs/issues/2850
+(add-hook! show-paren-mode
+       (set-face-attribute 'show-paren-match nil :weight 'regular))
+
 (setq-default python-shell-interpreter "python")
 
 (setq-default ivy-use-selectable-prompt t
@@ -132,7 +137,7 @@
 ;;  "q" #'bury-buffer
 ;;  "G" #'+popup/raise)
 
-(map! "M-'" #'+term/toggle
+(map! "M-'" #'+vterm/toggle
       "C-c s" #'ssh)
 
 
