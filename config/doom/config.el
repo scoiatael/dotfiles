@@ -40,8 +40,11 @@
 
 (setq-default +snippets-dir (file-truename "~/dotfiles/emacs-snippets"))
 
+(after! vterm
+  (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
+
 (after! git-gutter
-  (setq-default
+  (setq
    git-gutter:deleted-sign "˗"
    git-gutter:added-sign "·"
    git-gutter:modified-sign "˃"))
