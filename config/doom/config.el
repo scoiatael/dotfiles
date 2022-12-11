@@ -41,6 +41,7 @@
 (setq-default +snippets-dir (file-truename "~/dotfiles/emacs-snippets"))
 
 (after! vterm
+  (advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args))))
   (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
 
 (after! git-gutter
@@ -311,6 +312,9 @@
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
   (when (file-exists-p custom-config-file)
     (load-file custom-config-file)))
+
+(setq custom-file "~/dotfiles/config/doom/emacs-custom.el")
+(load custom-file)
 
 ;; Local Variables:
 ;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
