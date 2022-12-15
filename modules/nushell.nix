@@ -29,6 +29,7 @@ in {
 
         source ~/dotfiles/config/nushell/starship.nu
         source ~/dotfiles/config/nushell/zoxide.nu
+        source ~/dotfiles/config/nushell/vterm.nu
       '';
     };
     envFile = {

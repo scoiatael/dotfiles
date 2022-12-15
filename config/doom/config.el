@@ -294,6 +294,8 @@
 
 (use-package! vlang-mode)
 
+(use-package! nushell-mode)
+
 (use-package! nix-update
   :config
   (add-hook 'nix-mode-hook
