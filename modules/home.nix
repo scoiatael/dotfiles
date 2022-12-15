@@ -30,6 +30,7 @@
     entr
     rnix-lsp # LSP for nix?!
     yubikey-manager
+    pry
     (nerdfonts.override {
       fonts = [
         "JetBrainsMono" # needed for rofi theme
@@ -188,5 +189,19 @@
     export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
     export DOOMLOCALDIR="~/.emacs.local"
     export EMACSDIR="~/.emacs.doom"
+  '';
+
+  home.file.".pryrc".text = ''
+    Pry::Prompt.add(
+      :vterm,
+      "A simple `>>` w/ vterm ending.",
+      ['>> ', ' | ']
+    ) do |_, _, _, sep|
+      whoami = ENV['USER']
+      pwd = ENV['pwd']
+      sep + "\e]51;A#{whoami}@:#{pwd}\e\\"
+    end
+
+    Pry.config.prompt = Pry::Prompt[:vterm]
   '';
 }
