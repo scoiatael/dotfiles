@@ -35,7 +35,7 @@
       theme = "whitesur";
   };
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ "mem_sleep_default=deep" ];
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
 #+end_src
