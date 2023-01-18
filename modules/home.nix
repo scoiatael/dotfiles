@@ -4,7 +4,8 @@
   programs.gpg = { enable = true; };
 
   home.packages = with pkgs; [
-    httpie
+    curlie
+    xh
     dive
     gnutar
     tokei
