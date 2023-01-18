@@ -309,6 +309,9 @@
 (use-package! ligature
   :config (global-ligature-mode t))
 
+(use-package! dhall-mode
+  :mode "\\.dhall")
+
 (load! (expand-file-name "packages/evil-colemak-dh.el" doom-private-dir))
 
 (let ((custom-config-file (expand-file-name "./custom.el" (dir!))))

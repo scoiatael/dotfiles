@@ -123,6 +123,8 @@
 
 (package! ligature)
 
-(package! nushell-mode :recipe (:host github :repo "azzamsa/emacs-nushell"))
+(package! emacs-nushell :recipe (:host github :repo "azzamsa/emacs-nushell"))
+
+(package! dhall-mode)
 
 ;;
