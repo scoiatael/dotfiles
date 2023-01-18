@@ -44,10 +44,6 @@
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
   programs = {
-    kitty = {
-      enable = true;
-      settings = { font = "JetBrainsMono Nerd Font"; };
-    };
     alacritty = {
       enable = true;
       settings = {
