@@ -14,7 +14,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      grub2-themes.nixosModule
+      grub2-themes.nixosModules.default
     ];
 #+end_src
 ** boot
