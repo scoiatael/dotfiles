@@ -47,7 +47,7 @@
           ./modules/git.nix
           ./modules/emacs.nix
           ./modules/tmux.nix
-          ./modules/nushell.nix
+          ./modules/zsh.nix
           ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
           {
             home = {
