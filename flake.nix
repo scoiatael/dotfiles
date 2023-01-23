@@ -17,7 +17,7 @@
   };
 
   outputs = { nixpkgs, home-manager, darwin, ... }@attrs: {
-    homeConfigurations.framework = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.lczaplinski = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       modules = [
         ./modules/home.nix
@@ -27,6 +27,7 @@
         ./modules/git.nix
         ./modules/emacs.nix
         ./modules/tmux.nix
+        ./modules/zsh.nix
         ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsGit; })
         {
           home = {

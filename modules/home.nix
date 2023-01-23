@@ -176,11 +176,11 @@
   home.file.".direnvrc".source =
     ../config/direnvrc; # for direnv to load in HOME
 
-  home.file.".elvish/rc.elv".source = ../config/elvish/rc.elv;
-  home.file.".elvish/lib/direnv.elv".source = ../config/elvish/lib/direnv.elv;
-  home.file.".elvish/lib/zoxide.elv".source = ../config/elvish/lib/zoxide.elv;
-  home.file.".elvish/lib/starship.elv".source =
-    ../config/elvish/lib/starship.elv;
+  # home.file.".elvish/rc.elv".source = ../config/elvish/rc.elv;
+  # home.file.".elvish/lib/direnv.elv".source = ../config/elvish/lib/direnv.elv;
+  # home.file.".elvish/lib/zoxide.elv".source = ../config/elvish/lib/zoxide.elv;
+  # home.file.".elvish/lib/starship.elv".source =
+  #   ../config/elvish/lib/starship.elv;
 
   home.file.".zprofile".text = ''
     export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels

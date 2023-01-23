@@ -221,7 +221,6 @@ TODO: 22.05 introduced native support, no need to roll own user :)
       "users"
       "i2c" # use ddcutil
     ];
-    shell = pkgs.elvish;
     group = "lczaplinski";
   };
   users.users.lczaplinski-docker = {

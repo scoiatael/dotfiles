@@ -15,7 +15,7 @@
     #     command = "qsyncthingtray --wait";
     #   }; doesn't work due to missing 'tray.target'
   };
-  services.emacs = { enable = true; };
+  services.emacs.enable = true;
   home.packages = with pkgs; [
     janet # broken on macOS
     procs # broken on macOS
@@ -23,4 +23,5 @@
     lm_sensors # for temp display in i3status-rust?
     neofetch
   ];
+  services.unclutter.enable = true;
 }
