@@ -156,8 +156,8 @@ set E:MANPAGER = "sh -c 'col -bx | bat -l man -p'"
 use github.com/xiaq/edit.elv/smart-matcher
 smart-matcher:apply
 
-use github.com/zzamboni/elvish-completions/git git-completions
-git-completions:init
+# use github.com/zzamboni/elvish-completions/git git-completions
+# git-completions:init
 
 use github.com/zzamboni/elvish-modules/long-running-notifications
 # remember to `brew install terminal-notifier`
