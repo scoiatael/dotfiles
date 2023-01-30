@@ -6,8 +6,11 @@
     shellAliases = {
       hmr =
         "home-manager switch --flake 'path:${config.home.homeDirectory}/dotfiles'";
+      nix-test =
+        "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
     };
     shellGlobalAliases = { "..." = "../../"; };
+    sessionVariables = { DOOMLOCALDIR = "$HOME/.emacs.local"; };
     enableAutosuggestions = true;
     plugins = with pkgs; [
       {

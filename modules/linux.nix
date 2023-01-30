@@ -24,4 +24,12 @@
     neofetch
   ];
   services.unclutter.enable = true;
+  xresources.properties = {
+    "Xft.antialias" = true;
+    "Xft.autohint" = false;
+    "Xft.rgba" = "rgb";
+    "Xft.hinting" = true;
+    "Xft.hintstyle" = "hintfull";
+    "Xft.lcdfilter" = "lcddefault";
+  };
 }
