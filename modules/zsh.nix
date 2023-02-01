@@ -10,8 +10,24 @@
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
     };
     shellGlobalAliases = { "..." = "../../"; };
-    sessionVariables = { DOOMLOCALDIR = "$HOME/.emacs.local"; };
+    sessionVariables = {
+      DOOMLOCALDIR = "$HOME/.emacs.local";
+      LSP_USE_PLISTS = "true";
+    };
     enableAutosuggestions = true;
+    historySubstringSearch = { enable = true; };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "tmux" "emacs" "gpg-agent" ];
+      extraConfig = ''
+        ZSH_TMUX_AUTOSTART=true
+        ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
+
+        export TMUX_COLORTAG_TAG_ONLY=yes
+        export TMUX_COLORTAG_USE_POWERLINE=yes
+        export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
+      '';
+    };
     plugins = with pkgs; [
       {
         name = "forgit";
