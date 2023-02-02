@@ -9,6 +9,8 @@
   programs.zsh.sessionVariables = {
     # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
     AWS_VAULT_BACKEND = "kwallet";
+    # error: file 'nixpkgs' was not found in the Nix search path (add it using $NIX_PATH or -I)
+    NIX_PATH = "~/.nix-defexpr/channels/nixos";
   };
   services.keybase.enable = true;
   services.syncthing = {
