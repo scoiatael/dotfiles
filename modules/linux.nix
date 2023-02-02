@@ -6,6 +6,10 @@
     enableSshSupport = true;
     pinentryFlavor = "qt";
   };
+  programs.zsh.sessionVariables = {
+    # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
+    AWS_VAULT_BACKEND = "kwallet";
+  };
   services.keybase.enable = true;
   services.syncthing = {
     enable = true;
