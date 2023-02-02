@@ -26,7 +26,7 @@
       battery_icon_color = "0xffd75f5f";
       dnd_icon_color = "0xffa8a8a8";
       clock_icon_color = "0xffa8a8a8";
-      power_icon_strip = " ";
+      power_icon_strip = " ";
       space_icon = "•";
       space_icon_strip = "1 2 3 4 5 6 7 8 9 10";
       spaces_for_all_displays = "on";
@@ -55,8 +55,14 @@
 
   homebrew = {
     enable = true;
-    casks =
-      [ "battle-net" "bitwarden" "iterm2" "karabiner-elements" "syncthing" ];
+    casks = [
+      "battle-net"
+      "bitwarden"
+      "iterm2"
+      "karabiner-elements"
+      "syncthing"
+      "eloston-chromium"
+    ];
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
