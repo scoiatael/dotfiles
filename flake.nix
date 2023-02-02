@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     macNixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
-    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.url = "github:azuwis/nix-darwin/sketchybar";
     darwin.inputs.nixpkgs.follows = "macNixpkgs";
   };
 
