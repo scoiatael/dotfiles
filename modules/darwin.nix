@@ -1,15 +1,21 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let top_padding = 36;
+in {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ vim pinentry_mac ];
+  environment.systemPackages = with pkgs; [
+    vim
+    pinentry_mac
+    (callPackage ../packages/sketchybar-helper { })
+  ];
 
   services.yabai = {
     enable = true;
     package = pkgs.yabai;
-    enableScriptingAddition = true;
+    enableScriptingAddition = false;
     config = {
       focus_follows_mouse = "autoraise";
-      mouse_follows_focus = "off";
+      mouse_follows_focus = "on";
       window_placement = "second_child";
       window_opacity = "off";
       window_opacity_duration = "0.0";
@@ -31,11 +37,11 @@
       mouse_action1 = "move";
       mouse_action2 = "resize";
       layout = "bsp";
-      top_padding = 36;
-      bottom_padding = 10;
-      left_padding = 10;
-      right_padding = 10;
-      window_gap = 10;
+      top_padding = top_padding;
+      bottom_padding = 2;
+      left_padding = 2;
+      right_padding = 2;
+      window_gap = 5;
     };
 
     extraConfig = ''
@@ -59,12 +65,18 @@
       };
     });
     config = ''
-      # This is a demo config to show some of the most important commands more easily.
-      # This is meant to be changed and configured, as it is intentionally kept sparse.
-      # For a more advanced configuration example see my dotfiles:
-      # https://github.com/FelixKratz/dotfiles
+      # source: https://github.com/FelixKratz/dotfiles
+
+      source "$HOME/dotfiles/config/sketchybar/colors.sh" # Loads all defined colors
+      source "$HOME/dotfiles/config/sketchybar/icons.sh" # Loads all defined icons
 
       PLUGIN_DIR="$HOME/dotfiles/config/sketchybar/plugins"
+      FONT="JetBrainsMono Nerd Font:Regular"
+
+      # Setting up and starting the helper process
+      HELPER=git.scoiatael.helper
+      killall sketchybar-helper
+      sketchybar-helper $HELPER > /dev/null 2>&1 &
 
       ##### Bar Appearance #####
       # Configuring the general appearance of the bar, these are only some of the
@@ -73,23 +85,23 @@
       # If you are looking for other colors, see the color picker:
       # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
-      sketchybar --bar height=32        \
+      sketchybar --bar height=${toString top_padding}        \
                        blur_radius=30   \
                        position=top     \
                        sticky=off       \
                        padding_left=10  \
                        padding_right=10 \
-                       color=0x15ffffff
+                       color=$BAR_COLOR
 
       ##### Changing Defaults #####
       # We now change some default values that are applied to all further items
       # For a full list of all available item properties see:
       # https://felixkratz.github.io/SketchyBar/config/items
 
-      sketchybar --default icon.font="JetBrainsMono Nerd Font:Regular:12.0"  \
-                           icon.color=0xffffffff                 \
-                           label.font="JetBrainsMono Nerd Font:Regular:12.0" \
-                           label.color=0xffffffff                \
+      sketchybar --default icon.font="$FONT:12.0"  \
+                           icon.color=$ICON_COLOR                 \
+                           label.font="$FONT:12.0" \
+                           label.color=$LABEL_COLOR                \
                            padding_left=5                        \
                            padding_right=5                       \
                            label.padding_left=4                  \
@@ -106,7 +118,7 @@
         sketchybar --add space space.${sid} left                               \
                    --set space.${sid} associated_space=${sid}                  \
                                     icon=${icon}                               \
-                                    background.color=0x44ffffff                \
+                                    background.color=0xBACKGROUND_1                \
                                     background.corner_radius=5                 \
                                     background.height=20                       \
                                     background.drawing=off                     \
@@ -158,7 +170,7 @@
                                                                        \
                    --add item wifi right                               \
                    --set wifi    script="$PLUGIN_DIR/wifi.sh"          \
-                                 icon=直                               \
+                                 icon=$WIFI                               \
                    --subscribe wifi wifi_change                        \
                                                                        \
                    --add item volume right                             \
