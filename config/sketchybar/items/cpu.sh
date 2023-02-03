@@ -1,7 +1,7 @@
 #!/bin/sh
 
 sketchybar --add item        cpu.top right                 \
-           --set cpu.top     label.font="$FONT:Semibold:7" \
+           --set cpu.top     label.font="$FONT:7" \
                              label=CPU                     \
                              icon.drawing=off              \
                              width=0                       \
@@ -9,7 +9,7 @@ sketchybar --add item        cpu.top right                 \
                              y_offset=6                    \
                                                            \
            --add item        cpu.percent right             \
-           --set cpu.percent label.font="$FONT:Heavy:12"   \
+           --set cpu.percent label.font="$FONT:12"   \
                              label=CPU                     \
                              y_offset=-4                   \
                              padding_right=15              \

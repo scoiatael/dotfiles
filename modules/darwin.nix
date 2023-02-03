@@ -71,6 +71,7 @@ in {
       source "$HOME/dotfiles/config/sketchybar/icons.sh" # Loads all defined icons
 
       PLUGIN_DIR="$HOME/dotfiles/config/sketchybar/plugins"
+      ITEM_DIR="$HOME/dotfiles/config/sketchybar/items"
       FONT="JetBrainsMono Nerd Font:Regular"
 
       # Setting up and starting the helper process
@@ -181,6 +182,8 @@ in {
                    --set battery script="$PLUGIN_DIR/battery.sh"       \
                                  update_freq=120                       \
                    --subscribe battery system_woke power_source_change
+
+        source "$ITEM_DIR/cpu.sh"
 
         ##### Finalizing Setup #####
         # The below command is only needed at the end of the initial configuration to
