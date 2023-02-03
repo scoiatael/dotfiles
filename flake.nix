@@ -11,9 +11,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    macNixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
     darwin.url = "github:azuwis/nix-darwin/sketchybar";
-    darwin.inputs.nixpkgs.follows = "macNixpkgs";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { nixpkgs, home-manager, darwin, ... }@attrs: {

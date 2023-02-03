@@ -48,7 +48,16 @@
 
   services.sketchybar = {
     enable = true;
-    package = pkgs.sketchybar;
+    package = pkgs.sketchybar.overrideAttrs (final: old: rec {
+      version = "2.14.0";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "FelixKratz";
+        repo = "SketchyBar";
+        rev = "v${version}";
+        sha256 = "sha256-2uViQ3/gQcEgUbBK87qDcB8lcn1xFHWCaTDJPb4y3Ws=";
+      };
+    });
     config = ''
       # This is a demo config to show some of the most important commands more easily.
       # This is meant to be changed and configured, as it is intentionally kept sparse.
