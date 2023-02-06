@@ -4,6 +4,7 @@
   programs.gpg = { enable = true; };
 
   home.packages = with pkgs; [
+    neofetch
     curlie
     xh
     dive

@@ -6,12 +6,18 @@
     enableSshSupport = true;
     pinentryFlavor = "qt";
   };
-  programs.zsh.sessionVariables = {
-    # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
-    AWS_VAULT_BACKEND = "kwallet";
-    # error: file 'nixpkgs' was not found in the Nix search path (add it using $NIX_PATH or -I)
-    NIX_PATH = "~/.nix-defexpr/channels/nixos";
+  programs.zsh = {
+    sessionVariables = {
+      # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
+      AWS_VAULT_BACKEND = "kwallet";
+    };
+    initExtra = ''
+      unset NIX_PATH
+      # error: file 'nixpkgs' was not found in the Nix search path (add it using $NIX_PATH or -I)
+      export NIX_PATH="${config.home.homeDirectory}/.nix-defexpr/channels/nixos";
+    '';
   };
+
   services.keybase.enable = true;
   services.syncthing = {
     enable = true;
@@ -27,7 +33,6 @@
     procs # broken on macOS
     libnotify # doesn't work on macOS
     lm_sensors # for temp display in i3status-rust?
-    neofetch
   ];
   services.unclutter.enable = true;
   xresources.properties = {
