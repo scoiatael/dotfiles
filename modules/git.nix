@@ -177,7 +177,6 @@ in {
       ".tool-versions"
     ];
     extraConfig = {
-      core.editor = "edit";
       color = {
         branch = "auto";
         diff = "auto";

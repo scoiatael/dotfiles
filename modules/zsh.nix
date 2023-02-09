@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  # for emacsclient.sh
+  home.packages = with pkgs; [ gnused coreutils-full ];
   programs.zsh = {
     enable = true;
     shellAliases = {
@@ -13,6 +15,8 @@
     sessionVariables = {
       DOOMLOCALDIR = "$HOME/.emacs.local";
       LSP_USE_PLISTS = "true";
+      EDITOR =
+        "env PATH=${config.home.homeDirectory}/.nix-profile/bin ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/emacs/emacsclient.sh";
     };
     enableAutosuggestions = true;
     historySubstringSearch = { enable = true; };
@@ -22,10 +26,12 @@
 
       setopt PROMPT_SUBST
       PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+
+      path+=("$HOME/dotfiles/bin")
     '';
     oh-my-zsh = {
       enable = true;
-      plugins = [ "tmux" "gpg-agent" ];
+      plugins = [ "tmux" "gpg-agent" "emacs" ];
       extraConfig = ''
         ZSH_TMUX_AUTOSTART=true
         ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
