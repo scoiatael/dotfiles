@@ -20,7 +20,7 @@
     };
     enableAutosuggestions = true;
     historySubstringSearch = { enable = true; };
-    initExtra = ''
+    initExtra = lib.mkAfter ''
       autoload -U add-zsh-hook
       add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 
