@@ -2,13 +2,13 @@
 
 # TODO: https://www.nerdfonts.com/cheat-sheet
 # General Icons
-LOADING=􀖇
+LOADING=󰔟
 APPLE=
-PREFERENCES=􀺽
-ACTIVITY=􀒓
-LOCK=􀒳
-BELL=􀋚
-BELL_DOT=􀝗
+PREFERENCES=
+ACTIVITY=
+LOCK=󱅞
+BELL=
+BELL_DOT=
 
 # Git Icons
 GIT_ISSUE=􀍷

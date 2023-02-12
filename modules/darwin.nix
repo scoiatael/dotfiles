@@ -98,17 +98,27 @@ in {
       # We now change some default values that are applied to all further items
       # For a full list of all available item properties see:
       # https://felixkratz.github.io/SketchyBar/config/items
+      defaults=(
+        icon.font="$FONT:12.0"
+        icon.color=$ICON_COLOR
+        label.font="$FONT:12.0"
+        label.color=$LABEL_COLOR
+        padding_left=5
+        padding_right=5
+        label.padding_left=4
+        label.padding_right=4
+        icon.padding_left=4
+        icon.padding_right=4
+        popup.background.border_width=2
+        popup.background.corner_radius=9
+        popup.background.border_color=$POPUP_BORDER_COLOR
+        popup.background.color=$POPUP_BACKGROUND_COLOR
+        popup.blur_radius=20
+        popup.background.shadow.drawing=on
+      )
 
-      sketchybar --default icon.font="$FONT:12.0"  \
-                           icon.color=$ICON_COLOR                 \
-                           label.font="$FONT:12.0" \
-                           label.color=$LABEL_COLOR                \
-                           padding_left=5                        \
-                           padding_right=5                       \
-                           label.padding_left=4                  \
-                           label.padding_right=4                 \
-                           icon.padding_left=4                   \
-                           icon.padding_right=4
+      sketchybar --default "''${defaults[@]}"
+      source "$ITEM_DIR/apple.sh"
 
       ##### Adding Mission Control Space Indicators #####
       # Now we add some mission control spaces:
