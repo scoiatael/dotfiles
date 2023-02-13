@@ -27,7 +27,7 @@
       setopt PROMPT_SUBST
       PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 
-      path+=("$HOME/dotfiles/bin")
+      path+=("$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
     '';
     oh-my-zsh = {
       enable = true;
