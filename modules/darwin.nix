@@ -221,8 +221,15 @@ in {
       "karabiner-elements"
       "syncthing"
       "eloston-chromium"
+      "keybase"
+      "todoist"
+      "raycast"
+      "librewolf"
+      "dropbox"
     ];
   };
+  # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
+  security.pam.enableSudoTouchIdAuth = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -231,4 +238,6 @@ in {
   services.nix-daemon.enable = true;
 
   nix.package = pkgs.nix;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

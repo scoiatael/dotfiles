@@ -3,8 +3,8 @@
 let
   doomDir = builtins.fetchTarball {
     url =
-      "https://github.com/doomemacs/doomemacs/archive/d5ccac5d71c819035fa251f01d023b3f94b4fba4.tar.gz";
-    sha256 = "1hrhh3fa98nc9dc1a4x7slakmf3gfrqrcx4d4vg65rd8rb9wn37c";
+      "https://github.com/doomemacs/doomemacs/archive/8f6b045dfdb6d00e5a324c3f9044dce773791502.tar.gz";
+    sha256 = "1fzgwxvj60dfjdgylibjbg407d1lb35269ykgy7jcjxdmmbfzl9b";
   };
 in {
   nixpkgs.overlays = [ emacs-overlay.overlay ];
@@ -28,7 +28,12 @@ in {
     extraPackages = epkgs: [ epkgs.vterm ];
   };
 
-  home.file.".config/doom".source = ../config/doom;
+  # avoid copying into /nix/store to allow easy changes
+  # home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink "~/dotfiles/config/doom";
+  home.activation.linkDoomConfig = config.lib.dag.entryAfter ["writeBoundary"] ''
+    ln -sf ~/dotfiles/config/doom ~/.config/doom
+  '';
+
   home.file.".emacs.doom".source = doomDir;
   home.file.".emacs.d/early-init.el".text = ''
     (load "${config.home.homeDirectory}/.nix-profile/share/emacs/site-lisp/site-start.el" nil 'nomessage)
