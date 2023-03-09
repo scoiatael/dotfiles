@@ -52,6 +52,24 @@
           normal = { family = "JetBrainsMono Nerd Font"; };
           size = 9;
         };
+        colors.primary.background = "0x282828";
+        colors.primary.foreground = "0xeeeeee";
+        colors.normal.black = "0x282828";
+        colors.normal.red = "0xf43753";
+        colors.normal.green = "0xc9d05c";
+        colors.normal.yellow = "0xffc24b";
+        colors.normal.blue = "0xb3deef";
+        colors.normal.magenta = "0xd3b987";
+        colors.normal.cyan = "0x73cef4";
+        colors.normal.white = "0xeeeeee";
+        colors.bright.black = "0x4c4c4c";
+        colors.bright.red = "0xf43753";
+        colors.bright.green = "0xc9d05c";
+        colors.bright.yellow = "0xffc24b";
+        colors.bright.blue = "0xb3deef";
+        colors.bright.magenta = "0xd3b987";
+        colors.bright.cyan = "0x73cef4";
+        colors.bright.white = "0xfeffff";
       };
     };
     qutebrowser = {
@@ -202,5 +220,6 @@
 
     Pry.config.prompt = Pry::Prompt[:vterm]
   '';
-  home.file.".config/karabiner/karabiner.json".source = ../config/karabiner.json;
+  home.file.".config/karabiner/karabiner.json".source =
+    ../config/karabiner.json;
 }
