@@ -37,6 +37,7 @@ in {
 
   home.file.".emacs.doom".source = doomDir;
   home.file.".emacs.d/early-init.el".text = ''
+    (setq envrc-direnv-executable "${pkgs.direnv}/bin/direnv")
     (load "${config.home.homeDirectory}/.nix-profile/share/emacs/site-lisp/site-start.el" nil 'nomessage)
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))

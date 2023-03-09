@@ -1,16 +1,22 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq-default
+(when noninteractive
+  (add-to-list 'doom-env-whitelist "^SSH_"))
+
+(setq
  doom-localleader-key ","
  user-full-name "Lukasz Czaplinski"
  doom-font "JetBrainsMono Nerd Font"
  doom-theme 'doom-one
  display-line-numbers-type t
  comint-prompt-read-only nil
- gcmh-high-cons-threshold (* 1024 1024 1024) ; 1GiB
- ns-right-alternate-modifier 'none
- mac-right-option-modifier nil
- org-directory "~/dotfiles/org")
+ gcmh-high-cons-threshold (* 1024 1024 1024)) ; 1GiB
+
+(when IS-MAC (setq
+              ns-right-alternate-modifier 'none
+              mac-right-option-modifier nil))
+
+(add-to-list 'doom-symbol-fallback-font-families "Iosevka")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -30,11 +36,104 @@
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
+(when EMACS29+
+  (use-package! combobulate
+    ;; Ensure `combobulate-mode` is activated when you launch a mode it supports
+    :hook ((python-mode . combobulate-mode)
+           ;; (js-mode . combobulate-mode)))
+           (typescript-mode . combobulate-mode))))
+
+
+
 ;; - `after!' for running code after a package has loaded
+;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
+(after! 'smartparens
+  (dolist (char '("f" "r"))
+    (sp-local-pair '(python-mode) (concat char "'") "'")
+    (sp-local-pair '(python-mode) (concat char "\"") "\""))
+  (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
+
+(after! org
+  (setq
+   org-archive-location (concat org-directory "archive/%s::")
+   org-ellipsis " ▼ "
+   org-clock-persist t
+   org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")))
+
+(after! vterm
+  (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
+
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
+(map! "M-'" #'+vterm/toggle)
+
+(map! :v
+      "v" #'er/expand-region)
+
+(map! :leader
+      ">" #'spacemacs/alternate-buffer
+      "R" #'org-roam-node-find
+      "A" #'org-todo-list
+      "D" #'deadgrep
+      "/"   #'+default/search-project
+      "i u" #'list-unicode-display
+      "i d" #'scoiatael/yank-current-date
+      "w 2" #'split-window-below
+      "w 3" #'split-window-right
+      "f d" #'dired-jump
+      "f Y" #'scoiatael/yank-file-location
+      "s c" #'evil-ex-nohighlight
+      "s e" #'iedit-mode
+      "r R" (cmd! (find-file "README.md")))
+
+(map! :leader
+      "w <left>" #'evil-window-left
+      "w <right>" #'evil-window-right
+      "w <up>" #'evil-window-up
+      "w <down>" #'evil-window-down)
+
+(map! :leader
+      :prefix "k"
+      "d" #'server-edit
+      "e" #'ediff-buffers
+      "g" #'epa-encrypt-file
+      "y" #'scoiatael/json-to-yaml)
+
+(map! :leader
+      :prefix "j"
+      "l" #'avy-goto-word-1
+      "n" #'avy-goto-line)
+
+(map! :map magit-unmerged-section-map
+      :leader
+      :prefix "S"
+      :desc "Next conflict" "{" #'smerge-next
+      :desc "Prev conflict" "}" #'smerge-prev
+      :desc "Keep current" "c" #'smerge-keep-current
+      :desc "Keep all" "a" #'smerge-keep-all)
+
+(map! :after org-mode
+      :map org-mode-map
+      :desc "dwim" "C-M-x" #'+org/dwim-at-point
+      :desc "toggle folds" "TAB" #'org-cycle)
+
+(map! :map puppet-mode-map
+      :after puppet-mode
+      :localleader
+      :desc "Align block" "b" #'puppet-align-block
+      :desc "Align class params" "p" #'scoiatael/puppet-align-parameters
+      :desc "Toggle string quotes" "'" #'puppet-toggle-string-quotes)
+
+(map! :map direnv-envrc-mode-map
+      :after direnv
+      :localleader
+      :desc "Allow envrc" "a" #'direnv-allow)
+
+(map! :map org-roam-mode-map
+      :leader
+      "r i" #'org-roam-insert-immediate)
 ;;
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
@@ -44,3 +143,11 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
+  (when (file-exists-p custom-config-file)
+    (load-file custom-config-file)))
+
+;; Used by customization system
+(setq custom-file "~/dotfiles/config/doom/emacs-custom.el")
+(load custom-file)
