@@ -1,63 +1,49 @@
-:CONFIG:
-#+startup: indent
-:END:
-* ~configuration.nix~
-:PROPERTIES:
-:header-args:nix: :tangle "/su::/etc/nixos/configuration.nix"  :mkdirp yes :comments no
-:header-args: :mkdirp yes :comments no
-:END:
-** preamble
-#+begin_src nix
 { config, lib, pkgs, grub2-themes, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      grub2-themes.nixosModules.default
-    ];
-#+end_src
-** boot
-#+begin_src nix
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    grub2-themes.nixosModules.default
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
-      enable = true;
-      version = 2;
-      device = "nodev";
-      efiSupport = true;
-      enableCryptodisk = true;
-      font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
-      fontSize = 20;
+    enable = true;
+    version = 2;
+    device = "nodev";
+    efiSupport = true;
+    enableCryptodisk = true;
+    font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
+    fontSize = 20;
   };
-  boot.loader.grub2-theme = {
-      theme = "whitesur";
-  };
+  boot.loader.grub2-theme = { theme = "whitesur"; };
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ "mem_sleep_default=deep" ];
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
-#+end_src
 
-** doas instead of sudo
-#+begin_src nix
   security.sudo.enable = false;
   security.doas = {
     enable = true;
     extraRules = [{
-	 users = [ "lczaplinski" ];
-         runAs = "lczaplinski-docker";
-         noPass = true;
-         setEnv = [  "AWS_ACCESS_KEY_ID" "AWS_DEFAULT_REGION" "AWS_REGION" "AWS_SECRET_ACCESS_KEY" "AWS_SECURITY_TOKEN" "AWS_SESSION_EXPIRATION" "AWS_SESSION_TOKEN" "AWS_VAULT" ];
+      users = [ "lczaplinski" ];
+      runAs = "lczaplinski-docker";
+      noPass = true;
+      setEnv = [
+        "AWS_ACCESS_KEY_ID"
+        "AWS_DEFAULT_REGION"
+        "AWS_REGION"
+        "AWS_SECRET_ACCESS_KEY"
+        "AWS_SECURITY_TOKEN"
+        "AWS_SESSION_EXPIRATION"
+        "AWS_SESSION_TOKEN"
+        "AWS_VAULT"
+      ];
     }];
   };
 
-#+end_src
-
-** docker w/ user-ns remap
-TODO: 22.05 introduced native support, no need to roll own user :)
-#+begin_src nix
   # https://rdes.gitlab.io/posts/2016-08-29-enabling-dockers-user-namespaces-in-nixos.html
   virtualisation.docker = {
     enable = true;
@@ -68,23 +54,19 @@ TODO: 22.05 introduced native support, no need to roll own user :)
     isSystemUser = true;
     uid = 10000;
     group = "dockremap";
-    subUidRanges = [
-      { startUid = 100000; count = 65536; }
-    ];
-    subGidRanges = [
-      { startGid = 100000; count = 65536; }
-    ];
+    subUidRanges = [{
+      startUid = 100000;
+      count = 65536;
+    }];
+    subGidRanges = [{
+      startGid = 100000;
+      count = 65536;
+    }];
   };
- #+end_src
 
-** shells
-#+begin_src nix
   users.extraUsers.root.shell = pkgs.bash;
   users.defaultUserShell = pkgs.zsh;
-#+end_src
 
-** networking
-#+begin_src nix
   networking.hostName = "r-work-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.wireless.userControlled.enable = true;
@@ -106,13 +88,15 @@ TODO: 22.05 introduced native support, no need to roll own user :)
   # Open ports in the firewall.
   networking.firewall = {
     allowedTCPPorts = [
-       6001 # shairport
-       631 # avahi
-       ];
-
-    allowedUDPPortRanges = [
-      { from = 6001; to = 6199; } # shairport
+      6001 # shairport
+      631 # avahi
     ];
+
+    allowedUDPPortRanges = [{
+      from = 6001;
+      to = 6199;
+    } # shairport
+      ];
 
     allowedUDPPorts = [
       5353 # avahi
@@ -135,15 +119,25 @@ TODO: 22.05 introduced native support, no need to roll own user :)
     keyMap = "us";
     #TODO: https://github.com/coderonline/base16-vtrgb/blob/master/consolecolors/base16-nord.vga
     colors = [
-        "002b36" "dc322f" "859900" "b58900"
-        "268bd2" "d33682" "2aa198" "eee8d5"
-        "002b36" "cb4b16" "586e75" "657b83"
-        "839496" "6c71c4" "93a1a1" "fdf6e3"
-      ];
+      "002b36"
+      "dc322f"
+      "859900"
+      "b58900"
+      "268bd2"
+      "d33682"
+      "2aa198"
+      "eee8d5"
+      "002b36"
+      "cb4b16"
+      "586e75"
+      "657b83"
+      "839496"
+      "6c71c4"
+      "93a1a1"
+      "fdf6e3"
+    ];
   };
-#+end_src
-** services
-#+begin_src nix
+
   # List services that you want to enable:
 
   # https://github.com/NixOS/nixpkgs/issues/126681
@@ -197,11 +191,7 @@ TODO: 22.05 introduced native support, no need to roll own user :)
 
   # https://wiki.archlinux.org/title/Solid_state_drive
   services.fstrim.enable = true;
-#+end_src
 
-** Windowing system
-*** Display Manager
-#+begin_src nix
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
@@ -209,9 +199,7 @@ TODO: 22.05 introduced native support, no need to roll own user :)
   # services.xserver.desktopManager.lxqt.enable = true;
   # disable the default
   # services.xserver.displayManager.lightdm.enable = false;
-#+end_src
-** users
-#+begin_src nix
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lczaplinski = {
     isNormalUser = true;
@@ -232,14 +220,12 @@ TODO: 22.05 introduced native support, no need to roll own user :)
     home = "/home/docker";
     createHome = true;
   };
-  users.groups.lczaplinski = {}; # Create shared group between main user and -docker one
+  users.groups.lczaplinski =
+    { }; # Create shared group between main user and -docker one
   system.activationScripts.shareHome = lib.stringAfter [ "users" ] ''
     chmod g+rwx /home/lczaplinski
   '';
-#+end_src
 
-** system packages
-#+begin_src nix
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
@@ -247,7 +233,7 @@ TODO: 22.05 introduced native support, no need to roll own user :)
     wget
     librewolf-wayland
     thunderbird-wayland
-     # for testing
+    # for testing
     ungoogled-chromium
     # ENDOF
     yakuake
@@ -314,11 +300,7 @@ TODO: 22.05 introduced native support, no need to roll own user :)
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
     cozette
   ];
-#+end_src
 
-** extra user programs
-TODO: do I still need those?
-#+begin_src nix
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
@@ -327,10 +309,7 @@ TODO: do I still need those?
   #   enableSSHSupport = true;
   # };
   # programs.ssh.startAgent = false;
- #+end_src
 
-** nix-direnv
-#+begin_src nix
   # https://github.com/nix-community/nix-direnv#via-configurationnix-in-nixos
   # at least until I have home-manager working properly :)
   # nix options for derivations to persist garbage collection
@@ -341,22 +320,15 @@ TODO: do I still need those?
   '';
   # https://nixos.wiki/wiki/Flakes
   nix.package = pkgs.nixFlakes; # or versioned attributes like nix_2_7
-  environment.pathsToLink = [
-    "/share/nix-direnv"
-  ];
-#+end_src
-** storage optimisations
-https://nixos.wiki/wiki/Storage_optimization
-#+begin_src nix
-nix.settings.auto-optimise-store = true;
-nix.gc = {
-  automatic = true;
-  dates = "weekly";
-  options = "--delete-older-than 7d";
-};
-#+end_src
-** openGL
-#+begin_src nix
+  environment.pathsToLink = [ "/share/nix-direnv" ];
+
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
   # https://nixos.wiki/wiki/Accelerated_Video_Playback
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
@@ -366,68 +338,44 @@ nix.gc = {
     driSupport = true;
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       vaapiVdpau
       libvdpau-va-gl
     ];
   };
- #+end_src
 
-** Environment variables
-*** For Elecron
-https://nixos.wiki/wiki/Slack#Wayland
-https://nixos.wiki/wiki/Visual_Studio_Code#Wayland
-#+begin_src nix
-environment.sessionVariables.NIXOS_OZONE_WL = "1";
-#+end_src
-*** For Sway
-#+begin_src nix
-environment.sessionVariables = {
-  MOZ_ENABLE_WAYLAND = "1";
-};
-#+end_src
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-** ddcutil:
-#+begin_src nix
-hardware.i2c.enable = true;
-#+end_src
-** bluetooth
-#+begin_src nix
-hardware.bluetooth.enable = true;
-#+end_src
+  environment.sessionVariables = { MOZ_ENABLE_WAYLAND = "1"; };
 
-** WiFi hacks
-#+begin_src nix
-environment.etc."NetworkManager/dispatcher.d/99-wlan" = {
-  text = ''
-    #!${pkgs.bash}/bin/bash
-    wired_interfaces="en.*|eth.*"
-    if [[ "$1" =~ $wired_interfaces ]]; then
-        case "$2" in
-            up)
-                nmcli radio wifi off
-                ;;
-            down)
-                nmcli radio wifi on
-                ;;
-        esac
-    fi
+  hardware.i2c.enable = true;
+
+  hardware.bluetooth.enable = true;
+
+  environment.etc."NetworkManager/dispatcher.d/99-wlan" = {
+    text = ''
+      #!${pkgs.bash}/bin/bash
+      wired_interfaces="en.*|eth.*"
+      if [[ "$1" =~ $wired_interfaces ]]; then
+          case "$2" in
+              up)
+                  nmcli radio wifi off
+                  ;;
+              down)
+                  nmcli radio wifi on
+                  ;;
+          esac
+      fi
     '';
 
     mode = "0550";
-};
-#+end_src
-** gtklock
-#+begin_src nix
-environment.etc."pam.d/gtklock" = {
-  text = "auth include login";
-  mode = "0550";
-};
+  };
 
-#+end_src
+  environment.etc."pam.d/gtklock" = {
+    text = "auth include login";
+    mode = "0550";
+  };
 
-** system version
-#+begin_src nix
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -435,30 +383,5 @@ environment.etc."pam.d/gtklock" = {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
- #+end_src
 
-** the end
-#+begin_src nix
 }
-#+end_src
-* ~flake.nix~
-:PROPERTIES:
-:header-args:nix: :tangle "/su::/etc/nixos/flake.nix"  :mkdirp yes :comments no
-:header-args: :mkdirp yes :comments no
-:END:
-https://nixos.wiki/wiki/Flakes#Using_nix_flakes_with_NixOS
-#+begin_src nix
-{
-  inputs.nixpkgs.url = github:NixOS/nixpkgs;
-  inputs.nixos-hardware.url = github:NixOS/nixos-hardware;
-  inputs.grub2-themes.url = github:vinceliuice/grub2-themes;
-
-  outputs = { self, nixpkgs, ... }@attrs: {
-    nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = attrs;
-        modules = [ ./configuration.nix ];
-    };
-  };
-}
-#+end_src

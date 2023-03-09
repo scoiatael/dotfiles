@@ -57,6 +57,26 @@
         "type": "github"
       }
     },
+    "grub2-themes": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1674015718,
+        "narHash": "sha256-cBgjWD/mR1tiPyVky9Bl5kUrDX6RnARJ+0cEJ4VhbRg=",
+        "owner": "vinceliuice",
+        "repo": "grub2-themes",
+        "rev": "7c0d8eb7849cd5a4cf6a26c8750dcf71c26f2b0f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vinceliuice",
+        "repo": "grub2-themes",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -75,6 +95,21 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1678350133,
+        "narHash": "sha256-sUxDtERkqq0oGU5eGtlem5zE5ga801yXfpc3XlPfC4k=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "6e303a505ad31a8e68a7f0d43e2170e81c16919b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
         "type": "github"
       }
     },
@@ -98,7 +133,9 @@
       "inputs": {
         "darwin": "darwin",
         "emacs-overlay": "emacs-overlay",
+        "grub2-themes": "grub2-themes",
         "home-manager": "home-manager",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
       }
     },

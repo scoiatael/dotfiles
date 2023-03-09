@@ -8,6 +8,8 @@
     shellAliases = {
       hmr =
         "home-manager switch --flake 'path:${config.home.homeDirectory}/dotfiles'";
+      nor =
+        "doas nixos-rebuild switch --flake 'path:${config.home.homeDirectory}/dotfiles'";
       nix-test =
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
     };

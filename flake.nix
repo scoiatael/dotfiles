@@ -11,8 +11,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    darwin.url = "github:azuwis/nix-darwin/sketchybar";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin = {
+      url = "github:azuwis/nix-darwin/sketchybar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    grub2-themes = {
+      url = "github:vinceliuice/grub2-themes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, darwin, ... }@attrs: {
@@ -63,6 +70,11 @@
     darwinConfigurations.LsGamingDarwin = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [ ./modules/darwin.nix ];
+    };
+    nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = attrs;
+      modules = [ ./modules/nixos.nix ];
     };
   };
 }
