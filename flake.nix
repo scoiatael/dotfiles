@@ -55,6 +55,7 @@
           ./modules/emacs.nix
           ./modules/tmux.nix
           ./modules/zsh.nix
+          ./modules/neovim.nix
           ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
           {
             home = {

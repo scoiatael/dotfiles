@@ -184,13 +184,14 @@ in {
       #                   yabai -m space --focus "''${index}"
 
       # fast focus desktop
-      # cmd + ctrl - x : yabai -m space --focus recent
-      # cmd + ctrl - 1 : yabai -m space --focus 1
-      # cmd + ctrl - 2 : yabai -m space --focus 2
+      cmd + ctrl - x : yabai -m space --focus recent
+      cmd + ctrl - 1 : yabai -m space --focus 1
+      cmd + ctrl - 2 : yabai -m space --focus 2
 
       # send window to desktop and follow focus
-      # shift + cmd - z : yabai -m window --space next; yabai -m space --focus next
-      # shift + cmd - 2 : yabai -m window --space  2; yabai -m space --focus 2
+      shift + cmd - z : yabai -m window --space next; yabai -m space --focus next
+      shift + cmd - 1 : yabai -m window --space  2; yabai -m space --focus 2
+      shift + cmd - 2 : yabai -m window --space  2; yabai -m space --focus 2
 
       # focus monitor
       cmd + ctrl - k  : yabai -m display --focus prev
