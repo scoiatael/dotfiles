@@ -250,6 +250,7 @@ in {
         sha256 = "sha256-2uViQ3/gQcEgUbBK87qDcB8lcn1xFHWCaTDJPb4y3Ws=";
       };
     });
+    # TODO: this has to be linked to ~/.skhdrc, otherwise will be ignored
     config = ''
       # source: https://github.com/FelixKratz/dotfiles
 
