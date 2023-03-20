@@ -32,6 +32,7 @@ in {
   # home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink "~/dotfiles/config/doom";
   home.activation.linkDoomConfig =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      test -d ~/.config || mkdir ~/.config
       test -d ~/.config/doom || ln -sf ~/dotfiles/config/doom ~/.config/doom
     '';
 

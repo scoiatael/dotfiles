@@ -19,3 +19,10 @@ Simply `home-manager switch --flake 'path:dotfiles#framework'` - or roll your ow
 6. Set Spotlight to ⌘D ;)
 7. `nix build --extra-experimental-features flakes --extra-experimental-features nix-command .#homeConfigurations.lukaszczaplinski@LsGamingDarwin.activationPackage`
 8. `./result/activate`
+
+# Yubikey transfer
+
+Source: https://github.com/drduh/YubiKey-Guide#switching-between-two-or-more-yubikeys
+```
+gpg-connect-agent "scd serialno" "learn --force" /bye
+```

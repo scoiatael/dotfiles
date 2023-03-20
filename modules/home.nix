@@ -4,6 +4,7 @@
   programs.gpg = { enable = true; };
 
   home.packages = with pkgs; [
+    elvish # until I port scripts back..
     neofetch
     curlie
     xh

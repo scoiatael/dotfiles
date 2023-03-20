@@ -60,6 +60,7 @@ in {
   services.skhd = {
     enable = true;
     package = pkgs.skhd;
+    # TODO: this has to be linked to ~/.skhdrc, otherwise will be ignored
     skhdConfig = ''
       # ################################################################ #
       # THE FOLLOWING IS AN EXPLANATION OF THE GRAMMAR THAT SKHD PARSES. #
@@ -250,7 +251,6 @@ in {
         sha256 = "sha256-2uViQ3/gQcEgUbBK87qDcB8lcn1xFHWCaTDJPb4y3Ws=";
       };
     });
-    # TODO: this has to be linked to ~/.skhdrc, otherwise will be ignored
     config = ''
       # source: https://github.com/FelixKratz/dotfiles
 
@@ -402,17 +402,12 @@ in {
   homebrew = {
     enable = true;
     casks = [
-      "battle-net"
-      "bitwarden"
       "iterm2"
       "karabiner-elements"
       "syncthing"
-      "eloston-chromium"
       "keybase"
-      "todoist"
       "raycast"
       "librewolf"
-      "dropbox"
     ];
   };
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25

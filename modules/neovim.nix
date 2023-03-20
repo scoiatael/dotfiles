@@ -44,4 +44,9 @@
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
     '';
   };
+  home.activation.createNvimDirectory =
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      test -d ~/.local/state/nvim/swap/ || mkdir ~/.local/state/nvim/swap/
+      chown -R $(whoami) ~/.local/state/nvim/swap/
+    '';
 }

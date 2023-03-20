@@ -46,6 +46,31 @@
       ];
       extraSpecialArgs = attrs;
     };
+    homeConfigurations."lucasczaplinski@LsCerosDarwin" =
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "x86_64-darwin";
+          config.allowBroken = true;
+        };
+        modules = [
+          ./modules/home.nix
+          ./modules/git.nix
+          ./modules/emacs.nix
+          ./modules/tmux.nix
+          ./modules/zsh.nix
+          ./modules/neovim.nix
+          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
+          {
+            home = {
+              username = "lukaszczaplinski";
+              homeDirectory = "/Users/lucasczaplinski";
+              stateVersion = "22.05";
+            };
+            programs.home-manager.enable = true;
+          }
+        ];
+        extraSpecialArgs = attrs;
+      };
     homeConfigurations."lukaszczaplinski@LsGamingDarwin" =
       home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-darwin;
@@ -70,7 +95,11 @@
       };
     darwinConfigurations.LsGamingDarwin = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
-      modules = [ ./modules/darwin.nix ];
+      modules = [ ./modules/darwin.nix ./modules/darwin/gaming.nix ];
+    };
+    darwinConfigurations.LsCerosDarwin = darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [ ./modules/darwin.nix ./modules/darwin/ceros.nix ];
     };
     nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
