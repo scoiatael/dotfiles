@@ -45,14 +45,14 @@ in {
     };
 
     extraConfig = ''
-      # rules
-      yabai -m rule --add app='System Preferences' manage=off
-
       # global settings
       yabai -m config insert_feedback_color 0xffd75f5f
 
       # General app settings
       yabai -m rule --add app="^Bitwarden$" manage=off grid=128:128:16:16:96:96
+
+      # https://github.com/koekeishiya/yabai/issues/1317
+      yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || yabai -m window $YABAI_WINDOW_ID --toggle float'
 
       echo "yabai configuration loaded.."
     '';
@@ -62,85 +62,6 @@ in {
     package = pkgs.skhd;
     # TODO: this has to be linked to ~/.skhdrc, otherwise will be ignored
     skhdConfig = ''
-      # ################################################################ #
-      # THE FOLLOWING IS AN EXPLANATION OF THE GRAMMAR THAT SKHD PARSES. #
-      # FOR SIMPLE EXAMPLE MAPPINGS LOOK FURTHER DOWN THIS FILE..        #
-      # ################################################################ #
-      # https://github.com/koekeishiya/yabai/wiki/Commands
-
-      # A list of all built-in modifier and literal keywords can
-      # be found at https://github.com/koekeishiya/skhd/issues/1
-      #
-      # A hotkey is written according to the following rules:
-      #
-      #   hotkey       = <mode> '<' <action> | <action>
-      #
-      #   mode         = 'name of mode' | <mode> ',' <mode>
-      #
-      #   action       = <keysym> '[' <proc_map_lst> ']' | <keysym> '->' '[' <proc_map_lst> ']'
-      #                  <keysym> ':' <command>          | <keysym> '->' ':' <command>
-      #                  <keysym> ';' <mode>             | <keysym> '->' ';' <mode>
-      #
-      #   keysym       = <mod> '-' <key> | <key>
-      #
-      #   mod          = 'modifier keyword' | <mod> '+' <mod>
-      #
-      #   key          = <literal> | <keycode>
-      #
-      #   literal      = 'single letter or built-in keyword'
-      #
-      #   keycode      = 'apple keyboard kVK_<Key> values (0x3C)'
-      #
-      #   proc_map_lst = * <proc_map>
-      #
-      #   proc_map     = <string> ':' <command> | <string>     '~' |
-      #                  '*'      ':' <command> | '*'          '~'
-      #
-      #   string       = '"' 'sequence of characters' '"'
-      #
-      #   command      = command is executed through '$SHELL -c' and
-      #                  follows valid shell syntax. if the $SHELL environment
-      #                  variable is not set, it will default to '/bin/bash'.
-      #                  when bash is used, the ';' delimeter can be specified
-      #                  to chain commands.
-      #
-      #                  to allow a command to extend into multiple lines,
-      #                  prepend '\' at the end of the previous line.
-      #
-      #                  an EOL character signifies the end of the bind.
-      #
-      #   ->           = keypress is not consumed by skhd
-      #
-      #   *            = matches every application not specified in <proc_map_lst>
-      #
-      #   ~            = application is unbound and keypress is forwarded per usual, when specified in a <proc_map>
-      #
-      # A mode is declared according to the following rules:
-      #
-      #   mode_decl = '::' <name> '@' ':' <command> | '::' <name> ':' <command> |
-      #               '::' <name> '@'               | '::' <name>
-      #
-      #   name      = desired name for this mode,
-      #
-      #   @         = capture keypresses regardless of being bound to an action
-      #
-      #   command   = command is executed through '$SHELL -c' and
-      #               follows valid shell syntax. if the $SHELL environment
-      #               variable is not set, it will default to '/bin/bash'.
-      #               when bash is used, the ';' delimeter can be specified
-      #               to chain commands.
-      #
-      #               to allow a command to extend into multiple lines,
-      #               prepend '\' at the end of the previous line.
-      #
-      #               an EOL character signifies the end of the bind.
-
-      # ############################################################### #
-      # THE FOLLOWING SECTION CONTAIN SIMPLE MAPPINGS DEMONSTRATING HOW #
-      # TO INTERACT WITH THE YABAI WM. THESE ARE SUPPOSED TO BE USED AS #
-      # A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
-      # ############################################################### #
-
       # focus window
       cmd - h : yabai -m window --focus west
       cmd - j : yabai -m window --focus south
@@ -168,39 +89,14 @@ in {
       # balance size of windows
       cmd + ctrl - 0 : yabai -m space --balance
 
-      cmd - 0x2F : elvish ~/dotfiles/bin/__hide_show_alacritty.sh
-      cmd + ctrl - 1 : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Emacs") | .id')
-      cmd + ctrl - 2 : yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Firefox") | .id')
-
-      # make floating window fill screen
-      # shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
-
-      # make floating window fill left-half of screen
-      # shift + alt - left   : yabai -m window --grid 1:2:0:0:1:1
-
-      # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-      # shift + cmd - n : yabai -m space --create && \
-      #                   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-      #                   yabai -m window --space "''${index}" && \
-      #                   yabai -m space --focus "''${index}"
-
-      # fast focus desktop
-      cmd + ctrl - x : yabai -m space --focus recent
-      cmd + ctrl - 1 : yabai -m space --focus 1
-      cmd + ctrl - 2 : yabai -m space --focus 2
-
-      # send window to desktop and follow focus
-      shift + cmd - z : yabai -m window --space next; yabai -m space --focus next
-      shift + cmd - 1 : yabai -m window --space  2; yabai -m space --focus 2
-      shift + cmd - 2 : yabai -m window --space  2; yabai -m space --focus 2
-
       # focus monitor
-      cmd + ctrl - k  : yabai -m display --focus prev
-      cmd + ctrl - j  : yabai -m display --focus next
+      cmd  - 0x21  : yabai -m display --focus prev
+      cmd  - 0x1E  : yabai -m display --focus next
       # ctrl + alt - 3  : yabai -m display --focus 3
 
       # send window to monitor and follow focus
-      # ctrl + cmd - c  : yabai -m window --display next; yabai -m display --focus next
+      ctrl + cmd - 0x21  : yabai -m window --display prev; yabai -m display --focus prev
+      ctrl + cmd - 0x1E  : yabai -m window --display next; yabai -m display --focus next
       # ctrl + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1
 
       # move floating window
@@ -219,20 +115,20 @@ in {
       # ctrl + alt - h : yabai -m window --insert west
 
       # toggle window zoom
-      cmd - return : yabai -m window --toggle zoom-parent
+      cmd + shift - return : yabai -m window --toggle zoom-parent
       cmd + ctrl - return : yabai -m window --toggle zoom-fullscreen
 
       # toggle window split type
-      cmd + shift - return  : yabai -m window --toggle split
+      cmd - 0x2C  : yabai -m window --toggle split
 
       # float / unfloat window and center on screen
-      # alt - t : yabai -m window --toggle float;\
-      #           yabai -m window --grid 4:4:1:1:2:2
+      alt - t : yabai -m window --toggle float;\
+                yabai -m window --grid 4:4:1:1:2:2
 
       # toggle sticky(+float), topmost, picture-in-picture
-      # alt - p : yabai -m window --toggle sticky;\
-      #           yabai -m window --toggle topmost;\
-      #           yabai -m window --toggle pip
+      alt - p : yabai -m window --toggle sticky;\
+                yabai -m window --toggle topmost;\
+                yabai -m window --toggle pip
 
       # https://github.com/koekeishiya/yabai/wiki/Tips-and-tricks#quickly-restart-the-yabai-launch-agent
       cmd + shift - c : launchctl kickstart -k "gui/''${UID}/homebrew.mxcl.yabai"
