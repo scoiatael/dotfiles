@@ -37,7 +37,8 @@ in {
       mouse_action1 = "move";
       mouse_action2 = "resize";
       layout = "bsp";
-      top_padding = top_padding;
+      # TODO: when there is notch, this is precisely notch height. So we don't need extra padding.
+      top_padding = 0;
       bottom_padding = 2;
       left_padding = 2;
       right_padding = 2;
@@ -52,7 +53,7 @@ in {
       yabai -m rule --add app="^Bitwarden$" manage=off grid=128:128:16:16:96:96
 
       # https://github.com/koekeishiya/yabai/issues/1317
-      yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || yabai -m window $YABAI_WINDOW_ID --toggle float'
+      # yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || yabai -m window $YABAI_WINDOW_ID --toggle float'
 
       echo "yabai configuration loaded.."
     '';
@@ -69,10 +70,10 @@ in {
       cmd - l : yabai -m window --focus east
 
       # colemak-dh
-      cmd - m : yabai -m window --focus west
-      cmd - n : yabai -m window --focus south
-      cmd - e : yabai -m window --focus north
-      cmd - i : yabai -m window --focus east
+      # cmd - m : yabai -m window --focus west
+      # cmd - n : yabai -m window --focus south
+      # cmd - e : yabai -m window --focus north
+      # cmd - i : yabai -m window --focus east
 
       # swap managed window
       ctrl + cmd - h : yabai -m window --swap west
@@ -132,6 +133,9 @@ in {
 
       # https://github.com/koekeishiya/yabai/wiki/Tips-and-tricks#quickly-restart-the-yabai-launch-agent
       cmd + shift - c : launchctl kickstart -k "gui/''${UID}/homebrew.mxcl.yabai"
+
+      # minimize window
+      cmd - m : yabai -m window --minimize
     '';
   };
 
