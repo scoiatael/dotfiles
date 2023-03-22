@@ -43,6 +43,8 @@
            ;; (js-mode . combobulate-mode)))
            (typescript-mode . combobulate-mode))))
 
+(use-package! eldoc-box
+  :hook ((eglot-managed-mode-hook . eldoc-box-hover-mode)))
 
 
 ;; - `after!' for running code after a package has loaded
@@ -61,7 +63,8 @@
    org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")))
 
 (after! vterm
-  (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
+ (advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args))))
+ (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
 
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
