@@ -5,6 +5,7 @@
 
   home.packages = with pkgs; [
     elvish # until I port scripts back..
+    html-tidy
     wget
     neofetch
     curlie

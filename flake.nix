@@ -60,6 +60,7 @@
           ./modules/zsh.nix
           ./modules/neovim.nix
           ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
+          ({ pkgs, ... }: { home.packages = with pkgs; [ lastpass-cli ]; })
           {
             home = {
               username = "lukaszczaplinski";

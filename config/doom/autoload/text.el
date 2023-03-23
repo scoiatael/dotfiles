@@ -42,3 +42,16 @@
         (delete-region start end)
         (insert (s-upper-camel-case str)))
     (message "No region selected")))
+
+;; https://github.com/zmaas/evil-unimpaired/blob/master/evil-unimpaired.el#L67-L75
+;;;###autoload
+(defun evil-unimpaired-paste-above ()
+  (interactive)
+  (evil-insert-newline-above)
+  (evil-paste-after 1 evil-this-register))
+
+;;;###autoload
+(defun evil-unimpaired-paste-below ()
+  (interactive)
+  (evil-insert-newline-below)
+  (evil-paste-after 1 evil-this-register))

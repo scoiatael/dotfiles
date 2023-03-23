@@ -72,6 +72,9 @@
 ;; - `map!' for binding new keys
 (map! "M-'" #'+vterm/toggle)
 
+(map! :n "]p" #'evil-unimpaired-paste-below
+      :n "[p" #'evil-unimpaired-paste-above)
+
 (map! :v
       "v" #'er/expand-region)
 
