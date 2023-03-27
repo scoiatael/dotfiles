@@ -15,33 +15,25 @@ notFound() {
   exit 1
 }
 
+notLoggedIn() {
+  echo "Please login via 'lpass login  <username>' first"
+  exit 1
+}
+
 PATH="~/.nix-profile/bin/:$PATH"
 if ! command -v lpass &> /dev/null; then
-  echo "The Bitwarden CLI is not installed."
+  echo "The LastPass CLI is not installed."
   exit 1
 fi
 
-# token=$(security find-generic-password -a ${USER} -s raycast-bitwarden -w 2> /dev/null)
-# token_status=$?
-
-# session=""
-# if [ $token_status -eq 0 ]; then
-#   session="--session $token"
-# fi
-
-# bw unlock --check $session > /dev/null 2>&1
-# unlocked_status=$?
-
-# if [ $unlocked_status -ne 0 ]; then
-#   echo "Vault is locked!"
-#   exit 1
-# fi
+lpass status > /dev/null 2>&1 || notLoggedIn()
 
 item=$(lpass ls | grep "$1")
 name=$(echo $item | awk '{ print $1  }') || notFound
-password=$(echo $item cut -d '[' -f 2| cut -d ']' -f 1 | awk '{ print $2  }' | xargs lpass show | awk '/password:/ { print $2  }') || notFound
+id=$(echo $item | cut -d '[' -f 2| cut -d ']' -f 1 | awk '{ print $2  }') || notFound
+password=$(lpass show "$id" | awk '/password:/ { print $2  }') || notFound
 
 echo -n $password | pbcopy
 unset password
-echo "Copied the password for '$name' to the clipboard."
+echo "Copied the password for '$name' [ID: $id] to the clipboard."
 exit 0
