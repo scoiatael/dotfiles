@@ -37,8 +37,7 @@ in {
       mouse_action1 = "move";
       mouse_action2 = "resize";
       layout = "bsp";
-      # TODO: when there is notch, this is precisely notch height. So we don't need extra padding.
-      top_padding = 0;
+      top_padding = 36;
       bottom_padding = 2;
       left_padding = 2;
       right_padding = 2;
