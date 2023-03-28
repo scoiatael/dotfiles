@@ -26,7 +26,7 @@ if ! command -v lpass &> /dev/null; then
   exit 1
 fi
 
-lpass status > /dev/null 2>&1 || notLoggedIn()
+lpass status > /dev/null 2>&1 || notLoggedIn
 
 item=$(lpass ls | grep "$1")
 name=$(echo $item | awk '{ print $1  }') || notFound
