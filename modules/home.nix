@@ -53,7 +53,7 @@
       settings = {
         font = {
           normal = { family = "JetBrainsMono Nerd Font"; };
-          size = 9;
+          size = 12;
         };
         colors.primary.background = "0x282828";
         colors.primary.foreground = "0xeeeeee";

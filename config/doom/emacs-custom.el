@@ -13,7 +13,9 @@
       (c-set-offset 'case-label '0)
       (c-set-offset 'innamespace '0)
       (c-set-offset 'inline-open '0))))
- '(safe-local-variable-values '((flycheck-disabled-checkers emacs-lisp-checkdoc))))
+ '(safe-local-variable-values
+   '((engine . jinja2)
+     (flycheck-disabled-checkers emacs-lisp-checkdoc))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

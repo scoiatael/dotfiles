@@ -53,6 +53,7 @@ in {
 
       # https://github.com/koekeishiya/yabai/issues/1317
       # yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || yabai -m window $YABAI_WINDOW_ID --toggle float'
+      yabai -m signal --add event=window_minimized active=yes action="if \$(yabai -m query --windows --window \$YABAI_WINDOW_ID | jq -r '.\"is-floating\"'); then yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null; fi"
 
       echo "yabai configuration loaded.."
     '';
@@ -134,7 +135,7 @@ in {
       cmd + shift - c : launchctl kickstart -k "gui/''${UID}/homebrew.mxcl.yabai"
 
       # minimize window
-      cmd - m : yabai -m window --minimize
+      cmd - m : yabai -m window --minimize; yabai -m window --focus mouse
     '';
   };
 

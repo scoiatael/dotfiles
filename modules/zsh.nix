@@ -14,6 +14,7 @@
         "darwin-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
       nix-test =
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
+      g = "git";
     };
     shellGlobalAliases = { "..." = "../../"; };
     sessionVariables = {
@@ -29,7 +30,10 @@
       add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 
       setopt PROMPT_SUBST
-      PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+      if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+        PROMPT=$PROMPT' %{$(vterm_prompt_end)%}'
+        alias vi=find_file
+      fi
 
       path+=("$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
     '';
