@@ -15,6 +15,8 @@
       nix-test =
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
       g = "git";
+      watch = "viddy";
+      w = "viddy";
     };
     shellGlobalAliases = { "..." = "../../"; };
     sessionVariables = {
@@ -29,25 +31,7 @@
       autoload -U add-zsh-hook
       add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 
-      setopt PROMPT_SUBST
       if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-        PROMPT=$PROMPT' %{$(vterm_prompt_end)%}'
-        alias vi=find_file
-      fi
-
-      path+=("$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
-    '';
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "tmux" "gpg-agent" "emacs" ];
-      extraConfig = ''
-        ZSH_TMUX_AUTOSTART=true
-        ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
-
-        export TMUX_COLORTAG_TAG_ONLY=yes
-        export TMUX_COLORTAG_USE_POWERLINE=yes
-        export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
-
         vterm_printf() {
             if [ -n "$TMUX" ] && ([ "$TERM" = "tmux" ] || [ "$TERM" = "screen" ]); then
                 # Tell tmux to pass the escape sequences through
@@ -85,6 +69,38 @@
         say() {
             vterm_cmd message "%s" "$*"
         }
+
+        setopt PROMPT_SUBST
+        PROMPT=$PROMPT' %{$(vterm_prompt_end)%}'
+
+        alias vi=find_file
+      fi
+
+      path+=("$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
+    '';
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "tmux" "gpg-agent" "emacs" ];
+      extraConfig = ''
+        ZSH_TMUX_AUTOSTART=true
+        ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
+
+        export TMUX_COLORTAG_TAG_ONLY=yes
+        export TMUX_COLORTAG_USE_POWERLINE=yes
+        export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
+
+        ### Fix slowness of pastes with zsh-syntax-highlighting.zsh
+        pasteinit() {
+          OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
+          zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+        }
+
+        pastefinish() {
+          zle -N self-insert $OLD_SELF_INSERT
+        }
+        zstyle :bracketed-paste-magic paste-init pasteinit
+        zstyle :bracketed-paste-magic paste-finish pastefinish
+        ### Fix slowness of pastes
       '';
     };
     plugins = with pkgs; [

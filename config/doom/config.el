@@ -49,11 +49,16 @@
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
-(after! 'smartparens
+(after! smartparens
   (dolist (char '("f" "r"))
     (sp-local-pair '(python-mode) (concat char "'") "'")
     (sp-local-pair '(python-mode) (concat char "\"") "\""))
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
+
+(after! format
+ (advice-add 'format-all-buffer :around #'envrc-propagate-environment)
+ (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)
+ (advice-add '+format-buffer-h :around #'envrc-propagate-environment))
 
 (after! org
   (setq
