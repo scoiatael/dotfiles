@@ -151,6 +151,16 @@
     };
     dircolors = { enable = true; };
     bat = { enable = true; };
+    btop = { enable = true; };
+    atuin = {
+      enable = true;
+      flags = [ "--disable-up-arrow" ];
+    };
+    gh = {
+      enable = true;
+      extensions = [ pkgs.gh-eco (pkgs.callPackage ../packages/gh-poi { }) ];
+      settings = { git_protocol = "ssh"; };
+    };
     exa = {
       enable = true;
       enableAliases = true;

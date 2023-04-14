@@ -17,6 +17,8 @@
       g = "git";
       watch = "viddy";
       w = "viddy";
+      cat = "bat";
+      c = "bat";
     };
     shellGlobalAliases = { "..." = "../../"; };
     sessionVariables = {
