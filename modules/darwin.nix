@@ -302,12 +302,12 @@ in {
   homebrew = {
     enable = true;
     casks = [
-      "iterm2"
       "karabiner-elements"
       "syncthing"
       "keybase"
       "raycast"
       "librewolf"
+      "signal"
     ];
   };
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
