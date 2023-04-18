@@ -3,16 +3,7 @@
 {
   services.sketchybar = {
     enable = true;
-    package = pkgs.sketchybar.overrideAttrs (final: old: rec {
-      version = "2.14.0";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "FelixKratz";
-        repo = "SketchyBar";
-        rev = "v${version}";
-        sha256 = "sha256-2uViQ3/gQcEgUbBK87qDcB8lcn1xFHWCaTDJPb4y3Ws=";
-      };
-    });
+    package = pkgs.sketchybar;
     config = ''
       # source: https://github.com/FelixKratz/dotfiles
 
