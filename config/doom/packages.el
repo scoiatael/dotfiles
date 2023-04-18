@@ -19,7 +19,19 @@
   (package! combobulate
     :recipe (:repo "mickeynp/combobulate" :host github) :pin "2aef9d4"))
 
-(package! eldoc-box :pin "c805bf")
+(package! eldoc-box :recipe (:host github :repo "casouri/eldoc-box") :pin "c805bf")
+
+(package! modus-themes :recipe (:host sourcehut :repo "protesilaos/modus-themes") :pin "cfc8c4ee")
+
+(package! moody :recipe (:host github :repo "tarsius/moody") :pin "249c5f1")
+
+(package! keycast :recipe (:host github :repo "tarsius/keycast") :pin "cabb3fa")
+
+(package! devdocs :recipe (:host github :repo "astoff/devdocs.el") :pin "2988d4d")
+
+(package! doom-modeline :recipe (:host github :repo "seagle0128/doom-modeline") :pin "ed72a56")
+
+(package! spaceline :recipe (:host github :repo "TheBB/spaceline") :pin "e0f848c")
 
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify

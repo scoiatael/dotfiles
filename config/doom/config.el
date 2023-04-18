@@ -46,6 +46,11 @@
 (use-package! eldoc-box
   :hook ((eglot-managed-mode-hook . eldoc-box-hover-mode)))
 
+;; https://gitlab.inria.fr/jwintz/doom.d/-/blob/develop/config.el
+(add-to-list              'load-path doom-private-dir)
+(add-to-list 'custom-theme-load-path doom-private-dir)
+(require '+private|modeline)
+
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
