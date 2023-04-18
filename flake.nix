@@ -100,6 +100,7 @@
       modules = [
         ./modules/darwin.nix
         ./modules/darwin/yabai.nix
+        ./modules/darwin/sketchybar.nix
         ./modules/darwin/gaming.nix
       ];
     };
@@ -108,6 +109,7 @@
       modules = [
         ./modules/darwin.nix
         ./modules/darwin/yabai.nix
+        ./modules/darwin/sketchybar.nix
         ./modules/darwin/ceros.nix
       ];
     };
