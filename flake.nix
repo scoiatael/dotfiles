@@ -97,11 +97,19 @@
       };
     darwinConfigurations.LsGamingDarwin = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
-      modules = [ ./modules/darwin.nix ./modules/darwin/gaming.nix ];
+      modules = [
+        ./modules/darwin.nix
+        ./modules/darwin/yabai.nix
+        ./modules/darwin/gaming.nix
+      ];
     };
     darwinConfigurations.LsCerosDarwin = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      modules = [ ./modules/darwin.nix ./modules/darwin/ceros.nix ];
+      modules = [
+        ./modules/darwin.nix
+        ./modules/darwin/yabai.nix
+        ./modules/darwin/ceros.nix
+      ];
     };
     nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
