@@ -11,14 +11,8 @@
       # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
       AWS_VAULT_BACKEND = "kwallet";
     };
-    initExtra = ''
-      unset NIX_PATH
-      # error: file 'nixpkgs' was not found in the Nix search path (add it using $NIX_PATH or -I)
-      export NIX_PATH="${config.home.homeDirectory}/.nix-defexpr/channels/nixos";
-    '';
   };
 
-  services.keybase.enable = true;
   services.syncthing = {
     enable = true;
     # tray = {

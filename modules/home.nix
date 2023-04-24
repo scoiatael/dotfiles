@@ -216,7 +216,6 @@
   #   ../config/elvish/lib/starship.elv;
 
   home.file.".zprofile".text = ''
-    export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
     export DOOMLOCALDIR="~/.emacs.local"
     export EMACSDIR="~/.emacs.doom"
   '';

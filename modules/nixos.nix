@@ -10,7 +10,7 @@
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
-    enable = true;
+    enable = false;
     version = 2;
     device = "nodev";
     efiSupport = true;
@@ -25,49 +25,13 @@
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
 
   security.sudo.enable = false;
-  security.doas = {
-    enable = true;
-    extraRules = [{
-      users = [ "lczaplinski" ];
-      runAs = "lczaplinski-docker";
-      noPass = true;
-      setEnv = [
-        "AWS_ACCESS_KEY_ID"
-        "AWS_DEFAULT_REGION"
-        "AWS_REGION"
-        "AWS_SECRET_ACCESS_KEY"
-        "AWS_SECURITY_TOKEN"
-        "AWS_SESSION_EXPIRATION"
-        "AWS_SESSION_TOKEN"
-        "AWS_VAULT"
-      ];
-    }];
-  };
-
-  # https://rdes.gitlab.io/posts/2016-08-29-enabling-dockers-user-namespaces-in-nixos.html
-  virtualisation.docker = {
-    enable = true;
-    extraOptions = "--userns-remap=default";
-  };
-  users.groups.dockremap.gid = 10000;
-  users.users.dockremap = {
-    isSystemUser = true;
-    uid = 10000;
-    group = "dockremap";
-    subUidRanges = [{
-      startUid = 100000;
-      count = 65536;
-    }];
-    subGidRanges = [{
-      startGid = 100000;
-      count = 65536;
-    }];
-  };
+  security.doas = { enable = true; };
 
   users.extraUsers.root.shell = pkgs.bash;
   users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
 
-  networking.hostName = "r-work-nixos"; # Define your hostname.
+  networking.hostName = "LsFramework"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.wireless.userControlled.enable = true;
   networking.networkmanager.enable = true;
@@ -87,21 +51,11 @@
 
   # Open ports in the firewall.
   networking.firewall = {
-    allowedTCPPorts = [
-      6001 # shairport
-      631 # avahi
-    ];
+    allowedTCPPorts = [ ];
 
-    allowedUDPPortRanges = [{
-      from = 6001;
-      to = 6199;
-    } # shairport
-      ];
+    allowedUDPPortRanges = [ ];
 
-    allowedUDPPorts = [
-      5353 # avahi
-      631 # avahi
-    ];
+    allowedUDPPorts = [ ];
   };
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -165,8 +119,6 @@
     updater.enable = true;
   };
 
-  services.thermald.enable = true;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -199,9 +151,13 @@
   # services.xserver.desktopManager.lxqt.enable = true;
   # disable the default
   # services.xserver.displayManager.lightdm.enable = false;
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.lczaplinski = {
+  users.users.lukaszczaplinski = {
     isNormalUser = true;
     extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
@@ -209,59 +165,26 @@
       "users"
       "i2c" # use ddcutil
     ];
-    group = "lczaplinski";
   };
-  users.users.lczaplinski-docker = {
-    isSystemUser = true;
-    group = "lczaplinski";
-    extraGroups = [
-      "docker" # Enable ‘docker’ for the user.
-    ];
-    home = "/home/docker";
-    createHome = true;
-  };
-  users.groups.lczaplinski =
-    { }; # Create shared group between main user and -docker one
-  system.activationScripts.shareHome = lib.stringAfter [ "users" ] ''
-    chmod g+rwx /home/lczaplinski
-  '';
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
     git
-    wget
     librewolf-wayland
-    thunderbird-wayland
-    # for testing
-    ungoogled-chromium
-    # ENDOF
-    yakuake
-    slack
     lsof
-    fd
-    zoom-us
-    stow
-    elvish
-    zoxide
     go
     xsel
     xclip
     rclone
     signal-desktop
+    keybase-gui
     kgpg
     gparted
-    aws-vault
-    google-cloud-sdk
-    awscli
-    aws-sam-cli
     htop
     fzf
-    python3Minimal
     ark
     sd
-    keybase-gui
-    helix
     zsh
     libsForQt5.kwallet
     libsForQt5.kate
@@ -269,7 +192,6 @@
     libsForQt5.bismuth
     libsForQt5.qt5ct
     libsForQt5.powerdevil
-    shairport-sync
     mpv
     shotcut
     powertop
@@ -292,9 +214,6 @@
     # Screenshotting under sway
     sway-contrib.grimshot
   ]);
-
-  # SLACK!
-  nixpkgs.config.allowUnfree = true;
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
@@ -344,13 +263,18 @@
     ];
   };
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  environment.sessionVariables = { MOZ_ENABLE_WAYLAND = "1"; };
+  environment.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    LIBVA_DRIVER_NAME = "iHD";
+  };
 
   hardware.i2c.enable = true;
 
   hardware.bluetooth.enable = true;
+
+  # https://nixos.wiki/wiki/Fwupd
+  services.fwupd.enable = true;
 
   environment.etc."NetworkManager/dispatcher.d/99-wlan" = {
     text = ''
@@ -371,17 +295,12 @@
     mode = "0550";
   };
 
-  environment.etc."pam.d/gtklock" = {
-    text = "auth include login";
-    mode = "0550";
-  };
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 
 }

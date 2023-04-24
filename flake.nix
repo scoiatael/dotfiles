@@ -20,32 +20,45 @@
       url = "github:vinceliuice/grub2-themes";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # TODO:
+    # doomemacs = {
+    #   url = "github:doomemacs/doomemacs";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = { nixpkgs, home-manager, darwin, ... }@attrs: {
-    homeConfigurations.lczaplinski = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      modules = [
-        ./modules/home.nix
-        ./modules/electron.nix
-        ./modules/linux.nix
-        ./modules/rclone-gdrive-mount.nix
-        ./modules/git.nix
-        ./modules/emacs.nix
-        ./modules/tmux.nix
-        ./modules/zsh.nix
-        ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsGit; })
-        {
-          home = {
-            username = "lczaplinski";
-            homeDirectory = "/home/lczaplinski";
-            stateVersion = "21.11";
-          };
-          programs.home-manager.enable = true;
-        }
-      ];
-      extraSpecialArgs = attrs;
-    };
+    homeConfigurations."lukaszczaplinski@LsFramework" =
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [
+          ./modules/home.nix
+          ./modules/electron.nix
+          ./modules/linux.nix
+          ./modules/git.nix
+          ./modules/emacs.nix
+          ./modules/tmux.nix
+          ./modules/zsh.nix
+          ./modules/neovim.nix
+          ({ lib, ... }: {
+            programs.alacritty.settings.font.size = lib.mkForce 10;
+          })
+          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsPgtk; })
+          {
+            home = {
+              username = "lukaszczaplinski";
+              homeDirectory = "/home/lukaszczaplinski";
+              stateVersion = "22.11";
+            };
+            programs.home-manager.enable = true;
+          }
+        ];
+        extraSpecialArgs = attrs;
+      };
     homeConfigurations."lucasczaplinski@LsCerosDarwin" =
       home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
@@ -113,7 +126,7 @@
         ./modules/darwin/ceros.nix
       ];
     };
-    nixosConfigurations.r-work-nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
       modules = [ ./modules/nixos.nix ];

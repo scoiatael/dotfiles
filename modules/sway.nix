@@ -1,4 +1,4 @@
-{ config, lib, pkgs, persway, ... }:
+{ config, lib, pkgs, ... }:
 # https://github.com/johnae/nixos-configuration/blob/b10bedaf0dc66bba527a2d825fe5f4b687a1cbe2/home/sway.nix
 let
   swayservice = Description: Service: {
@@ -14,12 +14,12 @@ let
   };
   swayr = "${pkgs.swayr}/bin/swayr";
 in {
-  nixpkgs.overlays = [ persway.overlays.default ];
+  # nixpkgs.overlays = [ persway.overlays.default ];
 
   systemd.user.services = {
-    persway = swayservice "Small Sway IPC Deamon" {
-      ExecStart = "${pkgs.persway}/bin/persway -aw";
-    };
+    # persway = swayservice "Small Sway IPC Deamon" {
+    #   ExecStart = "${pkgs.persway}/bin/persway -aw";
+    # };
     swayrd = swayservice "A window-switcher & more for sway" {
       ExecStart = "${pkgs.swayr}/bin/swayrd";
       Environment = [ "PATH=${pkgs.wofi}/bin" ];
@@ -47,7 +47,7 @@ in {
       ### Output configuration
       #
       # Default wallpaper (more resolutions are available in /run/current-system/sw/share/backgrounds/sway/)
-      output * bg ~/Wallpapers/da9d95cf-f3e7-4031-9500-2250d16d0572.jpg fill
+      output * bg ~/Wallpapers/d7ed303d-7af9-4278-a02e-a14c9c9b1d05.png fill
       #
       # Example configuration:
       #
@@ -167,7 +167,7 @@ in {
       }];
     };
   };
-  programs.mako = {
+  services.mako = {
     enable = true;
     font = "JetBrainsMono Nerd Font 10";
     backgroundColor = "#1E1D2F";
@@ -285,47 +285,36 @@ in {
     bars = {
       default = {
         settings = {
-          icons = { name = "material-nf"; };
-          theme = { name = "slick"; };
+          icons = { icons = "material-nf"; };
+          theme = { theme = "slick"; };
           block = [
             # { block = "uptime"; }
             {
               block = "disk_space";
               path = "/";
-              alias = "/";
               info_type = "available";
-              unit = "GB";
               interval = 60;
               warning = 20.0;
               alert = 10.0;
             }
-            {
-              block = "memory";
-              display_type = "memory";
-              format_mem = "{mem_used_percents}";
-              format_swap = "{swap_used_percents}";
-            }
+            { block = "memory"; }
             {
               block = "cpu";
               interval = 1;
             }
             {
               block = "temperature";
-              collapsed = true;
               interval = 10;
-              format = "{min} min, {max} max, {average} avg";
               warning = 90; # i7 11th gen is running kinda hot.
             }
             {
               block = "load";
               interval = 1;
-              format = "{1m}";
             }
             { block = "sound"; }
             {
               block = "battery";
               interval = 10;
-              format = "{percentage} {time}";
             }
             {
               block = "backlight";
@@ -350,7 +339,6 @@ in {
             {
               block = "time";
               interval = 60;
-              format = "%a %d/%m %R";
             }
           ];
         };
