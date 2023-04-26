@@ -1,28 +1,19 @@
-{ config, lib, pkgs, grub2-themes, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    grub2-themes.nixosModules.default
   ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = false;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = {
-    enable = false;
-    version = 2;
-    device = "nodev";
-    efiSupport = true;
-    enableCryptodisk = true;
-    font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
-    fontSize = 20;
-  };
-  boot.loader.grub2-theme = { theme = "whitesur"; };
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ "mem_sleep_default=deep" ];
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
+  # Enroll keys once secureboot is enforced:
+  # systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p1
+  boot.initrd.systemd = { enable = true; };
 
   security.sudo.enable = false;
   security.doas = { enable = true; };
