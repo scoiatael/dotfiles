@@ -20,6 +20,7 @@ in {
     nixfmt
     sqlite
     clang
+    # TODO: https://github.com/aca/emmet-ls
   ];
 
   programs.emacs = {
