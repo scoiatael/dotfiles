@@ -25,7 +25,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [ epkgs.vterm ];
+    extraPackages = epkgs: [ epkgs.vterm epkgs.jinx ];
   };
 
   # avoid copying into /nix/store to allow easy changes
