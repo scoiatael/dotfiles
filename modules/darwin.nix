@@ -1,6 +1,7 @@
 { pkgs, lib, ... }: {
   # TODO: https://github.com/gilacost/dot-files/blob/master/darwin-configuration.nix
   # TODO: https://the-empire.systems/linux-macos-setup
+  # TODO: https://notes.alinpanaitiu.com/Keyboard%20tricks%20from%20a%20macOS%20app%20dev
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
