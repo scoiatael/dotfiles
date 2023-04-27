@@ -16,7 +16,9 @@
               ns-right-alternate-modifier 'none
               mac-right-option-modifier nil))
 
-(add-to-list 'doom-symbol-fallback-font-families "Iosevka")
+(add-to-list #'doom-symbol-fallback-font-families "Iosevka")
+(add-hook! #'emacs-lisp-mode
+  (add-to-list #'flycheck-disabled-checkers 'emacs-lisp-checkdoc))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -40,7 +42,6 @@
   (use-package! combobulate
     ;; Ensure `combobulate-mode` is activated when you launch a mode it supports
     :hook ((python-mode . combobulate-mode)
-           ;; (js-mode . combobulate-mode)))
            (typescript-mode . combobulate-mode))))
 
 (use-package! eldoc-box

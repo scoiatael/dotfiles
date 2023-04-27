@@ -17,7 +17,6 @@ in {
     aspellDicts.en
     aspellDicts.en-science
     aspellDicts.en-computers
-    ispell
     nixfmt
     sqlite
     clang
