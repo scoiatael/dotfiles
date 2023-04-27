@@ -74,7 +74,6 @@
           ./modules/neovim.nix
           ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
           ({ pkgs, ... }: { home.packages = with pkgs; [ lastpass-cli ]; })
-          ./modules/podman.nix
           {
             home = {
               username = "lukaszczaplinski";
