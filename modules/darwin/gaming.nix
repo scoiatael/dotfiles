@@ -2,6 +2,14 @@
 
 {
   homebrew = {
-    casks = [ "battle-net" "bitwarden" "eloston-chromium" "todoist" "dropbox" ];
+    casks = [
+      "battle-net"
+      "bitwarden"
+      "eloston-chromium"
+      "todoist"
+      "dropbox"
+      "wowup"
+      "steam"
+    ];
   };
 }
