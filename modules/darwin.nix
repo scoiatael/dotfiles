@@ -29,7 +29,21 @@
       "signal"
       "lunar"
     ];
+    taps = [ "Homebrew/homebrew-autoupdate" ];
+    onActivation = { cleanup = "uninstall"; };
   };
+
+  # https://github.com/LnL7/nix-darwin/blob/master/modules/system/activation-scripts.nix#L111
+  system.activationScripts.postUserActivation.text = let
+    brewPrefix = if pkgs.stdenv.hostPlatform.isAarch64 then
+      "/opt/homebrew/bin"
+    else
+      "/usr/local/bin";
+  in ''
+    echo >&2 "setting up homebrew autoupdate..."
+    PATH=${brewPrefix}:$PATH brew autoupdate delete
+    PATH=${brewPrefix}:$PATH brew autoupdate start --upgrade --cleanup
+  '';
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
   security.pam.enableSudoTouchIdAuth = true;
 
