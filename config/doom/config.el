@@ -52,6 +52,7 @@
 (add-to-list 'custom-theme-load-path doom-private-dir)
 (require '+private|modeline)
 (require '+private|spellchecking)
+(require '+private|posframe)
 
 
 ;; - `after!' for running code after a package has loaded
@@ -89,10 +90,10 @@
 (map! "M-'" #'+vterm/toggle)
 
 (map! :n "]p" #'evil-unimpaired-paste-below
-      :n "[p" #'evil-unimpaired-paste-above)
-
-(map! :v
-      "v" #'er/expand-region)
+      :n "[p" #'evil-unimpaired-paste-above
+      :v "[6" #'base64-decode-region
+      :v "]6" #'base64-encode-region
+      :v "v" #'er/expand-region)
 
 (map! :leader
       ">" #'spacemacs/alternate-buffer
