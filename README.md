@@ -10,15 +10,15 @@ Simply `home-manager switch --flake 'path:dotfiles#framework'` - or roll your ow
 # macOS Clean install
 
 1. Clone this repo.
-2. Install nix from https://nixos.org/download.html#nix-install-macos
-3. Install brew from https://docs.brew.sh/Installation
-4. `nix --extra-experimental-features nix-command --extra-experimental-features flakes build ~/dotfiles#darwinConfigurations.LsMBP.system`
-5. Edit your hostname via https://support.apple.com/en-gb/guide/mac-help/mchlp2322/mac
-5. Reboot :)
-5. `./result/sw/bin/darwin-rebuild switch --flake ~/dotfiles`
-6. Set Spotlight to ⌘D ;)
-7. `nix build --extra-experimental-features flakes --extra-experimental-features nix-command .#homeConfigurations.lukaszczaplinski@LsGamingDarwin.activationPackage`
-8. `./result/activate`
+1. Install nix from https://nixos.org/download.html#nix-install-macos
+1. Install brew from https://docs.brew.sh/Installation
+1. Edit your hostname via https://support.apple.com/en-gb/guide/mac-help/mchlp2322/mac
+1. Reboot :)
+1. `nix --extra-experimental-features nix-command --extra-experimental-features flakes build ~/dotfiles#darwinConfigurations.LsMBP.system`
+1. `./result/sw/bin/darwin-rebuild switch --flake ~/dotfiles`
+1. Set Spotlight to ⌘D ;)
+1. `nix build --extra-experimental-features flakes --extra-experimental-features nix-command .#homeConfigurations.lukaszczaplinski@LsGamingDarwin.activationPackage`
+1. `./result/activate`
 
 # Yubikey transfer
 
