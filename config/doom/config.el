@@ -44,9 +44,6 @@
     :hook ((python-mode . combobulate-mode)
            (typescript-mode . combobulate-mode))))
 
-(use-package! eldoc-box
-  :hook ((eglot-managed-mode-hook . eldoc-box-hover-mode)))
-
 ;; https://gitlab.inria.fr/jwintz/doom.d/-/blob/develop/config.el
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)

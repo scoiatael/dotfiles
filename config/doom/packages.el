@@ -19,8 +19,6 @@
   (package! combobulate
     :recipe (:repo "mickeynp/combobulate" :host github) :pin "2aef9d4"))
 
-(package! eldoc-box :recipe (:host github :repo "casouri/eldoc-box") :pin "c805bf")
-
 (package! modus-themes :recipe (:host sourcehut :repo "protesilaos/modus-themes") :pin "cfc8c4ee")
 
 (package! moody :recipe (:host github :repo "tarsius/moody") :pin "249c5f1")

@@ -107,7 +107,4 @@
 (marginalia-mode)
 (mini-frame-mode t)
 
-(use-package! eldoc-box
-  :hook ((eglot-managed-mode-hook . eldoc-box-hover-mode)))
-
 (provide '+private|posframe)
