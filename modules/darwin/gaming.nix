@@ -10,6 +10,7 @@
       "dropbox"
       "wowup"
       "steam"
+      "skype"
     ];
   };
 }
