@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+require 'yaml'
+
+THEMES =  YAML.load_file("#{Dir.home}/dotfiles/config/alacritty_themes.yaml")
+
+if ARGV.include? '-list'
+  puts THEMES.keys
+  exit 0
+end
+
+unless ARGV.include? '-set'
+  puts "USAGE:\n\ttheme -set {theme_name}\n\ttheme -list"
+  exit 1
+end
+
+theme_index = ARGV.index('-set') + 1
+theme = ARGV[theme_index]
+
+if theme.nil? || theme.empty?
+  puts 'must provided a theme name'
+  exit 1
+end
+
+if THEMES[theme].nil?
+  puts 'theme not found'
+  exit 1
+end
+
+config_path = "#{Dir.home}/.config/alacritty/theme.yml"
+begin
+  CURRENT_CONFIG = YAML.load_file(config_path)
+rescue Errno::ENOENT
+  CURRENT_CONFIG = {}
+end
+CURRENT_CONFIG['colors'] = THEMES.dig(theme)
+
+File.open(config_path, 'w') do |file|
+  file.write CURRENT_CONFIG.to_yaml
+end
+
+bg1 = CURRENT_CONFIG.dig("colors", "primary", "background").gsub("0x", "#")
+lightgray = CURRENT_CONFIG.dig("colors", "primary", "foreground").gsub("0x", "#")
+
+`tmux set -g status-style bg=#{bg1}`
+`tmux set -g window-status-separator ""`
+`tmux set -g window-status-style fg=#{bg1},bg=#{bg1},none`
+`tmux set -g window-status-activity-style bg=#{bg1},fg=#{lightgray},none`
+`tmux set -g window-status-bell-style bg=#{bg1},fg=#{lightgray},none`
+# TODO: how to make it work?
+# `tmux set-environment -g colortag_bg1 "#{bg1}"`
+# `tmux set-environment -g colortag_bg0 "#{bg1}"`
+# `tmux set-environment -g colortag_lightgray "#{lightgray}"`
