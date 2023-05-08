@@ -2,5 +2,5 @@
 
 {
   hardware.notch = true;
-  homebrew = { casks = [ "slack" "zoom" "google-drive" "podman-desktop" ]; };
+  homebrew = { casks = [ "slack" "zoom" "google-drive" ]; };
 }
