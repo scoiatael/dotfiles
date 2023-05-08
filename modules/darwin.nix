@@ -42,7 +42,7 @@
       "/usr/local/bin";
   in ''
     echo >&2 "setting up homebrew autoupdate..."
-    PATH=${brewPrefix}:$PATH brew autoupdate delete
+    PATH=${brewPrefix}:$PATH brew autoupdate delete > /dev/null
     PATH=${brewPrefix}:$PATH brew autoupdate start --upgrade --cleanup
   '';
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
