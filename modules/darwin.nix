@@ -26,7 +26,10 @@
       "syncthing"
       "keybase"
       "raycast"
-      "librewolf"
+      {
+        name = "librewolf";
+        args = { no_quarantine = true; };
+      }
       "signal"
       "lunar"
     ];
