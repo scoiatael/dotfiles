@@ -49,7 +49,6 @@
 (add-to-list 'custom-theme-load-path doom-private-dir)
 (require '+private|modeline)
 (require '+private|spellchecking)
-(require '+private|posframe)
 
 
 ;; - `after!' for running code after a package has loaded
