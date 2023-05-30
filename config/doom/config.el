@@ -126,12 +126,10 @@
       "n" #'avy-goto-line)
 
 (map! :map magit-unmerged-section-map
-      :leader
-      :prefix "S"
-      :desc "Next conflict" "{" #'smerge-next
-      :desc "Prev conflict" "}" #'smerge-prev
-      :desc "Keep current" "c" #'smerge-keep-current
-      :desc "Keep all" "a" #'smerge-keep-all)
+      :n :desc "Next conflict" "]s" #'smerge-next
+      :n :desc "Prev conflict" "[s" #'smerge-prev
+      :n :desc "Keep current" "C" #'smerge-keep-current
+      :n :desc "Keep all" "A" #'smerge-keep-all)
 
 (map! :after org-mode
       :map org-mode-map
