@@ -76,7 +76,7 @@
           ({ pkgs, ... }: { home.packages = with pkgs; [ lastpass-cli ]; })
           {
             home = {
-              username = "lukaszczaplinski";
+              username = "lucasczaplinski";
               homeDirectory = "/Users/lucasczaplinski";
               stateVersion = "22.05";
             };

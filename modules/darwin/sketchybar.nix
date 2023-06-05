@@ -116,7 +116,7 @@
 
         sketchybar --add item clock right                              \
                    --set clock   update_freq=10                        \
-                                 icon=                                \
+                                 icon=$CLOCK                           \
                                  script="$PLUGIN_DIR/clock.sh"         \
                                                                        \
                    --add item wifi right                               \

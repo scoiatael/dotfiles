@@ -41,3 +41,7 @@ BATTERY_CHARGING=
 
 # WiFi
 WIFI=󰖩
+
+# Clock
+CLOCK=
+CALENDAR=

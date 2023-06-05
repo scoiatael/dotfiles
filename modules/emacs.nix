@@ -3,8 +3,8 @@
 let
   doomDir = builtins.fetchTarball {
     url =
-      "https://github.com/doomemacs/doomemacs/archive/8f6b045dfdb6d00e5a324c3f9044dce773791502.tar.gz";
-    sha256 = "1fzgwxvj60dfjdgylibjbg407d1lb35269ykgy7jcjxdmmbfzl9b";
+      "https://github.com/doomemacs/doomemacs/archive/042fe0c43831c8575abfdec4196ebd7305fa16ac.tar.gz";
+    sha256 = "1z9cjksph1q0v6sz1lhnvdcv1hd5cx7vyzi3fn28ph7q0yxmq62y";
   };
 in {
   nixpkgs.overlays = [ emacs-overlay.overlay ];
