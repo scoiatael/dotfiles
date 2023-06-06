@@ -65,14 +65,14 @@
   };
 
   fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/FF5D-3A2D";
+    device = "/dev/disk/by-uuid/3DF9-C557";
     fsType = "vfat";
   };
 
-  swapDevices = [{
-    device = "/dev/disk/by-partuuid/78059e35-0cc9-4183-af14-1c12eb8322f8";
-    randomEncryption = true;
-  }];
+  #swapDevices = [{
+  #  device = "/dev/disk/by-partuuid/f50a41ef-4f65-4d47-b7ef-cac669f6bb47";
+  #  randomEncryption = true;
+  # }];
 
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "ondemand";

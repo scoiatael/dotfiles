@@ -16,10 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    grub2-themes = {
-      url = "github:vinceliuice/grub2-themes";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +40,7 @@
           ./modules/tmux.nix
           ./modules/zsh.nix
           ./modules/neovim.nix
+          ./modules/sway.nix
           ({ lib, ... }: {
             programs.alacritty.settings.font.size = lib.mkForce 10;
           })

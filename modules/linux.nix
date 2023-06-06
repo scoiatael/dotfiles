@@ -27,6 +27,7 @@
     procs # broken on macOS
     libnotify # doesn't work on macOS
     lm_sensors # for temp display in i3status-rust?
+    bitwarden
   ];
   services.unclutter.enable = true;
   xresources.properties = {
