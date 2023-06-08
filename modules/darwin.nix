@@ -32,6 +32,7 @@
       }
       "signal"
       "lunar"
+      "yubico-authenticator"
     ];
     taps = [ "Homebrew/homebrew-autoupdate" ];
     onActivation = { cleanup = "uninstall"; };

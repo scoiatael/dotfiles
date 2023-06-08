@@ -6,7 +6,7 @@
 (setq
  doom-localleader-key ","
  user-full-name "Lukasz Czaplinski"
- doom-font "JetBrainsMono Nerd Font-9"
+ doom-font "JetBrainsMono Nerd Font-12"
  doom-theme 'doom-one
  display-line-numbers-type t
  comint-prompt-read-only nil

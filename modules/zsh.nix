@@ -84,7 +84,7 @@
       enable = true;
       plugins = [ "tmux" "gpg-agent" "emacs" ];
       extraConfig = ''
-        ZSH_TMUX_AUTOSTART=true
+        # ZSH_TMUX_AUTOSTART=true
         ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
 
         export TMUX_COLORTAG_TAG_ONLY=yes

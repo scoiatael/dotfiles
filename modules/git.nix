@@ -194,11 +194,15 @@ in {
           includeIssuesSection = false;
         };
       };
+      user = {
+        name = "Lukasz Czaplinski";
+        email = "git@scoiatael.dev";
+      };
       github.user = "scoiatael";
       status.short = true;
       pull.rebase = true;
       rebase.autoSquash = true;
-      init.defaultBranch = "master";
+      init.defaultBrlaanch = "master";
     };
     signing = {
       signByDefault = true;
