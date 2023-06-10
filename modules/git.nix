@@ -202,7 +202,7 @@ in {
       status.short = true;
       pull.rebase = true;
       rebase.autoSquash = true;
-      init.defaultBrlaanch = "master";
+      init.defaultBranch = "main";
     };
     signing = {
       signByDefault = true;
