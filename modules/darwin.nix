@@ -33,6 +33,7 @@
       "signal"
       "lunar"
       "yubico-authenticator"
+      "dteoh-devdocs"
     ];
     taps = [ "Homebrew/homebrew-autoupdate" ];
     onActivation = { cleanup = "uninstall"; };
