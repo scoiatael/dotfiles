@@ -78,6 +78,8 @@
         alias vi=find_file
       fi
 
+      add-zsh-hook chpwd (){ tmux rename-window "$(print -P '%3~')" }
+
       path+=("$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
     '';
     oh-my-zsh = {

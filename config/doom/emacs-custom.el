@@ -14,7 +14,8 @@
       (c-set-offset 'innamespace '0)
       (c-set-offset 'inline-open '0))))
  '(safe-local-variable-values
-   '((engine . jinja2)
+   '((+format-with . "eslint")
+     (engine . jinja2)
      (flycheck-disabled-checkers emacs-lisp-checkdoc))))
 
 (custom-set-faces
