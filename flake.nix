@@ -111,6 +111,7 @@
         ./modules/darwin/yabai.nix
         ./modules/darwin/sketchybar.nix
         ./modules/darwin/gaming.nix
+        { documentation.enable = false; }
       ];
     };
     darwinConfigurations.LsCerosDarwin = darwin.lib.darwinSystem {
@@ -120,6 +121,7 @@
         ./modules/darwin/yabai.nix
         ./modules/darwin/sketchybar.nix
         ./modules/darwin/ceros.nix
+        { documentation.enable = false; }
       ];
     };
     nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
