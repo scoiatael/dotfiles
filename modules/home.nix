@@ -106,9 +106,16 @@
       enable = true;
       enableNushellIntegration = false; # broken as of 2022/12/03
       settings = {
-        format = "$cmd_duration$username(\\[$git_status\\])$character";
-        right_format = "$git_branch(\\[$git_state\\])ǂ$directory";
+        format = ''
+          $cmd_duration┌$fill$git_branch$git_stateǂ$directory
+          └$username\($git_status\)$character'';
+
         command_timeout = 90;
+
+        fill = {
+          symbol = "─";
+          style = "bold green";
+        };
 
         directory = {
           style = "blue";
@@ -137,7 +144,8 @@
         };
 
         git_state = {
-          format = "\\([$state( $progress_current/$progress_total)]($style)\\)";
+          format =
+            "\\([|$state( $progress_current/$progress_total)]($style)\\)";
           style = "bright-black";
         };
 
