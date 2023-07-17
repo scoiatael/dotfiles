@@ -108,7 +108,7 @@
       settings = {
         format = ''
           $cmd_duration┌$fill$git_branch$git_stateǂ$directory
-          └$username\($git_status\)$character'';
+          └$username$git_status$character'';
 
         command_timeout = 90;
 
@@ -134,7 +134,7 @@
         };
 
         git_status = {
-          format = "[$ahead_behind$staged$modified]($style)";
+          format = "[\\($ahead_behind$staged$modified\\)]($style)";
           style = "cyan";
           conflicted = "[䷅](red)";
           untracked = "[·](grey)";
