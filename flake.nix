@@ -16,11 +16,10 @@
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # TODO:
-    # doomemacs = {
-    #   url = "github:doomemacs/doomemacs";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    doomemacs = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
   };
 
   outputs = { nixpkgs, home-manager, darwin, ... }@attrs: {
