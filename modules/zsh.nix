@@ -80,7 +80,8 @@
 
       add-zsh-hook chpwd (){ local SWD="$(print -P '%3~')"; tmux rename-window "''${(@j[/]M)''${(@s[/]M)SWD##*/}#?}$SWD:t" }
 
-      path+=("$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
+      # TODO: fix on non-Darwin
+      path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
     '';
     oh-my-zsh = {
       enable = true;

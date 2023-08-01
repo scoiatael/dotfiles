@@ -43,7 +43,7 @@
       ];
     })
     # (callPackage ../packages/ternimal { })
-    janet
+    # janet
     # luakit # doesn't work on aarch64-darwin :/
   ];
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
@@ -55,6 +55,9 @@
         font = {
           normal = { family = "JetBrainsMono Nerd Font"; };
           size = 12;
+        };
+        shell = {
+          program = "${pkgs.zsh}/bin/zsh";
         };
         # colors.primary.background = "0x282828";
         # colors.primary.foreground = "0xeeeeee";

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, emacs-overlay, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   doomDir = builtins.fetchTarball {
@@ -7,8 +7,6 @@ let
     sha256 = "1z9cjksph1q0v6sz1lhnvdcv1hd5cx7vyzi3fn28ph7q0yxmq62y";
   };
 in {
-  nixpkgs.overlays = [ emacs-overlay.overlay ];
-
   home.packages = with pkgs; [
     recutils
     aspell
