@@ -64,7 +64,7 @@
           ./modules/tmux.nix
           ./modules/zsh.nix
           ./modules/neovim.nix
-          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacs29; })
+          ({ pkgs, ... }: { programs.emacs.package = pkgs.callPackage ./packages/emacs-mac {}; })
           ({ pkgs, ... }: { home.packages = with pkgs; [ lastpass-cli ]; })
           {
             home = {
