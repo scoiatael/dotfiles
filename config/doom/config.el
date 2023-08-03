@@ -50,6 +50,8 @@
 (require '+private|modeline)
 (require '+private|spellchecking)
 
+(after! jinx
+  (setq jinx-languages "en cs pl"))
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
@@ -87,6 +89,7 @@
 
 (map! :n "]p" #'evil-unimpaired-paste-below
       :n "[p" #'evil-unimpaired-paste-above
+      :n ";" #'projectile-find-file
       :v "[6" #'base64-decode-region
       :v "]6" #'base64-encode-region
       :v "v" #'er/expand-region)
