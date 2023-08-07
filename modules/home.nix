@@ -42,6 +42,8 @@
         "FiraCode"
       ];
     })
+    restic
+    rsync
     # (callPackage ../packages/ternimal { })
     # janet
     # luakit # doesn't work on aarch64-darwin :/
