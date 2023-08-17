@@ -9,6 +9,7 @@
     aspellDicts.en
     aspellDicts.en-science
     aspellDicts.en-computers
+    enchant
     nixfmt
     sqlite
     clang
@@ -35,5 +36,9 @@
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
     (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)
+  '';
+
+  xdg.configFile.".enchant/enchant.ordering".text = ''
+    *:aspell,hunspell,nuspell
   '';
 }

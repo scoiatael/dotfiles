@@ -40,6 +40,7 @@
       fonts = [
         "JetBrainsMono" # needed for rofi theme
         "FiraCode"
+        "VictorMono"
       ];
     })
     restic
@@ -58,9 +59,7 @@
           normal = { family = "JetBrainsMono Nerd Font"; };
           size = 12;
         };
-        shell = {
-          program = "${pkgs.zsh}/bin/zsh";
-        };
+        shell = { program = "${pkgs.zsh}/bin/zsh"; };
         # colors.primary.background = "0x282828";
         # colors.primary.foreground = "0xeeeeee";
         # colors.normal.black = "0x282828";

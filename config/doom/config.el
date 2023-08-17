@@ -7,7 +7,7 @@
  doom-localleader-key ","
  user-full-name "Lukasz Czaplinski"
  doom-theme 'doom-one
- doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 12)
+ doom-font (font-spec :family "VictorMono Nerd Font Mono" :size 12)
  display-line-numbers-type t
  comint-prompt-read-only nil
  gcmh-high-cons-threshold (* 1024 1024 1024)) ; 1GiB
