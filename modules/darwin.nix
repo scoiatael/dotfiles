@@ -26,10 +26,6 @@
       "syncthing"
       "keybase"
       "raycast"
-      {
-        name = "librewolf";
-        args = { no_quarantine = true; };
-      }
       "signal"
       "lunar"
       "yubico-authenticator"

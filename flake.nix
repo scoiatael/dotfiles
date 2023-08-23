@@ -99,6 +99,31 @@
         ];
         extraSpecialArgs = attrs;
       };
+    homeConfigurations."lukaszczaplinski@LsAir" =
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowBroken = true;
+        };
+        modules = [
+          ./modules/home.nix
+          ./modules/git.nix
+          ./modules/emacs.nix
+          ./modules/tmux.nix
+          ./modules/zsh.nix
+          ./modules/neovim.nix
+          ({ pkgs, ... }: { programs.emacs.package = pkgs.callPackage ./packages/emacs-mac {}; })
+          {
+            home = {
+              username = "lukaszczaplinski";
+              homeDirectory = "/Users/lukaszczaplinski";
+              stateVersion = "22.05";
+            };
+            programs.home-manager.enable = true;
+          }
+        ];
+        extraSpecialArgs = attrs;
+      };
     darwinConfigurations.LsGamingDarwin = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [
@@ -106,7 +131,6 @@
         ./modules/darwin/yabai.nix
         ./modules/darwin/sketchybar.nix
         ./modules/darwin/gaming.nix
-        { documentation.enable = false; }
       ];
     };
     darwinConfigurations.LsCerosDarwin = darwin.lib.darwinSystem {
@@ -116,7 +140,15 @@
         ./modules/darwin/yabai.nix
         ./modules/darwin/sketchybar.nix
         ./modules/darwin/ceros.nix
-        { documentation.enable = false; }
+      ];
+    };
+    darwinConfigurations.LsAir = darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        ./modules/darwin.nix
+        ./modules/darwin/yabai.nix
+        ./modules/darwin/sketchybar.nix
+        ./modules/darwin/air.nix
       ];
     };
     nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
