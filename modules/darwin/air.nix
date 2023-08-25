@@ -4,10 +4,10 @@
   hardware.notch = true;
 
   homebrew = {
-    casks = [
-      "bitwarden"
-      "todoist"
-      "arc"
-    ];
+    casks = [ "todoist" "arc" ];
+    masApps = {
+      "bitwarden" = 1352778147;
+      "kagi" = 1622835804;
+    };
   };
 }

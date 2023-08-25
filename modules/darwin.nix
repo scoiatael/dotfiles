@@ -24,7 +24,6 @@
     casks = [
       "karabiner-elements"
       "syncthing"
-      "keybase"
       "raycast"
       "signal"
       "lunar"
