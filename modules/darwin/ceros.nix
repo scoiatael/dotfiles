@@ -10,6 +10,7 @@
       "1password"
       "yubico-yubikey-manager"
       "arc"
+      "notion"
     ];
   };
 }
