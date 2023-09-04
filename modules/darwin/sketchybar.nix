@@ -1,6 +1,16 @@
 { config, lib, pkgs, ... }:
 
-{
+let sketchybar-helper = (pkgs.callPackage ../../packages/sketchybar-helper { });
+in {
+  # Helper for CPU
+  launchd.user.agents.sketchybar-helper = {
+    path = [ sketchybar-helper config.environment.systemPath ];
+    serviceConfig.ProgramArguments =
+      [ "${sketchybar-helper}/bin/sketchybar-helper" "git.scoiatael.helper" ];
+    serviceConfig.KeepAlive = true;
+    serviceConfig.RunAtLoad = true;
+  };
+
   services.sketchybar = {
     enable = true;
     package = pkgs.sketchybar;
@@ -16,8 +26,6 @@
 
       # Setting up and starting the helper process
       HELPER=git.scoiatael.helper
-      killall sketchybar-helper
-      sketchybar-helper $HELPER > /dev/null 2>&1 &
 
       ##### Bar Appearance #####
       # Configuring the general appearance of the bar, these are only some of the

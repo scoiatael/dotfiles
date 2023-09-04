@@ -4,11 +4,7 @@
   # TODO: https://notes.alinpanaitiu.com/Keyboard%20tricks%20from%20a%20macOS%20app%20dev
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    vim
-    pinentry_mac
-    (callPackage ../packages/sketchybar-helper { })
-  ];
+  environment.systemPackages = with pkgs; [ vim pinentry_mac ];
 
   # programs.fish.enable = true;
   programs.zsh.enable = true; # default shell on catalina
