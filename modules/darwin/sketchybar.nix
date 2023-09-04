@@ -1,12 +1,20 @@
 { config, lib, pkgs, ... }:
 
-let sketchybar-helper = (pkgs.callPackage ../../packages/sketchybar-helper { });
+let
+  sketchybar-helper = (pkgs.callPackage ../../packages/sketchybar-helper { });
+  colors = ../../config/sketchybar/colors.sh;
+  icons = ../../config/sketchybar/icons.sh;
+  plugin_dir = ../../config/sketchybar/plugins;
+  item_dir = ../../config/sketchybar/items;
 in {
   # Helper for CPU
   launchd.user.agents.sketchybar-helper = {
     path = [ sketchybar-helper config.environment.systemPath ];
-    serviceConfig.ProgramArguments =
-      [ "${sketchybar-helper}/bin/sketchybar-helper" "git.scoiatael.helper" ];
+    serviceConfig.ProgramArguments = [
+      "/bin/sh"
+      "-c"
+      "source ${colors} && ${sketchybar-helper}/bin/sketchybar-helper git.scoiatael.helper"
+    ];
     serviceConfig.KeepAlive = true;
     serviceConfig.RunAtLoad = true;
   };
@@ -17,11 +25,11 @@ in {
     config = ''
       # source: https://github.com/FelixKratz/dotfiles
 
-      source "$HOME/dotfiles/config/sketchybar/colors.sh" # Loads all defined colors
-      source "$HOME/dotfiles/config/sketchybar/icons.sh" # Loads all defined icons
+      source "${colors}" # Loads all defined colors
+      source "${icons}" # Loads all defined icons
 
-      PLUGIN_DIR="$HOME/dotfiles/config/sketchybar/plugins"
-      ITEM_DIR="$HOME/dotfiles/config/sketchybar/items"
+      PLUGIN_DIR="${plugin_dir}"
+      ITEM_DIR="${item_dir}"
       FONT="JetBrainsMono Nerd Font:Regular"
 
       # Setting up and starting the helper process
