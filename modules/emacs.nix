@@ -1,5 +1,6 @@
 { config, lib, pkgs, doomemacs, ... }:
 
+let emacsPackage = config.programs.emacs.package; in
 {
   home.packages = with pkgs; [
     recutils
@@ -32,7 +33,7 @@
   home.file.".emacs.doom".source = doomemacs;
   home.file.".emacs.d/early-init.el".text = ''
     (setq envrc-direnv-executable "${pkgs.direnv}/bin/direnv")
-    (load "${config.home.homeDirectory}/.nix-profile/share/emacs/site-lisp/site-start.el" nil 'nomessage)
+    (load "${emacsPackage}/share/emacs/site-lisp/site-start" nil 'nomessage)
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
     (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)

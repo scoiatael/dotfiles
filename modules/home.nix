@@ -45,6 +45,7 @@
     })
     restic
     rsync
+    mu
     # (callPackage ../packages/ternimal { })
     # janet
     # luakit # doesn't work on aarch64-darwin :/
@@ -157,7 +158,7 @@
       extensions = [ pkgs.gh-eco (pkgs.callPackage ../packages/gh-poi { }) ];
       settings = { git_protocol = "ssh"; };
     };
-    exa = {
+    eza = {
       enable = true;
       enableAliases = true;
     };

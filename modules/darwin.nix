@@ -26,6 +26,7 @@
       "yubico-authenticator"
       "dteoh-devdocs"
     ];
+    brews = [ "switchaudio-osx" ];
     taps = [ "Homebrew/homebrew-autoupdate" ];
     onActivation = { cleanup = "uninstall"; };
   };
