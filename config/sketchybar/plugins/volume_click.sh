@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+NAME="${NAME:-volume}"
 toggle_devices() {
   which SwitchAudioSource >/dev/null || exit 0
   source "$HOME/dotfiles/config/sketchybar/colors.sh"
