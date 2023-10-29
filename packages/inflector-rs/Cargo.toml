@@ -1,0 +1,8 @@
+[package]
+name = "inflector"
+version = "0.1.0"
+authors = ["scoiatael <czapl.luk@gmail.com>"]
+
+[dependencies]
+regex = "1"
+clap = "2"
