@@ -46,6 +46,7 @@
     restic
     rsync
     mu
+    (callPackage ../packages/gitblame { })
     # (callPackage ../packages/ternimal { })
     # janet
     # luakit # doesn't work on aarch64-darwin :/
