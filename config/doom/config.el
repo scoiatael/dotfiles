@@ -95,6 +95,7 @@
       :v "v" #'er/expand-region)
 
 (map! :leader
+      "\\" #'lsp-ui-doc-show
       ">" #'spacemacs/alternate-buffer
       "R" #'org-roam-node-find
       "A" #'org-todo-list
