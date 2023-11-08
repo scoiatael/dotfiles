@@ -20,12 +20,6 @@
 (add-hook! #'emacs-lisp-mode
   (add-to-list #'flycheck-disabled-checkers 'emacs-lisp-checkdoc))
 
-(add-hook 'spell-fu-mode-hook
-          (lambda ()
-            (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
-            (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "pl"))))
-
-
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -53,10 +47,10 @@
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)
 (require '+private|modeline)
-;; (require '+private|spellchecking)
+(require '+private|spellchecking)
 
-;; (after! jinx
-;;   (setq jinx-languages "en cs pl"))
+(after! jinx
+  (setq jinx-languages "en cs pl"))
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885

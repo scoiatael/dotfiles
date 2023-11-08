@@ -64,8 +64,7 @@
           ./modules/tmux.nix
           ./modules/zsh.nix
           ./modules/neovim.nix
-          ({ pkgs, ... }: { programs.emacs.package = pkgs.callPackage ./packages/emacs-mac {}; })
-          ({ pkgs, ... }: { home.packages = with pkgs; [ lastpass-cli ]; })
+          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacs29-macport; })
           {
             home = {
               username = "lucasczaplinski";
@@ -112,7 +111,7 @@
           ./modules/tmux.nix
           ./modules/zsh.nix
           ./modules/neovim.nix
-          ({ pkgs, ... }: { programs.emacs.package = pkgs.callPackage ./packages/emacs-mac {}; })
+          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacs29-macport; })
           {
             home = {
               username = "lukaszczaplinski";
