@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: pytest-focus
+# uuid:
+# key: pytest-focus
+# condition: t
+# --
+
+import pytest
+
+@pytest.mark.focus
