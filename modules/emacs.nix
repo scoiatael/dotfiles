@@ -1,7 +1,7 @@
 { config, lib, pkgs, doomemacs, ... }:
 
-let emacsPackage = config.programs.emacs.package; in
-{
+let emacsPackage = config.programs.emacs.package;
+in {
   home.packages = with pkgs; [
     recutils
     aspell
@@ -14,6 +14,9 @@ let emacsPackage = config.programs.emacs.package; in
     nixfmt
     sqlite
     clang
+    hunspell
+    hunspellDicts.pl_PL
+    hunspellDicts.en-gb-ise
     # TODO: https://github.com/aca/emmet-ls
   ];
 
@@ -39,7 +42,7 @@ let emacsPackage = config.programs.emacs.package; in
     (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)
   '';
 
-  xdg.configFile.".enchant/enchant.ordering".text = ''
+  xdg.configFile."enchant/enchant.ordering".text = ''
     *:aspell,hunspell,nuspell
   '';
 }

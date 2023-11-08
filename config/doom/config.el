@@ -1,7 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(when noninteractive
-  (add-to-list 'doom-env-whitelist "^SSH_"))
+;; (when noninteractive
+;;   (add-to-list 'doom-env-whitelist "^SSH_"))
 
 (setq
  doom-localleader-key ","
@@ -19,6 +19,11 @@
 (add-to-list #'doom-symbol-fallback-font-families "Iosevka")
 (add-hook! #'emacs-lisp-mode
   (add-to-list #'flycheck-disabled-checkers 'emacs-lisp-checkdoc))
+
+(add-hook 'spell-fu-mode-hook
+          (lambda ()
+            (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+            (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "pl"))))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -48,10 +53,10 @@
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)
 (require '+private|modeline)
-(require '+private|spellchecking)
+;; (require '+private|spellchecking)
 
-(after! jinx
-  (setq jinx-languages "en cs pl"))
+;; (after! jinx
+;;   (setq jinx-languages "en cs pl"))
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
@@ -62,9 +67,9 @@
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
 
 (after! format
- (advice-add 'format-all-buffer :around #'envrc-propagate-environment)
- (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)
- (advice-add '+format-buffer-h :around #'envrc-propagate-environment))
+  (advice-add 'format-all-buffer :around #'envrc-propagate-environment)
+  (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)
+  (advice-add '+format-buffer-h :around #'envrc-propagate-environment))
 
 (after! org
   (setq
@@ -74,8 +79,8 @@
    org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")))
 
 (after! web-mode
- (add-to-list 'web-mode-engines-alist '("jinja2" . "\\.jinja2?\\'"))
- (setq-default web-mode-enable-engine-detection 't))
+  (add-to-list 'web-mode-engines-alist '("jinja2" . "\\.jinja2?\\'"))
+  (setq-default web-mode-enable-engine-detection 't))
 
 (after! vterm
   (advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args))))
