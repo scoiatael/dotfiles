@@ -4,11 +4,12 @@
   hardware.notch = true;
 
   homebrew = {
-    casks = [ "todoist" "arc" "skype" "canon-eos-utility" "discord" "steam" "vlc" ];
+    casks = [ "todoist" "skype" "discord" "steam" "vlc" ];
     masApps = {
       "bitwarden" = 1352778147;
       "kagi" = 1622835804;
       "hush" = 1544743900;
+      "grammarly" = 1462114288;
     };
   };
 }
