@@ -42,7 +42,9 @@
 
   # Open ports in the firewall.
   networking.firewall = {
-    allowedTCPPorts = [ ];
+    allowedTCPPorts = [
+      22000 # syncthing
+    ];
 
     allowedUDPPortRanges = [ ];
 
@@ -104,6 +106,13 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    # require public key authentication for better security
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+    settings.PermitRootLogin = "no";
+  };
 
   services.clamav = {
     daemon.enable = true;
@@ -128,9 +137,16 @@
   };
 
   # https://nixos.wiki/wiki/Printing - for shairport
-  services.avahi.enable = true;
-  services.avahi.publish.enable = true;
-  services.avahi.publish.userServices = true;
+  # https://blog.stigok.com/2019/12/09/nixos-avahi-publish-service.html
+  services.avahi = {
+    enable = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      workstation = true;
+      userServices = true;
+    };
+  };
 
   # https://wiki.archlinux.org/title/Solid_state_drive
   services.fstrim.enable = true;
@@ -155,6 +171,10 @@
       "networkmanager" # https://nixos.org/manual/nixos/stable/index.html#sec-networking
       "users"
       "i2c" # use ddcutil
+    ];
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1hKsM+Xk4QAzHUI3p4stYXvLlUF6lyHn9UzkduK44A7ctN53GRtqu308cRpqOb4rIH9Ohu3ZuyvofmwxfIuKfOnTbVlnhx6w/Dbm7P+9TAq7ZjjSiHmBp+1tn81t0sdCwVSa20jFTztHB0eJ0SnZaKkBkSu8+Y8Ul66Of8R8ehtxsVLGeleOIg7peBIy2YU7Flmz0Tg3ZEsA5jNgwTkeKYKcMNIMjhDM1l5mqvsj76mPtulpJxdW2YeN4td+OW2d918bWgf245/nqyWjFVEr9ftc4MFSit16P2emm/IKxo8H7tb2Pb29JrPtjuCdPVcrj5u/wyVBAx7Hgo9l8YZsLxwN5+CelF67rHzR1yXfmVqeN+sBJC/ZrjOgubl/b/bwJWw04eZbDwoCDuC1DdLTT8SH2/QZRsIf4ay3+bLNc+RD3VsB3QPifUWMYiTJxWJ81tO/qU+IBnlN/WW0kUBLk2Md3ybJFvGh4NoSu9Gi3PguGNpth0NG3a7pgK9al5wP98/3ANidlH/r+XU5bB0ewQ64gDN0w7lpwmI2yemfnVmPxlzGODm6Vr7UbX9rwNAGHQf0oXSWd1uIL3eOfqMVXLGmMwcuh423VijajXRp32VtlAPQo7NsTz3ankf0SxBIhIsy3/kuvbvbfyIxVVoXypZnrezRaLqtgNCT6j+/b8Q== keybase"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ7QCZSnf0WDnN8EnI6h8la4xIMeetYhTh4y70YouZUF bitwarden"
     ];
   };
 
@@ -247,12 +267,10 @@
   hardware.opengl = {
     enable = true;
     driSupport = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
+    extraPackages = with pkgs;
+      [
+        intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      ];
   };
 
   environment.sessionVariables = {

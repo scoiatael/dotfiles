@@ -39,7 +39,6 @@
           ({ lib, ... }: {
             programs.alacritty.settings.font.size = lib.mkForce 10;
           })
-          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsPgtk; })
           {
             home = {
               username = "lukaszczaplinski";
@@ -153,7 +152,7 @@
     nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-      modules = [ ./modules/nixos.nix ];
+      modules = [ ./modules/nixos.nix ./modules/nixos/smb.nix ];
     };
   };
 }
