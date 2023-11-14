@@ -11,6 +11,7 @@
       "yubico-yubikey-manager"
       "arc"
       "notion"
+      "keymapp"
     ];
   };
 }
