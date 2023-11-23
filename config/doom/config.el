@@ -48,6 +48,7 @@
 (add-to-list 'custom-theme-load-path doom-private-dir)
 (require '+private|modeline)
 (require '+private|spellchecking)
+(require '+private|llm)
 
 (after! jinx
   (setq jinx-languages "en cs pl"))

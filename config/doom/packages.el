@@ -7,13 +7,13 @@
 
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;(package! some-package)
+                                        ;(package! some-package)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format
-;(package! another-package
-;  :recipe (:host github :repo "username/repo"))
+                                        ;(package! another-package
+                                        ;  :recipe (:host github :repo "username/repo"))
 
 (when EMACS29+
   (package! combobulate
@@ -33,6 +33,9 @@
 
 (package! marginalia :recipe (:host github :repo "minad/marginalia") :pin "3ddd2b7")
 (package! mini-frame :recipe (:host github :repo "muffinmad/emacs-mini-frame") :pin "60838f3")
+
+(package! ellama :recipe (:host github :repo "s-kostyaev/ellama") :pin "b8ef883")
+(package! llm :recipe (:host github :repo "ahyatt/llm") :pin "4c0ff74")
 
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
