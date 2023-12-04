@@ -119,6 +119,7 @@
 
 (map! :leader
       :prefix "k"
+      "c" #'chmod
       "d" #'server-edit
       "e" #'ediff-buffers
       "g" #'epa-encrypt-file
