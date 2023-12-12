@@ -4,7 +4,7 @@
   hardware.notch = true;
 
   homebrew = {
-    casks = [ "todoist" "skype" "discord" "steam" "vlc" "keymapp" ];
+    casks = [ "todoist" "skype" "discord" "steam" "vlc" "keymapp" "battle-net" "battlescribe" ];
     masApps = {
       "bitwarden" = 1352778147;
       "kagi" = 1622835804;
