@@ -139,6 +139,7 @@
         ./modules/darwin/sketchybar.nix
         ./modules/darwin/ceros.nix
         ./modules/darwin/ollama.nix
+        ./modules/darwin/shortcat.nix
       ];
     };
     darwinConfigurations.LsAir = darwin.lib.darwinSystem {
