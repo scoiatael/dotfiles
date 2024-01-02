@@ -14,6 +14,11 @@
   (scoiatael/yank (format "%s:%d" (scoiatael/file-relative-name) (line-number-at-pos))))
 
 ;;;###autoload
+(defun scoiatael/blog/cover-img ()
+  (interactive)
+  (scoiatael/yank (format "![](/img/%s.jpg)" (file-name-sans-extension (file-relative-name buffer-file-name)))))
+
+;;;###autoload
 (defun scoiatael/yank-current-date ()
   (interactive)
   (scoiatael/yank (shell-command-to-string "date +%Y-%m-%d | xargs printf %s")))

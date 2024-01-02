@@ -3,7 +3,7 @@
 let emacsPackage = config.programs.emacs.package;
 in {
   home.packages = with pkgs; [
-    recutils
+    #recutils
     aspell
     aspellDicts.pl
     aspellDicts.cs

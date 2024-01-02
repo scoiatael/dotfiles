@@ -20,7 +20,7 @@
     units
     tig
     lsof
-    ruby_3_0
+    ruby_3_3
     meld
     sops
     viddy

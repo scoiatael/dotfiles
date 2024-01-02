@@ -110,7 +110,19 @@
           ./modules/tmux.nix
           ./modules/zsh.nix
           ./modules/neovim.nix
-          ({ pkgs, ... }: { programs.emacs.package = pkgs.emacs29-macport; })
+          ({ pkgs, ... }: {
+            programs.emacs.package =
+              # https://bitbucket.org/mituharu/emacs-mac/commits/5f6c306095c825eb01708e336f9d03c15271dfe9
+              # see https://github.com/doomemacs/doomemacs/issues/7532
+              pkgs.emacs29-macport.overrideAttrs {
+                src = pkgs.fetchFromBitbucket {
+                  owner = "mituharu";
+                  repo = "emacs-mac";
+                  rev = "5f6c306095c825eb01708e336f9d03c15271dfe9";
+                  hash = "sha256-0OHa9znJzJ1g4mE2vOwt7C/ER40Uh1Y3hgnE+m4g1tw=";
+                };
+              };
+          })
           {
             home = {
               username = "lukaszczaplinski";
