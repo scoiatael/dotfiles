@@ -4,6 +4,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
+ '(custom-safe-themes
+   '("014cb63097fc7dbda3edf53eb09802237961cbb4c9e9abd705f23b86511b0a69" "e4a702e262c3e3501dfe25091621fe12cd63c7845221687e36a79e17cf3a67e0" default))
  '(ignored-local-variable-values
    '((eval ignore-errors
       (require 'whitespace)
@@ -13,6 +15,7 @@
       (c-set-offset 'case-label '0)
       (c-set-offset 'innamespace '0)
       (c-set-offset 'inline-open '0))))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(safe-local-variable-values
    '((+format-with . "eslint")
      (engine . jinja2)
