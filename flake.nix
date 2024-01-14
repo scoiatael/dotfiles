@@ -161,6 +161,8 @@
         ./modules/darwin/yabai.nix
         ./modules/darwin/sketchybar.nix
         ./modules/darwin/air.nix
+        ./modules/darwin/shortcat.nix
+        ./modules/darwin/ollama.nix
       ];
     };
     nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
