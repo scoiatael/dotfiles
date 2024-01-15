@@ -31,8 +31,6 @@
     enableAutosuggestions = true;
     historySubstringSearch = { enable = true; };
     initExtraFirst = ''
-      zmodload zsh/zprof
-
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
     '';
     initExtra = lib.mkAfter ''
