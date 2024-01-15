@@ -5,6 +5,7 @@
   home.packages = with pkgs; [ gnused coreutils-full ];
   programs.zsh = {
     enable = true;
+    enableCompletion = false;
     shellAliases = {
       hmr =
         "home-manager switch --flake 'path:${config.home.homeDirectory}/dotfiles'";
@@ -29,11 +30,16 @@
     };
     enableAutosuggestions = true;
     historySubstringSearch = { enable = true; };
-    initExtra = lib.mkAfter ''
-      autoload -U add-zsh-hook
-      add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
+    initExtraFirst = ''
+      zmodload zsh/zprof
 
+      export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
+    '';
+    initExtra = lib.mkAfter ''
       if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+        autoload -U add-zsh-hook
+        add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
+
         vterm_printf() {
             if [ -n "$TMUX" ] && ([ "$TERM" = "tmux" ] || [ "$TERM" = "screen" ]); then
                 # Tell tmux to pass the escape sequences through
@@ -46,9 +52,7 @@
             fi
         }
 
-        if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-            alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
-        fi
+        alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
 
         vterm_prompt_end() {
             vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
@@ -78,21 +82,25 @@
         alias vi=find_file
       fi
 
-      add-zsh-hook chpwd (){ local SWD="$(print -P '%3~')"; tmux rename-window "''${(@j[/]M)''${(@s[/]M)SWD##*/}#?}$SWD:t" }
+      if [[ "$TERM_PROGRAM" = 'tmux' ]]; then
+        add-zsh-hook chpwd (){ local SWD="$(print -P '%3~')"; tmux rename-window "''${(@j[/]M)''${(@s[/]M)SWD##*/}#?}$SWD:t" }
+      fi
 
       # TODO: fix on non-Darwin
       path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
     '';
+    envExtra = ''
+        export TMUX_COLORTAG_TAG_ONLY=yes
+        export TMUX_COLORTAG_USE_POWERLINE=yes
+        export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
+      '';
     oh-my-zsh = {
-      enable = true;
+      enable = false;
       plugins = [ "tmux" "gpg-agent" "emacs" ];
       extraConfig = ''
         # ZSH_TMUX_AUTOSTART=true
         ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
 
-        export TMUX_COLORTAG_TAG_ONLY=yes
-        export TMUX_COLORTAG_USE_POWERLINE=yes
-        export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
 
         ### Fix slowness of pastes with zsh-syntax-highlighting.zsh
         pasteinit() {
