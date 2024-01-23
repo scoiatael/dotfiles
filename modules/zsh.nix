@@ -34,6 +34,8 @@
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
     '';
     initExtra = lib.mkAfter ''
+      autoload -U compinit
+      compinit -C # assume zcompdump is fresh
       if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
         autoload -U add-zsh-hook
         add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
@@ -88,10 +90,10 @@
       path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
     '';
     envExtra = ''
-        export TMUX_COLORTAG_TAG_ONLY=yes
-        export TMUX_COLORTAG_USE_POWERLINE=yes
-        export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
-      '';
+      export TMUX_COLORTAG_TAG_ONLY=yes
+      export TMUX_COLORTAG_USE_POWERLINE=yes
+      export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
+    '';
     oh-my-zsh = {
       enable = false;
       plugins = [ "tmux" "gpg-agent" "emacs" ];
@@ -148,4 +150,17 @@
     ];
   };
   programs.starship.enableZshIntegration = true;
+
+  home.activation.updateDotzcompdump = let
+    script = pkgs.writeTextFile {
+      name = "update.zsh";
+      executable = true;
+      text = ''
+        #! ${pkgs.zsh}/bin/zsh -i
+        rm -rf "$HOME"/.zcompdump*
+        autoload -U compinit
+        compinit
+      '';
+    };
+  in config.lib.dag.entryAfter [ "writeBoundary" ] "${script}";
 }

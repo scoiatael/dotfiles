@@ -7,7 +7,10 @@
   environment.systemPackages = with pkgs; [ vim pinentry_mac ];
 
   # programs.fish.enable = true;
-  programs.zsh.enable = true; # default shell on catalina
+  programs.zsh = {
+    enable = true; # default shell on catalina
+    enableCompletion = false;
+  };
   programs.gnupg = {
     agent = {
       enable = true;
