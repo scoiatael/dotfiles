@@ -3,6 +3,8 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./nixos/nvidia.nix
+    ./nixos/jellyfin.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -260,23 +262,9 @@
     options = "--delete-older-than 7d";
   };
 
-  # https://nixos.wiki/wiki/Accelerated_Video_Playback
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    extraPackages = with pkgs;
-      [
-        intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      ];
-  };
-
   environment.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
-    LIBVA_DRIVER_NAME = "iHD";
   };
 
   hardware.i2c.enable = true;
