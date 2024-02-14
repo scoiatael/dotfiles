@@ -5,13 +5,17 @@
 
 (setq
  doom-localleader-key ","
+ display-line-numbers-type 'relative
  user-full-name "Lukasz Czaplinski"
  doom-theme 'doom-one
  doom-font (font-spec :family "VictorMono Nerd Font Mono" :size 12)
- display-line-numbers-type t
  comint-prompt-read-only nil
  git-commit-summary-max-length 120
  gcmh-high-cons-threshold (* 1024 1024 1024)) ; 1GiB
+
+(after! company
+  (setq company-minimum-prefix-length 5
+        company-idle-delay 0.5))
 
 (when IS-MAC (setq
               ns-right-alternate-modifier 'none

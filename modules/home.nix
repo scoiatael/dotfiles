@@ -67,7 +67,8 @@
         };
         shell = { program = "${pkgs.zsh}/bin/zsh"; };
         window.decorations = "None";
-        import = [ "${config.home.homeDirectory}/.config/alacritty/theme.yml" ];
+        import =
+          [ "${config.home.homeDirectory}/.config/alacritty/theme.toml" ];
       };
     };
     qutebrowser = {

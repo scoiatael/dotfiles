@@ -20,6 +20,7 @@
       w = "viddy";
       cat = "bat";
       c = "bat";
+      tm = "tmux";
     };
     shellGlobalAliases = { "..." = "../../"; };
     sessionVariables = {
