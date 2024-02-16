@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, ... }:
 
 {
   services.xserver.videoDrivers = ["nvidia"];
@@ -7,7 +7,8 @@
     driSupport = true;
     driSupport32Bit = true;
   };
-    hardware.nvidia = {
+  nixpkgs.config.allowUnfree = true;
+  hardware.nvidia = {
 
     # Modesetting is required.
     modesetting.enable = true;
