@@ -4,6 +4,7 @@
   hardware.notch = true;
   homebrew = {
     casks = [
+      "loom"
       "slack"
       "zoom"
       "google-drive"
