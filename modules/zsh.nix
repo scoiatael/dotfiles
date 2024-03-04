@@ -133,11 +133,11 @@
         src = zsh-autopair;
         file = "share/zsh/zsh-autopair/autopair.zsh";
       }
-      {
-        name = "fzf-tab";
-        src = zsh-fzf-tab;
-        file = "share/fzf-tab/fzf-tab.plugin.zsh";
-      }
+      # {
+      #   name = "fzf-tab";
+      #   src = zsh-fzf-tab.overrideAttrs { src = };
+      #   file = "share/fzf-tab/fzf-tab.plugin.zsh";
+      # }
       {
         name = "you-should-use";
         src = zsh-you-should-use;
