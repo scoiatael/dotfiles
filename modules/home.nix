@@ -191,20 +191,24 @@
       enable = true;
       package = pkgs.vscodium;
       userSettings = {
-        "update.channel" = "none";
+        "update.mode" = "none";
         "[nix]"."editor.tabSize" = 2;
         "workbench.startupEditor" = "none";
         "editor.fontFamily" = "JetBrainsMono Nerd Font";
         "editor.fontSize" = 12;
         "workbench.colorTheme" = "GitHub Dark Dimmed";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "extensions.autoUpdate" = false;
       };
-      extensions = [
-        pkgs.vscode-extensions.bbenoist.nix
-        pkgs.vscode-extensions.github.github-vscode-theme
-        pkgs.vscode-extensions.esbenp.prettier-vscode
-        pkgs.vscode-extensions.mattn.lisp
+      extensions = with pkgs.vscode-extensions; [
+        bbenoist.nix
+        github.github-vscode-theme
+        esbenp.prettier-vscode
+        mattn.lisp
+        tamasfe.even-better-toml
+        kamadorueda.alejandra
       ];
+      mutableExtensionsDir = false;
     };
   };
 

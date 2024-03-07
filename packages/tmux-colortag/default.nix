@@ -14,6 +14,6 @@ pkgs.tmuxPlugins.mkTmuxPlugin rec {
 
   postInstall = ''
     sed -i -e 's|TMUX_PLUGIN_MANAGER_PATH|TMPDIR|g' $target/name2color.py
-    sed -i -e 's|/usr/bin/env python|${pkgs.python38}/bin/python|g' $target/name2color.py
+    sed -i -e 's|/usr/bin/env python|${pkgs.python3}/bin/python|g' $target/name2color.py
   '';
 }
