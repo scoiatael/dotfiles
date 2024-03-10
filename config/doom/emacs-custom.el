@@ -17,7 +17,10 @@
       (c-set-offset 'inline-open '0))))
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(safe-local-variable-values
-   '((+format-with . "eslint")
+   '((+format-with . rubocop)
+     (+format-with . rubocop-format-current-file-silent)
+     (+format-with quote rubocop-format-current-file-silent)
+     (+format-with . "eslint")
      (engine . jinja2)
      (flycheck-disabled-checkers emacs-lisp-checkdoc))))
 
