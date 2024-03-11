@@ -13,6 +13,8 @@
       "arc"
       "notion"
       "keymapp"
+      "iterm2"
+      "gitbutler"
     ];
   };
 }
