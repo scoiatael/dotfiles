@@ -17,25 +17,25 @@
 
 (when EMACS29+
   (package! combobulate
-    :recipe (:repo "mickeynp/combobulate" :host github) :pin "2aef9d4"))
+    :recipe (:repo "mickeynp/combobulate" :host github)))
 
-(package! modus-themes :recipe (:host sourcehut :repo "protesilaos/modus-themes") :pin "cfc8c4ee")
+(package! modus-themes :recipe (:host sourcehut :repo "protesilaos/modus-themes"))
 
-(package! moody :recipe (:host github :repo "tarsius/moody") :pin "249c5f1")
+(package! moody :recipe (:host github :repo "tarsius/moody"))
 
-(package! keycast :recipe (:host github :repo "tarsius/keycast") :pin "cabb3fa")
+(package! keycast :recipe (:host github :repo "tarsius/keycast"))
 
-(package! devdocs :recipe (:host github :repo "astoff/devdocs.el") :pin "2988d4d")
+(package! devdocs :recipe (:host github :repo "astoff/devdocs.el"))
 
-(package! doom-modeline :recipe (:host github :repo "seagle0128/doom-modeline") :pin "ed72a56")
+(package! doom-modeline :recipe (:host github :repo "seagle0128/doom-modeline"))
 
-(package! spaceline :recipe (:host github :repo "TheBB/spaceline") :pin "e0f848c")
+(package! spaceline :recipe (:host github :repo "TheBB/spaceline"))
 
-(package! marginalia :recipe (:host github :repo "minad/marginalia") :pin "3ddd2b7")
-(package! mini-frame :recipe (:host github :repo "muffinmad/emacs-mini-frame") :pin "60838f3")
+(package! marginalia :recipe (:host github :repo "minad/marginalia"))
+(package! mini-frame :recipe (:host github :repo "muffinmad/emacs-mini-frame"))
 
-(package! ellama :recipe (:host github :repo "s-kostyaev/ellama") :pin "b8ef883")
-(package! llm :recipe (:host github :repo "ahyatt/llm") :pin "4c0ff74")
+(package! ellama :recipe (:host github :repo "s-kostyaev/ellama"))
+(package! llm :recipe (:host github :repo "ahyatt/llm"))
 
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
