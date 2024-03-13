@@ -86,6 +86,25 @@
   (advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args))))
   (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
 
+(after! projectile
+  (add-to-list #'projectile-project-root-files ".envrc")
+  (add-to-list #'projectile-project-root-files-bottom-up ".envrc")
+  (add-to-list #'projectile-project-root-files-top-down-recurring ".envrc"))
+
+(after! magit
+  (add-hook 'find-file-hook #'jujutsu-commit-setup-check-buffer)
+  (defconst jujutsu-commit-filename-regexp "\\.jjdescription\\'")
+
+  (with-eval-after-load 'recentf
+    (add-to-list 'recentf-exclude jujutsu-commit-filename-regexp))
+
+  (add-to-list 'with-editor-file-name-history-exclude jujutsu-commit-filename-regexp)
+
+  (defun jujutsu-commit-setup-check-buffer ()
+    (when (and buffer-file-name
+               (string-match-p jujutsu-commit-filename-regexp buffer-file-name))
+      (git-commit-setup))))
+
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
