@@ -160,6 +160,10 @@
         #! ${pkgs.zsh}/bin/zsh -i
         rm -rf "$HOME"/.zcompdump*
         autoload -U compinit
+      '' + (lib.strings.optionalString config.programs.jujutsu.enable ''
+        source <(${pkgs.jujutsu}/bin/jj util completion zsh)
+        compdef _jj ${pkgs.jujutsu}/bin/jj
+      '') + ''
         compinit
       '';
     };
