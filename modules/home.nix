@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     elvish # until I port scripts back..
     patchutils
-    jujutsu
     html-tidy
     wget
     neofetch

@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+exec git column --mode=column

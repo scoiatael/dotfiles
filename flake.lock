@@ -130,6 +130,22 @@
         "type": "github"
       }
     },
+    "gitAlias": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1698009614,
+        "narHash": "sha256-At11Q9zmtM5mj6nD5oA1656AUWCMxt6U5FU8pbOIeM4=",
+        "owner": "GitAlias",
+        "repo": "gitalias",
+        "rev": "12c40fc70b37c9a26dd9f8ff72f61ca7d98e32d2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "GitAlias",
+        "repo": "gitalias",
+        "type": "github"
+      }
+    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -281,6 +297,7 @@
         "darwin": "darwin",
         "doomemacs": "doomemacs",
         "emacsMacport": "emacsMacport",
+        "gitAlias": "gitAlias",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nixos-hardware": "nixos-hardware",

@@ -24,6 +24,10 @@
       url = "git+https://bitbucket.com/mituharu/emacs-mac?ref=work&depth=1";
       flake = false;
     };
+    gitAlias = {
+      url = "github:GitAlias/gitalias";
+      flake = false;
+    };
   };
 
   outputs = { nixpkgs, home-manager, darwin, emacsMacport, ... }@attrs:

@@ -1,11 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, gitAlias, ... }:
 
-let
-  gitAlias = builtins.fetchGit {
-    url = "https://github.com/GitAlias/gitalias";
-    rev = "3cec0549a5a11771f7e2afa71f2ba6fa047181f7";
-  };
-in {
+{
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -203,6 +198,9 @@ in {
       pull.rebase = true;
       rebase.autoSquash = true;
       init.defaultBranch = "main";
+      rerere.enabled = true;
+      column.ui = "auto";
+      branch.sort = "committerdate";
     };
     signing = {
       signByDefault = true;
@@ -213,5 +211,29 @@ in {
       { path = "${gitAlias}/gitalias.txt"; }
     ];
     difftastic.enable = true;
+  };
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      merge-tools = {
+        ediff = {
+          merge-args = [
+            "-c"
+            ''
+              emacsclient -c --eval "(ediff-merge-files-with-ancestor \"$0\" \"$1\" \"$2\" nil \"$3\")"''
+            "$left"
+            "$right"
+            "$base"
+            "$output"
+          ];
+          program = "sh";
+        };
+      };
+      user = {
+        name = "Lukasz Czaplinski";
+        email = "git@scoiatael.dev";
+      };
+    };
   };
 }
