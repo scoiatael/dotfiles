@@ -218,6 +218,14 @@ in {
     enable = true;
     settings = {
       ui.diff-editor = "ediff";
+      ui.pager = [
+        "sh"
+        "-c"
+        "${pkgs.diff-so-fancy}/bin/diff-so-fancy | ${pkgs.less}/bin/less -RFX"
+      ];
+      ui.default-command = "l";
+      aliases.la = [ "log" "-r" "(main..@):: | (main..@)-" ];
+      aliases.l = [ "log" "-s" "-r" "branches() | main@origin" ];
       merge-tools = {
         ediff = {
           edit-args = [
@@ -232,9 +240,6 @@ in {
           ];
           program = "sh";
         };
-        ui.pager =
-          [ "sh" "-c" "${pkgs.diff-so-fancy}/bin/diff-so-fancy | less -RFX" ];
-        aliases.l = [ "log" "-r" "(main..@):: | (main..@)-" ];
       };
       user = {
         name = config.programs.git.extraConfig.user.name;
