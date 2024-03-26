@@ -1,6 +1,7 @@
 { config, lib, pkgs, gitAlias, ... }:
 
-{
+let inherit (lib) mkDefault;
+in {
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -190,8 +191,8 @@
         };
       };
       user = {
-        name = "Lukasz Czaplinski";
-        email = "git@scoiatael.dev";
+        name = mkDefault "Lukasz Czaplinski";
+        email = mkDefault "git@scoiatael.dev";
       };
       github.user = "scoiatael";
       status.short = true;
@@ -204,7 +205,7 @@
     };
     signing = {
       signByDefault = true;
-      key = "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
+      key = mkDefault "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
     includes = [
       { path = "~/.gitconfig_custom"; }
@@ -216,9 +217,11 @@
   programs.jujutsu = {
     enable = true;
     settings = {
+      ui.diff-editor = "ediff";
       merge-tools = {
         ediff = {
-          merge-args = [
+          edit-args = [
+            "sh"
             "-c"
             ''
               emacsclient -c --eval "(ediff-merge-files-with-ancestor \"$0\" \"$1\" \"$2\" nil \"$3\")"''
@@ -229,10 +232,13 @@
           ];
           program = "sh";
         };
+        ui.pager =
+          [ "sh" "-c" "${pkgs.diff-so-fancy}/bin/diff-so-fancy | less -RFX" ];
+        aliases.l = [ "log" "-r" "(main..@):: | (main..@)-" ];
       };
       user = {
-        name = "Lukasz Czaplinski";
-        email = "git@scoiatael.dev";
+        name = config.programs.git.extraConfig.user.name;
+        email = config.programs.git.extraConfig.user.email;
       };
     };
   };

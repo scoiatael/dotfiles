@@ -81,6 +81,13 @@
             ./modules/neovim.nix
             patchedEmacsMacport
             {
+              programs.git.extraConfig.user = {
+                email = "lukasz.czaplinski@ceros.com";
+                name = "Lucas Czaplinski";
+                signingkey = "9AC1D5A4D14C1C854833487E4C30F23EF3EE8595";
+              };
+            }
+            {
               home = {
                 username = "lucasczaplinski";
                 homeDirectory = "/Users/lucasczaplinski";
