@@ -270,6 +270,11 @@
   hardware.i2c.enable = true;
 
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.settings = {
+	General = {
+		Experimental = true;
+	};
+};
 
   # https://nixos.wiki/wiki/Fwupd
   services.fwupd.enable = true;
