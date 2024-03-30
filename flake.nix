@@ -179,7 +179,7 @@
     nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = attrs;
-      modules = [ ./modules/nixos.nix ./modules/nixos/smb.nix  ./modules/nixos/jellyfin.nix ./modules/nixos/nvidia.nix ./modules/nixos/steam.nix];
+      modules = [ ./modules/nixos.nix ./modules/nixos/smb.nix  ./modules/nixos/jellyfin.nix ./modules/nixos/steam.nix];
     };
   };
 }
