@@ -217,7 +217,7 @@ in {
   programs.jujutsu = {
     enable = true;
     settings = {
-      ui.diff-editor = "ediff";
+      ui.diff-editor = "vscode";
       ui.pager = [
         "sh"
         "-c"
@@ -226,21 +226,6 @@ in {
       ui.default-command = "l";
       aliases.la = [ "log" "-r" "(main..@):: | (main..@)-" ];
       aliases.l = [ "log" "-s" "-r" "branches() | main@origin" ];
-      merge-tools = {
-        ediff = {
-          edit-args = [
-            "sh"
-            "-c"
-            ''
-              emacsclient -c --eval "(ediff-merge-files-with-ancestor \"$0\" \"$1\" \"$2\" nil \"$3\")"''
-            "$left"
-            "$right"
-            "$base"
-            "$output"
-          ];
-          program = "sh";
-        };
-      };
       user = {
         name = config.programs.git.extraConfig.user.name;
         email = config.programs.git.extraConfig.user.email;

@@ -47,6 +47,7 @@
     restic
     rsync
     mu
+    stylua
     (callPackage ../packages/gitblame { })
     (callPackage ../packages/inflector-rs { })
     (callPackage ../packages/indices { })

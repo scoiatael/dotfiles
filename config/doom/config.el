@@ -48,6 +48,9 @@
     :hook ((python-mode . combobulate-mode)
            (typescript-mode . combobulate-mode))))
 
+;; https://github.com/doomemacs/doomemacs/issues/7438
+(use-package! apheleia)
+
 ;; https://gitlab.inria.fr/jwintz/doom.d/-/blob/develop/config.el
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)

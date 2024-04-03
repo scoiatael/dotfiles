@@ -56,85 +56,85 @@ with lib; {
         echo "yabai configuration loaded.."
       '';
     };
-    services.skhd = {
-      enable = true;
-      package = pkgs.skhd;
-      # TODO: this has to be linked to ~/.skhdrc, otherwise will be ignored
-      skhdConfig = ''
-        # focus window
-        cmd - h : yabai -m window --focus west
-        cmd - j : yabai -m window --focus south
-        cmd - k : yabai -m window --focus north
-        cmd - l : yabai -m window --focus east
+    # services.skhd = {
+    #   enable = true;
+    #   package = pkgs.skhd;
+    #   # TODO: this has to be linked to ~/.skhdrc, otherwise will be ignored
+    #   skhdConfig = ''
+    #     # focus window
+    #     cmd - h : yabai -m window --focus west
+    #     cmd - j : yabai -m window --focus south
+    #     cmd - k : yabai -m window --focus north
+    #     cmd - l : yabai -m window --focus east
 
-        # colemak-dh
-        # cmd - m : yabai -m window --focus west
-        # cmd - n : yabai -m window --focus south
-        # cmd - e : yabai -m window --focus north
-        # cmd - i : yabai -m window --focus east
+    #     # colemak-dh
+    #     # cmd - m : yabai -m window --focus west
+    #     # cmd - n : yabai -m window --focus south
+    #     # cmd - e : yabai -m window --focus north
+    #     # cmd - i : yabai -m window --focus east
 
-        # swap managed window
-        ctrl + cmd - h : yabai -m window --swap west
-        ctrl + cmd - j : yabai -m window --swap south
-        ctrl + cmd - k : yabai -m window --swap north
-        ctrl + cmd - l : yabai -m window --swap east
+    #     # swap managed window
+    #     ctrl + cmd - h : yabai -m window --swap west
+    #     ctrl + cmd - j : yabai -m window --swap south
+    #     ctrl + cmd - k : yabai -m window --swap north
+    #     ctrl + cmd - l : yabai -m window --swap east
 
-        # move managed window
-        shift + cmd - h : yabai -m window --warp west
-        shift + cmd - j : yabai -m window --warp south
-        shift + cmd - k : yabai -m window --warp north
-        shift + cmd - l : yabai -m window --warp east
+    #     # move managed window
+    #     shift + cmd - h : yabai -m window --warp west
+    #     shift + cmd - j : yabai -m window --warp south
+    #     shift + cmd - k : yabai -m window --warp north
+    #     shift + cmd - l : yabai -m window --warp east
 
-        # balance size of windows
-        cmd + ctrl - 0 : yabai -m space --balance
+    #     # balance size of windows
+    #     cmd + ctrl - 0 : yabai -m space --balance
 
-        # focus monitor
-        cmd  - 0x21  : yabai -m display --focus prev
-        cmd  - 0x1E  : yabai -m display --focus next
-        # ctrl + alt - 3  : yabai -m display --focus 3
+    #     # focus monitor
+    #     cmd  - 0x21  : yabai -m display --focus prev
+    #     cmd  - 0x1E  : yabai -m display --focus next
+    #     # ctrl + alt - 3  : yabai -m display --focus 3
 
-        # send window to monitor and follow focus
-        ctrl + cmd - 0x21  : yabai -m window --display prev; yabai -m display --focus prev
-        ctrl + cmd - 0x1E  : yabai -m window --display next; yabai -m display --focus next
-        # ctrl + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1
+    #     # send window to monitor and follow focus
+    #     ctrl + cmd - 0x21  : yabai -m window --display prev; yabai -m display --focus prev
+    #     ctrl + cmd - 0x1E  : yabai -m window --display next; yabai -m display --focus next
+    #     # ctrl + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1
 
-        # move floating window
-        # shift + ctrl - a : yabai -m window --move rel:-20:0
-        # shift + ctrl - s : yabai -m window --move rel:0:20
+    #     # move floating window
+    #     # shift + ctrl - a : yabai -m window --move rel:-20:0
+    #     # shift + ctrl - s : yabai -m window --move rel:0:20
 
-        # increase window size
-        # shift + alt - a : yabai -m window --resize left:-20:0
-        # shift + alt - w : yabai -m window --resize top:0:-20
+    #     # increase window size
+    #     # shift + alt - a : yabai -m window --resize left:-20:0
+    #     # shift + alt - w : yabai -m window --resize top:0:-20
 
-        # decrease window size
-        # shift + cmd - s : yabai -m window --resize bottom:0:-20
-        # shift + cmd - w : yabai -m window --resize top:0:20
+    #     # decrease window size
+    #     # shift + cmd - s : yabai -m window --resize bottom:0:-20
+    #     # shift + cmd - w : yabai -m window --resize top:0:20
 
-        # set insertion point in focused container
-        # ctrl + alt - h : yabai -m window --insert west
+    #     # set insertion point in focused container
+    #     # ctrl + alt - h : yabai -m window --insert west
 
-        # toggle window zoom
-        cmd + shift - return : yabai -m window --toggle zoom-parent
-        cmd + ctrl - return : yabai -m window --toggle zoom-fullscreen
+    #     # toggle window zoom
+    #     cmd + shift - return : yabai -m window --toggle zoom-parent
+    #     cmd + ctrl - return : yabai -m window --toggle zoom-fullscreen
 
-        # toggle window split type
-        cmd - 0x2C  : yabai -m window --toggle split
+    #     # toggle window split type
+    #     cmd - 0x2C  : yabai -m window --toggle split
 
-        # float / unfloat window and center on screen
-        alt - t : yabai -m window --toggle float;\
-                  yabai -m window --grid 4:4:1:1:2:2
+    #     # float / unfloat window and center on screen
+    #     alt - t : yabai -m window --toggle float;\
+    #               yabai -m window --grid 4:4:1:1:2:2
 
-        # toggle sticky(+float), topmost, picture-in-picture
-        alt - p : yabai -m window --toggle sticky;\
-                  yabai -m window --toggle topmost;\
-                  yabai -m window --toggle pip
+    #     # toggle sticky(+float), topmost, picture-in-picture
+    #     alt - p : yabai -m window --toggle sticky;\
+    #               yabai -m window --toggle topmost;\
+    #               yabai -m window --toggle pip
 
-        # https://github.com/koekeishiya/yabai/wiki/Tips-and-tricks#quickly-restart-the-yabai-launch-agent
-        cmd + shift - c : launchctl kickstart -k "gui/''${UID}/homebrew.mxcl.yabai"
+    #     # https://github.com/koekeishiya/yabai/wiki/Tips-and-tricks#quickly-restart-the-yabai-launch-agent
+    #     cmd + shift - c : launchctl kickstart -k "gui/''${UID}/homebrew.mxcl.yabai"
 
-        # minimize window
-        cmd - m : yabai -m window --minimize; yabai -m window --focus mouse
-      '';
-    };
+    #     # minimize window
+    #     cmd - m : yabai -m window --minimize; yabai -m window --focus mouse
+    #   '';
+    # };
   };
 }

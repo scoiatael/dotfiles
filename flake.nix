@@ -74,6 +74,7 @@
           };
           modules = [
             ./modules/home.nix
+            ./modules/hammerspoon-config.nix
             ./modules/git.nix
             ./modules/emacs.nix
             ./modules/tmux.nix
@@ -162,7 +163,7 @@
           ./modules/darwin/sketchybar.nix
           ./modules/darwin/ceros.nix
           ./modules/darwin/ollama.nix
-          ./modules/darwin/shortcat.nix
+          ./modules/darwin/hammerspoon.nix
         ];
       };
       darwinConfigurations.LsAir = darwin.lib.darwinSystem {
@@ -176,10 +177,16 @@
           ./modules/darwin/ollama.nix
         ];
       };
-    nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = attrs;
-      modules = [ ./modules/nixos.nix ./modules/nixos/smb.nix  ./modules/nixos/jellyfin.nix ./modules/nixos/steam.nix];
+      nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = attrs;
+        modules = [
+          ./modules/nixos.nix
+          ./modules/nixos/smb.nix
+          ./modules/nixos/jellyfin.nix
+          ./modules/nixos/nvidia.nix
+          ./modules/nixos/steam.nix
+        ];
+      };
     };
-  };
 }
