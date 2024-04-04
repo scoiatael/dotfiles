@@ -117,6 +117,7 @@
 (map! :n "]p" #'evil-unimpaired-paste-below
       :n "[p" #'evil-unimpaired-paste-above
       :n ";" #'projectile-find-file
+      :n "~" #'+vterm/toggle
       :v "[6" #'base64-decode-region
       :v "]6" #'base64-encode-region
       :v "v" #'er/expand-region)
