@@ -21,7 +21,6 @@
   homebrew = {
     enable = true;
     casks = [
-      "karabiner-elements"
       "syncthing"
       "raycast"
       "signal"
@@ -34,6 +33,10 @@
     taps = [ "Homebrew/homebrew-autoupdate" ];
     onActivation = { cleanup = "uninstall"; };
   };
+
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl =
+    true; # Works alongside ControlEscape for better Caps :)
 
   # https://github.com/LnL7/nix-darwin/blob/master/modules/system/activation-scripts.nix#L111
   system.activationScripts.postUserActivation.text = let

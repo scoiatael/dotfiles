@@ -10,8 +10,9 @@
   home.file.".hammerspoon/init.lua".text = ''
     hs.loadSpoon("Yabai")
     hs.loadSpoon("WindowSpace")
+    hs.loadSpoon('ControlEscape'):start()
 
-    local super = {"ctrl", "alt", "shift"}
+    local super = {"ctrl", "alt"}
 
     local toastUuid
     function reloadConfig()
