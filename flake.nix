@@ -130,6 +130,7 @@
           modules = [
             ./modules/home.nix
             ./modules/git.nix
+            ./modules/hammerspoon-config.nix
             ./modules/emacs.nix
             ./modules/tmux.nix
             ./modules/zsh.nix
@@ -175,6 +176,7 @@
           ./modules/darwin/air.nix
           ./modules/darwin/shortcat.nix
           ./modules/darwin/ollama.nix
+          ./modules/darwin/hammerspoon.nix
         ];
       };
       nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
