@@ -81,6 +81,9 @@ function obj:move(dir, switch)
 		end
 	end
 	obj.logger.e("No space found")
+	if hs.spaces.addSpaceToScreen(uuid, false) then
+		return
+	end
 	flashScreen(screen) -- Shouldn't get here, so no space found
 end
 
