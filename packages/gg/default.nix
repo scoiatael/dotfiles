@@ -1,14 +1,8 @@
-{ lib, stdenv, darwin, fetchNpmDeps, nodePackages, fetchFromGitHub, gnused, perl
-, iconv, openssl, pkg-config, rustPlatform, webkitgtk, buildNpmPackage }:
+{ lib, stdenv, darwin, fetchNpmDeps, esbuild, nodePackages, fetchFromGitHub
+, gnused, perl, iconv, openssl, pkg-config, rustPlatform, webkitgtk
+, buildNpmPackage }:
 
 let
-
-  nixpkgsWithEsBuild01912 = import (fetchTarball {
-    name = "nixos-esbuild-01912";
-    url =
-      "https://github.com/NixOS/nixpkgs/archive/b60c5f00ad54fa71b363c559c5af12e09e40b8d7.tar.gz";
-  }) { };
-
   pname = "gg";
   version = "unstable-0.15.3";
 
@@ -23,14 +17,18 @@ let
     inherit version src;
     pname = "gg-ui";
 
-    ESBUILD_BINARY_PATH = "${nixpkgsWithEsBuild01912.esbuild}/bin/esbuild";
+    ESBUILD_BINARY_PATH = lib.getExe esbuild;
 
-    # npmFlags = [ "--ignore-scripts" ];
+    postPatch = ''
+      ln -sf ${./package-lock.json} ./package-lock.json
+    '';
 
-    npmDepsHash = "sha256-1rMfChTgsIsIvt1UPEroIkGFZmYgXuS6PemMR342H3A=";
+    npmDepsHash = "sha256-yfyr4iS8tATXySmCeBp3Yscc57AmkrAVZLp9e2BYC+o=";
 
     postBuild = ''
-      cp -r dist $out
+      mkdir -p $out
+      cp -r dist $out/
+      cp -r node_modules $out/
     '';
 
     dontInstall = true;
@@ -52,8 +50,8 @@ in rustPlatform.buildRustPackage {
     # Problem 1: duplication of 'cargo-vendor-dir' caused by relative path in
     #  https://github.com/NixOS/nixpkgs/blob/7f13fd4e7960fe2cefaba1048ea1885014311635/pkgs/build-support/rust/import-cargo-lock.nix#L234
     CARGO_VENDOR_DIR=$(realpath ../../cargo-vendor-dir)
-    substituteInPlace ../../.cargo/config "cargo-vendor-dir" "$CARGO_VENDOR_DIR"
-    substituteInPlace ../../cargo-vendor-dir/.cargo/config "cargo-vendor-dir" "$CARGO_VENDOR_DIR"
+    substituteInPlace ../../.cargo/config --replace-fail "cargo-vendor-dir" "$CARGO_VENDOR_DIR"
+    substituteInPlace ../../cargo-vendor-dir/.cargo/config --replace-fail "cargo-vendor-dir" "$CARGO_VENDOR_DIR"
 
     # Problem 2: locked dependencies of jj-cli missing in main Cargo.lock
     rm ../../cargo-vendor-dir/jj-cli-0.15.1/Cargo.lock
@@ -65,8 +63,23 @@ in rustPlatform.buildRustPackage {
     ln -sf ${./Cargo.lock} ./Cargo.lock
     ln -sf ${./Cargo.toml} ./Cargo.toml
 
-    # copy the frontend static resources to final build directory
-    cp -R ${frontend-build}/* ../dist/
+    # Tell Tauri where to expect frontend files
+    mkdir -p ui-build
+    ls  ${frontend-build}/
+    cp -R ${frontend-build}/dist/* ui-build/
+    substituteInPlace tauri.conf.json \
+       --replace-fail '"frontendDist": "../dist"' '"frontendDist": "ui-build"' \
+       --replace-fail '"beforeBuildCommand": "npm run build",' '"beforeBuildCommand": "",'
+  '';
+
+  buildPhase = ''
+    cd ../
+    ${frontend-build}/node_modules/.bin/tauri build --bundles app
+    echo "buildPhase done"
+  '';
+
+  installPhase = ''
+    cp -R src-tauri/target $out/
   '';
 
   nativeBuildInputs = [

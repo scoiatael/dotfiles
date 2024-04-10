@@ -57,6 +57,8 @@ async-trait = "0.1.79"
 insta = "1.38.0"
 test-case = "3.3.1"
 cargo_metadata = "0.18.1"
+hyper-tls = "^0.5"
+rustls-pemfile = "^1.0"
 
 [patch.crates-io]
 muda = { git = "https://github.com/gulbanana/muda.git", branch = "tauri-9127" }
