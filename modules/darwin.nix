@@ -81,7 +81,9 @@
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
-  nix.package = pkgs.nix;
+  documentation.doc.enable = false;
 
+  nix.nixPath = [ "nixpkgs=${pkgs.path}" ];
+  nix.package = pkgs.nix;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
