@@ -34,7 +34,6 @@
     bind # for dig
     pwgen
     entr
-    rnix-lsp # LSP for nix?!
     yubikey-manager
     pry
     (nerdfonts.override {
@@ -166,7 +165,6 @@
     };
     eza = {
       enable = true;
-      enableAliases = true;
     };
     broot = { enable = true; };
     helix = {

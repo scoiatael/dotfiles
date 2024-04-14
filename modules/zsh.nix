@@ -135,7 +135,7 @@
       }
       {
         name = "fzf-tab";
-        src = callPackage ../packages/fzf-tab { };
+        src = zsh-fzf-tab;
         file = "share/fzf-tab/fzf-tab.plugin.zsh";
       }
       {
