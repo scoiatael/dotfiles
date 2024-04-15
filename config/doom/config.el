@@ -94,6 +94,17 @@
   (add-to-list #'projectile-project-root-files-bottom-up ".envrc")
   (add-to-list #'projectile-project-root-files-top-down-recurring ".envrc"))
 
+(after! eglot
+  (add-to-list 'eglot-server-programs '((js-mode typescript-mode) . (eglot-deno "deno" "lsp")))
+
+  (defclass eglot-deno (eglot-lsp-server) ()
+    :documentation "A custom class for deno lsp.")
+
+  (cl-defmethod eglot-initialization-options ((server eglot-deno))
+    "Passes through required deno initialization options"
+    (list :enable t
+          :lint t)))
+
 (after! magit
   (add-hook 'find-file-hook #'jujutsu-commit-setup-check-buffer)
   (defconst jujutsu-commit-filename-regexp "\\.jjdescription\\'")
