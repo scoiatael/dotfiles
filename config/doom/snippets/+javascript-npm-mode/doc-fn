@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: doc-fn
+# uuid:
+# key: doc-fn
+# condition: t
+# --
+
+/**
+ * @param {User} user
+ * @returns {User}
+ * */

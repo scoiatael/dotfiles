@@ -74,6 +74,7 @@
           };
           modules = [
             ./modules/home.nix
+            ./modules/rio.nix
             ./modules/hammerspoon-config.nix
             ./modules/git.nix
             ./modules/emacs.nix

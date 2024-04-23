@@ -120,7 +120,13 @@
     plugins = with pkgs; [
       {
         name = "forgit";
-        src = zsh-forgit;
+        src = zsh-forgit.overrideAttrs {
+          postInstall = ''
+            substituteInPlace $out/share/zsh/zsh-forgit/forgit.plugin.zsh \
+                  --replace-fail "grep" "${lib.getExe pkgs.gnugrep}" \
+                  --replace-fail "awk" "${lib.getExe pkgs.gawk}"
+          '';
+        };
         file = "share/zsh/zsh-forgit/forgit.plugin.zsh";
       }
       {
