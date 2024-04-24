@@ -5,6 +5,7 @@
 
   home.packages = with pkgs; [
     elvish # until I port scripts back..
+    procps
     patchutils
     html-tidy
     wget
@@ -163,9 +164,7 @@
       extensions = [ pkgs.gh-eco (pkgs.callPackage ../packages/gh-poi { }) ];
       settings = { git_protocol = "ssh"; };
     };
-    eza = {
-      enable = true;
-    };
+    eza = { enable = true; };
     broot = { enable = true; };
     helix = {
       enable = true;

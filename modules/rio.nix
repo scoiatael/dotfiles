@@ -71,7 +71,7 @@
             action = "CreateTab";
           }
           {
-            key = "c";
+            key = "n";
             "with" = "super";
             action = "CreateWindow";
           }
@@ -102,6 +102,16 @@
             key = "[";
             "with" = "super";
             action = "SelectPrevTab";
+          }
+          {
+            key = "c";
+            "with" = "super";
+            action = "Copy";
+          }
+          {
+            key = "v";
+            "with" = "super";
+            action = "Paste";
           }
         ];
       };
