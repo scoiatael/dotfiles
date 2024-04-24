@@ -49,6 +49,9 @@
     hs.hotkey.bind(super, "down", function()
       spoon.Yabai:run({"-m", "window", "--focus", "south"})
     end)
+    hs.hotkey.bind(super, "\\", function()
+      hs.execute("touch ~/.config/rio/sentinel")
+    end)
 
     hs.hotkey.bind(super, "c", function()
       hs.execute("pkill yabai")
