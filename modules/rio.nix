@@ -28,21 +28,82 @@
     settings = {
       "confirm-before-quit" = false;
       "hide-cursor-when-typing" = true;
-      shell = {
-        program = lib.getExe pkgs.zsh;
-        args =
-          [ "-c" (lib.getExe pkgs.tmux) "new-session" "-A" "-s" "rio-main" ];
-      };
+      # shell = {
+      #   program = lib.getExe pkgs.zsh;
+      #   args = [ "-c" "${(lib.getExe pkgs.tmux)} new-session -A -s rio-main" ];
+      # };
       window = {
         background-opacity = 0.7;
         blur = true;
-        decorations = "Disabled";
       };
       navigation = {
-        mode = "Plain";
-        clickable = true;
+        mode = "CollapsedTab";
+        clickable = false;
         use-current-path = true;
-        color-automation = [ ];
+        color-automation = [
+          {
+            program = "nvim";
+            color = "#FFFF00";
+          }
+          {
+            path = "~/dotfiles";
+            color = "#FF0000";
+          }
+          {
+            path = "gemma/modules/ui";
+            color = "#FFaabb";
+          }
+          {
+            path = "gemma/modules/api";
+            color = "#FFbbaa";
+          }
+          {
+            path = "gemma/infrastructure";
+            color = "#FFbbbb";
+          }
+        ];
+      };
+      bindings = {
+        keys = [
+          {
+            key = "t";
+            "with" = "super";
+            action = "CreateTab";
+          }
+          {
+            key = "c";
+            "with" = "super";
+            action = "CreateWindow";
+          }
+          {
+            key = "w";
+            "with" = "super";
+            action = "CloseTab";
+          }
+          {
+            key = "q";
+            "with" = "super";
+            action = "Quit";
+          }
+          {
+            key = "pageup";
+            action = "ScrollPageUp";
+          }
+          {
+            key = "pagedown";
+            action = "ScrollPageDown";
+          }
+          {
+            key = "]";
+            "with" = "super";
+            action = "SelectNextTab";
+          }
+          {
+            key = "[";
+            "with" = "super";
+            action = "SelectPrevTab";
+          }
+        ];
       };
       fonts = {
         family = "JetBrainsMono Nerd Font";
