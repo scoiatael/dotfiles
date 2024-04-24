@@ -13,6 +13,8 @@
  git-commit-summary-max-length 120
  gcmh-high-cons-threshold (* 1024 1024 1024)) ; 1GiB
 
+(set-frame-parameter nil 'alpha-background 70)
+
 (after! company
   (setq company-minimum-prefix-length 5
         company-idle-delay 0.5))
