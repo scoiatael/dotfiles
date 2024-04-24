@@ -83,10 +83,6 @@
         alias vi=find_file
       fi
 
-      if [[ "$TERM_PROGRAM" = 'tmux' ]]; then
-        add-zsh-hook chpwd (){ local SWD="$(print -P '%3~')"; tmux rename-window "''${(@j[/]M)''${(@s[/]M)SWD##*/}#?}$SWD:t" }
-      fi
-
       # TODO: fix on non-Darwin
       path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
     '';

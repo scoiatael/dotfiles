@@ -1,19 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, catppuccin-rio, rio, pkgs, ... }:
 
 {
   programs.rio = {
     package = pkgs.rio.overrideAttrs (drv: rec {
-      version = "main-02e6c3075a7ed946caf2a9e5c0ebd6903e7afc74";
-      src = pkgs.fetchFromGitHub {
-        owner = "raphamorim";
-        repo = "rio";
-        rev = "02e6c3075a7ed946caf2a9e5c0ebd6903e7afc74";
-        hash = "sha256-wg2awdzgOXkXGuURn4AuEco2OJyTqeRDaDrds0TR7k4=";
-      };
+      version = "0.0.x";
+      src = rio;
       cargoDeps = drv.cargoDeps.overrideAttrs (_: {
         name = "${drv.pname}-${version}-vendor.tgz";
         inherit src;
-        outputHash = "sha256-i2IhrsopzDDJaNy+E+VrDb6rbenrDOSEvQx8EzAnUbE=";
+        outputHash = "sha256-wQ0PbmY3klLu2hfADYZaUj6wn5q0RNcdLGihNQzlMKY=";
       });
       buildInputs = with pkgs; [
         darwin.libobjc
@@ -37,6 +32,7 @@
         blur = true;
       };
       navigation = {
+        # mode = "Breadcrumb";
         mode = "CollapsedTab";
         clickable = false;
         use-current-path = true;
@@ -66,34 +62,6 @@
       bindings = {
         keys = [
           {
-            key = "t";
-            "with" = "super";
-            action = "CreateTab";
-          }
-          {
-            key = "n";
-            "with" = "super";
-            action = "CreateWindow";
-          }
-          {
-            key = "w";
-            "with" = "super";
-            action = "CloseTab";
-          }
-          {
-            key = "q";
-            "with" = "super";
-            action = "Quit";
-          }
-          {
-            key = "pageup";
-            action = "ScrollPageUp";
-          }
-          {
-            key = "pagedown";
-            action = "ScrollPageDown";
-          }
-          {
             key = "]";
             "with" = "super";
             action = "SelectNextTab";
@@ -104,14 +72,22 @@
             action = "SelectPrevTab";
           }
           {
-            key = "c";
-            "with" = "super";
-            action = "Copy";
+            key = "pageup";
+            action = "ScrollHalfPageUp";
           }
           {
-            key = "v";
+            key = "pagedown";
+            action = "ScrollHalfPageDown";
+          }
+          {
+            key = "up";
             "with" = "super";
-            action = "Paste";
+            action = "ScrollHalfPageUp";
+          }
+          {
+            key = "down";
+            "with" = "super";
+            action = "ScrollHalfPageDown";
           }
         ];
       };
@@ -120,12 +96,12 @@
         size = 16;
       };
       env-vars = [ ];
-      theme = "catpuccin-frappe";
+      theme = "catppuccin-frappe";
     };
   };
 
   home.file.".config/rio/themes" = {
-    source = ./rio/themes;
+    source = catppuccin-rio;
     recursive = true;
   };
 }

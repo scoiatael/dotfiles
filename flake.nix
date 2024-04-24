@@ -28,6 +28,14 @@
       url = "github:GitAlias/gitalias";
       flake = false;
     };
+    catppuccin-rio = {
+      url = "github:catppuccin/rio";
+      flake = false;
+    };
+    rio = {
+      url = "github:raphamorim/rio/0.0.x";
+      flake = false;
+    };
   };
 
   outputs = { nixpkgs, home-manager, darwin, emacsMacport, ... }@attrs:

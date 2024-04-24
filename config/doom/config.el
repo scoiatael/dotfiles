@@ -123,12 +123,12 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
-(map! "M-'" #'+vterm/toggle)
+(map! "C-`" #'+vterm/toggle)
 
 (map! :n "]p" #'evil-unimpaired-paste-below
       :n "[p" #'evil-unimpaired-paste-above
       :n ";" #'projectile-find-file
-      :n "~" #'+vterm/toggle
+      :n "\\" #'+vterm/toggle
       :v "[6" #'base64-decode-region
       :v "]6" #'base64-encode-region
       :v "v" #'er/expand-region)
