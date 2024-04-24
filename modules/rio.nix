@@ -29,17 +29,17 @@
       "confirm-before-quit" = false;
       "hide-cursor-when-typing" = true;
       shell = {
-        program = lib.getExe pkgs.tmux;
-        args = [ "new-session" "-A" "-s" "rio-main" ];
+        program = lib.getExe pkgs.zsh;
+        args =
+          [ "-c" (lib.getExe pkgs.tmux) "new-session" "-A" "-s" "rio-main" ];
       };
       window = {
-        foreground-opacity = 0.9;
         background-opacity = 0.7;
         blur = true;
         decorations = "Disabled";
       };
       navigation = {
-        mode = "NativeTab";
+        mode = "Plain";
         clickable = true;
         use-current-path = true;
         color-automation = [ ];
@@ -48,9 +48,7 @@
         family = "JetBrainsMono Nerd Font";
         size = 16;
       };
-      env-vars = [
-        "PATH=${config.home.homeDirectory}/.nix-profile/bin:/run/current-system/sw/bin:/usr/bin"
-      ];
+      env-vars = [ ];
       theme = "catpuccin-frappe";
     };
   };
