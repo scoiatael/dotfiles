@@ -14,6 +14,7 @@
  gcmh-high-cons-threshold (* 1024 1024 1024)) ; 1GiB
 
 (set-frame-parameter nil 'alpha-background 70)
+(add-to-list 'default-frame-alist '(alpha-background . 70))
 
 (after! company
   (setq company-minimum-prefix-length 5
