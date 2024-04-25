@@ -60,6 +60,7 @@
 (require '+private|modeline)
 (require '+private|spellchecking)
 (require '+private|llm)
+(require '+private|spacehammer)
 
 (after! jinx
   (setq jinx-languages "en cs pl"))

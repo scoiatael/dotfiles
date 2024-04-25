@@ -1,0 +1,47 @@
+hs.loadSpoon("Yabai")
+hs.loadSpoon("WindowSpace")
+hs.loadSpoon("ControlEscape"):start()
+
+local super = { "ctrl", "alt" }
+local ctrl = { "ctrl" }
+
+hs.hotkey.bind("alt", ",", function()
+	spoon.WindowSpace:move("left", true)
+end)
+hs.hotkey.bind("alt", ".", function()
+	spoon.WindowSpace:move("right", true)
+end)
+
+hs.hotkey.bind(ctrl, "h", function()
+	spoon.Yabai:run({ "-m", "window", "--focus", "west" })
+end)
+hs.hotkey.bind(ctrl, "l", function()
+	spoon.Yabai:run({ "-m", "window", "--focus", "east" })
+end)
+hs.hotkey.bind(ctrl, "k", function()
+	spoon.Yabai:run({ "-m", "window", "--focus", "north" })
+end)
+hs.hotkey.bind(ctrl, "j", function()
+	spoon.Yabai:run({ "-m", "window", "--focus", "south" })
+end)
+hs.hotkey.bind(super, "\\", function()
+	hs.execute("touch ~/.config/rio/sentinel")
+end)
+
+hs.hotkey.bind(super, "c", function()
+	hs.execute("pkill yabai")
+	reloadConfig()
+end)
+
+hs.hotkey.bind({ "alt" }, "t", function()
+	spoon.Yabai:run({ "-m", "window", "--toggle", "float" }, function()
+		spoon.Yabai:run({ "-m", "window", "--grid", "4:4:1:1:2:2" })
+	end)
+end)
+
+hs.hotkey.bind(super, "-", function()
+	spoon.Yabai:run({ "-m", "config", "top_padding", "36" })
+end)
+hs.hotkey.bind(super, "=", function()
+	spoon.Yabai:run({ "-m", "config", "top_padding", "0" })
+end)

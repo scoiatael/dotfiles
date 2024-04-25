@@ -22,7 +22,12 @@ in {
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [ epkgs.vterm epkgs.jinx ];
+    extraPackages = epkgs: [
+      epkgs.vterm
+      epkgs.jinx
+      epkgs.fennel-mode
+      epkgs.flymake-fennel
+    ];
   };
 
   # avoid copying into /nix/store to allow easy changes
