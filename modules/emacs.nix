@@ -11,7 +11,7 @@ in {
     aspellDicts.en-science
     aspellDicts.en-computers
     enchant
-    nixfmt
+    nixfmt-classic
     sqlite
     clang
     hunspell

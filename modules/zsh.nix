@@ -29,7 +29,7 @@
       EDITOR =
         "env PATH=${config.home.homeDirectory}/.nix-profile/bin ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/emacs/emacsclient.sh";
     };
-    enableAutosuggestions = true;
+    autosuggestion = { enable = true; };
     historySubstringSearch = { enable = true; };
     initExtraFirst = ''
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
@@ -37,6 +37,10 @@
     initExtra = lib.mkAfter ''
       autoload -U compinit
       compinit -C # assume zcompdump is fresh
+
+      bindkey "" history-beginning-search-forward
+      bindkey "" history-beginning-search-backward
+
       if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
         autoload -U add-zsh-hook
         add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
