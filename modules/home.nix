@@ -3,6 +3,8 @@
 {
   programs.gpg = { enable = true; };
 
+  home.language = { base = "en_GB.UTF-8"; };
+
   home.packages = with pkgs; [
     elvish # until I port scripts back..
     procps
