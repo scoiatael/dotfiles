@@ -26,7 +26,7 @@
     (launch-emacs)
     "
     (fn activate []
-        (windows.activate-app app-name)))
+       (hs.application.launchOrFocus app-name)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -82,47 +82,6 @@
 ;; Apps Menu
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(local app-bindings
-       [return
-       {:key :e
-       :title "Emacs"
-       :action (activator "Emacs")}
-       {:key :g
-       :title "Arc"
-       :action (activator "Arc")}
-       {:key :t
-       :title "Term"
-       :action (activator "Rio")}
-       {:key :s
-       :title "Slack"
-       :action (activator "Slack")}
-       {:key :m
-       :title music-app
-       :action (activator music-app)}])
-
-(local media-bindings
-       [return
-       {:key :s
-       :title "Play or Pause"
-       :action "multimedia:play-or-pause"}
-       {:key :h
-       :title "Prev Track"
-       :action "multimedia:prev-track"}
-       {:key :l
-       :title "Next Track"
-       :action "multimedia:next-track"}
-       {:key :j
-       :title "Volume Down"
-       :action "multimedia:volume-down"
-       :repeatable true}
-       {:key :k
-       :title "Volume Up"
-       :action "multimedia:volume-up"
-       :repeatable true}
-       {:key :a
-       :title (.. "Launch " music-app)
-       :action (activator music-app)}])
-
 (local emacs-bindings
        [return
        {:key :c
@@ -151,18 +110,18 @@
        :enter "windows:enter-window-menu"
        :exit "windows:exit-window-menu"
        :items window-bindings}
-       {:key   :a
-       :title "Apps"
-       :items app-bindings}
-       {:key    :j
-       :title  "Jump"
-       :action "windows:jump"}
-       {:key   :m
-       :title "Media"
-       :items media-bindings}
-       {:key   :x
+       {:key :e
        :title "Emacs"
-       :items emacs-bindings}])
+       :action (activator "Emacs")}
+       {:key :g
+       :title "Arc"
+       :action (activator "Arc")}
+       {:key :t
+       :title "Term"
+       :action (activator "Rio")}
+       {:key :s
+       :title "Slack"
+       :action (activator "Slack")}])
 
 (local common-keys
        [{:mods [:cmd]
@@ -293,11 +252,7 @@
        :repeat true}]})
 
 (local apps
-       [brave-config
-       chrome-config
-       firefox-config
-       emacs-config
-       grammarly-config
+       [grammarly-config
        hammerspoon-config
        slack-config])
 
