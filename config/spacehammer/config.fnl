@@ -14,7 +14,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (fn activator
-    [app-name]
+    [app-name other-app]
     "
     A higher order function to activate a target app. It's useful for quickly
     binding a modal menu action or hotkey action to launch or focus on an app.
@@ -26,7 +26,8 @@
     (launch-emacs)
     "
     (fn activate []
-       (hs.application.launchOrFocus app-name)))
+      (when (not (hs.application.launchOrFocus app-name))
+        (hs.application.launchOrFocus other-app))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -110,16 +111,16 @@
        :enter "windows:enter-window-menu"
        :exit "windows:exit-window-menu"
        :items window-bindings}
-       {:key :e
-       :title "Emacs"
-       :action (activator "Emacs")}
-       {:key :g
-       :title "Arc"
-       :action (activator "Arc")}
-       {:key :t
+       {:key :1
        :title "Term"
        :action (activator "Rio")}
-       {:key :s
+       {:key :2
+       :title "Emacs"
+       :action (activator "Emacs")}
+       {:key :3
+       :title "Arc"
+       :action (activator "Arc" "Safari")}
+       {:key :4
        :title "Slack"
        :action (activator "Slack")}])
 
