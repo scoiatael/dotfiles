@@ -7,7 +7,6 @@
 
   home.packages = with pkgs; [
     elvish # until I port scripts back..
-    procps
     patchutils
     html-tidy
     wget

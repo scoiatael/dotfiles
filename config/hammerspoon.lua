@@ -7,18 +7,22 @@ local ctrl = { "ctrl" }
 local cmd = { "cmd" }
 local hyper = { "cmd", "ctrl" }
 
-hs.hotkey.bind(ctrl, "h", function()
-	hs.eventtap.keyStroke({}, "left", 1000)
-end)
-hs.hotkey.bind(ctrl, "j", function()
-	hs.eventtap.keyStroke({}, "down", 1000)
-end)
-hs.hotkey.bind(ctrl, "k", function()
-	hs.eventtap.keyStroke({}, "up", 1000)
-end)
-hs.hotkey.bind(ctrl, "l", function()
-	hs.eventtap.keyStroke({}, "right", 1000)
-end)
+local fn = function()
+	hs.eventtap.keyStroke({}, "left", 100)
+end
+hs.hotkey.bind(ctrl, "h", fn, nil, fn)
+local fn = function()
+	hs.eventtap.keyStroke({}, "down", 100)
+end
+hs.hotkey.bind(ctrl, "j", fn, nil, fn)
+local fn = function()
+	hs.eventtap.keyStroke({}, "up", 100)
+end
+hs.hotkey.bind(ctrl, "k", fn, nil, fn)
+local fn = function()
+	hs.eventtap.keyStroke({}, "right", 100)
+end
+hs.hotkey.bind(ctrl, "l", fn, nil, fn)
 
 hs.hotkey.bind("alt", ",", function()
 	spoon.WindowSpace:move("left", true)

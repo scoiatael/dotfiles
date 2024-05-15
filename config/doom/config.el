@@ -123,6 +123,9 @@
                (string-match-p jujutsu-commit-filename-regexp buffer-file-name))
       (git-commit-setup))))
 
+(after! dired
+  (define-key ranger-mode-map (kbd "\\") #'ranger-toggle-dotfiles))
+
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.

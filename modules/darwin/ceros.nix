@@ -10,7 +10,8 @@
       "1password"
       "yubico-yubikey-manager"
       "arc"
-      "iterm2"
+      "docker"
+      "1password/tap/1password-cli"
     ];
   };
 }
