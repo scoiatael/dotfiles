@@ -112,19 +112,22 @@
          :exit "windows:exit-window-menu"
          :items window-bindings}
         {:key :1
-         :title "Term"
+         :title ""
          :action (activator "Rio")}
         {:key :2
-         :title "Emacs"
+         :title ""
          :action (activator "Emacs")}
         {:key :3
-         :title "Arc"
+         :title ""
          :action (activator "Arc" "Safari")}
         {:key :4
-         :title "Slack"
+         :title ""
          :action (activator "Slack" "Signal")}
         {:key :5
-         :title "Music"
+         :title "󰵅"
+         :action (activator "Signal")}
+        {:key :6
+         :title ""
          :action (activator "Music")} ])
 
 (local common-keys
@@ -230,10 +233,10 @@
                {:mods [:ctrl]
                 :key :n
                 :action "slack:next-day"}
-               {:mods [:ctrl]
-                :key :e
-                :action "slack:scroll-up"
-                :repeat true}
+               ;; {:mods [:ctrl]
+               ;;  :key :e
+               ;;  :action "slack:scroll-up"
+               ;;  :repeat true}
                {:mods [:ctrl]
                 :key :y
                 :action "slack:scroll-down"
@@ -269,7 +272,8 @@
         :exit  (fn [] (windows.hide-display-numbers))
         :apps  apps
         :hyper {:key :F18}
-        :modules {:windows {:center-ratio "80:50"}}})
+        :modules {:windows {:center-ratio "80:50"}}
+        :modal-style {:textFont "JetBrainsMono Nerd Font"}})
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
