@@ -19,9 +19,10 @@
     "cryptd"
   ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "nct6775" ];
   boot.extraModulePackages = [ ];
   boot.tmpOnTmpfs = true;
+  boot.kernelParams = [ "i915.force_probe=56a5"];
 
   # https://nixos.wiki/wiki/TPM
   security.tpm2.enable = true;

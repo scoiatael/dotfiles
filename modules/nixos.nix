@@ -3,8 +3,6 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./nixos/nvidia.nix
-    ./nixos/jellyfin.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -16,6 +14,11 @@
   # Enroll keys once secureboot is enforced:
   # systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p1
   boot.initrd.systemd = { enable = true; };
+
+  hardware.opengl.extraPackages = with pkgs; [
+   intel-compute-runtime
+   intel-media-driver
+  ];
 
   security.sudo.enable = false;
   security.doas = { enable = true; };
@@ -184,6 +187,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
+    pciutils
+    lm_sensors
     yubioath-flutter
     git
     librewolf-wayland
