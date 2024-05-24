@@ -138,7 +138,7 @@
           };
           modules = [
             ./modules/home.nix
-            ./modules/rio.nix
+            ./modules/wezterm.nix
             ./modules/git.nix
             ./modules/hammerspoon-config.nix
             ./modules/emacs.nix
