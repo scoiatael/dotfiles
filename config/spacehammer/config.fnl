@@ -113,7 +113,7 @@
          :items window-bindings}
         {:key :1
          :title ""
-         :action (activator "Rio")}
+         :action (activator "WezTerm")}
         {:key :2
          :title ""
          :action (activator "Emacs")}
@@ -122,7 +122,7 @@
          :action (activator "Arc" "Safari")}
         {:key :4
          :title ""
-         :action (activator "Slack" "Signal")}
+         :action (activator "Slack")}
         {:key :5
          :title "󰵅"
          :action (activator "Signal")}

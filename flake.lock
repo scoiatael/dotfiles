@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "catppuccin-rio": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1701812339,
-        "narHash": "sha256-bT789sEDJl3wQh/yfbmjD/J7XNr2ejOd0UsASguyCQo=",
-        "owner": "catppuccin",
-        "repo": "rio",
-        "rev": "a8d3d3c61f828da5f3d6d02d7d489108f6428178",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "rio",
-        "type": "github"
-      }
-    },
     "crane": {
       "inputs": {
         "nixpkgs": [
@@ -308,26 +292,8 @@
         "type": "github"
       }
     },
-    "rio": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1710379273,
-        "narHash": "sha256-wg2awdzgOXkXGuURn4AuEco2OJyTqeRDaDrds0TR7k4=",
-        "owner": "raphamorim",
-        "repo": "rio",
-        "rev": "02e6c3075a7ed946caf2a9e5c0ebd6903e7afc74",
-        "type": "github"
-      },
-      "original": {
-        "owner": "raphamorim",
-        "ref": "0.0.x",
-        "repo": "rio",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "catppuccin-rio": "catppuccin-rio",
         "darwin": "darwin",
         "doomemacs": "doomemacs",
         "emacsMacport": "emacsMacport",
@@ -335,8 +301,7 @@
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
-        "rio": "rio"
+        "nixpkgs": "nixpkgs"
       }
     },
     "rust-overlay": {

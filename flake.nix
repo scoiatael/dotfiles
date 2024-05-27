@@ -28,14 +28,14 @@
       url = "github:GitAlias/gitalias";
       flake = false;
     };
-    catppuccin-rio = {
-      url = "github:catppuccin/rio";
-      flake = false;
-    };
-    rio = {
-      url = "github:raphamorim/rio/0.0.x";
-      flake = false;
-    };
+    # catppuccin-rio = {
+    #   url = "github:catppuccin/rio";
+    #   flake = false;
+    # };
+    # rio = {
+    #   url = "github:raphamorim/rio/0.0.x";
+    #   flake = false;
+    # };
   };
 
   outputs = { nixpkgs, home-manager, darwin, emacsMacport, ... }@attrs:
@@ -82,7 +82,7 @@
           };
           modules = [
             ./modules/home.nix
-            ./modules/rio.nix
+            ./modules/wezterm.nix
             ./modules/hammerspoon-config.nix
             ./modules/git.nix
             ./modules/emacs.nix
