@@ -44,6 +44,9 @@ local process_icons = {
 -- Return the Tab's current working directory
 local function get_cwd(tab)
 	-- Note, returns URL Object: https://wezfurlong.org/wezterm/config/lua/pane/get_current_working_dir.html
+	if not tab.active_pane.current_working_dir then
+		return ""
+	end
 	return tab.active_pane.current_working_dir.file_path or ""
 end
 
@@ -127,18 +130,30 @@ local function select_contrasting_fg_color(hex_color)
 	---@diagnostic disable-next-line: unused-local
 	local lightness, _a, _b, _alpha = color:laba()
 	if lightness > 55 then
-		return "#000000" -- Black has higher contrast with colors perceived to be "bright"
+		return "#222222" -- Black has higher contrast with colors perceived to be "bright"
 	end
-	return "#FFFFFF" -- White has higher contrast
+	return "#DDDDDD" -- White has higher contrast
+end
+
+local function darken(hex_color, amount)
+	local color = wezterm.color.parse(hex_color)
+	local r, g, b, a = color:darken(amount):srgba_u8()
+	return string.format("#%X%X%X", r, g, b)
+end
+
+local function lighten(hex_color, amount)
+	local color = wezterm.color.parse(hex_color)
+	local r, g, b, a = color:lighten(amount):srgba_u8()
+	return string.format("#%X%X%X", r, g, b)
 end
 
 -- Inline tests
 local testColor = string_to_color("/Users/kyleking/Developer/ProjectA")
 assert(testColor == "#EBD168", "Unexpected color value for test hash (" .. testColor .. ")")
-assert(select_contrasting_fg_color("#494CED") == "#FFFFFF", "Expected higher contrast with white")
-assert(select_contrasting_fg_color("#128b26") == "#FFFFFF", "Expected higher contrast with white")
-assert(select_contrasting_fg_color("#58f5a6") == "#000000", "Expected higher contrast with black")
-assert(select_contrasting_fg_color("#EBD168") == "#000000", "Expected higher contrast with black")
+assert(select_contrasting_fg_color("#494CED") == "#DDDDDD", "Expected higher contrast with white")
+assert(select_contrasting_fg_color("#128b26") == "#DDDDDD", "Expected higher contrast with white")
+assert(select_contrasting_fg_color("#58f5a6") == "#222222", "Expected higher contrast with black")
+assert(select_contrasting_fg_color("#EBD168") == "#222222", "Expected higher contrast with black")
 
 -- On format tab title events, override the default handling to return a custom title
 -- Docs: https://wezfurlong.org/wezterm/config/lua/window-events/format-tab-title.html
@@ -149,7 +164,6 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 
 	if tab.is_active then
 		return {
-			{ Attribute = { Intensity = "Bold" } },
 			{ Background = { Color = color } },
 			{ Foreground = { Color = select_contrasting_fg_color(color) } },
 			{ Text = title },
@@ -157,14 +171,14 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 	end
 	if has_unseen_output(tab) then
 		return {
-			{ Foreground = { Color = "#EBD168" } },
-			{ Foreground = { Color = select_contrasting_fg_color(color) } },
+			{ Foreground = { Color = color } },
+			{ Foreground = { Color = lighten(select_contrasting_fg_color(color), 0.3) } },
 			{ Text = title },
 		}
 	end
 	return {
 		{ Background = { Color = color } },
-		{ Foreground = { Color = select_contrasting_fg_color(color) } },
+		{ Foreground = { Color = darken(select_contrasting_fg_color(color), 0.3) } },
 		{ Text = title },
 	}
 end)
