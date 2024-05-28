@@ -2,6 +2,7 @@
 
 let inherit (lib) mkDefault;
 in {
+  home.packages = [ pkgs.bit] ;
   programs.git = {
     enable = true;
     lfs.enable = true;
