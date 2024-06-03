@@ -51,7 +51,7 @@
 
   system.defaults.spaces.spans-displays = false;
 
-  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = "-1.0";
+  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
 
   system.defaults.NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
   system.defaults.NSGlobalDomain.NSDisableAutomaticTermination = true;

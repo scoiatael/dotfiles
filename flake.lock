@@ -28,16 +28,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1690282736,
-        "narHash": "sha256-W4/TNzwTAy6ddv7IqtfxWEptX/Q1XfndsKdNxPsVNMk=",
-        "owner": "azuwis",
+        "lastModified": 1716993688,
+        "narHash": "sha256-vo5k2wQekfeoq/2aleQkBN41dQiQHNTniZeVONWiWLs=",
+        "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "56f56c80ef15178c0f6c4dc5b72338c95f0f0076",
+        "rev": "c0d5b8c54d6828516c97f6be9f2d00c63a363df4",
         "type": "github"
       },
       "original": {
-        "owner": "azuwis",
-        "ref": "sketchybar",
+        "owner": "LnL7",
         "repo": "nix-darwin",
         "type": "github"
       }
