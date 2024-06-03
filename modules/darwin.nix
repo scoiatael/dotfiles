@@ -27,7 +27,7 @@
       "lunar"
       "yubico-authenticator"
       "dteoh-devdocs"
-      "caffeine"
+      "domzilla-caffeine"
     ];
     brews = [ "switchaudio-osx" ];
     taps = [ "Homebrew/homebrew-autoupdate" ];
