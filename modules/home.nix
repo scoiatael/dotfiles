@@ -160,11 +160,6 @@
       enable = true;
       flags = [ "--disable-up-arrow" ];
     };
-    gh = {
-      enable = true;
-      extensions = [ pkgs.gh-eco (pkgs.callPackage ../packages/gh-poi { }) ];
-      settings = { git_protocol = "ssh"; };
-    };
     eza = { enable = true; };
     broot = { enable = true; };
     helix = {

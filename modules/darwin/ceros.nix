@@ -12,6 +12,7 @@
       "arc"
       "docker"
       "1password/tap/1password-cli"
+      "routine"
     ];
   };
 }

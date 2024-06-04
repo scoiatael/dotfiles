@@ -2,7 +2,7 @@
 
 let inherit (lib) mkDefault;
 in {
-  home.packages = [ pkgs.bit] ;
+  home.packages = [ pkgs.bit ];
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -233,4 +233,12 @@ in {
       };
     };
   };
+
+  programs.gh = {
+    enable = true;
+    extensions = [ pkgs.gh-eco (pkgs.callPackage ../packages/gh-poi { }) ];
+    settings = { git_protocol = "ssh"; };
+  };
+
+  programs.gh-dash = { enable = true; };
 }
