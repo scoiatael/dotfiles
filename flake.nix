@@ -59,7 +59,6 @@
             ./modules/tmux.nix
             ./modules/zsh.nix
             ./modules/neovim.nix
-            ./modules/sway.nix
             ({ lib, ... }: {
               programs.alacritty.settings.font.size = lib.mkForce 10;
             })
@@ -196,7 +195,6 @@
           ./modules/nixos.nix
           ./modules/nixos/smb.nix
           ./modules/nixos/jellyfin.nix
-          ./modules/nixos/nvidia.nix
           ./modules/nixos/steam.nix
         ];
       };
