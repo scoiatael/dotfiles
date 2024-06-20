@@ -125,14 +125,28 @@ local function string_to_color(str)
 	return "#" .. (string.rep("0", 6 - #c) .. c):upper()
 end
 
-local function select_contrasting_fg_color(hex_color)
+local function select_contrasting_fg_color(hex_color, modifier)
+	modifier = modifier or "none"
 	local color = wezterm.color.parse(hex_color)
 	---@diagnostic disable-next-line: unused-local
 	local lightness, _a, _b, _alpha = color:laba()
 	if lightness > 55 then
-		return "#222222" -- Black has higher contrast with colors perceived to be "bright"
+		-- Reversed logic: "lighten" for dark colours should be the most visible
+		if modifier == "lighten" then
+			return "#000000"
+		elseif modifier == "darken" then
+			return "#444444"
+		else
+			return "#222222"
+		end
 	end
-	return "#DDDDDD" -- White has higher contrast
+	if modifier == "lighten" then
+		return "#FFFFFF"
+	elseif modifier == "darken" then
+		return "#BBBBBB"
+	else
+		return "#DDDDDD"
+	end
 end
 
 local function darken(hex_color, amount)
@@ -172,13 +186,13 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 	if has_unseen_output(tab) then
 		return {
 			{ Foreground = { Color = color } },
-			{ Foreground = { Color = lighten(select_contrasting_fg_color(color), 0.3) } },
+			{ Foreground = { Color = select_contrasting_fg_color(color, "ligthen") } },
 			{ Text = title },
 		}
 	end
 	return {
 		{ Background = { Color = color } },
-		{ Foreground = { Color = darken(select_contrasting_fg_color(color), 0.3) } },
+		{ Foreground = { Color = select_contrasting_fg_color(color, "darken") } },
 		{ Text = title },
 	}
 end)

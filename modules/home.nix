@@ -55,6 +55,7 @@
     # (callPackage ../packages/ternimal { })
     # janet
     # luakit # doesn't work on aarch64-darwin :/
+    devenv
   ];
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
