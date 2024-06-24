@@ -103,6 +103,8 @@
         ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
 
 
+        FAST_HIGHLIGHT[use_brackets]=1
+
         ### Fix slowness of pastes with zsh-syntax-highlighting.zsh
         pasteinit() {
           OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
@@ -149,10 +151,15 @@
         src = zsh-you-should-use;
         file = "share/zsh/plugins/you-should-use/you-should-use.plugin.zsh";
       }
+      # {
+      #   name = "syntax-hightlighing";
+      #   src = zsh-syntax-highlighting;
+      #   file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
+      # }
       {
-        name = "syntax-hightlighing";
-        src = zsh-syntax-highlighting;
-        file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
+        name = "fast-syntax-hightlighing";
+        src = zsh-fast-syntax-highlighting;
+        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
       }
     ];
   };
