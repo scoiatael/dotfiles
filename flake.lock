@@ -1,5 +1,37 @@
 {
   "nodes": {
+    "AdamWagner_stackline": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1669758007,
+        "narHash": "sha256-x7SIgKR6rwkoVVbaAvjFr1N7wTF3atni/d6xGLBBRN4=",
+        "owner": "AdamWagner",
+        "repo": "stackline",
+        "rev": "2aa0bd9a27f93bad24b0fd4da38f3c0356414098",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AdamWagner",
+        "repo": "stackline",
+        "type": "github"
+      }
+    },
+    "agzam_spacehammer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712776348,
+        "narHash": "sha256-UD0NF30eQZ+6UzoQ3B3eoaUrY9DxoYtQ1RZafHIh/aQ=",
+        "owner": "agzam",
+        "repo": "spacehammer",
+        "rev": "bfbe3de8cdea5944647337c0a698ab0fd2101697",
+        "type": "github"
+      },
+      "original": {
+        "owner": "agzam",
+        "repo": "spacehammer",
+        "type": "github"
+      }
+    },
     "crane": {
       "inputs": {
         "nixpkgs": [
@@ -365,6 +397,8 @@
     },
     "root": {
       "inputs": {
+        "AdamWagner_stackline": "AdamWagner_stackline",
+        "agzam_spacehammer": "agzam_spacehammer",
         "cursorless_talon": "cursorless_talon",
         "darwin": "darwin",
         "doomemacs": "doomemacs",

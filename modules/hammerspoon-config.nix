@@ -1,13 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, agzam_spacehammer, AdamWagner_stackline, ... }:
 
 {
   home.file.".hammerspoon" = let
-    spacehammer = pkgs.fetchFromGitHub {
-      owner = "agzam";
-      repo = "spacehammer";
-      rev = "bfbe3de";
-      sha256 = "sha256-UD0NF30eQZ+6UzoQ3B3eoaUrY9DxoYtQ1RZafHIh/aQ=";
-    };
     fennel = builtins.fetchTarball {
       url = "https://fennel-lang.org/downloads/fennel-1.4.2.tar.gz";
       sha256 = "sha256:1cvxpyr72wv42w5g1ghvp76rbxipmk3lh9yhy8j12fl4a8pf9cmi";
@@ -33,7 +27,11 @@
     source = pkgs.symlinkJoin {
       name = "dot-hammerspoon";
       paths = [
-        (lib.sources.sourceFilesBySuffices spacehammer [ ".lua" ".fnl" ".el" ])
+        (lib.sources.sourceFilesBySuffices agzam_spacehammer [
+          ".lua"
+          ".fnl"
+          ".el"
+        ])
         (lib.sources.sourceFilesBySuffices fennel [ ".lua" ])
         spoons
         my-lua-config
@@ -44,10 +42,12 @@
   };
 
   # https://fennel-lang.org/reference
-  home.file."/.spacehammer" = {
+  home.file.".spacehammer" = {
     source = ../config/spacehammer;
     recursive = true;
   };
+
+  home.file.".hammerspoon/stackline".source = AdamWagner_stackline;
 }
 
 # Local Variables:
