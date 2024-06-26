@@ -2,6 +2,22 @@ hs.loadSpoon("Yabai")
 hs.loadSpoon("WindowSpace")
 hs.loadSpoon("ControlEscape"):start()
 
+old_path = package.path
+stackline = require("stackline")
+stackline:init({
+	paths = {
+		yabai = "/run/current-system/sw/bin/yabai",
+	},
+})
+
+-- HACK: Since we do extensive path manipulation, Lua will try to be lazy and cache requires. This breaks stuff.
+package.loaded["lib.utils"] = nil
+fennel = require("fennel")
+package.path = hs.configdir .. "/spacehammer/?.lua;" .. old_path
+fennel.path = hs.configdir .. "/spacehammer/?/init.fnl;" .. hs.configdir .. "/spacehammer/?.fnl;" .. old_path
+fennel["macro-path"] = hs.configdir .. "/spacehammer/?/macros.fnl;" .. hs.configdir .. "/spacehammer/?.fnl;" .. old_path
+require("spacehammer")
+
 local super = { "ctrl", "alt" }
 local ctrl = { "ctrl" }
 local cmd = { "cmd" }
@@ -25,16 +41,10 @@ end
 hs.hotkey.bind(ctrl, "l", fn, nil, fn)
 
 hs.hotkey.bind("alt", ",", function()
-	spoon.WindowSpace:move("left", true)
-end)
-hs.hotkey.bind(super, ",", function()
-	hs.eventtap.keyStroke({ "ctrl", "fn" }, "left", 1000)
+	spoon.Yabai:run({ "-m", "window", "--focus", "stack.prev" })
 end)
 hs.hotkey.bind("alt", ".", function()
-	spoon.WindowSpace:move("right", true)
-end)
-hs.hotkey.bind(super, ".", function()
-	hs.eventtap.keyStroke({ "ctrl", "fn" }, "right", 1000)
+	spoon.Yabai:run({ "-m", "window", "--focus", "stack.next" })
 end)
 
 hs.hotkey.bind(hyper, "h", function()
@@ -48,9 +58,6 @@ hs.hotkey.bind(hyper, "k", function()
 end)
 hs.hotkey.bind(hyper, "j", function()
 	spoon.Yabai:run({ "-m", "window", "--focus", "south" })
-end)
-hs.hotkey.bind(super, "\\", function()
-	hs.execute("touch ~/.config/rio/sentinel")
 end)
 
 hs.hotkey.bind(super, "c", function()
