@@ -35,9 +35,9 @@ with lib; {
         mouse_action2 = "resize";
         layout = "bsp";
         top_padding = if config.hardware.notch then 0 else 36;
-        bottom_padding = 2;
-        left_padding = 2;
-        right_padding = 2;
+        bottom_padding = 10;
+        left_padding = 10;
+        right_padding = 10;
         window_gap = 5;
         mouse_modifier = "ctrl";
         mouse_drop_action = "stack";
