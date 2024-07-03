@@ -94,6 +94,7 @@
   (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
 
 (after! projectile
+  (setq projectile-require-project-root t)
   (add-to-list #'projectile-project-root-files ".envrc")
   (add-to-list #'projectile-project-root-files-bottom-up ".envrc")
   (add-to-list #'projectile-project-root-files-top-down-recurring ".envrc"))
