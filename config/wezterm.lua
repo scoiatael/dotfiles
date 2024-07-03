@@ -245,6 +245,8 @@ local keys = {
 	--   }
 	-- }
 	-- { key = 'r', mods = 'LEADER', action = act.ActivateKeyTable { name = 'resize_pane', one_shot = false, }, }
+	{ key = "u", mods = "CTRL", action = act.ScrollToPrompt(-1) },
+	{ key = "d", mods = "CTRL", action = act.ScrollToPrompt(1) },
 }
 
 return {
