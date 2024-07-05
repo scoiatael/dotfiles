@@ -157,16 +157,19 @@
   services.fstrim.enable = true;
 
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.enable = true;
+  services.displayManager.sddm = { 
+    enable = true;
+    wayland.enable = true;
+  };
+  services.xserver.desktopManager.plasma6.enable = true;
+  # services.xserver.enable = true;
   # services.xserver.desktopManager.lxqt.enable = true;
   # disable the default
   # services.xserver.displayManager.lightdm.enable = false;
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
+  # programs.sway = {
+   #  enable = true;
+  #   wrapperFeatures.gtk = true;
+  # };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lukaszczaplinski = {
