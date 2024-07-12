@@ -166,10 +166,6 @@ in {
       # Visual Studio Code ElixirLS
       ".elixir_ls"
 
-      # Direnv
-      ".envrc"
-      ".envrc.enc*"
-
       # Asdf-vm
       ".tool-versions"
     ];
