@@ -66,6 +66,7 @@
           # see https://github.com/doomemacs/doomemacs/issues/7532
           pkgs.emacs29-macport.overrideAttrs { src = emacsMacport; };
       };
+      lix = { pkgs, ... }: { nix.package = pkgs.lix; };
     in {
       homeConfigurations."lukaszczaplinski@LsFramework" =
         home-manager.lib.homeManagerConfiguration {
@@ -189,6 +190,7 @@
       darwinConfigurations.LsCerosDarwin = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          lix
           ./modules/darwin.nix
           ./modules/darwin/yabai.nix
           ./modules/darwin/sketchybar.nix

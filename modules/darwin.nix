@@ -84,6 +84,6 @@
   documentation.doc.enable = false;
 
   nix.nixPath = [ "nixpkgs=${pkgs.path}" ];
-  nix.package = pkgs.nix;
+  nix.package = lib.mkDefault pkgs.nix;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
