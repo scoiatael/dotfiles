@@ -202,6 +202,7 @@
       darwinConfigurations.LsAir = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          lix
           ./modules/darwin.nix
           ./modules/darwin/yabai.nix
           ./modules/darwin/talon.nix
