@@ -238,6 +238,6 @@
     ../config/karabiner.json;
 
   home.file."${config.home.homeDirectory}/.gnupg/dirmngr.conf".text = ''
-    keyserver hkp://keyserver.ubuntu.com
+    keyserver hkps://keys.openpgp.org/
   '';
 }
