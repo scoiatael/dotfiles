@@ -10,6 +10,10 @@
  ;; :m  "]s"   #'jinx-correct-next
  )
 
+
+(after! jinx
+  (setq jinx-languages "en cs pl"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide '+private|spellchecking)

@@ -61,9 +61,7 @@
 (require '+private|spellchecking)
 (require '+private|llm)
 (require '+private|spacehammer)
-
-(after! jinx
-  (setq jinx-languages "en cs pl"))
+(require '+private|gleam)
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
