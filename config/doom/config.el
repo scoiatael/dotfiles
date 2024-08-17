@@ -154,7 +154,7 @@
       "f Y" #'scoiatael/yank-file-location
       "s c" #'evil-ex-nohighlight
       "s e" #'iedit-mode
-      "r R" (cmd! (find-file "README.md")))
+      "r R" (cmd! (find-file (projectile-rails-expand-root "README.md"))))
 
 (map! :leader
       "w <left>" #'evil-window-left
@@ -164,7 +164,7 @@
 
 (map! :leader
       :prefix "k"
-      "c" #'chmod
+      "c" (cmd! (chmod buffer-file-name (read-file-modes "chmod:" buffer-file-name)))
       "d" #'server-edit
       "e" #'ediff-buffers
       "g" #'epa-encrypt-file
@@ -180,6 +180,11 @@
       :n :desc "Prev conflict" "[s" #'smerge-prev
       :n :desc "Keep current" "C" #'smerge-keep-current
       :n :desc "Keep all" "A" #'smerge-keep-all)
+
+(map! :map git-commit-mode-map
+      :n :desc "Commit" "]c" #'with-editor-finish
+      :n :desc "Cancel" "[k" #'with-editor-cancel)
+
 
 (map! :after org-mode
       :map org-mode-map
