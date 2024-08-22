@@ -3,7 +3,10 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    # nixos-hardware.nixosModules.framework
+    nixos-hardware.nixosModules.common-cpu-amd
+    nixos-hardware.nixosModules.common-cpu-amd-pstate
+    nixos-hardware.nixosModules.common-cpu-amd-zenpower
+    nixos-hardware.nixosModules.common-gpu-intel
     lanzaboote.nixosModules.lanzaboote
   ];
 
@@ -23,6 +26,8 @@
   boot.extraModulePackages = [ ];
   boot.tmpOnTmpfs = true;
   boot.kernelParams = [ "i915.force_probe=56a5"];
+
+  hardware.intelgpu.driver = "xe";
 
   # https://nixos.wiki/wiki/TPM
   security.tpm2.enable = true;
