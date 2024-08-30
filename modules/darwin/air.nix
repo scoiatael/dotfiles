@@ -4,7 +4,17 @@
   hardware.notch = true;
 
   homebrew = {
-    casks = [ "todoist" "skype" "discord" "steam" "vlc" "keymapp" "battle-net" "battlescribe" ];
+    casks = [
+      "todoist"
+      "skype"
+      "discord"
+      "steam"
+      "vlc"
+      "keymapp"
+      "battle-net"
+      "battlescribe"
+      "${../../casks}/legimi-kindle.rb"
+    ];
     masApps = {
       "bitwarden" = 1352778147;
       "kagi" = 1622835804;
