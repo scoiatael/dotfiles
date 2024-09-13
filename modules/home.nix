@@ -3,6 +3,13 @@
 {
   programs.gpg = { enable = true; };
 
+  home.file.".gnupg/gpg-agent.conf".text = let
+    program = if pkgs.stdenv.isDarwin then
+      "/run/current-system/sw/bin/pinentry-mac"
+    else
+      "";
+  in "pinentry-program ${program}";
+
   home.language = { base = "en_GB.UTF-8"; };
 
   home.packages = with pkgs; [
