@@ -58,6 +58,8 @@
   system.defaults.NSGlobalDomain."com.apple.sound.beep.volume" = 0.0;
   system.defaults.NSGlobalDomain._HIHideMenuBar = true;
 
+  system.defaults.NSGlobalDomain.AppleFontSmoothing = 2;
+
   # https://github.com/LnL7/nix-darwin/blob/master/modules/system/activation-scripts.nix#L111
   system.activationScripts.postUserActivation.text = let
     brewPrefix = if pkgs.stdenv.hostPlatform.isAarch64 then
@@ -71,6 +73,9 @@
 
     # https://derflounder.wordpress.com/2023/09/26/managing-the-click-wallpaper-to-reveal-desktop-setting-in-macos-sonoma/
     /usr/bin/defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+
+    # https://apple.stackexchange.com/a/337871
+    /usr/bin/defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
   '';
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
   security.pam.enableSudoTouchIdAuth = true;
