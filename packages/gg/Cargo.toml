@@ -1,76 +1,85 @@
 [package]
 name = "gg"
-version = "0.15.3"
+version = "0.20.0"
 description = "GG - Gui for JJ"
 authors = ["Thomas Castiglione"]
 edition = "2021"
 
 [build-dependencies]
-tauri-build = { version = "=2.0.0-beta.9", features = [] }
+tauri-build = { version = "2.0.0-rc", features = [] }
 
 [dev-dependencies]
 tempfile = "3.10.1"
 zip = "0.6"
+assert_matches = "1.5"
 
 [dependencies]
-tauri = { version = "=2.0.0-beta.11", features = [] }
-tauri-codegen = "=2.0.0-beta.9"
-tauri-macros = "=2.0.0-beta.9"
-tauri-plugin = "=2.0.0-beta.9"
-tauri-runtime = "=2.0.0-beta.9"
-tauri-runtime-wry = "=2.0.0-beta.9"
-tauri-utils = "=2.0.0-beta.9"
-tauri-plugin-dialog = "=2.0.0-beta.2"
-tauri-plugin-shell = "=2.0.0-beta.2"
-tauri-plugin-window-state = "=2.0.0-beta.2"
-tauri-plugin-log = "=2.0.0-beta.2"
+tauri = { version = "=2.0.0-rc.0", features = [] }
+tauri-codegen = "=2.0.0-rc.0"
+tauri-macros = "=2.0.0-rc.0"
+tauri-plugin = "=2.0.0-rc.0"
+tauri-runtime = "=2.0.0-rc.0"
+tauri-runtime-wry = "=2.0.0-rc.0"
+tauri-utils = "=2.0.0-rc.0"
+tauri-plugin-dialog = "=2.0.0-rc.0"
+tauri-plugin-shell = "=2.0.0-rc.0"
+tauri-plugin-window-state = "=2.0.0-rc.0"
+tauri-plugin-log = "=2.0.0-rc.0"
 
-jj-lib = { version = "0.15.1", features = ["vendored-openssl", "watchman"] }
-jj-cli = { version = "0.15.1", default-features = false, features = [
+jj-lib = { version = "0.20.0", features = ["vendored-openssl", "watchman"] }
+jj-cli = { version = "0.20.0", default-features = false, features = [
     "vendored-openssl",
 ] }
 
-anyhow = "1.0.79"
-chrono = { version = "0.4.34", features = ["serde"] }
+# @scoiatael: added because otherwise cargo build fails in nix sandbox
+criterion = "0.5.1"
+assert_cmd = "2.0.8"
+insta = { version = "1.39.0", features = ["filters"] }
+test-case = "3.3.1"
+
+# deps shared with JJ, which we try to keep on the same version
+anyhow = "1.0.86"
+clap = { version = "4.5.13", features = [
+    "derive",
+    "deprecated",
+    "wrap_help",
+    "string",
+] }
 config = { version = "0.13.4", default-features = false, features = ["toml"] }
 dirs = "5.0.1"
-dunce = "1.0.4"
-itertools = "0.12.1"
-indexmap = "2.2.2"
+itertools = "0.13.0"
+indexmap = "2.3.0"
 futures-util = "0.3.30"
-git2 = { version = "0.18.2", features = ["vendored-libgit2"] }
-gix = { version = "0.58.0", default-features = false, features = [
+gix = { version = "0.64.0", default-features = false, features = [
     "index",
     "max-performance-safe",
+    "blob-diff"
 ] }
-log = "^0.4"
 pollster = "0.3.0"
-serde = { version = "1.0.196", features = ["derive"] }
-serde_json = "1.0"
-thiserror = "1.0.57"
-ts-rs = { version = "7.1.1", features = ["chrono-impl"], optional = true }
-clap = { version = "4.5.3", features = ["derive"] }
-criterion = "0.5.1"
-assert_cmd = "2.0.14"
-assert_matches = "1.5.0"
-async-trait = "0.1.79"
-insta = "1.38.0"
-test-case = "3.3.1"
-cargo_metadata = "0.18.1"
-hyper-tls = "^0.5"
-rustls-pemfile = "^1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.122"
+thiserror = "1.0.63"
 
-[patch.crates-io]
-muda = { git = "https://github.com/gulbanana/muda.git", branch = "tauri-9127" }
+# deps implicitly used by JJ, which need to be pinned to a version to fix errors
+gix-object = "0.42.3"
+
+# deps used by JJ but with different features
+chrono = { version = "0.4.38", features = ["serde"] }
+git2 = { version = "0.18.3", features = ["vendored-libgit2"] }
+
+# extra deps not used by JJ
+log = "0.4"
+dunce = "1.0.4"
+ts-rs = { version = "7.1.1", features = ["chrono-impl"], optional = true }
+hyper-tls = "0.6"
+rustls-pemfile = "2.1.3"
 
 [target."cfg(windows)".dependencies]
 windows = { version = "0.54.0", features = [
     "Win32_Foundation",
-    # "Win32_Security",
     "Win32_System_Com",
     "Win32_System_Com_StructuredStorage",
     "Win32_System_Console",
-    # "Win32_System_Registry",
     "Win32_UI_Shell",
     "Win32_UI_Shell_Common",
     "Win32_UI_Shell_PropertiesSystem",

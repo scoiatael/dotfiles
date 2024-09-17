@@ -1,29 +1,24 @@
-{ lib, stdenv, darwin, fetchNpmDeps, esbuild, nodePackages, fetchFromGitHub
-, gnused, perl, iconv, openssl, pkg-config, rustPlatform, webkitgtk
-, buildNpmPackage }:
+{ lib, stdenv, darwin, fetchNpmDeps, nodePackages, fetchFromGitHub, gnused, perl
+, iconv, openssl, pkg-config, rustPlatform, webkitgtk, buildNpmPackage }:
 
 let
   pname = "gg";
-  version = "unstable-0.15.3";
+  version = "unstable-0.20.0";
 
   src = fetchFromGitHub {
     owner = "gulbanana";
     repo = pname;
-    rev = "ef0ab3ccbe083cf1cebcf1918e63cf49b88a6cf1";
-    sha256 = "sha256-pn4FMXLQOs2HIOI/8kZwPstvDWDRfsfOWB6zox3o8FY=";
+    rev = "3fe15f8a4bea370c0c9e2d7e95d453a73395013b";
+    sha256 = "sha256-xOi/AUlH0FeenTXz3hsDYixCEl+yr22PGy6Ow4TKxY0=";
   };
 
   frontend-build = buildNpmPackage {
     inherit version src;
     pname = "gg-ui";
 
-    ESBUILD_BINARY_PATH = lib.getExe esbuild;
+    postPatch = "";
 
-    postPatch = ''
-      ln -sf ${./package-lock.json} ./package-lock.json
-    '';
-
-    npmDepsHash = "sha256-yfyr4iS8tATXySmCeBp3Yscc57AmkrAVZLp9e2BYC+o=";
+    npmDepsHash = "sha256-oHBFuX65D/FgnGa03jjpIKAdH8Q4c2NrpD64bhfe720=";
 
     postBuild = ''
       mkdir -p $out
@@ -39,12 +34,7 @@ in rustPlatform.buildRustPackage {
 
   sourceRoot = "${src.name}/src-tauri";
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "muda-0.11.5" = "sha256-z83C6772RgA8i5Cuzpw16ZcA4Gxop9IdQqpUuxoNOuA=";
-    };
-  };
+  cargoLock = { lockFile = ./Cargo.lock; };
 
   postConfigure = ''
     # Problem 1: duplication of 'cargo-vendor-dir' caused by relative path in
@@ -54,7 +44,7 @@ in rustPlatform.buildRustPackage {
     substituteInPlace ../../cargo-vendor-dir/.cargo/config --replace-fail "cargo-vendor-dir" "$CARGO_VENDOR_DIR"
 
     # Problem 2: locked dependencies of jj-cli missing in main Cargo.lock
-    rm ../../cargo-vendor-dir/jj-cli-0.15.1/Cargo.lock
+    rm $CARGO_VENDOR_DIR/*/Cargo.lock
   '';
 
   postPatch = ''
