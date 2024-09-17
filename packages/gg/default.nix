@@ -16,8 +16,6 @@ let
     inherit version src;
     pname = "gg-ui";
 
-    postPatch = "";
-
     npmDepsHash = "sha256-oHBFuX65D/FgnGa03jjpIKAdH8Q4c2NrpD64bhfe720=";
 
     postBuild = ''
