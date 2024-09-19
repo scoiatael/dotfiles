@@ -24,7 +24,6 @@
       "syncthing"
       "raycast"
       "signal"
-      "lunar"
       "yubico-authenticator"
       "dteoh-devdocs"
       "domzilla-caffeine"
@@ -57,6 +56,7 @@
   system.defaults.NSGlobalDomain.NSDisableAutomaticTermination = true;
   system.defaults.NSGlobalDomain."com.apple.sound.beep.volume" = 0.0;
   system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
 
   system.defaults.NSGlobalDomain.AppleFontSmoothing = 2;
 

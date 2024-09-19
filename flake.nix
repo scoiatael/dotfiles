@@ -157,7 +157,7 @@
             config.allowBroken = true;
           };
           modules = [
-            ./modules/cursorless.nix # requires talon in nix-darwin
+            #./modules/cursorless.nix # requires talon in nix-darwin
             ./modules/home.nix
             ./modules/wezterm.nix
             ./modules/git.nix
