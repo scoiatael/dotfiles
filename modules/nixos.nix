@@ -151,6 +151,7 @@
       workstation = true;
       userServices = true;
     };
+    allowInterfaces = ["enp4s0"];
   };
 
   # https://wiki.archlinux.org/title/Solid_state_drive
