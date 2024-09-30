@@ -21,7 +21,7 @@
       flake = false;
     };
     emacsMacport = {
-      url = "git+https://bitbucket.com/mituharu/emacs-mac?ref=work&depth=1";
+      url = "git+https://bitbucket.com/mituharu/emacs-mac?ref=work";
       flake = false;
     };
     gitAlias = {
@@ -94,15 +94,14 @@
           ];
           extraSpecialArgs = attrs;
         };
-      homeConfigurations."lucasczaplinski@LsCerosDarwin" =
+      homeConfigurations."wooting@LsWootingMBP" =
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            system = "aarch64-darwin";
+            system = "x86_64-darwin";
             config.allowBroken = true;
           };
           modules = [
             ./modules/home.nix
-            ./modules/wezterm.nix
             ./modules/hammerspoon-config.nix
             ./modules/git.nix
             ./modules/emacs.nix
@@ -112,15 +111,15 @@
             patchedEmacsMacport
             {
               programs.git.extraConfig.user = {
-                email = "lukasz.czaplinski@ceros.com";
-                name = "Lucas Czaplinski";
-                signingkey = "9AC1D5A4D14C1C854833487E4C30F23EF3EE8595";
+                email = "lukasz@wooting.io";
+                name = "Lukas Czaplinski";
+                signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
               };
             }
             {
               home = {
-                username = "lucasczaplinski";
-                homeDirectory = "/Users/lucasczaplinski";
+                username = "wooting";
+                homeDirectory = "/Users/wooting";
                 stateVersion = "22.05";
               };
               programs.home-manager.enable = true;
@@ -187,15 +186,14 @@
           ./modules/darwin/gaming.nix
         ];
       };
-      darwinConfigurations.LsCerosDarwin = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
+      darwinConfigurations.LsWootingMBP = darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
         modules = [
           lix
           ./modules/darwin.nix
           ./modules/darwin/yabai.nix
+          ./modules/darwin/wooting.nix
           ./modules/darwin/sketchybar.nix
-          ./modules/darwin/ceros.nix
-          ./modules/darwin/ollama.nix
           ./modules/darwin/hammerspoon.nix
         ];
       };

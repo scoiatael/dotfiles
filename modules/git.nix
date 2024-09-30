@@ -208,7 +208,7 @@ in {
       { path = "~/.gitconfig_custom"; }
       { path = "${gitAlias}/gitalias.txt"; }
     ];
-    difftastic.enable = true;
+    #difftastic.enable = true;
   };
 
   programs.jujutsu = {
