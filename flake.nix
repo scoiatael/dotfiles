@@ -94,7 +94,7 @@
           ];
           extraSpecialArgs = attrs;
         };
-      homeConfigurations."wooting@LsWootingMBP" =
+      homeConfigurations."wooting@MacBookPro" =
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "x86_64-darwin";

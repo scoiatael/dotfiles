@@ -111,6 +111,9 @@
          :enter "windows:enter-window-menu"
          :exit "windows:exit-window-menu"
          :items window-bindings}
+        {:key :s
+         :title "🖼️"
+         :action (activator "Screenshot")}
         {:key :1
          :title ""
          :action (activator "WezTerm")}
