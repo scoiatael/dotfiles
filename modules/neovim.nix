@@ -20,7 +20,11 @@
       nvim-treesitter
       tender-vim
       lightline-vim
+      # https://github.com/echasnovski/mini.nvim/tree/main
+      minimap-vim
+      mini-nvim
     ];
+    extraPackages = with pkgs; [ code-minimap ];
     extraConfig = ''
       " If you have vim >=8.0 or Neovim >= 0.1.5
       if (has("termguicolors"))
@@ -46,7 +50,18 @@
       vim.keymap.set('n', '<leader>b', builtin.buffers, {})
       vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
       vim.keymap.set('n', '<leader>t', builtin.treesitter, {})
-    '';
+    '' + (lib.strings.concatMapStrings (plugin: ''
+      require('${plugin}').setup()
+    '') [
+      "mini.ai"
+      "mini.operators"
+      "mini.pairs"
+      "mini.surround"
+      "mini.bracketed"
+      "mini.files"
+      "mini.jump2d"
+      "mini.pick"
+    ]);
   };
   home.activation.createNvimDirectory =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
