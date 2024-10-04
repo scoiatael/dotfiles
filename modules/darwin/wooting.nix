@@ -3,11 +3,6 @@
 {
   hardware.notch = false;
   homebrew = {
-    casks = [
-      "slack"
-"betterdisplay"
-"gather"
-"bitwarden"
-    ];
+    casks = [ "slack" "betterdisplay" "gather" "bitwarden" "arc" ];
   };
 }
