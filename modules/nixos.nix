@@ -15,7 +15,7 @@
   # systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p1
   boot.initrd.systemd = { enable = true; };
 
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
    intel-compute-runtime
    intel-media-driver
   ];
@@ -162,7 +162,7 @@
     enable = true;
     wayland.enable = true;
   };
-  services.xserver.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = true;
   # services.xserver.enable = true;
   # services.xserver.desktopManager.lxqt.enable = true;
   # disable the default
@@ -239,7 +239,7 @@
     sway-contrib.grimshot
   ]);
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
     cozette
   ];

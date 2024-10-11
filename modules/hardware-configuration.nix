@@ -24,7 +24,7 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" "nct6775" ];
   boot.extraModulePackages = [ ];
-  boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
   boot.kernelParams = [ "i915.force_probe=56a5"];
 
   hardware.intelgpu.driver = "xe";

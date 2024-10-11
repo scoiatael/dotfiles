@@ -6,7 +6,7 @@
   ];
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     publish = {
       enable = true;
       addresses = true;
@@ -63,9 +63,9 @@
   ];
   services.samba = {
     enable = true;
-    securityType = "user";
     settings = {
       global = {
+      securityType = "user";
       "log level" = 3;
       workgroup = "WORKGROUP";
       "server string" = "smbnix";
@@ -85,8 +85,6 @@
       "fruit:time machine" = "yes";
       "vfs objects" = "catia fruit streams_xattr";
       };
-    };
-    shares = {
       private = {
         path = "/srv/nfs/";
         browseable = "yes";
