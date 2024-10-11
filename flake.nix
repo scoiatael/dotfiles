@@ -203,7 +203,6 @@
           lix
           ./modules/darwin.nix
           ./modules/darwin/yabai.nix
-          ./modules/darwin/talon.nix
           ./modules/darwin/sketchybar.nix
           ./modules/darwin/air.nix
           ./modules/darwin/shortcat.nix

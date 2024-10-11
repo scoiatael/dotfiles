@@ -238,11 +238,8 @@
   home.file.".gnupg/dirmngr.conf".text = ''
     keyserver hkps://keys.openpgp.org/
   '';
-} # // (lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
-  #home.file.".gnupg/gpg-agent.conf".text = let
-   # program =  "/run/current-system/sw/bin/pinentry-mac";
-  #in "pinentry-program ${program}";
 
-  #home.file.".config/karabiner/karabiner.json".source =
-  #  ../config/karabiner.json;
-#}))
+  home.file.".gnupg/gpg-agent.conf" =
+    let program = "/run/current-system/sw/bin/pinentry-mac";
+    in lib.mkIf pkgs.stdenv.isDarwin { text = "pinentry-program ${program}"; };
+}

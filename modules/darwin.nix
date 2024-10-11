@@ -27,6 +27,7 @@
       "yubico-authenticator"
       "dteoh-devdocs"
       "domzilla-caffeine"
+      "betterdisplay"
     ];
     brews = [ "switchaudio-osx" ];
     taps = [ "Homebrew/homebrew-autoupdate" ];

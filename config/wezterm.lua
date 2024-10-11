@@ -252,7 +252,7 @@ local keys = {
 return {
 	-- ...your existing config
 	color_scheme = "Catppuccin Mocha", -- or Macchiato, Frappe, Latte
-	font = wezterm.font("JetBrainsMono Nerd Font"),
+	font = wezterm.font("JetBrains Mono"),
 	font_size = 12,
 	line_height = 1.2,
 	use_dead_keys = false,
