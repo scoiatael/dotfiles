@@ -64,26 +64,28 @@
   services.samba = {
     enable = true;
     securityType = "user";
-    extraConfig = ''
-      log level = 3
-      workgroup = WORKGROUP
-      server string = smbnix
-      netbios name = smbnix
+    settings = {
+      global = {
+      "log level" = 3;
+      workgroup = "WORKGROUP";
+      "server string" = "smbnix";
+      "netbios name" = "smbnix";
       #use sendfile = yes
       #max protocol = smb2
       # note: localhost is the ipv6 localhost ::1
-      hosts allow = 192.168.1. 127.0.0.1 localhost
-      hosts deny = 0.0.0.0/0
-      guest account = nobody
-      map to guest = bad user
-      server min protocol = SMB2_02
-      server smb encrypt = desired
-      use sendfile = yes
-      min receivefile size = 16384
-      fruit:aapl = yes
-      fruit:time machine = yes
-      vfs objects = catia fruit streams_xattr
-    '';
+      "hosts allow" = "192.168.1. 127.0.0.1 localhost";
+      "hosts deny" = "0.0.0.0/0";
+      "guest account" = "nobody";
+      "map to guest" = "bad user";
+      "server min protocol" = "SMB2_02";
+      "server smb encrypt" = "desired";
+      "use sendfile" = "yes";
+      "min receivefile size" = 16384;
+      "fruit:aapl" = "yes";
+      "fruit:time machine" = "yes";
+      "vfs objects" = "catia fruit streams_xattr";
+      };
+    };
     shares = {
       private = {
         path = "/srv/nfs/";

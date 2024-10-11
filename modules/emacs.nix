@@ -8,7 +8,6 @@ in {
     aspellDicts.pl
     aspellDicts.cs
     aspellDicts.en
-    aspellDicts.en-science
     aspellDicts.en-computers
     enchant
     nixfmt-classic

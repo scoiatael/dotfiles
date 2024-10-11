@@ -128,7 +128,7 @@
   services.printing.enable = true;
 
   # Enable sound.
-  sound.enable = false;
+  #sound.enable = false;
   hardware.pulseaudio.enable = false;
   # https://nixos.wiki/wiki/PipeWire
   security.rtkit.enable = true;

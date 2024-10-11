@@ -1,14 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   programs.gpg = { enable = true; };
-
-  home.file.".gnupg/gpg-agent.conf".text = let
-    program = if pkgs.stdenv.isDarwin then
-      "/run/current-system/sw/bin/pinentry-mac"
-    else
-      "";
-  in "pinentry-program ${program}";
 
   home.language = { base = "en_GB.UTF-8"; };
 
@@ -76,8 +69,8 @@
         };
         shell = { program = "${pkgs.zsh}/bin/zsh"; };
         window.decorations = "None";
-        import =
-          [ "${config.home.homeDirectory}/.config/alacritty/theme.toml" ];
+        # import =
+        #  [ "${config.home.homeDirectory}/.config/alacritty/theme.toml" ];
       };
     };
     qutebrowser = {
@@ -241,10 +234,15 @@
 
     Pry.config.prompt = Pry::Prompt[:vterm]
   '';
-  home.file.".config/karabiner/karabiner.json".source =
-    ../config/karabiner.json;
 
-  home.file."${config.home.homeDirectory}/.gnupg/dirmngr.conf".text = ''
+  home.file.".gnupg/dirmngr.conf".text = ''
     keyserver hkps://keys.openpgp.org/
   '';
-}
+} # // (lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+  #home.file.".gnupg/gpg-agent.conf".text = let
+   # program =  "/run/current-system/sw/bin/pinentry-mac";
+  #in "pinentry-program ${program}";
+
+  #home.file.".config/karabiner/karabiner.json".source =
+  #  ../config/karabiner.json;
+#}))
