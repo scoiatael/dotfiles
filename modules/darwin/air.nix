@@ -13,7 +13,7 @@
       "keymapp"
       "battle-net"
       "battlescribe"
-      "${../../casks}/legimi-kindle.rb"
+      "${../../casks}/legimi-kindle"
     ];
     masApps = {
       "bitwarden" = 1352778147;
