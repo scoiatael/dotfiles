@@ -16,6 +16,7 @@
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils.url = "github:numtide/flake-utils/v1.0.0";
     doomemacs = {
       url = "github:doomemacs/doomemacs";
       flake = false;
@@ -39,6 +40,7 @@
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     talonhub_community = {
       url = "github:talonhub/community";
@@ -58,7 +60,8 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, darwin, emacsMacport, ... }@attrs:
+  outputs = { self, flake-utils, nixpkgs, home-manager, darwin, emacsMacport
+    , ... }@attrs:
     let
       patchedEmacsMacport = { pkgs, ... }: {
         programs.emacs.package =
@@ -68,34 +71,34 @@
       };
       lix = { pkgs, ... }: { nix.package = pkgs.lix; };
     in {
-      homeConfigurations."lukaszczaplinski@LsFramework" =
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./modules/home.nix
-            ./modules/electron.nix
-            ./modules/linux.nix
-            ./modules/git.nix
-            ./modules/emacs.nix
-            ./modules/tmux.nix
-            ./modules/zsh.nix
-            ./modules/neovim.nix
-            ({ lib, ... }: {
-              programs.alacritty.settings.font.size = lib.mkForce 10;
-            })
-            {
-              home = {
-                username = "lukaszczaplinski";
-                homeDirectory = "/home/lukaszczaplinski";
-                stateVersion = "22.11";
-              };
-              programs.home-manager.enable = true;
-            }
-          ];
-          extraSpecialArgs = attrs;
-        };
-      homeConfigurations."wooting@MacBookPro" =
-        home-manager.lib.homeManagerConfiguration {
+      homeConfigurations = {
+        "lukaszczaplinski@LsFramework" =
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = [
+              ./modules/home.nix
+              ./modules/electron.nix
+              ./modules/linux.nix
+              ./modules/git.nix
+              ./modules/emacs.nix
+              ./modules/tmux.nix
+              ./modules/zsh.nix
+              ./modules/neovim.nix
+              ({ lib, ... }: {
+                programs.alacritty.settings.font.size = lib.mkForce 10;
+              })
+              {
+                home = {
+                  username = "lukaszczaplinski";
+                  homeDirectory = "/home/lukaszczaplinski";
+                  stateVersion = "22.11";
+                };
+                programs.home-manager.enable = true;
+              }
+            ];
+            extraSpecialArgs = attrs;
+          };
+        "wooting@MacBookPro" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "x86_64-darwin";
             config.allowBroken = true;
@@ -127,30 +130,29 @@
           ];
           extraSpecialArgs = attrs;
         };
-      homeConfigurations."lukaszczaplinski@LsGamingDarwin" =
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-darwin;
-          modules = [
-            ./modules/home.nix
-            ./modules/git.nix
-            ./modules/emacs.nix
-            ./modules/tmux.nix
-            ./modules/zsh.nix
-            ./modules/neovim.nix
-            ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
-            {
-              home = {
-                username = "lukaszczaplinski";
-                homeDirectory = "/Users/lukaszczaplinski";
-                stateVersion = "22.05";
-              };
-              programs.home-manager.enable = true;
-            }
-          ];
-          extraSpecialArgs = attrs;
-        };
-      homeConfigurations."lukaszczaplinski@LsAir" =
-        home-manager.lib.homeManagerConfiguration {
+        "lukaszczaplinski@LsGamingDarwin" =
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-darwin;
+            modules = [
+              ./modules/home.nix
+              ./modules/git.nix
+              ./modules/emacs.nix
+              ./modules/tmux.nix
+              ./modules/zsh.nix
+              ./modules/neovim.nix
+              ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
+              {
+                home = {
+                  username = "lukaszczaplinski";
+                  homeDirectory = "/Users/lukaszczaplinski";
+                  stateVersion = "22.05";
+                };
+                programs.home-manager.enable = true;
+              }
+            ];
+            extraSpecialArgs = attrs;
+          };
+        "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "aarch64-darwin";
             config.allowBroken = true;
@@ -177,48 +179,103 @@
           ];
           extraSpecialArgs = attrs;
         };
-      darwinConfigurations.LsGamingDarwin = darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
-        modules = [
-          ./modules/darwin.nix
-          ./modules/darwin/yabai.nix
-          ./modules/darwin/sketchybar.nix
-          ./modules/darwin/gaming.nix
-        ];
       };
-      darwinConfigurations.LsWootingMBP = darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
-        modules = [
-          lix
-          ./modules/darwin.nix
-          ./modules/darwin/yabai.nix
-          ./modules/darwin/wooting.nix
-          ./modules/darwin/sketchybar.nix
-          ./modules/darwin/hammerspoon.nix
-        ];
+      darwinConfigurations = {
+        LsGamingDarwin = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
+          modules = [
+            ./modules/darwin.nix
+            ./modules/darwin/yabai.nix
+            ./modules/darwin/sketchybar.nix
+            ./modules/darwin/gaming.nix
+          ];
+        };
+        LsWootingMBP = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
+          modules = [
+            lix
+            ./modules/darwin.nix
+            ./modules/darwin/yabai.nix
+            ./modules/darwin/wooting.nix
+            ./modules/darwin/sketchybar.nix
+            ./modules/darwin/hammerspoon.nix
+          ];
+        };
+        LsAir = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            lix
+            ./modules/darwin.nix
+            ./modules/darwin/yabai.nix
+            ./modules/darwin/sketchybar.nix
+            ./modules/darwin/air.nix
+            ./modules/darwin/shortcat.nix
+            ./modules/darwin/ollama.nix
+            ./modules/darwin/hammerspoon.nix
+          ];
+        };
+
       };
-      darwinConfigurations.LsAir = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          lix
-          ./modules/darwin.nix
-          ./modules/darwin/yabai.nix
-          ./modules/darwin/sketchybar.nix
-          ./modules/darwin/air.nix
-          ./modules/darwin/shortcat.nix
-          ./modules/darwin/ollama.nix
-          ./modules/darwin/hammerspoon.nix
-        ];
+
+      nixosConfigurations = {
+        LsFramework = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = attrs;
+          modules = [
+            ./modules/nixos.nix
+            ./modules/nixos/smb.nix
+            ./modules/nixos/jellyfin.nix
+            ./modules/nixos/steam.nix
+          ];
+        };
+        demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = attrs;
+          modules = [
+            ({ pkgs, ... }: {
+              users.users = {
+                me = {
+                  isNormalUser = true;
+                  extraGroups = [ "wheel" ];
+                };
+              };
+
+              virtualisation.vmVariant = {
+                virtualisation = {
+                  graphics = false;
+                  host.pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+                };
+              };
+
+              services.openssh = { enable = true; };
+
+              environment.systemPackages = with pkgs; [ htop ];
+
+              system.stateVersion = "23.05";
+            })
+          ];
+        };
       };
-      nixosConfigurations.LsFramework = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = attrs;
-        modules = [
-          ./modules/nixos.nix
-          ./modules/nixos/smb.nix
-          ./modules/nixos/jellyfin.nix
-          ./modules/nixos/steam.nix
-        ];
-      };
-    };
+    } // flake-utils.lib.eachDefaultSystem (hostSystem:
+      let
+        pkgs = nixpkgs.legacyPackages.${hostSystem};
+        machine =
+          self.nixosConfigurations."demo-vm-${hostSystem}".config.system.build.vm;
+
+        program = pkgs.writeShellScript "run-vm.sh" ''
+          export NIX_DISK_IMAGE=$(mktemp -u -t nixos.qcow2)
+
+          trap "rm -f $NIX_DISK_IMAGE" EXIT
+
+          ${machine}/bin/run-nixos-vm
+        '';
+      in {
+        apps = {
+          default = {
+            type = "app";
+
+            program = "${program}";
+          };
+        };
+      });
 }
