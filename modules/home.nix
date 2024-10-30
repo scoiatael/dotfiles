@@ -56,6 +56,7 @@
     # janet
     # luakit # doesn't work on aarch64-darwin :/
     devenv
+    nixd
   ];
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
@@ -170,7 +171,7 @@
       };
       config = {
         paging = "never";
-        theme = "catppuccin";
+        theme = "catpuccin";
       };
       extraPackages = with pkgs.bat-extras; [ batman ];
     };
