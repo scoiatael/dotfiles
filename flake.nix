@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    old_nixpkgs.url =
+      "github:nixos/nixpkgs/e2dd4e18cc1c7314e24154331bae07df76eb582f";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -98,9 +100,10 @@
             ];
             extraSpecialArgs = attrs;
           };
-        "wooting@MacBookPro" = home-manager.lib.homeManagerConfiguration {
+        "wooting@MacBookPro" = let system = "x86_64-darwin";
+        in home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            system = "x86_64-darwin";
+            inherit system;
             config.allowBroken = true;
           };
           modules = [
@@ -111,7 +114,13 @@
             ./modules/tmux.nix
             ./modules/zsh.nix
             ./modules/neovim.nix
-            patchedEmacsMacport
+            {
+              programs.emacs.package =
+                attrs.old_nixpkgs.legacyPackages.${system}.emacs29-macport.overrideAttrs {
+                  src = emacsMacport;
+                };
+            }
+
             {
               programs.git.extraConfig.user = {
                 email = "lukasz@wooting.io";
