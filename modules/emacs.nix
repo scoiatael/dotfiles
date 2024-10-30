@@ -36,6 +36,8 @@ in {
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
       test -d ~/.config || mkdir ~/.config
       test -d ~/.config/doom || ln -sf ~/dotfiles/config/doom ~/.config/doom
+
+      doom sync
     '';
 
   home.file.".emacs.doom".source = doomemacs;

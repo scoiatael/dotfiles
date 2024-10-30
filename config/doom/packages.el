@@ -19,7 +19,7 @@
   (package! combobulate
     :recipe (:repo "mickeynp/combobulate" :host github)))
 
-(package! modus-themes :recipe (:host sourcehut :repo "protesilaos/modus-themes"))
+;; (package! modus-themes :recipe (:host sourcehut :repo "protesilaos/modus-themes"))
 
 (package! moody :recipe (:host github :repo "tarsius/moody"))
 

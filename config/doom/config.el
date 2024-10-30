@@ -48,8 +48,8 @@
 (when EMACS29+
   (use-package! combobulate
     ;; Ensure `combobulate-mode` is activated when you launch a mode it supports
-    :hook ((python-mode . combobulate-mode)
-           (typescript-mode . combobulate-mode))))
+    :hook ((python-mode combobulate-mode)
+           (typescript-mode combobulate-mode))))
 
 ;; https://github.com/doomemacs/doomemacs/issues/7438
 (use-package! apheleia)
@@ -58,10 +58,10 @@
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)
 (require '+private|modeline)
-(require '+private|spellchecking)
-(require '+private|llm)
-(require '+private|spacehammer)
-(require '+private|gleam)
+;; (require '+private|spellchecking)
+;; (require '+private|llm)
+;; (require '+private|spacehammer)
+;; (require '+private|gleam)
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
@@ -123,13 +123,15 @@
       (git-commit-setup))))
 
 (after! dired
-  (define-key ranger-mode-map (kbd "\\") #'ranger-toggle-dotfiles))
+  (define-key dired-mode-map (kbd "\\") #'ranger-toggle-dotfiles))
 
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
 (map! "C-`" #'+vterm/toggle)
+
+(map! :i "C-i" #'up-list)
 
 (map! :n "]p" #'evil-unimpaired-paste-below
       :n "[p" #'evil-unimpaired-paste-above
@@ -183,7 +185,7 @@
 
 (map! :map git-commit-mode-map
       :n :desc "Commit" "]c" #'with-editor-finish
-      :n :desc "Cancel" "[k" #'with-editor-cancel)
+      :n :desc "Cancel" "]k" #'with-editor-cancel)
 
 
 (map! :after org-mode
