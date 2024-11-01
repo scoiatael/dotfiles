@@ -100,6 +100,13 @@
 (after! eglot
   (add-to-list 'eglot-server-programs '((js-mode typescript-mode) . (eglot-deno "deno" "lsp")))
 
+  (setenv "NIXD_FLAGS"  "--inlay-hints=false")
+  (setq lsp-nix-nixd-server-path "nixd"
+        lsp-nix-nixd-formatting-command [ "nixfmt" ]
+        lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"
+        lsp-nix-nixd-nixos-options-expr (concat "(builtins.getFlake \"" (getenv "HOME") "/dotfiles\").nixosConfigurations.LsFramework.options")
+        lsp-nix-nixd-home-manager-options-expr (concat "(builtins.getFlake \"" (getenv "HOME") "/dotfiles\").homeConfigurations.\"lukaszczaplinski@LsFramework\".options"))
+
   (defclass eglot-deno (eglot-lsp-server) ()
     :documentation "A custom class for deno lsp.")
 

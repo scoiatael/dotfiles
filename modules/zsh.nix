@@ -40,6 +40,7 @@
 
       bindkey "" history-beginning-search-forward
       bindkey "" history-beginning-search-backward
+      bindkey '^W' backward-delete-word
 
       if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
         autoload -U add-zsh-hook
@@ -123,10 +124,13 @@
       {
         name = "forgit";
         src = zsh-forgit.overrideAttrs {
-          postInstall = ''
+          postInstall = let
+            grep = lib.getExe pkgs.gnugrep;
+            awk = lib.getExe pkgs.gawk;
+          in ''
             substituteInPlace $out/share/zsh/zsh-forgit/forgit.plugin.zsh \
-                  --replace-fail "grep" "${lib.getExe pkgs.gnugrep}" \
-                  --replace-fail "awk" "${lib.getExe pkgs.gawk}"
+                  --replace-fail "grep" "${grep}" \
+                  --replace-fail "awk" "${awk}"
           '';
         };
         file = "share/zsh/zsh-forgit/forgit.plugin.zsh";
