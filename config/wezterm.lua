@@ -232,7 +232,8 @@ local keys = {
 	-- { key = 'd', mods = 'CMD', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, }
 	-- { key = 'h', mods = 'CMD', action = act.ActivatePaneDirection 'Left', }
 	-- { key = 'l', mods = 'CMD', action = act.ActivatePaneDirection 'Right', }
-	{ key = "t", mods = cmd, action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "t", mods = cmd, action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir }) },
+	{ key = "x", mods = super, action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, args = { wezterm.home_dir .. "/.nix-profile/bin/zsh", "-c", "~/dotfiles/bin/__fzf_z.sh", }, }) },
 	{ key = "w", mods = cmd, action = act.CloseCurrentTab({ confirm = true }) },
 	{ key = "q", mods = cmd, action = act.CloseCurrentPane({ confirm = true }) },
 	-- { key = 'b', mods = 'LEADER|CTRL', action = act.SendString '\x02', }
@@ -269,4 +270,6 @@ return {
 		},
 	},
 	tab_max_width = 128,
+	-- Useful for debugging new tab commands
+	-- exit_behavior = 'Hold',
 }

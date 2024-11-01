@@ -10,10 +10,9 @@ fn -prompt-pwd {
 
 var DIR = (
     zoxide query -l |
-        fzf-tmux-popup --preview 'echo {}; exa {}' --layout=reverse --preview-window "top:3:wrap"
+        fzf-tmux --preview 'echo {}; exa {}' --layout=reverse --preview-window "top:3:wrap"
 )
 
 cd $DIR
 
-tmux rename-window (-prompt-pwd)
 exec (get-env SHELL)
