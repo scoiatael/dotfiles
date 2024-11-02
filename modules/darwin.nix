@@ -77,6 +77,9 @@
 
     # https://apple.stackexchange.com/a/337871
     /usr/bin/defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
+
+    # https://github.com/nikitabobko/AeroSpace?tab=readme-ov-file#tip-of-the-day
+    /usr/bin/defaults write -g NSWindowShouldDragOnGesture -bool true
   '';
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
   security.pam.enableSudoTouchIdAuth = true;

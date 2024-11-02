@@ -137,5 +137,13 @@ with lib; {
     #     cmd - m : yabai -m window --minimize; yabai -m window --focus mouse
     #   '';
     # };
+    home.file.".hammerspoon/init.lua".text = lib.mkAfter ''
+      stackline = require("stackline")
+      stackline:init({
+      	paths = {
+      		yabai = "/run/current-system/sw/bin/yabai",
+      	},
+      })
+    '';
   };
 }

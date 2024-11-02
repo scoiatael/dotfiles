@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  hardware.notch = true;
+  # hardware.notch = true;
 
   homebrew = {
     casks = [
@@ -14,6 +14,7 @@
       "battle-net"
       "battlescribe"
       "${../../casks}/legimi-kindle"
+      "orion"
     ];
     masApps = {
       "bitwarden" = 1352778147;

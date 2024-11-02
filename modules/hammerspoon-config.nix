@@ -24,7 +24,8 @@
   home.file.".hammerspoon/stackline".source = AdamWagner_stackline;
   home.file.".hammerspoon/spacehammer".source = agzam_spacehammer;
   home.file.".hammerspoon/Spoons".source = ../config/Spoons;
-  home.file.".hammerspoon/init.lua".source = ../config/hammerspoon.lua;
+  home.file.".hammerspoon/init.lua".text =
+    builtins.readFile ../config/hammerspoon.lua;
 }
 
 # Local Variables:

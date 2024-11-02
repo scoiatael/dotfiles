@@ -3,12 +3,6 @@ hs.loadSpoon("WindowSpace")
 hs.loadSpoon("ControlEscape"):start()
 
 old_path = package.path
-stackline = require("stackline")
-stackline:init({
-	paths = {
-		yabai = "/run/current-system/sw/bin/yabai",
-	},
-})
 
 -- HACK: Since we do extensive path manipulation, Lua will try to be lazy and cache requires. This breaks stuff.
 package.loaded["lib.utils"] = nil

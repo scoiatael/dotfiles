@@ -215,7 +215,7 @@
           modules = [
             lix
             ./modules/darwin.nix
-            ./modules/darwin/yabai.nix
+            ./modules/darwin/aerospace.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/air.nix
             ./modules/darwin/shortcat.nix
