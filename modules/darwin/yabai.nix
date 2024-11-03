@@ -145,5 +145,34 @@ with lib; {
       	},
       })
     '';
+    services.sketchybar.config = ''
+      ##### Adding Mission Control Space Indicators #####
+      # Now we add some mission control spaces:
+      # https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
+      # to indicate active and available mission control spaces
+    '' + (builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs
+      (sid: icon: ''
+        sketchybar --add space space.${sid} left                               \
+                   --set space.${sid} associated_space=${sid}                  \
+                                    icon=${icon}                               \
+                                    background.color=''${BACKGROUND_1} \
+                                    background.corner_radius=5                 \
+                                    background.height=20                       \
+                                    background.drawing=off                     \
+                                    label.drawing=off                          \
+                                    script="$PLUGIN_DIR/space.sh"              \
+                                    click_script="yabai -m space --focus ${sid}"
+      '') {
+        "1" = "1";
+        "2" = "2";
+        "3" = "3";
+        "4" = "4";
+        "5" = "5";
+        "6" = "6";
+        "7" = "7";
+        "8" = "8";
+        "9" = "9";
+        "10" = "10";
+      })));
   };
 }
