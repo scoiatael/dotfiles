@@ -150,7 +150,9 @@
 ;; - `map!' for binding new keys
 (map! "C-`" #'+vterm/toggle)
 
-(map! :i "C-i" #'up-list)
+;; https://emacs.stackexchange.com/a/221
+(define-key input-decode-map [?\C-i] [C-i])
+(map! :i "<C-i>" #'up-list)
 
 (map! :n "]p" #'evil-unimpaired-paste-below
       :n "[p" #'evil-unimpaired-paste-above
