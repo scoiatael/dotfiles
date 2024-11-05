@@ -54,6 +54,18 @@
 ;; https://github.com/doomemacs/doomemacs/issues/7438
 (use-package! apheleia)
 
+(use-package kagi
+  :ensure t
+  :custom
+  ;; or use a function, e.g. with the password-store package:
+  (kagi-api-token (lambda () (password-store-get "kagi-api-token")))
+
+  ;; Universal Summarizer settings
+  (kagi-summarizer-engine "cecil")
+  (kagi-summarizer-default-language "EN")
+  (kagi-summarizer-cache t))
+
+
 ;; https://gitlab.inria.fr/jwintz/doom.d/-/blob/develop/config.el
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)

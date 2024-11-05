@@ -18,6 +18,7 @@ in {
     hunspellDicts.en-gb-ise
     # TODO: https://github.com/aca/emmet-ls
     zstd.bin
+    pass
   ];
 
   programs.emacs = {
