@@ -80,6 +80,9 @@
 
     # https://github.com/nikitabobko/AeroSpace?tab=readme-ov-file#tip-of-the-day
     /usr/bin/defaults write -g NSWindowShouldDragOnGesture -bool true
+
+    # https://nikitabobko.github.io/AeroSpace/guide#a-note-on-mission-control
+    /usr/bin/defaults write com.apple.dock expose-group-apps -bool true && killall Dock
   '';
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
   security.pam.enableSudoTouchIdAuth = true;
