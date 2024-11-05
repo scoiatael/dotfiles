@@ -4,7 +4,8 @@
 
 let
   on-workspace-change = pkgs.writeShellScript "on-workspace-change.sh" ''
-    ${pkgs.sketchybar}/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE
+    ${pkgs.sketchybar}/bin/sketchybar --trigger aerospace_workspace_change \
+      FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE
   '';
 in {
   services.aerospace = {
