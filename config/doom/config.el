@@ -63,7 +63,11 @@
   ;; Universal Summarizer settings
   (kagi-summarizer-engine "cecil")
   (kagi-summarizer-default-language "EN")
-  (kagi-summarizer-cache t))
+  (kagi-summarizer-cache t)
+  :config
+  (define-kagi-fastgpt-prompt kagi-write
+                              "Write code that solves following problem: %s"
+                              "Code"))
 
 
 ;; https://gitlab.inria.fr/jwintz/doom.d/-/blob/develop/config.el
