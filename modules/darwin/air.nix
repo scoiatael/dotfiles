@@ -12,9 +12,9 @@
       "vlc"
       "keymapp"
       "battle-net"
-      "battlescribe"
       "${../../casks}/legimi-kindle"
-      "orion"
+      "bettertouchtool"
+      "karabiner-elements"
     ];
     masApps = {
       "bitwarden" = 1352778147;

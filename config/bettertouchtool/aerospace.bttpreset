@@ -1,0 +1,81 @@
+[
+  {
+    "BTTActionCategory" : 0,
+    "BTTLastUpdatedAt" : 1731087266.718369,
+    "BTTTriggerType" : 630,
+    "BTTTriggerTypeDescriptionReadOnly" : "Group",
+    "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
+    "BTTUUID" : "B1C9173A-D16A-4FF4-A991-FCCBAB65A982",
+    "BTTPredefinedActionType" : 366,
+    "BTTPredefinedActionName" : "Empty Placeholder",
+    "BTTGroupName" : "Aerospace",
+    "BTTEnabled" : 1,
+    "BTTEnabled2" : 1,
+    "BTTOrder" : 1,
+    "BTTAdditionalActions" : [
+      {
+        "BTTActionCategory" : 0,
+        "BTTLastUpdatedAt" : 1731087316.9236259,
+        "BTTTriggerType" : 100,
+        "BTTTriggerTypeDescriptionReadOnly" : "3 Finger Swipe Left",
+        "BTTTriggerParentUUID" : "B1C9173A-D16A-4FF4-A991-FCCBAB65A982",
+        "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
+        "BTTUUID" : "B9059046-81DD-44FA-A787-1B3620686553",
+        "BTTPredefinedActionType" : 366,
+        "BTTPredefinedActionName" : "Empty Placeholder",
+        "BTTEnabled" : 1,
+        "BTTEnabled2" : 1,
+        "BTTOrder" : 0,
+        "BTTAdditionalActions" : [
+          {
+            "BTTActionCategory" : 0,
+            "BTTLastUpdatedAt" : 1731087219.2889891,
+            "BTTTriggerParentUUID" : "B9059046-81DD-44FA-A787-1B3620686553",
+            "BTTIsPureAction" : true,
+            "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
+            "BTTUUID" : "A46330F6-0141-4216-B305-6744FF7750A6",
+            "BTTPredefinedActionType" : 206,
+            "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
+            "BTTShellTaskActionScript" : "aerospace workspace \"$(aerospace list-workspaces --monitor mouse --visible)\" && aerospace workspace prev\n",
+            "BTTShellTaskActionConfig" : "\/bin\/bash:::-c:::-:::PATH=\/run\/current-system\/sw\/bin\/",
+            "BTTEnabled" : 1,
+            "BTTEnabled2" : 1,
+            "BTTOrder" : 5
+          }
+        ]
+      },
+      {
+        "BTTActionCategory" : 0,
+        "BTTLastUpdatedAt" : 1731087244.5924978,
+        "BTTTriggerType" : 101,
+        "BTTTriggerTypeDescriptionReadOnly" : "3 Finger Swipe Right",
+        "BTTTriggerParentUUID" : "B1C9173A-D16A-4FF4-A991-FCCBAB65A982",
+        "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
+        "BTTUUID" : "8E9429FB-36C5-4077-8457-3687E6950DA3",
+        "BTTPredefinedActionType" : 366,
+        "BTTPredefinedActionName" : "Empty Placeholder",
+        "BTTEnabled" : 1,
+        "BTTEnabled2" : 1,
+        "BTTOrder" : 2,
+        "BTTAdditionalActions" : [
+          {
+            "BTTActionCategory" : 0,
+            "BTTLastUpdatedAt" : 1731087222.5857439,
+            "BTTTriggerParentUUID" : "8E9429FB-36C5-4077-8457-3687E6950DA3",
+            "BTTIsPureAction" : true,
+            "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
+            "BTTUUID" : "9947156A-9CB9-432A-98EC-81245A5C28DC",
+            "BTTPredefinedActionType" : 206,
+            "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
+            "BTTShellTaskActionScript" : "aerospace workspace \"$(aerospace list-workspaces --monitor mouse --visible)\" && aerospace workspace next\n",
+            "BTTShellTaskActionConfig" : "\/bin\/bash:::-c:::-:::PATH=\/run\/current-system\/sw\/bin\/",
+            "BTTEnabled" : 1,
+            "BTTEnabled2" : 1,
+            "BTTOrder" : 2
+          }
+        ]
+      }
+    ],
+    "BTTAdditionalData" : "eyJCVFRJY29uQ29uZmlnSWNvblR5cGUiOjIsIkJUVEljb25Db25maWdJY29uSGVpZ2h0IjoyNSwiQlRUSWNvbkNvbmZpZ0ljb25JY29uV2lkdGgiOjI1fQ=="
+  }
+]

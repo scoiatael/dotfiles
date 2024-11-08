@@ -167,11 +167,9 @@
             config.allowBroken = true;
           };
           modules = [
-            #./modules/cursorless.nix # requires talon in nix-darwin
             ./modules/home.nix
             ./modules/wezterm.nix
             ./modules/git.nix
-            ./modules/hammerspoon-config.nix
             ./modules/emacs.nix
             ./modules/tmux.nix
             ./modules/zsh.nix
@@ -218,9 +216,6 @@
             ./modules/darwin/aerospace.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/air.nix
-            ./modules/darwin/shortcat.nix
-            ./modules/darwin/ollama.nix
-            ./modules/darwin/hammerspoon.nix
           ];
         };
 
