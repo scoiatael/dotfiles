@@ -237,6 +237,7 @@
     adwaita-qt
     # Screenshotting under sway
     sway-contrib.grimshot
+    aria2
   ]);
 
   fonts.packages = with pkgs; [
