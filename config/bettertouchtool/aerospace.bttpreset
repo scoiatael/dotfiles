@@ -29,14 +29,14 @@
         "BTTAdditionalActions" : [
           {
             "BTTActionCategory" : 0,
-            "BTTLastUpdatedAt" : 1731087219.2889891,
+            "BTTLastUpdatedAt" : 1731092350.824656,
             "BTTTriggerParentUUID" : "B9059046-81DD-44FA-A787-1B3620686553",
             "BTTIsPureAction" : true,
             "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
             "BTTUUID" : "A46330F6-0141-4216-B305-6744FF7750A6",
             "BTTPredefinedActionType" : 206,
             "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
-            "BTTShellTaskActionScript" : "aerospace workspace \"$(aerospace list-workspaces --monitor mouse --visible)\" && aerospace workspace prev\n",
+            "BTTShellTaskActionScript" : "aerospace workspace \"$(aerospace list-workspaces --monitor mouse --visible)\" && aerospace workspace next\n",
             "BTTShellTaskActionConfig" : "\/bin\/bash:::-c:::-:::PATH=\/run\/current-system\/sw\/bin\/",
             "BTTEnabled" : 1,
             "BTTEnabled2" : 1,
@@ -60,14 +60,14 @@
         "BTTAdditionalActions" : [
           {
             "BTTActionCategory" : 0,
-            "BTTLastUpdatedAt" : 1731087222.5857439,
+            "BTTLastUpdatedAt" : 1731092356.9489069,
             "BTTTriggerParentUUID" : "8E9429FB-36C5-4077-8457-3687E6950DA3",
             "BTTIsPureAction" : true,
             "BTTTriggerClass" : "BTTTriggerTypeTouchpadAll",
             "BTTUUID" : "9947156A-9CB9-432A-98EC-81245A5C28DC",
             "BTTPredefinedActionType" : 206,
             "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
-            "BTTShellTaskActionScript" : "aerospace workspace \"$(aerospace list-workspaces --monitor mouse --visible)\" && aerospace workspace next\n",
+            "BTTShellTaskActionScript" : "aerospace workspace \"$(aerospace list-workspaces --monitor mouse --visible)\" && aerospace workspace prev\n",
             "BTTShellTaskActionConfig" : "\/bin\/bash:::-c:::-:::PATH=\/run\/current-system\/sw\/bin\/",
             "BTTEnabled" : 1,
             "BTTEnabled2" : 1,
