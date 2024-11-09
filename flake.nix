@@ -82,7 +82,6 @@
               ./modules/electron.nix
               ./modules/linux.nix
               ./modules/git.nix
-              ./modules/emacs.nix
               ./modules/tmux.nix
               ./modules/zsh.nix
               ./modules/neovim.nix

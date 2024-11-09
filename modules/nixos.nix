@@ -195,7 +195,6 @@
     lm_sensors
     yubioath-flutter
     git
-    librewolf-wayland
     lsof
     go
     xsel
@@ -263,7 +262,7 @@
     experimental-features = nix-command flakes
   '';
   # https://nixos.wiki/wiki/Flakes
-  nix.package = pkgs.nixFlakes; # or versioned attributes like nix_2_7
+  nix.package = pkgs.lix; # or versioned attributes like nix_2_7
   environment.pathsToLink = [ "/share/nix-direnv" ];
 
   nix.settings.auto-optimise-store = true;
