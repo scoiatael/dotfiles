@@ -107,7 +107,6 @@
           };
           modules = [
             ./modules/home.nix
-            ./modules/hammerspoon-config.nix
             ./modules/git.nix
             ./modules/emacs.nix
             ./modules/tmux.nix
@@ -203,7 +202,6 @@
             ./modules/darwin/aerospace.nix
             ./modules/darwin/wooting.nix
             ./modules/darwin/sketchybar.nix
-            ./modules/darwin/hammerspoon.nix
           ];
         };
         LsAir = darwin.lib.darwinSystem {

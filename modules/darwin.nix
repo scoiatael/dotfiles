@@ -28,6 +28,7 @@
       "dteoh-devdocs"
       "domzilla-caffeine"
       "betterdisplay"
+      "karabiner-elements"
     ];
     brews = [ "switchaudio-osx" ];
     taps = [ "Homebrew/homebrew-autoupdate" ];
