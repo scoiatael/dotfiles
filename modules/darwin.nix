@@ -49,7 +49,7 @@
   system.defaults.finder.FXEnableExtensionChangeWarning = false;
   system.defaults.finder.ShowStatusBar = true;
 
-  system.defaults.spaces.spans-displays = false;
+  system.defaults.spaces.spans-displays = true;
 
   system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
 

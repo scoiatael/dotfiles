@@ -94,8 +94,8 @@ outer.right =      0
 # '''
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-alt-slash = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
+# alt-slash = 'layout tiles horizontal vertical'
+# alt-comma = 'layout accordion horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 alt-ctrl-h = 'focus left'
@@ -103,7 +103,7 @@ alt-ctrl-j = 'focus down'
 alt-ctrl-k = 'focus up'
 alt-ctrl-l = 'focus right'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#move
+# See: https:/onikitabobko.github.io/AeroSpace/commands#move
 alt-ctrl-shift-h = 'move left'
 alt-ctrl-shift-j = 'move down'
 alt-ctrl-shift-k = 'move up'
@@ -178,6 +178,9 @@ alt-shift-9 = 'move-node-to-workspace 9'
 # alt-shift-x = 'move-node-to-workspace X'
 # alt-shift-y = 'move-node-to-workspace Y'
 # alt-shift-z = 'move-node-to-workspace Z'
+
+alt-comma = "workspace prev"
+alt-period = "workspace next"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'

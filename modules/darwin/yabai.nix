@@ -140,10 +140,55 @@ with lib; {
     home.file.".hammerspoon/init.lua".text = lib.mkAfter ''
       stackline = require("stackline")
       stackline:init({
-      	paths = {
-      		yabai = "/run/current-system/sw/bin/yabai",
-      	},
+      paths = {
+          yabai = "/run/current-system/sw/bin/yabai",
+      },
       })
+
+      hs.loadSpoon("Yabai")
+      hs.hotkey.bind("alt", ",", function()
+      	spoon.Yabai:run({ "-m", "window", "--focus", "stack.prev" })
+      end)
+      hs.hotkey.bind("alt", ".", function()
+      	spoon.Yabai:run({ "-m", "window", "--focus", "stack.next" })
+      end)
+
+      hs.hotkey.bind(hyper, "h", function()
+      	spoon.Yabai:run({ "-m", "window", "--focus", "west" })
+      end)
+      hs.hotkey.bind(hyper, "l", function()
+      	spoon.Yabai:run({ "-m", "window", "--focus", "east" })
+      end)
+      hs.hotkey.bind(hyper, "k", function()
+      	spoon.Yabai:run({ "-m", "window", "--focus", "north" })
+      end)
+      hs.hotkey.bind(hyper, "j", function()
+      	spoon.Yabai:run({ "-m", "window", "--focus", "south" })
+      end)
+      hs.hotkey.bind(hyper, "return", function()
+      	spoon.Yabai:run({ "-m", "--toggle", "zoom-fullscreen" })
+      end)
+
+      hs.hotkey.bind(super, "c", function()
+      	hs.execute("pkill yabai")
+      	reloadConfig()
+      end)
+      hs.hotkey.bind(super, "\\", function()
+      	stackline.config:toggle("appearance.showIcons")
+      end)
+
+      hs.hotkey.bind({ "alt" }, "t", function()
+      	spoon.Yabai:run({ "-m", "window", "--toggle", "float" }, function()
+      		spoon.Yabai:run({ "-m", "window", "--grid", "4:4:1:1:2:2" })
+      	end)
+      end)
+
+      hs.hotkey.bind(super, "-", function()
+      	spoon.Yabai:run({ "-m", "config", "top_padding", "36" })
+      end)
+      hs.hotkey.bind(super, "=", function()
+      	spoon.Yabai:run({ "-m", "config", "top_padding", "0" })
+      end)
     '';
     services.sketchybar.config = ''
       ##### Adding Mission Control Space Indicators #####

@@ -199,9 +199,8 @@
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
           modules = [
-            lix
             ./modules/darwin.nix
-            ./modules/darwin/yabai.nix
+            ./modules/darwin/aerospace.nix
             ./modules/darwin/wooting.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/hammerspoon.nix
