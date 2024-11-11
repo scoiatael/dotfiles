@@ -30,6 +30,8 @@ in {
             background.corner_radius=5 \
             background.height=20 \
             background.drawing=off \
+            icon.color=''${GREY} \
+            icon.font="sketchybar-app-font:Regular:8.0" \
             label="$sid" \
             click_script="aerospace workspace $sid" \
             script="$PLUGIN_DIR/aerospace.sh $sid"
