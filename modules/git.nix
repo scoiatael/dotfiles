@@ -168,6 +168,9 @@ in {
 
       # Asdf-vm
       ".tool-versions"
+
+      # mvbak
+      "*.bak.*"
     ];
     extraConfig = {
       color = {
