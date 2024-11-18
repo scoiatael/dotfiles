@@ -53,11 +53,11 @@
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
-(when EMACS29+
-  (use-package! combobulate
-    ;; Ensure `combobulate-mode` is activated when you launch a mode it supports
-    :hook ((python-mode combobulate-mode)
-           (typescript-mode combobulate-mode))))
+;; (when EMACS29+
+;;   (use-package! combobulate
+;;     ;; Ensure `combobulate-mode` is activated when you launch a mode it supports
+;;     :hook ((python-mode combobulate-mode)
+;;            (typescript-mode combobulate-mode))))
 
 ;; https://github.com/doomemacs/doomemacs/issues/7438
 (use-package! apheleia)
