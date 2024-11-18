@@ -6,7 +6,7 @@ else
     sketchybar --set space.$1 background.drawing=off
 fi
 
-MONITOR="$(/run/current-system/sw/bin/aerospace list-workspaces --all --format "%{workspace} %{monitor-id}" | grep "^$1" | cut '-d ' -f 2- )"
+MONITOR="$(/run/current-system/sw/bin/aerospace list-workspaces --all --format "%{workspace}|%{monitor-id}" | grep "^$1|" | cut '-d|' -f 2- )"
 if test -n "$MONITOR"; then
     sketchybar --set space.$1 icon="$MONITOR"
 fi
