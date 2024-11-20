@@ -33,7 +33,7 @@
     historySubstringSearch = { enable = true; };
     initExtraFirst = ''
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
-      export FZF_CTRL_T_COMMAND=fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv
+      export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
     '';
     initExtra = lib.mkAfter ''
       autoload -U compinit
