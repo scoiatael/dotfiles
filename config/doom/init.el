@@ -21,7 +21,8 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       (company +childframe)            ; the ultimate code completion backend
+       ;; (company +childframe)            ; the ultimate code completion backend
+       (corfu +icons +orderless +dabbrev)
        (vertico +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
@@ -35,8 +36,8 @@
        ;;(emoji +unicode)  ; 🙂
        hl-todo                ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
-       ;;indent-guides     ; highlighted indent columns
-       ;;ligatures         ; ligatures and symbols to make your code pretty again
+       indent-guides     ; highlighted indent columns
+       ligatures         ; ligatures and symbols to make your code pretty again
        ;; minimap           ; show a map of the code on the side
        ;; modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash                  ; blink cursor line after big motions
@@ -68,7 +69,7 @@
        word-wrap                 ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +ranger)   ; making dired pretty [functional]
+       (dired +dirvish +icons)   ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
        (ibuffer +icons)           ; interactive buffer management
        (undo +tree)      ; persistent, smarter undo for your inevitable mistakes
@@ -81,16 +82,16 @@
        vterm                            ; the best terminal emulation in Emacs
 
        :checkers
-       (syntax +childframe)                        ; tasing you for every semicolon you forget
-       ;; (spell +flyspell +aspell +enchant +hunspell +everywhere)             ; tasing you for misspelling mispelling
+       (syntax +childframe +flymake +icons)                        ; tasing you for every semicolon you forget
+       ;; (spell +enchant +everywhere)             ; tasing you for misspelling mispelling
        grammar                       ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
        ;;biblio            ; Writes a PhD for you (citation needed)
-       ;;debugger          ; FIXME stepping through code, to help you add bugs
+       debugger          ; FIXME stepping through code, to help you add bugs
        direnv
-       docker
+       ;; docker
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)       ; run code, run (also, repls)
@@ -102,7 +103,7 @@
        (pass +auth)              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
+       rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        terraform          ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
@@ -111,13 +112,13 @@
 
        :os
        (:if IS-MAC macos)               ; improve compatibility with macOS
-       ;;tty               ; improve the terminal Emacs experience
+       tty               ; improve the terminal Emacs experience
 
        :lang
        ;;agda              ; types of types of types of types...
        ;;beancount         ; mind the GAAP
        ;;(cc +lsp)         ; C > C++ == 1
-       clojure           ; java with a lisp
+       ;; clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
@@ -125,10 +126,10 @@
        data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
        ;;dhall
-       elixir            ; erlang done right
+       ;; elixir            ; erlang done right
        ;;elm               ; care for a cup of TEA?
        emacs-lisp                       ; drown in parentheses
-       (erlang +lsp +tree-sitter)            ; an elegant language for a more civilized age
+       ;; (erlang +lsp +tree-sitter)            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
        ;;factor
        ;;faust             ; dsp, but you get to keep your soul
@@ -149,16 +150,16 @@
        ;;latex             ; writing papers in Emacs has never been so fun
        ;;lean              ; for folks with too much to prove
        ;;ledger            ; be audit you can be
-       (lua +lsp +tree-sitter)               ; one-based indices? one-based indices
+       ;; (lua +lsp +tree-sitter)               ; one-based indices? one-based indices
        markdown         ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        (nix +tree-sitter +lsp)              ; I hereby declare "nix geht mehr!"
-       (ocaml +tree-sitter)             ; an objective camel
+       ;; (ocaml +tree-sitter)             ; an objective camel
        (org +roam2)     ; organize your plain life in plain text
-       php               ; perl's insecure younger brother
+       ;; php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +tree-sitter +pyright +lsp) ; beautiful is better than ugly
+       ;; (python +tree-sitter +pyright +lsp) ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
@@ -178,7 +179,7 @@
        ;;zig               ; C, but simpler
 
        :email
-       (mu4e +org)
+       ;; (mu4e +org)
        ;;notmuch
        ;;(wanderlust +gmail)
 

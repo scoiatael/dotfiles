@@ -26,7 +26,15 @@
 
 (add-to-list #'doom-symbol-fallback-font-families "Iosevka")
 (add-hook! #'emacs-lisp-mode
-  (add-to-list #'flycheck-disabled-checkers 'emacs-lisp-checkdoc))
+  (add-hook 'emacs-lisp-mode-hook
+            (defun my-elisp-flymake-hook ()
+              (when (doom-real-buffer-p (current-buffer))
+                (when (seq-find (lambda (dir) (file-in-directory-p (buffer-file-name) dir))
+                                '("~/dotfiles" "~/.config" "~/.doom.d" "~/.emacs.d/lisp" "~/.emacs.d/modules"))
+                  (setq flymake-diagnostic-functions '(my-elisp-config-flymake-byte-compile)))
+                (flymake-mode))))
+
+  (cl-callf append elisp-flymake-byte-compile-load-path load-path))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -167,6 +175,7 @@
       :v "v" #'er/expand-region)
 
 (map! :leader
+      "-" #'dirvish
       "\\" #'lsp-ui-doc-show
       ">" #'spacemacs/alternate-buffer
       "R" #'org-roam-node-find
