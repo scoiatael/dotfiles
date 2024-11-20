@@ -7,6 +7,7 @@ raycast://extensions/asubbotin/shell
 raycast://extensions/sawyerh/type-snob
 raycast://extensions/mmazzarolo/unicode-symbols
 raycast://extensions/fedevitaledev/music
+raycast://extensions/sjdonado/idonthavespotify
 )
 
 for ext in ${EXTENSIONS[@]}; do
