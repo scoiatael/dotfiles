@@ -15,6 +15,7 @@
       "${../../casks}/legimi-kindle"
       "bettertouchtool"
       "karabiner-elements"
+      "wezterm"
     ];
     masApps = {
       "bitwarden" = 1352778147;
