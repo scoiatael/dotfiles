@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
+  programs.yazi = {
+    enable = true;
+  };
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -23,6 +26,7 @@
       # https://github.com/echasnovski/mini.nvim/tree/main
       minimap-vim
       mini-nvim
+      yazi-nvim
     ];
     extraPackages = with pkgs; [ code-minimap ];
     extraConfig = ''
@@ -61,7 +65,12 @@
       "mini.files"
       "mini.jump2d"
       "mini.pick"
-    ]);
+    ]) + ''
+        local yazi = require("yazi")
+        vim.keymap.set("n", "<leader>-", function()
+          yazi.yazi()
+        end)
+      '';
   };
   home.activation.createNvimDirectory =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
