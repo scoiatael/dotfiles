@@ -80,7 +80,6 @@
             ./modules/home.nix
             (import ./modules/home-manager.nix attrs)
             (import ./modules/git.nix attrs)
-            (import ./modules/git.nix attrs)
             (import ./modules/emacs.nix attrs)
             ./modules/tmux.nix
             ./modules/zsh.nix
@@ -116,7 +115,7 @@
               ./modules/home.nix
               ./modules/electron.nix
               ./modules/linux.nix
-              ./modules/git.nix
+              (import ./modules/git.nix attrs)
               ./modules/tmux.nix
               ./modules/zsh.nix
               ./modules/neovim.nix
@@ -146,8 +145,8 @@
             pkgs = nixpkgs.legacyPackages.x86_64-darwin;
             modules = [
               ./modules/home.nix
-              ./modules/git.nix
-              ./modules/emacs.nix
+              (import ./modules/git.nix attrs)
+              (import ./modules/emacs.nix attrs)
               ./modules/tmux.nix
               ./modules/zsh.nix
               ./modules/neovim.nix
@@ -170,8 +169,8 @@
           modules = [
             ./modules/home.nix
             ./modules/wezterm.nix
-            ./modules/git.nix
-            ./modules/emacs.nix
+            (import ./modules/git.nix attrs)
+            (import ./modules/emacs.nix attrs)
             ./modules/tmux.nix
             ./modules/zsh.nix
             ./modules/neovim.nix
