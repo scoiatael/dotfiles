@@ -73,6 +73,41 @@
       };
       lix = { pkgs, ... }: { nix.package = pkgs.lix; };
     in {
+      homeManagerModules = {
+        wooting = let system = "x86_64-darwin";
+        in {
+          imports = [
+            ./modules/home.nix
+            (import ./modules/home-manager.nix attrs)
+            (import ./modules/git.nix attrs)
+            (import ./modules/git.nix attrs)
+            (import ./modules/emacs.nix attrs)
+            ./modules/tmux.nix
+            ./modules/zsh.nix
+            ./modules/neovim.nix
+            {
+              programs.emacs.package =
+                attrs.old_nixpkgs.legacyPackages.${system}.emacs29-macport.overrideAttrs {
+                  src = emacsMacport;
+                };
+            }
+            {
+              programs.git.extraConfig.user = {
+                email = "lukasz@wooting.io";
+                name = "Lukas Czaplinski";
+                signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
+              };
+            }
+            {
+              home = {
+                username = "wooting";
+                homeDirectory = "/Users/wooting";
+                stateVersion = "22.05";
+              };
+            }
+          ];
+        };
+      };
       homeConfigurations = {
         "lukaszczaplinski@LsFramework" =
           home-manager.lib.homeManagerConfiguration {
@@ -94,47 +129,16 @@
                   homeDirectory = "/home/lukaszczaplinski";
                   stateVersion = "22.11";
                 };
-                programs.home-manager.enable = true;
               }
             ];
             extraSpecialArgs = attrs;
           };
-        "wooting@MacBookPro" = let system = "x86_64-darwin";
-        in home-manager.lib.homeManagerConfiguration {
+        "wooting@MacBookPro" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            inherit system;
+            system = "x86_64-darwin";
             config.allowBroken = true;
           };
-          modules = [
-            ./modules/home.nix
-            ./modules/git.nix
-            ./modules/emacs.nix
-            ./modules/tmux.nix
-            ./modules/zsh.nix
-            ./modules/neovim.nix
-            {
-              programs.emacs.package =
-                attrs.old_nixpkgs.legacyPackages.${system}.emacs29-macport.overrideAttrs {
-                  src = emacsMacport;
-                };
-            }
-
-            {
-              programs.git.extraConfig.user = {
-                email = "lukasz@wooting.io";
-                name = "Lukas Czaplinski";
-                signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
-              };
-            }
-            {
-              home = {
-                username = "wooting";
-                homeDirectory = "/Users/wooting";
-                stateVersion = "22.05";
-              };
-              programs.home-manager.enable = true;
-            }
-          ];
+          modules = [ self.homeManagerModules.wooting ];
           extraSpecialArgs = attrs;
         };
         "lukaszczaplinski@LsGamingDarwin" =
@@ -154,7 +158,6 @@
                   homeDirectory = "/Users/lukaszczaplinski";
                   stateVersion = "22.05";
                 };
-                programs.home-manager.enable = true;
               }
             ];
             extraSpecialArgs = attrs;
@@ -179,7 +182,6 @@
                 homeDirectory = "/Users/lukaszczaplinski";
                 stateVersion = "22.05";
               };
-              programs.home-manager.enable = true;
             }
           ];
           extraSpecialArgs = attrs;
@@ -198,10 +200,24 @@
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
           modules = [
+            home-manager.darwinModules.home-manager
             ./modules/darwin.nix
             ./modules/darwin/aerospace.nix
             ./modules/darwin/wooting.nix
             ./modules/darwin/sketchybar.nix
+            {
+              users.users.wooting = {
+                name = "wooting";
+                home = "/Users/wooting";
+              };
+            }
+            {
+              # TODO: these break some thing
+              # read up on them.
+              #home-manager.useGlobalPkgs = true;
+              #home-manager.useUserPackages = true;
+              home-manager.users.wooting = self.homeManagerModules.wooting;
+            }
           ];
         };
         LsAir = darwin.lib.darwinSystem {

@@ -1,4 +1,5 @@
-{ config, lib, pkgs, gitAlias, ... }:
+{ gitAlias, ... }:
+{ config, lib, pkgs, ... }:
 
 let inherit (lib) mkDefault;
 in {

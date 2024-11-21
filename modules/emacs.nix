@@ -1,4 +1,5 @@
-{ config, lib, pkgs, doomemacs, ... }:
+{ doomemacs, ... }:
+{ config, lib, pkgs, ... }:
 
 let emacsPackage = config.programs.emacs.package;
 in {
@@ -38,7 +39,10 @@ in {
       test -d ~/.config || mkdir ~/.config
       test -d ~/.config/doom || ln -sf ~/dotfiles/config/doom ~/.config/doom
 
-      doom sync
+      export DOOMLOCALDIR="~/.emacs.local/"
+      export EMACSDIR="~/.emacs.doom/"
+      export PATH=${emacsPackage}/bin/:$PATH
+      ${doomemacs}/bin/doom sync
     '';
 
   home.file.".emacs.doom".source = doomemacs;
