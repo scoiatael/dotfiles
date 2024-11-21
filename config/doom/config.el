@@ -122,7 +122,7 @@
   (add-to-list #'projectile-project-root-files-top-down-recurring ".envrc"))
 
 (after! eglot
-  (add-to-list 'eglot-server-programs '((js-mode typescript-mode) . (eglot-deno "deno" "lsp")))
+  (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-tsx-mode) . ,(eglot-alternatives '(("deno" "lsp") ("vtsls" "--stdio")))))
 
   (setenv "NIXD_FLAGS"  "--inlay-hints=false")
   (setq lsp-nix-nixd-server-path "nixd"
