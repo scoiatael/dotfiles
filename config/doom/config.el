@@ -239,6 +239,10 @@
       :localleader
       :desc "Allow envrc" "a" #'direnv-allow)
 
+(map! :map eglot-mode-map
+      :localleader
+      :desc "Quickfix" "a" #'eglot-code-action-quickfix)
+
 (map! :map org-roam-mode-map
       :leader
       "r i" #'org-roam-insert-immediate)
