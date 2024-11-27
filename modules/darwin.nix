@@ -31,7 +31,7 @@
       "karabiner-elements"
     ];
     brews = [ "switchaudio-osx" ];
-    taps = [ "Homebrew/homebrew-autoupdate" ];
+    taps = [ "domt4/autoupdate" ];
     onActivation = { cleanup = "uninstall"; };
   };
 
@@ -70,8 +70,7 @@
       "/usr/local/bin";
   in ''
     echo >&2 "setting up homebrew autoupdate..."
-    PATH=${brewPrefix}:$PATH brew autoupdate delete > /dev/null
-    PATH=${brewPrefix}:$PATH brew autoupdate start --upgrade --cleanup
+    PATH=${brewPrefix}:$PATH ${pkgs.bash}/bin/bash -c "brew autoupdate status | grep 'installed and running' || brew autoupdate start --upgrade --cleanup"
 
     # https://derflounder.wordpress.com/2023/09/26/managing-the-click-wallpaper-to-reveal-desktop-setting-in-macos-sonoma/
     /usr/bin/defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
