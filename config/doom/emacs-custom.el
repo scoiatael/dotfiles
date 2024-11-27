@@ -16,6 +16,7 @@
       (c-set-offset 'innamespace '0)
       (c-set-offset 'inline-open '0))))
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
+ '(rubocop-autocorrect-command "rubocop -A --format emacs")
  '(safe-local-variable-values
    '((+format-with . rubocop)
      (+format-with . rubocop-format-current-file-silent)
