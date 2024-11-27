@@ -86,17 +86,17 @@ outer.right =      0
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 # You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
-alt-enter = 'layout floating tiling'
+alt-quote = 'layout floating tiling'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
 alt-backslash = 'layout accordion horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-alt-ctrl-left = 'focus left'
-alt-ctrl-down = 'focus down'
-alt-ctrl-up = 'focus up'
-alt-ctrl-right = 'focus right'
+cmd-left = 'focus left'
+cmd-down = 'focus down'
+cmd-up = 'focus up'
+cmd-right = 'focus right'
 
 # See: https:/onikitabobko.github.io/AeroSpace/commands#move
 alt-ctrl-shift-left = 'move left'
