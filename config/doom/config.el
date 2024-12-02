@@ -25,14 +25,13 @@
               mac-right-option-modifier nil))
 
 (add-to-list #'doom-symbol-fallback-font-families "Iosevka")
+
 (add-hook! #'emacs-lisp-mode
-  (add-hook 'emacs-lisp-mode-hook
-            (defun my-elisp-flymake-hook ()
-              (when (doom-real-buffer-p (current-buffer))
-                (when (seq-find (lambda (dir) (file-in-directory-p (buffer-file-name) dir))
-                                '("~/dotfiles" "~/.config" "~/.doom.d" "~/.emacs.d/lisp" "~/.emacs.d/modules"))
-                  (setq flymake-diagnostic-functions '(my-elisp-config-flymake-byte-compile)))
-                (flymake-mode))))
+  (when (doom-real-buffer-p (current-buffer))
+    (when (seq-find (lambda (dir) (file-in-directory-p (buffer-file-name) dir))
+                    '("~/dotfiles" "~/.config" "~/.doom.d" "~/.emacs.d/lisp" "~/.emacs.d/modules"))
+      (setq flymake-diagnostic-functions '(my-elisp-config-flymake-byte-compile)))
+    (flymake-mode))
 
   (cl-callf append elisp-flymake-byte-compile-load-path load-path))
 
@@ -61,6 +60,11 @@
 
 ;; https://github.com/doomemacs/doomemacs/issues/7438
 (use-package! apheleia)
+
+(use-package! river-mode
+  :config
+  (add-hook! #'river-mode #'display-line-numbers-mode)
+  (add-to-list 'auto-mode-alist '("\\.alloy\\'" . river-mode)))
 
 (use-package kagi
   :ensure t

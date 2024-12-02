@@ -42,7 +42,7 @@ in {
       export DOOMLOCALDIR="~/.emacs.local/"
       export EMACSDIR="~/.emacs.doom/"
       export PATH=${emacsPackage}/bin/:$PATH
-      ${doomemacs}/bin/doom sync
+      ${doomemacs}/bin/doom sync --strict-load "${emacsPackage}/share/emacs/site-lisp/site-start.el"
     '';
 
   home.file.".emacs.doom".source = doomemacs;
