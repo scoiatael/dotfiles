@@ -108,6 +108,33 @@
         };
       };
       homeConfigurations = {
+        "L@LsNixOS" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./modules/home.nix
+            ./modules/electron.nix
+            ./modules/linux.nix
+            (import ./modules/git.nix attrs)
+            ./modules/zsh.nix
+            ./modules/neovim.nix
+            (import ./modules/home-manager.nix attrs)
+            (import ./modules/emacs.nix attrs)
+            {
+              programs.git.extraConfig.user = {
+                email = "lukasz@wooting.io";
+                name = "Lukas Czaplinski";
+                signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
+              };
+            }
+            {
+              home = {
+                username = "l";
+                homeDirectory = "/home/l";
+                stateVersion = "24.11";
+              };
+            }
+          ];
+        };
         "lukaszczaplinski@LsFramework" =
           home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -233,6 +260,12 @@
       };
 
       nixosConfigurations = {
+        LsNixOS = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = attrs;
+          # Naming is getting fun...
+          modules = [ ./modules/framework.nix ];
+        };
         LsFramework = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = attrs;
