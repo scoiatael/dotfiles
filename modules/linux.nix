@@ -4,7 +4,7 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-curses;
+    pinentryPackage = pkgs.pinentry-gnome3;
   };
   programs.zsh = {
     sessionVariables = {
@@ -38,4 +38,5 @@
     "Xft.hintstyle" = "hintfull";
     "Xft.lcdfilter" = "lcddefault";
   };
+  programs.wezterm.enable = true;
 }

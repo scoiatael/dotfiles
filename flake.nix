@@ -117,6 +117,7 @@
             (import ./modules/git.nix attrs)
             ./modules/zsh.nix
             ./modules/neovim.nix
+            ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)
             (import ./modules/emacs.nix attrs)
             {

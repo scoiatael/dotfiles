@@ -5,9 +5,8 @@
     ./framework/hardware-configuration.nix
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ "mem_sleep_default=deep" ];
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
@@ -42,8 +41,7 @@
 
   # Open ports in the firewall.
   networking.firewall = {
-    allowedTCPPorts = [
-    ];
+    allowedTCPPorts = [ ];
 
     allowedUDPPortRanges = [ ];
 
@@ -165,24 +163,13 @@
     lm_sensors
     yubioath-flutter
     git
-    lsof
-    go
-    xsel
-    xclip
     rclone
-    kgpg
     gparted
     htop
     fzf
     ark
     sd
     zsh
-    libsForQt5.kwallet
-    libsForQt5.kate
-    libsForQt5.krdc
-    libsForQt5.bismuth
-    libsForQt5.qt5ct
-    libsForQt5.powerdevil
     mpv
     shotcut
     powertop
@@ -205,7 +192,16 @@
     # Screenshotting under sway
     sway-contrib.grimshot
     aria2
+
+    librewolf-bin
+    brave
+
+    kdePackages.kmail
+    kdePackages.kmail-account-wizard
+    slack
   ]);
+
+  nixpkgs.config.allowUnfree = true;
 
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })

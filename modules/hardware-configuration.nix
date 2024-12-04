@@ -25,7 +25,7 @@
   boot.kernelModules = [ "kvm-intel" "nct6775" ];
   boot.extraModulePackages = [ ];
   boot.tmp.useTmpfs = true;
-  boot.kernelParams = [ "i915.force_probe=56a5"];
+  boot.kernelParams = [ "i915.force_probe=56a5" ];
 
   hardware.intelgpu.driver = "xe";
 
@@ -87,7 +87,7 @@
     fsType = "btrfs";
   };
 
-  fileSystems."/boot/efi" = {
+  fileSystems."/boot/EFI" = {
     device = "/dev/disk/by-uuid/3DF9-C557";
     fsType = "vfat";
   };

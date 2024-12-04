@@ -134,7 +134,7 @@
           normal = { family = "JetBrainsMono Nerd Font"; };
           size = 12;
         };
-        shell = { program = "${pkgs.zsh}/bin/zsh"; };
+        terminal = { shell = { program = "${pkgs.zsh}/bin/zsh"; }; };
         window.decorations = "None";
         # import =
         #  [ "${config.home.homeDirectory}/.config/alacritty/theme.toml" ];

@@ -41,7 +41,7 @@ in {
 
       export DOOMLOCALDIR="~/.emacs.local/"
       export EMACSDIR="~/.emacs.doom/"
-      export PATH=${emacsPackage}/bin/:$PATH
+      export PATH=${emacsPackage}/bin/:${pkgs.git}/bin/:${pkgs.openssh}/bin/:$PATH
       ${doomemacs}/bin/doom sync --strict-load "${emacsPackage}/share/emacs/site-lisp/site-start.el"
     '';
 
