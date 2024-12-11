@@ -189,31 +189,33 @@
             ];
             extraSpecialArgs = attrs;
           };
-        "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "aarch64-darwin";
-            config.allowBroken = true;
+        "lukaszczaplinski@LsAir.local" =
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              system = "aarch64-darwin";
+              config.allowBroken = true;
+            };
+            modules = [
+              ./modules/cli.nix
+              ./modules/home.nix
+              ./modules/wezterm.nix
+              (import ./modules/home-manager.nix attrs)
+              (import ./modules/git.nix attrs)
+              (import ./modules/emacs.nix attrs)
+              ./modules/tmux.nix
+              ./modules/zsh.nix
+              ./modules/neovim.nix
+              patchedEmacsMacport
+              {
+                home = {
+                  username = "lukaszczaplinski";
+                  homeDirectory = "/Users/lukaszczaplinski";
+                  stateVersion = "22.05";
+                };
+              }
+            ];
+            extraSpecialArgs = attrs;
           };
-          modules = [
-            ./modules/home.nix
-            ./modules/wezterm.nix
-            (import ./modules/home-manager.nix attrs)
-            (import ./modules/git.nix attrs)
-            (import ./modules/emacs.nix attrs)
-            ./modules/tmux.nix
-            ./modules/zsh.nix
-            ./modules/neovim.nix
-            patchedEmacsMacport
-            {
-              home = {
-                username = "lukaszczaplinski";
-                homeDirectory = "/Users/lukaszczaplinski";
-                stateVersion = "22.05";
-              };
-            }
-          ];
-          extraSpecialArgs = attrs;
-        };
       };
       darwinConfigurations = {
         LsGamingDarwin = darwin.lib.darwinSystem {

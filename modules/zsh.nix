@@ -7,8 +7,7 @@
     enable = true;
     enableCompletion = false;
     shellAliases = {
-      hmr =
-        "home-manager switch --flake 'path:${config.home.homeDirectory}/dotfiles'";
+      hmr = "nh home switch 'path:${config.home.homeDirectory}/dotfiles'";
       nor =
         "doas nixos-rebuild switch --flake 'path:${config.home.homeDirectory}/dotfiles'";
       dnr =
