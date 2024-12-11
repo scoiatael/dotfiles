@@ -197,6 +197,7 @@
           modules = [
             ./modules/home.nix
             ./modules/wezterm.nix
+            (import ./modules/home-manager.nix attrs)
             (import ./modules/git.nix attrs)
             (import ./modules/emacs.nix attrs)
             ./modules/tmux.nix
