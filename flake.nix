@@ -78,6 +78,7 @@
         in {
           imports = [
             ./modules/home.nix
+            ./modules/cli.nix
             (import ./modules/home-manager.nix attrs)
             (import ./modules/git.nix attrs)
             (import ./modules/emacs.nix attrs)
@@ -160,7 +161,7 @@
             ];
             extraSpecialArgs = attrs;
           };
-        "wooting@MacBookPro" = home-manager.lib.homeManagerConfiguration {
+        "wooting@MacBookPro.bagend" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "x86_64-darwin";
             config.allowBroken = true;
