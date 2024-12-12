@@ -1,7 +1,7 @@
 { doomemacs, ... }:
 { config, lib, pkgs, ... }:
 
-let emacsPackage = config.programs.emacs.package;
+let emacsPackage = config.programs.emacs.finalPackage;
 in {
   home.packages = with pkgs; [
     #recutils
@@ -42,13 +42,12 @@ in {
       export DOOMLOCALDIR="~/.emacs.local/"
       export EMACSDIR="~/.emacs.doom/"
       export PATH=${emacsPackage}/bin/:${pkgs.git}/bin/:${pkgs.openssh}/bin/:$PATH
-      ${doomemacs}/bin/doom sync --strict-load "${emacsPackage}/share/emacs/site-lisp/site-start.el"
+      ${doomemacs}/bin/doom sync
     '';
 
   home.file.".emacs.doom".source = doomemacs;
   home.file.".emacs.d/early-init.el".text = ''
     (setq envrc-direnv-executable "${pkgs.direnv}/bin/direnv")
-    (load "${emacsPackage}/share/emacs/site-lisp/site-start" nil 'nomessage)
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
     (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)

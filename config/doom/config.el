@@ -86,7 +86,7 @@
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)
 (require '+private|modeline)
-;; (require '+private|spellchecking)
+(require '+private|spellchecking)
 ;; (require '+private|llm)
 ;; (require '+private|spacehammer)
 ;; (require '+private|gleam)
