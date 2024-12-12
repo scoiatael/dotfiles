@@ -14,5 +14,7 @@
     doggo
     fx
     gitu
+    (pkgs.callPackage ../packages/cometary { })
+    (pkgs.callPackage ../packages/human { })
   ];
 }
