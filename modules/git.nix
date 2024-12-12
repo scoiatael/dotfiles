@@ -3,7 +3,7 @@
 
 let inherit (lib) mkDefault;
 in {
-  home.packages = [ pkgs.bit ];
+  home.packages = [ pkgs.bit pkgs.mergiraf ];
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -203,15 +203,17 @@ in {
       rerere.enabled = true;
       column.ui = "auto";
       branch.sort = "committerdate";
+      merge.mergiraf = {
+        name = "mergiraf";
+        driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P";
+      };
+      core.gitattributesfile = ../config/gitattributes;
     };
     signing = {
       signByDefault = true;
       key = mkDefault "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
-    includes = [
-      { path = "~/.gitconfig_custom"; }
-      { path = "${gitAlias}/gitalias.txt"; }
-    ];
+    includes = [{ path = "${gitAlias}/gitalias.txt"; }];
     difftastic.enable = true;
   };
 
