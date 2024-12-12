@@ -45,7 +45,11 @@
 (package! kagi :pin "0137492184")
 
 (package! river-mode
+  :type 'local
   :recipe (:local-repo "packages"))
+
+;; Should be installed via Nix
+(package! vterm :type 'virtual)
 
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
