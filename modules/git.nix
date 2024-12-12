@@ -207,7 +207,7 @@ in {
         name = "mergiraf";
         driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P";
       };
-      core.gitattributesfile = ../config/gitattributes;
+      core.gitattributesfile = "${../config/gitattributes}";
     };
     signing = {
       signByDefault = true;
