@@ -16,8 +16,8 @@
   boot.initrd.systemd = { enable = true; };
 
   hardware.graphics.extraPackages = with pkgs; [
-   intel-compute-runtime
-   intel-media-driver
+    intel-compute-runtime
+    intel-media-driver
   ];
 
   security.sudo.enable = false;
@@ -151,14 +151,14 @@
       workstation = true;
       userServices = true;
     };
-    allowInterfaces = ["enp4s0"];
+    allowInterfaces = [ "enp4s0" ];
   };
 
   # https://wiki.archlinux.org/title/Solid_state_drive
   services.fstrim.enable = true;
 
   # Enable the Plasma 5 Desktop Environment.
-  services.displayManager.sddm = { 
+  services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
   };
@@ -168,7 +168,7 @@
   # disable the default
   # services.xserver.displayManager.lightdm.enable = false;
   # programs.sway = {
-   #  enable = true;
+  #  enable = true;
   #   wrapperFeatures.gtk = true;
   # };
 
@@ -240,7 +240,8 @@
   ]);
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
     cozette
   ];
 
@@ -280,11 +281,7 @@
   hardware.i2c.enable = true;
 
   hardware.bluetooth.enable = true;
-  hardware.bluetooth.settings = {
-	General = {
-		Experimental = true;
-	};
-};
+  hardware.bluetooth.settings = { General = { Experimental = true; }; };
 
   # https://nixos.wiki/wiki/Fwupd
   services.fwupd.enable = true;

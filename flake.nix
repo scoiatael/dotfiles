@@ -2,7 +2,7 @@
   description = "Home-manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs";
     old_nixpkgs.url =
       "github:nixos/nixpkgs/e2dd4e18cc1c7314e24154331bae07df76eb582f";
     home-manager = {
@@ -161,14 +161,15 @@
             ];
             extraSpecialArgs = attrs;
           };
-        "wooting@MacBookPro.bagend" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-darwin";
-            config.allowBroken = true;
+        "wooting@MacBookPro.bagend" =
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs {
+              system = "x86_64-darwin";
+              config.allowBroken = true;
+            };
+            modules = [ self.homeManagerModules.wooting ];
+            extraSpecialArgs = attrs;
           };
-          modules = [ self.homeManagerModules.wooting ];
-          extraSpecialArgs = attrs;
-        };
         "lukaszczaplinski@LsGamingDarwin" =
           home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-darwin;
@@ -190,33 +191,32 @@
             ];
             extraSpecialArgs = attrs;
           };
-        "lukaszczaplinski@LsAir.local" =
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs {
-              system = "aarch64-darwin";
-              config.allowBroken = true;
-            };
-            modules = [
-              ./modules/cli.nix
-              ./modules/home.nix
-              ./modules/wezterm.nix
-              (import ./modules/home-manager.nix attrs)
-              (import ./modules/git.nix attrs)
-              (import ./modules/emacs.nix attrs)
-              ./modules/tmux.nix
-              ./modules/zsh.nix
-              ./modules/neovim.nix
-              patchedEmacsMacport
-              {
-                home = {
-                  username = "lukaszczaplinski";
-                  homeDirectory = "/Users/lukaszczaplinski";
-                  stateVersion = "22.05";
-                };
-              }
-            ];
-            extraSpecialArgs = attrs;
+        "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            config.allowBroken = true;
           };
+          modules = [
+            ./modules/cli.nix
+            ./modules/home.nix
+            ./modules/wezterm.nix
+            (import ./modules/home-manager.nix attrs)
+            (import ./modules/git.nix attrs)
+            (import ./modules/emacs.nix attrs)
+            ./modules/tmux.nix
+            ./modules/zsh.nix
+            ./modules/neovim.nix
+            patchedEmacsMacport
+            {
+              home = {
+                username = "lukaszczaplinski";
+                homeDirectory = "/Users/lukaszczaplinski";
+                stateVersion = "22.05";
+              };
+            }
+          ];
+          extraSpecialArgs = attrs;
+        };
       };
       darwinConfigurations = {
         LsGamingDarwin = darwin.lib.darwinSystem {
@@ -259,6 +259,7 @@
             ./modules/darwin/aerospace.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/air.nix
+            { networking.hostName = "LsAir"; }
           ];
         };
 

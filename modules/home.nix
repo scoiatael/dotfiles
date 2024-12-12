@@ -104,13 +104,6 @@
     entr
     yubikey-manager
     pry
-    (nerdfonts.override {
-      fonts = [
-        "JetBrainsMono" # needed for rofi theme
-        "FiraCode"
-        "VictorMono"
-      ];
-    })
     restic
     rsync
     mu
@@ -123,7 +116,12 @@
     # luakit # doesn't work on aarch64-darwin :/
     devenv
     nixd
+
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.victor-mono
   ];
+
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
   programs = {
