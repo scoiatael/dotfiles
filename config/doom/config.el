@@ -59,7 +59,12 @@
 ;;            (typescript-mode combobulate-mode))))
 
 ;; https://github.com/doomemacs/doomemacs/issues/7438
-(use-package! apheleia)
+(use-package! apheleia
+  :config
+  (setf (alist-get 'ruby-ts-mode apheleia-mode-alist)
+        '(rufo))
+  (setf (alist-get 'ruby-mode apheleia-mode-alist)
+        '(rufo)))
 
 (use-package! river-mode
   :config
@@ -126,7 +131,7 @@
   (add-to-list #'projectile-project-root-files-top-down-recurring ".envrc"))
 
 (after! eglot
-  (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-tsx-mode) . ,(eglot-alternatives '(("deno" "lsp") ("vtsls" "--stdio")))))
+  (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-tsx-mode rjsx-mode) . ,(eglot-alternatives '(("deno" "lsp") ("vtsls" "--stdio")))))
 
   (setenv "NIXD_FLAGS"  "--inlay-hints=false")
   (setq lsp-nix-nixd-server-path "nixd"

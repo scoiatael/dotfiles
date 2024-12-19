@@ -20,6 +20,9 @@ in {
     # TODO: https://github.com/aca/emmet-ls
     zstd.bin
     pass
+
+    vtsls # LSP for JS
+    rufo # formatter for Ruby
   ];
 
   programs.emacs = {

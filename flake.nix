@@ -85,6 +85,7 @@
             ./modules/tmux.nix
             ./modules/zsh.nix
             ./modules/neovim.nix
+            ./modules/wezterm.nix
             {
               programs.emacs.package =
                 attrs.old_nixpkgs.legacyPackages.${system}.emacs29-macport.overrideAttrs {
