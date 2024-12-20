@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 pkgs.stdenv.mkDerivation {
-  name = "hello-nix";
+  name = "human";
 
   src = pkgs.fetchgit {
     url = "git://z3bra.org/human";
@@ -15,7 +15,8 @@ pkgs.stdenv.mkDerivation {
   '';
 
   installPhase = ''
-    mkdir -p $out/bin
-    cp human  $out/bin/human
+    mkdir -p $out/{bin,man}
+    cp human  $out/bin/
+    cp human.1  $out/man/
   '';
 }
