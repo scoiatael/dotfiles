@@ -20,8 +20,18 @@
       cat = "bat";
       c = "bat";
       tm = "tmux";
+      man = "batman --paging-always";
+      n = "nix";
+      ns = "nix-shell";
+      nix-repl = "nix repl -f '<nixpkgs>'";
+      zsh_stats = ''
+        atuin history list --cmd-only | awk '{CMD[$1]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10'';
     };
-    shellGlobalAliases = { "..." = "../../"; };
+    shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
+      let
+        name = "." + lib.concatStrings (lib.replicate op ".");
+        cmd = lib.concatStrings (lib.replicate op "../");
+      in acc // { "${name}" = cmd; }) { } (lib.range 2 4));
     sessionVariables = {
       DOOMLOCALDIR = "$HOME/.emacs.local";
       LSP_USE_PLISTS = "true";
@@ -34,7 +44,8 @@
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
       export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
     '';
-    initExtra = lib.mkAfter ''
+    initExtra = let ls = lib.getExe pkgs.eza;
+    in lib.mkAfter ''
       autoload -U compinit
       compinit -C # assume zcompdump is fresh
 
@@ -42,8 +53,14 @@
       bindkey "" history-beginning-search-backward
       bindkey '^W' backward-delete-word
 
+      autoload -Uz add-zsh-hook
+      # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
+      do-ls() {emulate -L zsh; print ''${(r:$COLUMNS::─:)PWD}; ${ls} --icons;}
+
+      # add do-ls to chpwd hook
+      add-zsh-hook chpwd do-ls
+
       if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-        autoload -U add-zsh-hook
         add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 
         vterm_printf() {
