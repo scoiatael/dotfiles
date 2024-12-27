@@ -20,7 +20,7 @@
       cat = "bat";
       c = "bat";
       tm = "tmux";
-      man = "batman --paging-always";
+      man = "batman --paging=always";
       n = "nix";
       ns = "nix-shell";
       nix-repl = "nix repl -f '<nixpkgs>'";
