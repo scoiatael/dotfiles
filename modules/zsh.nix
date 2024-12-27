@@ -60,7 +60,12 @@
 
       autoload -Uz add-zsh-hook
       # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
-      do-ls() {emulate -L zsh; print ''${(r:$COLUMNS::─:)PWD}; ${ls} --icons;}
+      do-ls() {
+              emulate -L zsh;
+              print ''${(r:$COLUMNS::─:)PWD};
+              test -d $PWD/.git && git log --oneline -n 10;
+              ${ls} --icons;
+      }
 
       # add do-ls to chpwd hook
       add-zsh-hook chpwd do-ls
