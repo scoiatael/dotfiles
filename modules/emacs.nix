@@ -1,7 +1,6 @@
 { doomemacs, ... }:
 { config, lib, pkgs, ... }:
-let
-  emacsPackage = config.programs.emacs.finalPackage;
+let emacsPackage = config.programs.emacs.finalPackage;
 in {
   home.packages = with pkgs; [
     #recutils
@@ -45,7 +44,7 @@ in {
       export DOOMLOCALDIR="~/.emacs.local/"
       export EMACSDIR="~/.emacs.doom/"
       export PATH=${emacsPackage}/bin/:${pkgs.git}/bin/:${pkgs.openssh}/bin/:$PATH
-      ${doomemacs}/bin/doom sync
+      ${doomemacs}/bin/doom sync --force # Suppress prompts by auto-accepting their consequences.
     '';
 
   home.file.".emacs.doom".source = doomemacs;

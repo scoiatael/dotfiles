@@ -1,3 +1,4 @@
+{ dirsummary, ... }:
 { config, lib, pkgs, ... }:
 
 {
@@ -51,7 +52,7 @@
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
       export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
     '';
-    initExtra = let ls = lib.getExe pkgs.eza;
+    initExtra = let summary = dirsummary.packages.${pkgs.stdenv.system}.default;
     in lib.mkAfter ''
       autoload -U compinit
       compinit -C # assume zcompdump is fresh
@@ -62,12 +63,7 @@
 
       autoload -Uz add-zsh-hook
       # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
-      do-ls() {
-              emulate -L zsh;
-              print ''${(r:$COLUMNS::─:)PWD};
-              test -d $PWD/.git && git log --oneline -n 10;
-              ${ls} --icons;
-      }
+      do-ls() {${summary}/bin/dir-summary $PWD;}
 
       # add do-ls to chpwd hook
       add-zsh-hook chpwd do-ls

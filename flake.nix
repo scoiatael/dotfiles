@@ -60,6 +60,8 @@
       url = "github:AdamWagner/stackline";
       flake = false;
     };
+
+    dirsummary = { url = "path:./packages/dir-summary"; };
   };
 
   outputs = { self, flake-utils, nixpkgs, home-manager, darwin, emacsMacport
@@ -83,7 +85,7 @@
             (import ./modules/git.nix attrs)
             (import ./modules/emacs.nix attrs)
             ./modules/tmux.nix
-            ./modules/zsh.nix
+            (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
             ./modules/wezterm.nix
             {
@@ -119,7 +121,7 @@
             ./modules/linux.nix
             ./modules/cli.nix
             (import ./modules/git.nix attrs)
-            ./modules/zsh.nix
+            (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
             ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)
@@ -149,7 +151,7 @@
               ./modules/linux.nix
               (import ./modules/git.nix attrs)
               ./modules/tmux.nix
-              ./modules/zsh.nix
+              (import ./modules/zsh.nix attrs)
               ./modules/neovim.nix
               ({ lib, ... }: {
                 programs.alacritty.settings.font.size = lib.mkForce 10;
@@ -181,7 +183,7 @@
               (import ./modules/git.nix attrs)
               (import ./modules/emacs.nix attrs)
               ./modules/tmux.nix
-              ./modules/zsh.nix
+              (import ./modules/zsh.nix attrs)
               ./modules/neovim.nix
               ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
               {
@@ -207,7 +209,7 @@
             (import ./modules/git.nix attrs)
             (import ./modules/emacs.nix attrs)
             ./modules/tmux.nix
-            ./modules/zsh.nix
+            (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
             patchedEmacsMacport
             {
