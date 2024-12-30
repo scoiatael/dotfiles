@@ -1,21 +1,25 @@
-{ config, lib, pkgs, ... }:
-
 {
-  imports = [ # Include the results of the hardware scan.
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
     ./framework/hardware-configuration.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelParams = [ "mem_sleep_default=deep" ];
+  boot.kernelParams = ["mem_sleep_default=deep"];
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
   # Enroll keys once secureboot is enforced:
   # systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p1
-  boot.initrd.systemd = { enable = true; };
+  boot.initrd.systemd = {enable = true;};
 
   security.sudo.enable = false;
-  security.doas = { enable = true; };
+  security.doas = {enable = true;};
 
   users.extraUsers.root.shell = pkgs.bash;
   users.defaultUserShell = pkgs.zsh;
@@ -41,11 +45,11 @@
 
   # Open ports in the firewall.
   networking.firewall = {
-    allowedTCPPorts = [ ];
+    allowedTCPPorts = [];
 
-    allowedUDPPortRanges = [ ];
+    allowedUDPPortRanges = [];
 
-    allowedUDPPorts = [ ];
+    allowedUDPPorts = [];
   };
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -59,7 +63,7 @@
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-m32n.psf.gz";
-    packages = with pkgs; [ terminus_font ];
+    packages = with pkgs; [terminus_font];
     keyMap = "us";
     #TODO: https://github.com/coderonline/base16-vtrgb/blob/master/consolecolors/base16-nord.vga
     colors = [
@@ -84,20 +88,49 @@
 
   # List services that you want to enable:
 
-  # https://github.com/NixOS/nixpkgs/issues/126681
-  services.interception-tools = {
+  # https://wiki.nixos.org/wiki/Keyd
+  services.keyd = {
     enable = true;
-    plugins = [ pkgs.interception-tools-plugins.caps2esc ];
-    udevmonConfig = ''
-      - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc -m 1 | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
-        DEVICE:
-          EVENTS:
-            EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
-    '';
   };
 
+  # Optional, but makes sure that when you type the make palm rejection work with keyd
+  # https://github.com/rvaiya/keyd/issues/723
+  environment.etc."libinput/local-overrides.quirks".text = ''
+    [Serial Keyboards]
+    MatchUdevType=keyboard
+    MatchName=keyd virtual keyboard
+    AttrKeyboardIntegration=internal
+  '';
+
+  environment.etc."keyd/default.conf".text = ''
+     [ids]
+
+     *
+
+     [main]
+
+     # Maps capslock to escape when pressed and layer "capslock" when held.
+     capslock = overload(capslock, esc)
+
+     # Remaps the escape key to capslock
+     esc = capslock
+
+
+    # https://github.com/rvaiya/keyd/blob/6dc2d5c4ea76802fd192b143bdd53b1787fd6deb/docs/keyd.scdoc#L128
+    # Layer named "capslock" - defaults to control+KEY if not found
+    [capslock:C]
+
+     h = left
+     j = down
+     k = up
+     l = right
+  '';
+
+  hardware.wooting.enable = true;
+  hardware.keyboard.zsa.enable = true;
+
   # https://nixos.wiki/wiki/Yubikey
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = [pkgs.yubikey-personalization];
 
   services.pcscd.enable = true;
 
@@ -158,7 +191,23 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = (with pkgs; [
+  environment.systemPackages = let
+    vivaldi-patched =
+      (pkgs.vivaldi.overrideAttrs (oldAttrs: {
+        buildPhase =
+          builtins.replaceStrings
+          ["for f in libGLESv2.so libqt5_shim.so ; do"]
+          ["for f in libGLESv2.so libqt6_shim.so ; do"]
+          oldAttrs.buildPhase;
+      }))
+      .override {
+        qt5 = pkgs.qt6;
+        commandLineArgs = ["--ozone-platform=wayland"];
+        # The following two are just my preference, feel free to leave them out
+        proprietaryCodecs = true;
+        enableWidevine = true;
+      };
+  in (with pkgs; [
     pciutils
     lm_sensors
     yubioath-flutter
@@ -193,8 +242,8 @@
     sway-contrib.grimshot
     aria2
 
+    vivaldi-patched
     librewolf-bin
-    brave
 
     kdePackages.kmail
     kdePackages.kmail-account-wizard
@@ -228,7 +277,7 @@
   '';
   # https://nixos.wiki/wiki/Flakes
   nix.package = pkgs.lix; # or versioned attributes like nix_2_7
-  environment.pathsToLink = [ "/share/nix-direnv" ];
+  environment.pathsToLink = ["/share/nix-direnv"];
 
   nix.settings.auto-optimise-store = true;
   nix.gc = {
@@ -245,7 +294,7 @@
   hardware.i2c.enable = true;
 
   hardware.bluetooth.enable = true;
-  hardware.bluetooth.settings = { General = { Experimental = true; }; };
+  hardware.bluetooth.settings = {General = {Experimental = true;};};
 
   # https://nixos.wiki/wiki/Fwupd
   services.fwupd.enable = true;
@@ -276,5 +325,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
 }
