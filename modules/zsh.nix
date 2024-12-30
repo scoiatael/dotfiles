@@ -24,6 +24,7 @@
       man = "batman --paging=always";
       n = "nix";
       ns = "nix-shell";
+      nf = "nix flake";
       nix-repl = "nix repl -f '<nixpkgs>'";
       zsh_stats = ''
         atuin history list --cmd-only | awk '{CMD[$1]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10'';
