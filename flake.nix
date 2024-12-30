@@ -273,7 +273,7 @@
           system = "x86_64-linux";
           specialArgs = attrs;
           # Naming is getting fun...
-          modules = [ ./modules/framework.nix ];
+          modules = [ ./modules/framework.nix ./modules/nixos/keyd.nix ];
         };
         LsFramework = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
