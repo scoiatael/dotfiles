@@ -6,10 +6,11 @@
   programs.zsh = {
     enable = true;
     enableCompletion = false;
-    shellAliases = {
-      hmr = "nh home switch 'path:${config.home.homeDirectory}/dotfiles'";
+    shellAliases = let nh = lib.getExe pkgs.nh;
+    in {
+      hmr = "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles'";
       nor =
-        "doas nixos-rebuild switch --flake 'path:${config.home.homeDirectory}/dotfiles'";
+        "doas ${nh} os switch -R 'path:${config.home.homeDirectory}/dotfiles'";
       dnr =
         "darwin-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
       nix-test =

@@ -85,7 +85,7 @@
       ''
       (lib.strings.optionalString pkgs.stdenv.isLinux ''
         front_end="WebGpu",
-        enable_wayland=false,
+        dpi=72,
       '')
       ''
         }

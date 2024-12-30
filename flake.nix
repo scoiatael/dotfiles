@@ -110,12 +110,13 @@
         };
       };
       homeConfigurations = {
-        "L@LsNixOS" = home-manager.lib.homeManagerConfiguration {
+        "l@LsNixOS" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             ./modules/home.nix
             ./modules/electron.nix
             ./modules/linux.nix
+            ./modules/cli.nix
             (import ./modules/git.nix attrs)
             ./modules/zsh.nix
             ./modules/neovim.nix
