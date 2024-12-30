@@ -114,6 +114,7 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             ./modules/home.nix
+            ./modules/ghostty.nix
             ./modules/electron.nix
             ./modules/linux.nix
             ./modules/cli.nix
