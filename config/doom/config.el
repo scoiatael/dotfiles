@@ -9,6 +9,7 @@
  user-full-name "Lukasz Czaplinski"
  doom-theme 'doom-one
  doom-font (font-spec :family "VictorMono Nerd Font Mono" :size 12)
+ doom-symbol-font (font-spec :family "FiraCode Nerd Font Mono")
  comint-prompt-read-only nil
  git-commit-summary-max-length 120
  gcmh-high-cons-threshold (* 1024 1024 1024)) ; 1GiB
@@ -23,8 +24,6 @@
 (when IS-MAC (setq
               ns-right-alternate-modifier 'none
               mac-right-option-modifier nil))
-
-(add-to-list #'doom-symbol-fallback-font-families "Iosevka")
 
 (add-hook! #'emacs-lisp-mode
   (when (doom-real-buffer-p (current-buffer))

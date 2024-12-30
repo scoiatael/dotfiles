@@ -1,12 +1,8 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
-  programs.gpg = {enable = true;};
+{ lib, pkgs, ... }: {
+  programs.gpg = { enable = true; };
   programs.zellij = {
     enable = true;
-    settings = {theme = "catppuccin-macchiato";};
+    settings = { theme = "catppuccin-macchiato"; };
   };
   home.file.".config/zellij/themes/catppuccin.kdl".text = ''
         // Catppuccin Theme:
@@ -71,7 +67,7 @@
     }
   '';
 
-  home.language = {base = "en_GB.UTF-8";};
+  home.language = { base = "en_GB.UTF-8"; };
 
   home.packages = with pkgs; [
     elvish # until I port scripts back..
@@ -110,18 +106,22 @@
     rsync
     mu
     stylua
-    (callPackage ../packages/gitblame {})
-    (callPackage ../packages/inflector-rs {})
-    (callPackage ../packages/indices {})
+    (callPackage ../packages/gitblame { })
+    (callPackage ../packages/inflector-rs { })
+    (callPackage ../packages/indices { })
     # (callPackage ../packages/ternimal { })
     # janet
     # luakit # doesn't work on aarch64-darwin :/
     devenv
     nixd
 
-    nerd-fonts.jetbrains-mono
+    jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.victor-mono
+    dejavu_fonts
+    noto-fonts-color-emoji
+    unifont
+    udev-gothic
   ];
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
@@ -131,10 +131,10 @@
       enable = true;
       settings = {
         font = {
-          normal = {family = "JetBrainsMono Nerd Font";};
+          normal = { family = "JetBrainsMono Nerd Font"; };
           size = 12;
         };
-        terminal = {shell = {program = "${pkgs.zsh}/bin/zsh";};};
+        terminal = { shell = { program = "${pkgs.zsh}/bin/zsh"; }; };
         window.decorations = "None";
         # import =
         #  [ "${config.home.homeDirectory}/.config/alacritty/theme.toml" ];
@@ -143,7 +143,8 @@
     qutebrowser = {
       # enable = true; broken on macOS -> enable via ./home-manager/linux.nix
       searchEngines = {
-        w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
+        w =
+          "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
         aw = "https://wiki.archlinux.org/?search={}";
         nw = "https://nixos.wiki/index.php?search={}";
         g = "https://www.google.com/search?hl=en&q={}";
@@ -206,7 +207,8 @@
         };
 
         git_state = {
-          format = "\\([|$state( $progress_current/$progress_total)]($style)\\)";
+          format =
+            "\\([|$state( $progress_current/$progress_total)]($style)\\)";
           style = "bright-black";
         };
 
@@ -218,7 +220,7 @@
         };
       };
     };
-    dircolors = {enable = true;};
+    dircolors = { enable = true; };
     bat = {
       enable = true;
       themes = {
@@ -236,15 +238,15 @@
         paging = "never";
         theme = "catpuccin";
       };
-      extraPackages = with pkgs.bat-extras; [batman];
+      extraPackages = with pkgs.bat-extras; [ batman ];
     };
-    btop = {enable = true;};
+    btop = { enable = true; };
     atuin = {
       enable = true;
-      flags = ["--disable-up-arrow"];
+      flags = [ "--disable-up-arrow" ];
     };
-    eza = {enable = true;};
-    broot = {enable = true;};
+    eza = { enable = true; };
+    broot = { enable = true; };
     helix = {
       enable = true;
       settings = {
@@ -256,11 +258,11 @@
         };
       };
     };
-    fzf = {enable = true;};
-    zoxide = {enable = true;};
+    fzf = { enable = true; };
+    zoxide = { enable = true; };
     direnv = {
       enable = true;
-      nix-direnv = {enable = true;};
+      nix-direnv = { enable = true; };
       stdlib = "source ${../config/direnvrc}";
     };
     vscode = {
@@ -321,8 +323,7 @@
     keyserver hkps://keys.openpgp.org/
   '';
 
-  home.file.".gnupg/gpg-agent.conf" = let
-    program = "/run/current-system/sw/bin/pinentry-mac";
-  in
-    lib.mkIf pkgs.stdenv.isDarwin {text = "pinentry-program ${program}";};
+  home.file.".gnupg/gpg-agent.conf" =
+    let program = "/run/current-system/sw/bin/pinentry-mac";
+    in lib.mkIf pkgs.stdenv.isDarwin { text = "pinentry-program ${program}"; };
 }
