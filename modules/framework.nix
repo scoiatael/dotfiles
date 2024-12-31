@@ -83,6 +83,9 @@
 
   # List services that you want to enable:
 
+  # https://mynixos.com/home-manager/option/services.gpg-agent.pinentryPackage
+  services.dbus.packages = [ pkgs.gcr ];
+
   hardware.wooting.enable = true;
   hardware.keyboard.zsa.enable = true;
 
