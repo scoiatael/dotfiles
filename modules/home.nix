@@ -116,8 +116,6 @@
     nixd
 
     jetbrains-mono
-    nerd-fonts.fira-code
-    nerd-fonts.victor-mono
     dejavu_fonts
     noto-fonts-color-emoji
     unifont
