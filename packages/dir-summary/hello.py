@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument('dirname')
 
 
-def git():
+def git_log():
     commits = subprocess.check_output(["git", "log", "--oneline", "-n10", "--color=always", "--abbrev-commit"]).decode().split("\n")
     table = Table(show_header=False)
     table.add_column("line")
@@ -27,6 +27,16 @@ def git():
         if commit:
             table.add_row(Text.from_ansi(commit))
     return table
+
+def git_status():
+    cmd = ["env",
+    "GIT_STATUS_COLOR=always",
+    "git",
+    "--config-env=status.color=GIT_STATUS_COLOR",
+    "status",
+    "--short"]
+    status = subprocess.check_output(cmd).decode()
+    return Panel(Text.from_ansi(status))
 
 def ls():
     files = subprocess.check_output(["eza", "--oneline", "--color=always", "--icons=always"]).decode().split("\n")
@@ -41,9 +51,10 @@ def main():
         console.print(table)
 
         if os.path.isdir(".git"):
+            console.print(git_status())
             layout = Layout()
             layout.split_row(
-                Layout(git(), name="git"),
+                Layout(git_log(), name="git"),
                 Layout(ls(), name="ls")
             )
             layout["git"].size = 60

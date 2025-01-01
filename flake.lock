@@ -98,7 +98,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-0/OnX9r3A5FEkG1dliK9JW5DgoVowhLVO+c4/JPa+Gs=",
+        "narHash": "sha256-uxTidivwR+P2OrdCNNVGS79Pgtwh/wajdEaAb9w9vuU=",
         "path": "./packages/dir-summary",
         "type": "path"
       },
