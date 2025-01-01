@@ -203,6 +203,8 @@
           };
           modules = [
             ./modules/cli.nix
+            ./modules/ghostty.nix
+            { config.ghostty.font-size = 16; }
             ./modules/home.nix
             ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)

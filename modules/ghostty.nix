@@ -1,32 +1,16 @@
 { config, lib, pkgs, ... }:
 
-let
-  ghosttyDesktop = pkgs.stdenvNoCC.mkDerivation rec {
-    name = "ghostty-launcher";
-    dontBuild = true;
-
-    unpackPhase = "true";
-
-    desktopItem = pkgs.makeDesktopItem {
-      name = "ghostty-launcher";
-      exec = lib.getExe pkgs.ghostty;
-      genericName = "GhosTTY";
-      categories = [ "System" "TerminalEmulator" ];
-      icon = "terminal";
-      desktopName = "Ghostty";
-    };
-
-    installPhase = ''
-      mkdir -p $out/share
-      cp -r ${desktopItem}/share/applications $out/share
-    '';
-
+{
+  options.ghostty.font-size = lib.mkOption {
+    type = lib.types.int;
+    default = 9;
   };
-in {
-  home.packages = [ pkgs.ghostty ghosttyDesktop ];
+  config = {
+    home.packages = [ pkgs.ghostty ];
 
-  home.file.".config/ghostty/config".text = ''
-    theme = catppuccin-frappe
-    font-size = 9
-  '';
+    home.file.".config/ghostty/config".text = ''
+      theme = catppuccin-frappe
+      font-size = ${builtins.toString config.ghostty.font-size}
+    '';
+  };
 }
