@@ -131,20 +131,27 @@
   (add-hook! #'river-mode #'display-line-numbers-mode)
   (add-to-list 'auto-mode-alist '("\\.alloy\\'" . river-mode)))
 
-(use-package kagi
-  :ensure t
-  :custom
-  ;; or use a function, e.g. with the password-store package:
-  (kagi-api-token (lambda () (password-store-get "kagi-api-token")))
-
-  ;; Universal Summarizer settings
-  (kagi-summarizer-engine "cecil")
-  (kagi-summarizer-default-language "EN")
-  (kagi-summarizer-cache t)
+(use-package! gptel
   :config
-  (define-kagi-fastgpt-prompt kagi-write
-                              "Write code that solves following problem: %s"
-                              "Code"))
+  (setq
+   gptel-model 'fastgpt
+   gptel-backend (gptel-make-kagi "Kagi"
+                   :key (password-store-get "kagi-api-token"))))
+
+;; (use-package kagi
+;;   :ensure t
+;;   :custom
+;;   ;; or use a function, e.g. with the password-store package:
+;;   (kagi-api-token (lambda () (password-store-get "kagi-api-token")))
+
+;;   ;; Universal Summarizer settings
+;;   (kagi-summarizer-engine "cecil")
+;;   (kagi-summarizer-default-language "EN")
+;;   (kagi-summarizer-cache t)
+;;   :config
+;;   (define-kagi-fastgpt-prompt kagi-write
+;;                               "Write code that solves following problem: %s"
+;;                               "Code"))
 
 (use-package jtsx
   :ensure t

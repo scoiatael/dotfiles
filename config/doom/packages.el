@@ -42,7 +42,7 @@
 ;; https://github.com/doomemacs/doomemacs/issues/8089
 (package! compat :pin "9a234d0")
 
-(package! kagi :pin "0137492184")
+(package! gptel :pin "676503e")
 
 (package! river-mode
   :type 'local
