@@ -133,10 +133,18 @@
 
 (use-package! gptel
   :config
+  ;; (setq
+  ;;  gptel-model 'mistral:latest
+  ;;  gptel-backend (gptel-make-ollama "Ollama"
+  ;;                :host "localhost:11434"
+  ;;                :stream t
+  ;;                :models '(mistral:latest)))
   (setq
+
    gptel-model 'fastgpt
    gptel-backend (gptel-make-kagi "Kagi"
-                   :key (password-store-get "kagi-api-token"))))
+                   :key (password-store-get "kagi-api-token")))
+  )
 
 ;; (use-package kagi
 ;;   :ensure t

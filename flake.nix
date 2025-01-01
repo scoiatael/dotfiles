@@ -263,6 +263,7 @@
           modules = [
             lix
             ./modules/darwin.nix
+            ./modules/darwin/ollama.nix
             ./modules/darwin/aerospace.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/air.nix
