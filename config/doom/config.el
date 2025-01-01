@@ -21,9 +21,7 @@
   (setq company-minimum-prefix-length 5
         company-idle-delay 0.5))
 
-(when IS-MAC (setq
-              ns-right-alternate-modifier 'none
-              mac-right-option-modifier nil))
+(when (featurep :system 'macos) (setq mac-right-option-modifier nil))
 
 (add-hook! #'emacs-lisp-mode
   (when (doom-real-buffer-p (current-buffer))
@@ -54,7 +52,7 @@
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
-(when EMACS29+
+(when (>= emacs-version 29)
   (use-package treesit
     :mode (("\\.tsx\\'" . tsx-ts-mode))
     :preface
@@ -140,7 +138,6 @@
   ;;                :stream t
   ;;                :models '(mistral:latest)))
   (setq
-
    gptel-model 'fastgpt
    gptel-backend (gptel-make-kagi "Kagi"
                    :key (password-store-get "kagi-api-token")))
