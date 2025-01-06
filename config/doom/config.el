@@ -52,7 +52,7 @@
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
-(when (>= emacs-version 29)
+(when (version<= "29" emacs-version)
   (use-package treesit
     :mode (("\\.tsx\\'" . tsx-ts-mode))
     :preface
