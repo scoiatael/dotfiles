@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.yazi = {
-    enable = true;
-  };
+  programs.yazi = { enable = true; };
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -27,6 +25,7 @@
       minimap-vim
       mini-nvim
       yazi-nvim
+      catppuccin-nvim
     ];
     extraPackages = with pkgs; [ code-minimap ];
     extraConfig = ''
@@ -40,9 +39,9 @@
 
       " Theme
       syntax enable
-      colorscheme tender
+      colorscheme catppuccin-frappe
       " set lighline theme inside lightline config
-      let g:lightline = { 'colorscheme': 'tender' }
+      let g:lightline = {'colorscheme': 'catppuccin'}
 
       let mapleader = " "
       let maplocalleader = ","
@@ -66,11 +65,11 @@
       "mini.jump2d"
       "mini.pick"
     ]) + ''
-        local yazi = require("yazi")
-        vim.keymap.set("n", "<leader>-", function()
-          yazi.yazi()
-        end)
-      '';
+      local yazi = require("yazi")
+      vim.keymap.set("n", "<leader>-", function()
+        yazi.yazi()
+      end)
+    '';
   };
   home.activation.createNvimDirectory =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
