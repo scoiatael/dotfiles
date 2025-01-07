@@ -9,7 +9,8 @@
     enableCompletion = false;
     shellAliases = let nh = lib.getExe pkgs.nh;
     in {
-      hmr = "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles'";
+      hmr =
+        "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles' -b bp.$(date --iso-8601)";
       nor =
         "doas ${nh} os switch -R 'path:${config.home.homeDirectory}/dotfiles'";
       dnr =
