@@ -87,6 +87,8 @@
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
+            ./modules/ghostty.nix
+            { config.ghostty.font-size = 12; }
             ./modules/wezterm.nix
             {
               programs.emacs.package =
