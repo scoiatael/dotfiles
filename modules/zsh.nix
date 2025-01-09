@@ -35,6 +35,11 @@
         "nix path-info --size --recursive -h $DEVENV_PROFILE | sort -hk2";
       nix-du = "nix path-info -Sh $DEVENV_PROFILE";
       d = "direnv";
+      gpg-fpr = "gpg -K --with-colons | grep fpr | head -n 1 | ${
+          lib.getExe pkgs.choose
+        } -f : -1";
+      gpg-quick-expire-extend = ''
+        gpg --quick-set-expire "$(gpg-fpr)" 3m "*"; gpg --quick-set-expire "$(gpg-fpr)" 3m'';
     };
     shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
       let
