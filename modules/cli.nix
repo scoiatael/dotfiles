@@ -4,6 +4,7 @@
   # https://lobste.rs/s/xyvwux/what_are_your_favorite_non_standard_cli
   home.packages = with pkgs;
     [
+      pinact # pin github actions
       tree
       aerc
       gron
