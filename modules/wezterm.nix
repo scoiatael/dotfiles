@@ -82,6 +82,7 @@
           tab_max_width = 128,
           -- Useful for debugging new tab commands
           -- exit_behavior = 'Hold',
+          front_end = "WebGpu",
       ''
       (lib.strings.optionalString pkgs.stdenv.isLinux ''
         front_end="WebGpu",
