@@ -150,7 +150,11 @@
    gptel-model 'fastgpt
    gptel-backend (gptel-make-kagi "Kagi"
                    :key (password-store-get "kagi-api-token")))
-  )
+
+  (map! :localleader
+        "g g" #'gptel
+        "g s" #'gptel-send
+        "g m" #'gptel-menu))
 
 ;; (use-package kagi
 ;;   :ensure t
