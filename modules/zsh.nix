@@ -39,7 +39,7 @@
           lib.getExe pkgs.choose
         } -f : -1";
       gpg-quick-expire-extend = ''
-        gpg --quick-set-expire "$(gpg-fpr)" 3m "*"; gpg --quick-set-expire "$(gpg-fpr)" 3m'';
+        gpg --quick-set-expire "$(gpg-fpr)" 3m '*'; gpg --quick-set-expire "$(gpg-fpr)" 3m'';
     };
     shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
       let
