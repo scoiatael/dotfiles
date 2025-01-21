@@ -137,6 +137,7 @@
   ;;                :host "localhost:11434"
   ;;                :stream t
   ;;                :models '(mistral:latest)))
+
   (gptel-make-openai "TogetherAI"         ;Any name you want
     :host "api.together.xyz"
     :key (password-store-get "together-ai-api-token")                   ;can be a function that returns the key
@@ -146,13 +147,17 @@
               mistralai/Mixtral-8x7B-Instruct-v0.1
               codellama/CodeLlama-13b-Instruct-hf
               codellama/CodeLlama-34b-Instruct-hf))
+  (gptel-make-kagi "Kagi"
+    :key (password-store-get "kagi-api-token"))
+
   (setq
-   gptel-model 'fastgpt
-   gptel-backend (gptel-make-kagi "Kagi"
-                   :key (password-store-get "kagi-api-token")))
+   gptel-backend (gptel-make-anthropic "Claude"          ;Any name you want
+                   :stream t                             ;Streaming responses
+                   :key (password-store-get "anthropic-com-api-token")))
 
   (map! :localleader
         "g g" #'gptel
+        "g r" #'gptel-rewrite
         "g s" #'gptel-send
         "g m" #'gptel-menu))
 
