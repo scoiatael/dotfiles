@@ -140,7 +140,7 @@
 
   (gptel-make-openai "TogetherAI"         ;Any name you want
     :host "api.together.xyz"
-    :key (password-store-get "together-ai-api-token")                   ;can be a function that returns the key
+    :key (lambda () (password-store-get "together-ai-api-token"))                   ;can be a function that returns the key
     :stream t
     :models '(;; has many more, check together.ai
               deepseek-ai/DeepSeek-V3
@@ -148,12 +148,12 @@
               codellama/CodeLlama-13b-Instruct-hf
               codellama/CodeLlama-34b-Instruct-hf))
   (gptel-make-kagi "Kagi"
-    :key (password-store-get "kagi-api-token"))
+    :key (lambda () (password-store-get "kagi-api-token")))
 
   (setq
    gptel-backend (gptel-make-anthropic "Claude"          ;Any name you want
                    :stream t                             ;Streaming responses
-                   :key (password-store-get "anthropic-com-api-token")))
+                   :key (lambda () (password-store-get "anthropic-com-api-token"))))
 
   (map! :localleader
         "g g" #'gptel
