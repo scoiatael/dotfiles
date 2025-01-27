@@ -19,6 +19,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils/v1.0.0";
+    walker.url = "github:abenz1267/walker";
     doomemacs = {
       url = "github:doomemacs/doomemacs";
       flake = false;
@@ -117,6 +118,8 @@
         "l@LsNixOS" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
+            attrs.walker.homeManagerModules.default
+            ./modules/walker.nix
             ./modules/home.nix
             ./modules/ghostty.nix
             ./modules/electron.nix
