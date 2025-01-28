@@ -40,6 +40,7 @@
         } -f : -1";
       gpg-quick-expire-extend = ''
         gpg --quick-set-expire "$(gpg-fpr)" 3m '*'; gpg --quick-set-expire "$(gpg-fpr)" 3m'';
+      random = ''ruby -r securerandom -e "puts SecureRandom.hex(40)"'';
     };
     shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
       let
