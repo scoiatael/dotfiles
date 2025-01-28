@@ -17,6 +17,8 @@
         "darwin-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
       nix-test =
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
+      nix-test-python =
+        "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
       g = "git";
       watch = "viddy";
       w = "viddy";
