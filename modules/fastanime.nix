@@ -4,7 +4,7 @@
     pkgs.mpv
     # HACK: plyer required by upstream is broken on macOS
     # HACK: thefuzz required by upstream is broken on macOS
-    (fastanime.packages."${pkgs.currentSystem}".default.overrideAttrs {
+    (fastanime.packages."${pkgs.stdenv.hostPlatform.system}".default.overrideAttrs {
       preBuild = ''
         sed -i 's/rich>=13.9.2/rich>=13.8.1/' pyproject.toml
         sed -i 's/pycryptodome>=3.21.0/pycryptodome>=3.20.0/' pyproject.toml
