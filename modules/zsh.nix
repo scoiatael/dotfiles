@@ -44,6 +44,7 @@
         gpg --quick-set-expire "$(gpg-fpr)" 3m '*'; gpg --quick-set-expire "$(gpg-fpr)" 3m'';
       random = ''
         ruby -r securerandom -e "puts SecureRandom.hex(ARGV.first&.to_i || 32)" "''${@}"'';
+      notmuch-ui = "emacs -nw -f notmuch";
     };
     shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
       let
