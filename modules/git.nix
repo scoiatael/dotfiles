@@ -1,13 +1,24 @@
 { gitAlias, ... }:
 { config, lib, pkgs, ... }:
 
-let inherit (lib) mkDefault;
+let
+  inherit (lib) mkDefault;
+  tig = pkgs.tig.overrideAttrs {
+    src = pkgs.fetchFromGitHub {
+      owner = "jonas";
+      repo = "tig";
+      rev = "d2b29cd2d424ccdd78ef080bd6b8e184847ce909";
+      sha256 = "sha256-l7e+CLnZ0lbZ6iQb+UOeRJgeUgDmTkq3SUVyMwXbBzM=";
+    };
+
+  };
 in {
-  home.packages = [ pkgs.bit pkgs.mergiraf ];
+  home.packages = with pkgs; [ bit mergiraf tig meld ];
   programs.git = {
     enable = true;
     lfs.enable = true;
     aliases = {
+      pp = "! git pull && git push";
       lg =
         "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       lga =
@@ -214,7 +225,8 @@ in {
       key = mkDefault "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
     includes = [{ path = "${gitAlias}/gitalias.txt"; }];
-    difftastic.enable = true;
+    difftastic.enable = false;
+    delta.enable = true;
   };
 
   programs.jujutsu = {
@@ -243,4 +255,8 @@ in {
   };
 
   programs.gh-dash = { enable = true; };
+
+  home.file.".tigrc".text = ''
+    set diff-highlight = "delta"
+  '';
 }

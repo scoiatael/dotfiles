@@ -85,10 +85,8 @@
     jq
     ripgrep
     units
-    tig
     lsof
     ruby_3_3
-    meld
     sops
     viddy
     hyperfine
