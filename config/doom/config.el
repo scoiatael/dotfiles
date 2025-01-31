@@ -244,6 +244,9 @@
     (sp-local-pair '(python-mode) (concat char "\"") "\""))
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
 
+;; https://github.com/doomemacs/doomemacs/issues/4585
+(after! notmuch (set-popup-rule! "^\\*notmuch-hello" :ignore t))
+
 (after! format
   (advice-add 'format-all-buffer :around #'envrc-propagate-environment)
   (advice-add 'format-all-buffer--from-hook :around #'envrc-propagate-environment)

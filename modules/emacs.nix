@@ -25,7 +25,11 @@ in {
 
     nerd-fonts.victor-mono
     nerd-fonts.fira-code
+
+    notmuch # mail
   ];
+
+  programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
 
   programs.emacs = {
     enable = true;
