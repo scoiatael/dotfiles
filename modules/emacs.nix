@@ -29,7 +29,10 @@ in {
     notmuch # mail
   ];
 
-  programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
+  programs.afew.enable = true;
+
+  programs.zsh.sessionVariables.NOTMUCH_CONFIG =
+    "${config.home.homeDirectory}/Mail/notmuch-config";
 
   programs.emacs = {
     enable = true;
