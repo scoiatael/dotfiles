@@ -227,6 +227,13 @@
   (add-hook 'jtsx-jsx-mode-hook 'jtsx-bind-keys-to-jtsx-jsx-mode-map)
   (add-hook 'jtsx-tsx-mode-hook 'jtsx-bind-keys-to-jtsx-tsx-mode-map))
 
+(use-package ultra-scroll
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
+
 ;; https://gitlab.inria.fr/jwintz/doom.d/-/blob/develop/config.el
 (add-to-list              'load-path doom-private-dir)
 (add-to-list 'custom-theme-load-path doom-private-dir)
