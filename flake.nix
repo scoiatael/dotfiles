@@ -2,7 +2,7 @@
   description = "Home-manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     old_nixpkgs.url =
       "github:nixos/nixpkgs/e2dd4e18cc1c7314e24154331bae07df76eb582f";
     home-manager = {
@@ -212,8 +212,8 @@
           };
           modules = [
             ./modules/cli.nix
-            ./modules/ghostty.nix
-            { config.ghostty.font-size = 16; }
+            #./modules/ghostty.nix
+            #{ config.ghostty.font-size = 16; }
             ./modules/home.nix
             ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)
