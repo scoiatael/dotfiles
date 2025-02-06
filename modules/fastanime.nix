@@ -39,19 +39,7 @@
         fastapi
         pycryptodome
         pypresence
-        (thefuzz.overrideAttrs {
-          propagatedBuildInputs = [
-            (levenshtein.overrideAttrs {
-              src = pkgs.fetchFromGitHub {
-                owner = "maxbachmann";
-                repo = "Levenshtein";
-                tag = "v0.27.0";
-                hash = "sha256-kiYu46qv8sBBcPoCo3PN1q9F0EJ1s5hAMKavPaztM4s=";
-                fetchSubmodules = true; # # for vendored `rapidfuzz-cpp`
-              };
-            })
-          ];
-        })
+        thefuzz
       ];
     })
   ];
