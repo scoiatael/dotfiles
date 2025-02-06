@@ -22,11 +22,18 @@
       (pkgs.stdenvNoCC.mkDerivation {
         name = "material-design-iconic-font";
 
+        src = pkgs.fetchzip {
+          url =
+            "https://github.com/zavoloklom/material-design-iconic-font/releases/download/2.2.0/material-design-iconic-font.zip";
+          hash = "sha256-xYoJjzxnjnCXZES7UVhNsk3T9MazK1KlNFzcTBsWv+M=";
+          stripRoot = false;
+        };
+
         phases = [ "installPhase" ];
 
         installPhase = ''
           mkdir -p $out/
-          ln -s ${pkgs.mpvScripts.modernx}/share/fonts/Material-Design-Iconic-Font.ttf $out/material-design-iconic-font.ttf
+          cp $src/fonts/Material-Design-Iconic-Font.ttf $out/
         '';
       })
     ];
