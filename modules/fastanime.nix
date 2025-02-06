@@ -15,7 +15,22 @@
     };
   };
   xdg.configFile."mpv/script-opts/uosc.conf".source = ../config/mpv/uosc.conf;
-  xdg.configFile."mpv/fonts".source = "${pkgs.mpvScripts.uosc}/share/fonts";
+  xdg.configFile."mpv/fonts".source = pkgs.symlinkJoin {
+    name = "mpv-uosc-fonts";
+    paths = [
+      "${pkgs.mpvScripts.uosc}/share/fonts"
+      (pkgs.stdenvNoCC.mkDerivation {
+        name = "material-design-iconic-font";
+
+        phases = [ "installPhase" ];
+
+        installPhase = ''
+          mkdir -p $out/
+          ln -s ${pkgs.mpvScripts.modernx}/share/fonts/Material-Design-Iconic-Font.ttf $out/material-design-iconic-font.ttf
+        '';
+      })
+    ];
+  };
   home.packages = [
     # HACK: plyer required by upstream is broken on macOS
     # HACK: thefuzz required by upstream is broken on macOS
