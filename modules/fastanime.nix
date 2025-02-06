@@ -1,8 +1,22 @@
 { fastanime, ... }:
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
+  programs.mpv = {
+    enable = true;
+    scripts = with pkgs.mpvScripts; [ uosc thumbfast ];
+    config = {
+      osd-bar = "no";
+      border = "no"; # Optional, but recommended
+    };
+    scriptOpts = {
+      thumbfast = {
+        network = "yes";
+        spawn_first = "yes";
+      };
+    };
+  };
+  xdg.configFile."mpv/script-opts/uosc.conf".source = ../config/mpv/uosc.conf;
+  xdg.configFile."mpv/fonts".source = "${pkgs.mpvScripts.uosc}/share/fonts";
   home.packages = [
-    pkgs.mpv
-    pkgs.yt-dlp
     # HACK: plyer required by upstream is broken on macOS
     # HACK: thefuzz required by upstream is broken on macOS
     # HACK: login doesn't work on macOS
@@ -22,7 +36,6 @@
         yt-dlp
         dbus-python
         hatchling
-        mpv
         fastapi
         pycryptodome
         pypresence
