@@ -81,26 +81,18 @@
       lix = { pkgs, ... }: { nix.package = pkgs.lix; };
     in {
       homeManagerModules = {
-        wooting = let system = "x86_64-darwin";
-        in {
+        wooting = {
           imports = [
             ./modules/home.nix
             ./modules/cli.nix
             (import ./modules/home-manager.nix attrs)
             (import ./modules/git.nix attrs)
-            (import ./modules/emacs.nix attrs)
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
-            ./modules/ghostty.nix
-            { config.ghostty.font-size = 12; }
             ./modules/wezterm.nix
-            {
-              programs.emacs.package =
-                attrs.old_nixpkgs.legacyPackages.${system}.emacs29-macport.overrideAttrs {
-                  src = emacsMacport;
-                };
-            }
+            (import ./modules/emacs.nix attrs)
+            patchedEmacsMacport
             {
               programs.git.extraConfig.user = {
                 email = "lukasz@wooting.io";
@@ -110,8 +102,8 @@
             }
             {
               home = {
-                username = "wooting";
-                homeDirectory = "/Users/wooting";
+                username = "lukas";
+                homeDirectory = "/Users/lukas";
                 stateVersion = "22.05";
               };
             }
@@ -175,15 +167,6 @@
             ];
             extraSpecialArgs = attrs;
           };
-        "wooting@MacBookPro.bagend" =
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs {
-              system = "x86_64-darwin";
-              config.allowBroken = true;
-            };
-            modules = [ self.homeManagerModules.wooting ];
-            extraSpecialArgs = attrs;
-          };
         "lukaszczaplinski@LsGamingDarwin" =
           home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-darwin;
@@ -218,11 +201,9 @@
             ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)
             (import ./modules/git.nix attrs)
-            (import ./modules/emacs.nix attrs)
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
-            patchedEmacsMacport
             (import ./modules/fastanime.nix attrs)
             {
               home = {
@@ -246,7 +227,7 @@
           ];
         };
         LsWootingMBP = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
+          system = "aarch64-darwin";
           modules = [
             home-manager.darwinModules.home-manager
             ./modules/darwin.nix
@@ -254,9 +235,9 @@
             ./modules/darwin/wooting.nix
             ./modules/darwin/sketchybar.nix
             {
-              users.users.wooting = {
-                name = "wooting";
-                home = "/Users/wooting";
+              users.users.lukas = {
+                name = "lukas";
+                home = "/Users/lukas";
               };
             }
             {
@@ -264,7 +245,7 @@
               # read up on them.
               #home-manager.useGlobalPkgs = true;
               #home-manager.useUserPackages = true;
-              home-manager.users.wooting = self.homeManagerModules.wooting;
+              home-manager.users.lukas = self.homeManagerModules.wooting;
             }
           ];
         };

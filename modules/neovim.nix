@@ -73,7 +73,7 @@
   };
   home.activation.createNvimDirectory =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      test -d ~/.local/state/nvim/swap/ || mkdir ~/.local/state/nvim/swap/
+      test -d ~/.local/state/nvim/swap/ || mkdir -p ~/.local/state/nvim/swap/
       chown -R $(whoami) ~/.local/state/nvim/swap/
     '';
 }

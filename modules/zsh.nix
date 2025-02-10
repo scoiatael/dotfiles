@@ -41,7 +41,8 @@
           lib.getExe pkgs.choose
         } -f : -1";
       gpg-quick-expire-extend = ''
-        gpg --quick-set-expire "$(gpg-fpr)" 3m '*'; gpg --quick-set-expire "$(gpg-fpr)" 3m'';
+        gpg --quick-set-expire "$(gpg-fpr)" 3m && gpg --quick-set-expire "$(gpg-fpr)" 3m '*'
+        '';
       random = ''
         ruby -r securerandom -e "puts SecureRandom.hex(ARGV.first&.to_i || 32)" "''${@}"'';
       notmuch-ui = "emacs -nw -f notmuch";
