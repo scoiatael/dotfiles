@@ -29,6 +29,8 @@ in {
     notmuch # mail
   ];
 
+  fonts.fontconfig.enable = true; # required to autoload fonts from packages
+
   programs.afew.enable = true;
 
   programs.zsh.sessionVariables.NOTMUCH_CONFIG =
