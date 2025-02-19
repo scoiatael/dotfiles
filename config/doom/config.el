@@ -54,7 +54,6 @@
 ;; - `use-package!' for configuring packages
 (when (version<= "29" emacs-version)
   (use-package treesit
-    :mode (("\\.tsx\\'" . tsx-ts-mode))
     :preface
     (defun mp-setup-install-grammars ()
       "Install Tree-sitter grammars if they are absent."
@@ -87,18 +86,18 @@
     ;; You can remap major modes with `major-mode-remap-alist'. Note
     ;; that this does *not* extend to hooks! Make sure you migrate them
     ;; also
-    (dolist (mapping
-             '((python-mode . python-ts-mode)
-               (css-mode . css-ts-mode)
-               (typescript-mode . typescript-ts-mode)
-               (js2-mode . js-ts-mode)
-               (bash-mode . bash-ts-mode)
-               (conf-toml-mode . toml-ts-mode)
-               (go-mode . go-ts-mode)
-               (css-mode . css-ts-mode)
-               (json-mode . json-ts-mode)
-               (js-json-mode . json-ts-mode)))
-      (add-to-list 'major-mode-remap-alist mapping))
+    ;; (dolist (mapping
+    ;;          '((python-mode . python-ts-mode)
+    ;;            (css-mode . css-ts-mode)
+    ;;            (typescript-mode . typescript-ts-mode)
+    ;;            (js2-mode . js-ts-mode)
+    ;;            (bash-mode . bash-ts-mode)
+    ;;            (conf-toml-mode . toml-ts-mode)
+    ;;            (go-mode . go-ts-mode)
+    ;;            (css-mode . css-ts-mode)
+    ;;            (json-mode . json-ts-mode)
+    ;;            (js-json-mode . json-ts-mode)))
+    ;;   (add-to-list 'major-mode-remap-alist mapping))
     :config
     (mp-setup-install-grammars)
     ;; Do not forget to customize Combobulate to your liking:
@@ -178,54 +177,57 @@
 ;;                               "Write code that solves following problem: %s"
 ;;                               "Code"))
 
-(use-package jtsx
-  :ensure t
-  :mode (("\\.jsx?\\'" . jtsx-jsx-mode)
-         ("\\.tsx\\'" . jtsx-tsx-mode)
-         ("\\.ts\\'" . jtsx-typescript-mode))
-  :commands jtsx-install-treesit-language
-  :hook ((jtsx-jsx-mode . hs-minor-mode)
-         (jtsx-tsx-mode . hs-minor-mode)
-         (jtsx-typescript-mode . hs-minor-mode))
-  ;; :custom
-  ;; Optional customizations
-  ;; (js-indent-level 2)
-  ;; (typescript-ts-mode-indent-offset 2)
-  ;; (jtsx-switch-indent-offset 0)
-  ;; (jtsx-indent-statement-block-regarding-standalone-parent nil)
-  ;; (jtsx-jsx-element-move-allow-step-out t)
-  ;; (jtsx-enable-jsx-electric-closing-element t)
-  ;; (jtsx-enable-electric-open-newline-between-jsx-element-tags t)
-  ;; (jtsx-enable-jsx-element-tags-auto-sync nil)
-  ;; (jtsx-enable-all-syntax-highlighting-features t)
-  :config
-  (defun jtsx-bind-keys-to-mode-map (mode-map)
-    "Bind keys to MODE-MAP."
-    (define-key mode-map (kbd "C-c C-j") 'jtsx-jump-jsx-element-tag-dwim)
-    (define-key mode-map (kbd "C-c j o") 'jtsx-jump-jsx-opening-tag)
-    (define-key mode-map (kbd "C-c j c") 'jtsx-jump-jsx-closing-tag)
-    (define-key mode-map (kbd "C-c j r") 'jtsx-rename-jsx-element)
-    (define-key mode-map (kbd "C-c <down>") 'jtsx-move-jsx-element-tag-forward)
-    (define-key mode-map (kbd "C-c <up>") 'jtsx-move-jsx-element-tag-backward)
-    (define-key mode-map (kbd "C-c C-<down>") 'jtsx-move-jsx-element-forward)
-    (define-key mode-map (kbd "C-c C-<up>") 'jtsx-move-jsx-element-backward)
-    (define-key mode-map (kbd "C-c C-S-<down>") 'jtsx-move-jsx-element-step-in-forward)
-    (define-key mode-map (kbd "C-c C-S-<up>") 'jtsx-move-jsx-element-step-in-backward)
-    (define-key mode-map (kbd "C-c j w") 'jtsx-wrap-in-jsx-element)
-    (define-key mode-map (kbd "C-c j u") 'jtsx-unwrap-jsx)
-    (define-key mode-map (kbd "C-c j d") 'jtsx-delete-jsx-node)
-    (define-key mode-map (kbd "C-c j t") 'jtsx-toggle-jsx-attributes-orientation)
-    (define-key mode-map (kbd "C-c j h") 'jtsx-rearrange-jsx-attributes-horizontally)
-    (define-key mode-map (kbd "C-c j v") 'jtsx-rearrange-jsx-attributes-vertically))
+;; (use-package jtsx
+;;   :ensure t
+;;   :mode (("\\.jsx?\\'" . jtsx-jsx-mode)
+;;          ("\\.tsx\\'" . jtsx-tsx-mode)
+;;          ("\\.ts\\'" . jtsx-typescript-mode))
+;;   :commands jtsx-install-treesit-language
+;;   :hook ((jtsx-jsx-mode . hs-minor-mode)
+;;          (jtsx-tsx-mode . hs-minor-mode)
+;;          (jtsx-typescript-mode . hs-minor-mode)
+;;          (jtsx-jsx-mode . eglot-ensure)
+;;          (jtsx-tsx-mode . eglot-ensure)
+;;          (jtsx-typescript-mode . eglot-ensure) )
+;;   ;; :custom
+;;   ;; Optional customizations
+;;   ;; (js-indent-level 2)
+;;   ;; (typescript-ts-mode-indent-offset 2)
+;;   ;; (jtsx-switch-indent-offset 0)
+;;   ;; (jtsx-indent-statement-block-regarding-standalone-parent nil)
+;;   ;; (jtsx-jsx-element-move-allow-step-out t)
+;;   ;; (jtsx-enable-jsx-electric-closing-element t)
+;;   ;; (jtsx-enable-electric-open-newline-between-jsx-element-tags t)
+;;   ;; (jtsx-enable-jsx-element-tags-auto-sync nil)
+;;   ;; (jtsx-enable-all-syntax-highlighting-features t)
+;;   :config
+;;   (defun jtsx-bind-keys-to-mode-map (mode-map)
+;;     "Bind keys to MODE-MAP."
+;;     (define-key mode-map (kbd "C-c C-j") 'jtsx-jump-jsx-element-tag-dwim)
+;;     (define-key mode-map (kbd "C-c j o") 'jtsx-jump-jsx-opening-tag)
+;;     (define-key mode-map (kbd "C-c j c") 'jtsx-jump-jsx-closing-tag)
+;;     (define-key mode-map (kbd "C-c j r") 'jtsx-rename-jsx-element)
+;;     (define-key mode-map (kbd "C-c <down>") 'jtsx-move-jsx-element-tag-forward)
+;;     (define-key mode-map (kbd "C-c <up>") 'jtsx-move-jsx-element-tag-backward)
+;;     (define-key mode-map (kbd "C-c C-<down>") 'jtsx-move-jsx-element-forward)
+;;     (define-key mode-map (kbd "C-c C-<up>") 'jtsx-move-jsx-element-backward)
+;;     (define-key mode-map (kbd "C-c C-S-<down>") 'jtsx-move-jsx-element-step-in-forward)
+;;     (define-key mode-map (kbd "C-c C-S-<up>") 'jtsx-move-jsx-element-step-in-backward)
+;;     (define-key mode-map (kbd "C-c j w") 'jtsx-wrap-in-jsx-element)
+;;     (define-key mode-map (kbd "C-c j u") 'jtsx-unwrap-jsx)
+;;     (define-key mode-map (kbd "C-c j d") 'jtsx-delete-jsx-node)
+;;     (define-key mode-map (kbd "C-c j t") 'jtsx-toggle-jsx-attributes-orientation)
+;;     (define-key mode-map (kbd "C-c j h") 'jtsx-rearrange-jsx-attributes-horizontally)
+;;     (define-key mode-map (kbd "C-c j v") 'jtsx-rearrange-jsx-attributes-vertically))
 
-  (defun jtsx-bind-keys-to-jtsx-jsx-mode-map ()
-    (jtsx-bind-keys-to-mode-map jtsx-jsx-mode-map))
+;;   (defun jtsx-bind-keys-to-jtsx-jsx-mode-map ()
+;;     (jtsx-bind-keys-to-mode-map jtsx-jsx-mode-map))
 
-  (defun jtsx-bind-keys-to-jtsx-tsx-mode-map ()
-    (jtsx-bind-keys-to-mode-map jtsx-tsx-mode-map))
+;;   (defun jtsx-bind-keys-to-jtsx-tsx-mode-map ()
+;;     (jtsx-bind-keys-to-mode-map jtsx-tsx-mode-map))
 
-  (add-hook 'jtsx-jsx-mode-hook 'jtsx-bind-keys-to-jtsx-jsx-mode-map)
-  (add-hook 'jtsx-tsx-mode-hook 'jtsx-bind-keys-to-jtsx-tsx-mode-map))
+;;   (add-hook 'jtsx-jsx-mode-hook 'jtsx-bind-keys-to-jtsx-jsx-mode-map)
+;;   (add-hook 'jtsx-tsx-mode-hook 'jtsx-bind-keys-to-jtsx-tsx-mode-map))
 
 (use-package ultra-scroll
   :init
@@ -290,7 +292,9 @@
   (add-to-list #'projectile-project-root-files-top-down-recurring ".envrc"))
 
 (after! eglot
-  (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-tsx-mode rjsx-mode jtsx-typescript-mode) . ,(eglot-alternatives '(("deno" "lsp") ("vtsls" "--stdio")))))
+  (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-ts-mode typescript-tsx-mode rjsx-mode jtsx-typescript-mode) . ,(eglot-alternatives '(("deno" "lsp") ("vtsls" "--stdio")))))
+  (setq eglot-events-buffer-config '(:size 2000000 :format full))
+  ;; (setq eglot-strict-mode '(disallow-non-standard-keys enforce-required-keys))
 
   (setenv "NIXD_FLAGS"  "--inlay-hints=false")
   (setq lsp-nix-nixd-server-path "nixd"
