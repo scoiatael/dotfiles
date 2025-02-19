@@ -3,7 +3,7 @@
 {
   # hardware.notch = false;
   homebrew = {
-    casks = [ "bitwarden" "arc" "wezterm" "slack" ];
+    casks = [ "bitwarden" "arc" "wezterm" "slack" "zed" ];
     brews = [ "stlink" ];
   };
   # nix.linux-builder.enable = true;

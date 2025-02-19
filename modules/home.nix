@@ -2,6 +2,7 @@
   programs.gpg = { enable = true; };
   programs.zellij = {
     enable = true;
+    enableZshIntegration = false;
     settings = { theme = "catppuccin-macchiato"; };
   };
   home.file.".config/zellij/themes/catppuccin.kdl".text = ''

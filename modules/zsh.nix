@@ -19,6 +19,8 @@
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
       nix-test-python =
         "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
+      # WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
+      convert = "imagemagick";
       g = "git";
       watch = "viddy";
       w = "viddy";
@@ -42,7 +44,7 @@
         } -f : -1";
       gpg-quick-expire-extend = ''
         gpg --quick-set-expire "$(gpg-fpr)" 3m && gpg --quick-set-expire "$(gpg-fpr)" 3m '*'
-        '';
+      '';
       random = ''
         ruby -r securerandom -e "puts SecureRandom.hex(ARGV.first&.to_i || 32)" "''${@}"'';
       notmuch-ui = "emacs -nw -f notmuch";
