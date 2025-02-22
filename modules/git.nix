@@ -226,8 +226,8 @@ in {
       key = mkDefault "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
     includes = [{ path = "${gitAlias}/gitalias.txt"; }];
-    difftastic.enable = false;
-    delta.enable = true;
+    difftastic.enable = true;
+    delta.enable = false;
   };
 
   programs.jujutsu = {
