@@ -200,6 +200,7 @@
             ./modules/home.nix
             ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)
+            (import ./modules/emacs.nix attrs)
             (import ./modules/git.nix attrs)
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
