@@ -136,14 +136,12 @@
       export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
     '';
     oh-my-zsh = {
-      enable = false;
+      enable = true;
       plugins = [ "tmux" "gpg-agent" "emacs" ];
       extraConfig = ''
         # ZSH_TMUX_AUTOSTART=true
         ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
 
-
-        FAST_HIGHLIGHT[use_brackets]=1
 
         ### Fix slowness of pastes with zsh-syntax-highlighting.zsh
         pasteinit() {
