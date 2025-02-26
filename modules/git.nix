@@ -57,6 +57,7 @@ in {
     };
     ignores = [
       "/.secret/"
+      "/.org/"
       # Source https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
       "*~"
       "#*#"
