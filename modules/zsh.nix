@@ -137,7 +137,8 @@
     '';
     oh-my-zsh = {
       enable = true;
-      plugins = [ "tmux" "gpg-agent" "emacs" ];
+      plugins =
+        [ "tmux" "gpg-agent" "emacs" "fancy-ctrl-z" "dircycle" "gitfast" ];
       extraConfig = ''
         # ZSH_TMUX_AUTOSTART=true
         ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
