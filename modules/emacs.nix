@@ -2,32 +2,26 @@
 { config, lib, pkgs, ... }:
 let emacsPackage = config.programs.emacs.finalPackage;
 in {
-  home.packages = with pkgs; [
-    #recutils
-    aspell
-    aspellDicts.pl
-    aspellDicts.cs
-    aspellDicts.en
-    aspellDicts.en-computers
-    enchant
-    nixfmt-classic
-    sqlite
-    clang
-    hunspell
-    hunspellDicts.pl_PL
-    hunspellDicts.en-gb-ise
-    # TODO: https://github.com/aca/emmet-ls
-    zstd.bin
-    pass
+  home.packages = with pkgs;
+    [
+      #recutils
+      nixfmt-classic
+      sqlite
+      clang
+      # TODO: https://github.com/aca/emmet-ls
+      zstd.bin
+      pass
 
-    vtsls # LSP for JS
-    rufo # formatter for Ruby
+      vtsls # LSP for JS
+      rufo # formatter for Ruby
 
-    nerd-fonts.victor-mono
-    nerd-fonts.fira-code
+      nerd-fonts.victor-mono
+      nerd-fonts.fira-code
 
-    notmuch # mail
-  ];
+      notmuch # mail
+
+      nuspell # spell checking
+    ] ++ (with pkgs.hunspellDicts; [ pl_PL en_GB-ise ]);
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
@@ -38,12 +32,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [
-      epkgs.vterm
-      epkgs.jinx
-      epkgs.fennel-mode
-      epkgs.flymake-fennel
-    ];
+    extraPackages = epkgs: [ epkgs.vterm epkgs.jinx ];
   };
 
   # avoid copying into /nix/store to allow easy changes
@@ -66,8 +55,12 @@ in {
     (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
     (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)
   '';
+  home.file.".config/enchant/hunspell/".source = pkgs.symlinkJoin {
+    name = "hunspell-dicts";
+    paths = [
+      "${pkgs.hunspellDicts.pl_PL}/share/hunspell/"
+      "${pkgs.hunspellDicts.en_GB-ise}/share/hunspell/"
+    ];
+  };
 
-  xdg.configFile."enchant/enchant.ordering".text = ''
-    *:aspell,hunspell,nuspell
-  '';
 }
