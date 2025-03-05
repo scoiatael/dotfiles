@@ -333,6 +333,8 @@
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
 (map! "C-`" #'+vterm/toggle)
+(map! :n "C-z" #'+eshell/toggle)
+(map! :i "C-z" #'+eshell/toggle)
 
 ;; https://emacs.stackexchange.com/a/221
 (define-key input-decode-map [?\C-i] [C-i])
