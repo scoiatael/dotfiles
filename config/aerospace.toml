@@ -200,3 +200,15 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.systempreferences'
+    run = ['layout floating']
+
+[[on-window-detected]]
+    if.window-title-regex-substring = 'doom capture'
+    run = ['layout floating']  # The callback itself
+
+[[on-window-detected]]
+    if.window-title-regex-substring = 'Virtual 15:10'
+    run = ['layout floating']  # The callback itself

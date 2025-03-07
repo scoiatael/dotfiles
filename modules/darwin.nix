@@ -85,13 +85,13 @@
     /usr/bin/defaults write com.apple.dock expose-group-apps -bool true && killall Dock
   '';
   # https://github.com/LnL7/nix-darwin/blob/master/modules/security/pam.nix#L25
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+
+  ids.gids.nixbld = 350;
 
   documentation.doc.enable = false;
 
