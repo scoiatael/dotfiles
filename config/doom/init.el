@@ -154,7 +154,7 @@
        markdown         ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        (nix +tree-sitter +lsp)              ; I hereby declare "nix geht mehr!"
-       ;; (ocaml +tree-sitter)             ; an objective camel
+       (ocaml +tree-sitter)             ; an objective camel
        (org +roam2)     ; organize your plain life in plain text
        ;; php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
