@@ -119,6 +119,8 @@
     noto-fonts-color-emoji
     unifont
     udev-gothic
+
+    czkawka-full
   ];
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
