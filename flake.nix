@@ -254,6 +254,7 @@
           system = "aarch64-darwin";
           modules = [
             lix
+            { ids.gids.nixbld = nixpkgs.lib.mkForce 30000;}
             ./modules/darwin.nix
             ./modules/darwin/ollama.nix
             ./modules/darwin/aerospace.nix
