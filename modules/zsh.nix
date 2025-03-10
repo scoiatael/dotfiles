@@ -20,7 +20,7 @@
       nix-test-python =
         "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
       # WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
-      convert = "imagemagick";
+      convert = "magick";
       g = "git";
       watch = "viddy";
       w = "viddy";
