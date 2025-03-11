@@ -386,6 +386,11 @@
 (map! "C-`" #'+vterm/toggle)
 (map! :n "C-z" #'+eshell/toggle)
 (map! :i "C-z" #'+eshell/toggle)
+(map! :i ", SPC" (cmd! (insert ", ")))
+(map! :i ", f" (cmd! (call-interactively #'evil-snipe-f)))
+(map! :i ", F" (cmd! (call-interactively #'evil-snipe-F)))
+(map! :i ", ;" (cmd! (save-excursion (up-list) (insert ";") )))
+(map! :i ", ESC" (cmd! (insert ",") (evil-escape)))
 
 ;; https://emacs.stackexchange.com/a/221
 (define-key input-decode-map [?\C-i] [C-i])
