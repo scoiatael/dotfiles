@@ -212,3 +212,7 @@ alt-shift-l = ['join-with right', 'mode main']
 [[on-window-detected]]
     if.window-title-regex-substring = 'Virtual 15:10'
     run = ['layout floating']  # The callback itself
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'mpv'
+    run = ['layout floating']  # The callback itself
