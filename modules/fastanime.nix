@@ -1,5 +1,11 @@
 { fastanime, ... }:
-{ pkgs, lib, ... }: {
+{ pkgs, lib, config, ... }:
+let
+  configDir = if pkgs.stdenv.isDarwin then
+    "Library/Application Support"
+  else
+    config.xdg.configHome;
+in {
   programs.mpv = {
     enable = true;
     scripts = with pkgs.mpvScripts; [ uosc thumbfast ];
@@ -14,7 +20,7 @@
       };
     };
   };
-  home.file."Library/Application Support/FastAnime/config.ini".source =
+  home.file."${configDir}/FastAnime/config.ini".source =
     ../config/fastanime/config.ini;
   xdg.configFile."mpv/script-opts/uosc.conf".source = ../config/mpv/uosc.conf;
   xdg.configFile."mpv/fonts".source = pkgs.symlinkJoin {
