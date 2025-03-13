@@ -216,6 +216,14 @@
           ];
           extraSpecialArgs = attrs;
         };
+        "lukas@LsWootingMBP.local" = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            config.allowBroken = true;
+          };
+          modules = [ self.homeManagerModules.wooting ];
+          extraSpecialArgs = attrs;
+        };
       };
       darwinConfigurations = {
         LsGamingDarwin = darwin.lib.darwinSystem {
