@@ -47,6 +47,7 @@ in {
     ];
   };
   home.packages = [
+    pkgs.chafa # for previews
     # HACK: plyer required by upstream is broken on macOS
     # HACK: thefuzz required by upstream is broken on macOS
     # HACK: login doesn't work on macOS
