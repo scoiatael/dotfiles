@@ -151,7 +151,7 @@
     :key (lambda () (password-store-get "kagi-api-token")))
 
   (setq
-   gptel-model 'claude-3-5-sonnet-20241022
+   gptel-model 'claude-3-7-sonnet-20250219
    gptel-backend (gptel-make-anthropic "Claude"          ;Any name you want
                    :stream t                             ;Streaming responses
                    :key (lambda () (password-store-get "anthropic-com-api-token"))))
