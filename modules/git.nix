@@ -56,6 +56,7 @@ in {
       l1 = "rev-parse --short HEAD";
     };
     ignores = [
+      "/result"
       "/.secret/"
       "/.org/"
       # Source https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
