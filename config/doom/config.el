@@ -7,12 +7,14 @@
  doom-localleader-key ","
  display-line-numbers-type 'relative
  user-full-name "Lukasz Czaplinski"
- doom-theme 'doom-one
- doom-font (font-spec :family "VictorMono Nerd Font Mono" :size 12)
- doom-symbol-font (font-spec :family "FiraCode Nerd Font Mono")
+ doom-theme 'catppuccin
+ catppuccin-flavor 'frappe
+ doom-font (font-spec :family "Victor Mono" :size 12)
+ doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
  comint-prompt-read-only nil
  git-commit-summary-max-length 120
- gcmh-high-cons-threshold (* 1024 1024 1024)) ; 1GiB
+ gcmh-high-cons-threshold (* 1024 1024 1024) ; 1GiB
+ fancy-splash-image "~/dotfiles/config/doom/cacochan.png")
 
 (set-frame-parameter nil 'alpha-background 70)
 (add-to-list 'default-frame-alist '(alpha-background . 70))

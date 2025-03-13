@@ -15,8 +15,8 @@ in {
       vtsls # LSP for JS
       rufo # formatter for Ruby
 
-      nerd-fonts.victor-mono
-      nerd-fonts.fira-code
+      victor-mono
+      nerd-fonts.symbols-only
 
       notmuch # mail
 
