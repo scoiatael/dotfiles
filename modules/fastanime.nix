@@ -14,6 +14,8 @@
       };
     };
   };
+  home.file."Library/Application Support/FastAnime/config.ini".source =
+    ../config/fastanime/config.ini;
   xdg.configFile."mpv/script-opts/uosc.conf".source = ../config/mpv/uosc.conf;
   xdg.configFile."mpv/fonts".source = pkgs.symlinkJoin {
     name = "mpv-uosc-fonts";
