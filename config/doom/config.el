@@ -7,8 +7,8 @@
  doom-localleader-key ","
  display-line-numbers-type 'relative
  user-full-name "Lukasz Czaplinski"
- doom-theme 'catppuccin
- catppuccin-flavor 'frappe
+ ;; https://github.com/doomemacs/themes/tree/screenshots
+ doom-theme 'doom-vibrant
  doom-font (font-spec :family "Victor Mono" :size 12)
  doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
  comint-prompt-read-only nil
@@ -16,8 +16,8 @@
  gcmh-high-cons-threshold (* 1024 1024 1024) ; 1GiB
  fancy-splash-image "~/dotfiles/config/doom/cacochan.png")
 
-(set-frame-parameter nil 'alpha-background 70)
-(add-to-list 'default-frame-alist '(alpha-background . 70))
+;; (set-frame-parameter nil 'alpha-background 70)
+;; (add-to-list 'default-frame-alist '(alpha-background . 70))
 
 (after! company
   (setq company-minimum-prefix-length 5

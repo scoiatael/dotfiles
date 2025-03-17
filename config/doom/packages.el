@@ -57,7 +57,6 @@
 
 (package! reason-mode :recipe (:host github :repo "reasonml-editor/reason-mode"))
 (package! rescript-mode :recipe (:host github :repo "jjlee/rescript-mode"))
-(package! catppuccin-theme)
 
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
