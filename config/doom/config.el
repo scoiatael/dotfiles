@@ -154,6 +154,11 @@
 
   (setq
    gptel-model 'claude-3-7-sonnet-20250219
+   gptel-directives '((assistant . "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
+                      (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
+                      (default . "You are a large language model and a careful programmer living inside Emacs editor. Provide code and only code as output without any additional text, prompt or note. Look at last line for additional requests from user.")
+                      (writing . "You are a large language model and a writing assistant. Respond concisely.")
+                      (chat . "You are a large language model and a conversation partner. Respond concisely."))
    gptel-backend (gptel-make-anthropic "Claude"          ;Any name you want
                    :stream t                             ;Streaming responses
                    :key (lambda () (password-store-get "anthropic-com-api-token"))))
@@ -380,6 +385,12 @@
 
 (after! dired
   (define-key dired-mode-map (kbd "\\") #'ranger-toggle-dotfiles))
+
+(after! apheleia
+  (setf (alist-get 'tofu apheleia-formatters)
+        '("tofu" "fmt" "-"))
+  (setf (alist-get 'terraform-mode apheleia-mode-alist)
+        '(terraform tofu)))
 
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
