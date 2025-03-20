@@ -53,6 +53,7 @@ in {
     (setq envrc-direnv-executable "${pkgs.direnv}/bin/direnv")
     (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
     (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
+    (setenv "SSH_AUTH_SOCK" (expand-file-name "S.gpg-agent.ssh" (file-name-as-directory "~/.gnupg/")))
     (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)
   '';
   home.file.".config/enchant/hunspell/".source = pkgs.symlinkJoin {
