@@ -273,7 +273,6 @@
                                 (add-hook 'before-save-hook 'refmt-before-save)
                                 (merlin-mode)))
 
-  (setq merlin-ac-setup t)
   :config
   (cl-remove 'reason-mode auto-mode-alist :test 'equal :key 'cdr)
   (add-to-list 'auto-mode-alist '("\\.rei?\\'" . reason-mode)))
@@ -291,11 +290,8 @@
                  '(rescript-mode . ("rescript-language-server" "--stdio"))))
   :hook ((rescript-mode . (lambda () (electric-indent-local-mode -1)))))
 
-;; https://gitlab.inria.fr/jwintz/doom.d/-/blob/develop/config.el
-(add-to-list              'load-path doom-private-dir)
-(add-to-list 'custom-theme-load-path doom-private-dir)
-(require '+private|modeline)
-(require '+private|spellchecking)
+(require-relative-list '(+private|modeline
+                         +private|spellchecking))
 ;; (require '+private|llm)
 ;; (require '+private|spacehammer)
 ;; (require '+private|gleam)

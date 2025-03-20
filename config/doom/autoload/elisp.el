@@ -26,6 +26,7 @@ current buffer state and calls REPORT-FN when done."
                    "--eval" "(setq byte-compile-warnings '(not unresolved docstrings))"
                    "-l" "~/.emacs.doom/lisp/doom.el"
                    "-l" "~/.emacs.doom/lisp/doom-start.el"
+                   "-l" "~/.emacs.local/init.el"
                    ;; "--eval" "(setq load-prefer-newer t)" ; for testing
                    ,@(mapcan (lambda (path) (list "-L" path))
                              elisp-flymake-byte-compile-load-path)
