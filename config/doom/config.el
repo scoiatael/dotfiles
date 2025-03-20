@@ -1,8 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; (when noninteractive
-;;   (add-to-list 'doom-env-whitelist "^SSH_"))
-
 (setq
  doom-localleader-key ","
  display-line-numbers-type 'relative
