@@ -417,6 +417,9 @@
       :v "]6" #'base64-encode-region
       :v "v" #'er/expand-region)
 
+(map! :n "M-<up>" (cmd!  (transpose-lines 1)(forward-line -2))
+      :n "M-<down>" (cmd! (forward-line 1) (transpose-lines 1) (forward-line -1)) )
+
 (map! :leader
       "-" #'dirvish
       "\\" #'lsp-ui-doc-show
