@@ -390,7 +390,7 @@
   (setf (alist-get 'tofu apheleia-formatters)
         '("tofu" "fmt" "-"))
   (setf (alist-get 'terraform-mode apheleia-mode-alist)
-        '(terraform tofu)))
+        'tofu))
 
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
