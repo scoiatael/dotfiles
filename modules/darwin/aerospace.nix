@@ -8,14 +8,22 @@ let
       FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE
   '';
 in {
+  # launchd.user.agents.jankyborders = {
+  #   path = [ pkgs.jankyborders ];
+  #   serviceConfig.ProgramArguments = [
+  #     "borders"
+  #     "active_color=0xa6d189"
+  #     "inactive_color=0x8caaee"
+  #     "width=5.0"
+  #   ];
+  #   serviceConfig.KeepAlive = true;
+  #   serviceConfig.RunAtLoad = true;
+  # };
   services.aerospace = {
     enable = true;
     settings = let
       toml = builtins.fromTOML (builtins.readFile ../../config/aerospace.toml);
-    in toml // {
-      exec-on-workspace-change = [ "${on-workspace-change}" ];
-
-    };
+    in toml // { exec-on-workspace-change = [ "${on-workspace-change}" ]; };
   };
   services.sketchybar.config = ''
     sketchybar --add event aerospace_workspace_change
