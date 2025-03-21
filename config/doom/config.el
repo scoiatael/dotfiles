@@ -393,6 +393,7 @@
 (map! :n "C-z" #'+eshell/toggle)
 (map! :i "C-z" #'+eshell/toggle)
 (map! :i ", SPC" (cmd! (insert ", ")))
+(map! :i ", RET" (cmd! (insert ",\n")))
 (map! :i ", f" (cmd! (call-interactively #'evil-snipe-f)))
 (map! :i ", F" (cmd! (call-interactively #'evil-snipe-F)))
 (map! :i ", ;" (cmd! (save-excursion (up-list) (insert ";") )))
