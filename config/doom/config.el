@@ -11,7 +11,15 @@
  comint-prompt-read-only nil
  git-commit-summary-max-length 120
  gcmh-high-cons-threshold (* 1024 1024 1024) ; 1GiB
- fancy-splash-image "~/dotfiles/config/doom/cacochan.png")
+ +doom-dashboard-functions '(doom-dashboard-widget-banner doom-dashboard-widget-loaded doom-dashboard-widget-shortmenu)
+ fancy-splash-image "~/dotfiles/config/doom/cacochan.png"
+ +doom-dashboard-menu-sections
+ '(("Open project"
+    :icon (nerd-icons-octicon "nf-oct-briefcase" :face 'doom-dashboard-menu-title)
+    :action projectile-switch-project)
+   ("Jump to bookmark"
+    :icon (nerd-icons-octicon "nf-oct-bookmark" :face 'doom-dashboard-menu-title)
+    :action bookmark-jump)))
 
 ;; (set-frame-parameter nil 'alpha-background 70)
 ;; (add-to-list 'default-frame-alist '(alpha-background . 70))
@@ -326,7 +334,29 @@
    org-archive-location (concat org-directory "archive/%s::")
    org-ellipsis " ▼ "
    org-clock-persist t
-   org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")))
+   org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+   org-capture-templates
+   '(("t" "todo" entry (file+headline "todo.org" "Inbox")
+      "* [ ] %?\n%i\n%a"
+      :prepend t)
+     ("d" "deadline" entry (file+headline "todo.org" "Inbox")
+      "* [ ] %?\nDEADLINE: <%(org-read-date)>\n\n%i\n%a"
+      :prepend t)
+     ("s" "schedule" entry (file+headline "todo.org" "Inbox")
+      "* [ ] %?\nSCHEDULED: <%(org-read-date)>\n\n%i\n%a"
+      :prepend t)
+     ("c" "check out later" entry (file+headline "todo.org" "Check out later")
+      "* [ ] %?\n%i\n%a"
+      :prepend t)
+     ("l" "ledger" plain (file "ledger/personal.gpg")
+      "%(+beancount/clone-transaction)")) ))
+
+(after! org-roam
+  (setq
+   ;; Use human readable dates for dailies titles
+   org-roam-dailies-capture-templates
+   `(("d" "default" plain ""
+      :target (file+head "%<%Y-%m-%d>.org" ,(format "%%[%s/template/journal.org]" org-roam-directory))))))
 
 (after! web-mode
   (add-to-list 'web-mode-engines-alist '("jinja2" . "\\.jinja2?\\'"))
@@ -361,6 +391,9 @@
     "Passes through required deno initialization options"
     (list :enable t
           :lint t)))
+
+(after! minimap
+  (add-hook 'org-capture-mode-hook (lambda () (minimap-mode 0))))
 
 (after! magit
   (add-hook 'find-file-hook #'jujutsu-commit-setup-check-buffer)

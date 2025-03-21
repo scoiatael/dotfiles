@@ -193,7 +193,7 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       (default +gnupg +bindings +smartparens))
 
 ;; Local Variables:
 ;; jinx-local-words: "DSLs Jupyter NERDTree ReST agda ansible auie backend beancount blockchain childframe chinese civilized clojure color csharp ctsrnm dhall dired dsp ein elisp emacs emms ess etirw faust fortran fsharp fstar gdscript geht gists github gmail gnipleh graphql gui haskell hy idris irc japanese javascript julia lsp lua macOS mispelling modeline monadic neckbeards neotree notational notmuch objed ocaml organize parinfer pdf perl's php plantuml purescript pyright repls rgb rss rst sml socialize tasing taskrunner tfel thgir tmux ui unicode uoy vcs vscode workspaces zig"
