@@ -9,6 +9,7 @@ raycast://extensions/mmazzarolo/unicode-symbols
 raycast://extensions/fedevitaledev/music
 raycast://extensions/sjdonado/idonthavespotify
 raycast://extensions/petra/prisma-docs-search
+raycast://extensions/limonkufu/aerospace
 )
 
 for ext in ${EXTENSIONS[@]}; do

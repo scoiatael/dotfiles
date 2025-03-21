@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
 
-# TODO: https://www.raycast.com/limonkufu/aerospace
-
 let
   on-workspace-change = pkgs.writeShellScript "on-workspace-change.sh" ''
     ${pkgs.sketchybar}/bin/sketchybar --trigger aerospace_workspace_change \
