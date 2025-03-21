@@ -29,7 +29,6 @@
       "domzilla-caffeine"
       "betterdisplay"
       "karabiner-elements"
-      "blurred"
     ];
     brews = [ "switchaudio-osx" ];
     taps = [ "domt4/autoupdate" ];

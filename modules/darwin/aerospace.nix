@@ -8,17 +8,17 @@ let
       FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE
   '';
 in {
-  # launchd.user.agents.jankyborders = {
-  #   path = [ pkgs.jankyborders ];
-  #   serviceConfig.ProgramArguments = [
-  #     "borders"
-  #     "active_color=0xa6d189"
-  #     "inactive_color=0x8caaee"
-  #     "width=5.0"
-  #   ];
-  #   serviceConfig.KeepAlive = true;
-  #   serviceConfig.RunAtLoad = true;
-  # };
+  launchd.user.agents.jankyborders = {
+    path = [ config.environment.systemPath ];
+    serviceConfig.ProgramArguments = [
+      "${pkgs.jankyborders}/bin/borders"
+      "active_color=0xff8bd5ca"
+      "inactive_color=0xff5b6078"
+      "width=5.0"
+    ];
+    serviceConfig.KeepAlive = true;
+    serviceConfig.RunAtLoad = true;
+  };
   services.aerospace = {
     enable = true;
     settings = let
