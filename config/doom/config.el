@@ -21,6 +21,9 @@
     :icon (nerd-icons-octicon "nf-oct-bookmark" :face 'doom-dashboard-menu-title)
     :action bookmark-jump)))
 
+(setf (alist-get 'width +org-capture-frame-parameters) 180)
+(setf (alist-get 'height +org-capture-frame-parameters) 20)
+
 ;; (set-frame-parameter nil 'alpha-background 70)
 ;; (add-to-list 'default-frame-alist '(alpha-background . 70))
 

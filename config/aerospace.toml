@@ -206,7 +206,7 @@ alt-shift-l = ['join-with right', 'mode main']
     run = ['layout floating']
 
 [[on-window-detected]]
-    if.window-title-regex-substring = 'doom capture'
+    if.window-title-regex-substring = 'doom-capture'
     run = ['layout floating']  # The callback itself
 
 [[on-window-detected]]
