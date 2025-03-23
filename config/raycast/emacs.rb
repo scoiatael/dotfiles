@@ -19,10 +19,10 @@ YELLOW = 33
 projects = `$HOME/.nix-profile/bin/emacsclient -e "(projectile-open-projects)"`[1..-1].split
 
 if projects.length == 0
-  message = "No open pull requests 🎉"
-  puts "\e[#{GREEN}m#{message}\e[0m"
+  message = "No open projects"
+  puts "\e[#{RED}m#{message}\e[0m"
 else
-  color = (projects.length <= 5) ? YELLOW : RED
+  color = (projects.length <= 5) ? GREEN : YELLOW
   message = "You have #{projects.length} open projects"
   puts "\e[#{color}m#{message}\e[0m"
 end
