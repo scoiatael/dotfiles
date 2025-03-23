@@ -6,6 +6,6 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon ✉︎
+# @raycast.icon images/capture.png
 
 $HOME/.nix-profile/bin/emacsclient -e "(+org-capture/open-frame)"

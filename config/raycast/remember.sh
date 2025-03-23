@@ -7,7 +7,7 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon ∆
+# @raycast.icon images/remember.png
 # @raycast.argument1 { "type": "text", "placeholder": "what" }
 
 # Documentation:
