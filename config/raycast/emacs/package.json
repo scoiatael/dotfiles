@@ -5,14 +5,24 @@
   "description": "Let you explore Emacs projects with Raycast",
   "icon": "extension-icon.png",
   "author": "lukasz_czaplinski",
-  "categories": [
-    "Developer Tools"
-  ],
+  "categories": ["Developer Tools"],
   "license": "MIT",
   "commands": [
     {
       "name": "list-projects",
       "title": "list projects",
+      "description": "",
+      "mode": "view"
+    },
+    {
+      "name": "open-project",
+      "title": "open project",
+      "description": "",
+      "mode": "view"
+    },
+    {
+      "name": "kill-workspace",
+      "title": "kill workspace",
       "description": "",
       "mode": "view"
     }
