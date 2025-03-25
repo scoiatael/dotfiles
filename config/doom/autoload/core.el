@@ -57,3 +57,23 @@ current window."
   (interactive)
   (+workspace/new)
   (find-file "~/Documents/Git"))
+
+(defun parse-file-link (file-link)
+  "Parse a file link of the format \"file:///path/to/file:line:column\".
+Returns a list containing the file path, line number, and column number.
+Returns nil if the input string is not in the expected format."
+  (let ((regexp "^file://\\(.*\\):\\([0-9]+\\):\\([0-9]+\\)$"))
+    (if (string-match regexp file-link)
+        (list (match-string 1 file-link)
+              (string-to-number (match-string 2 file-link))
+              (string-to-number (match-string 3 file-link)))
+      nil)))
+
+;;;###autoload
+(defun scoiatael/open-file-url (file)
+  (interactive "sfilename: \n")
+  (if-let ((match (parse-file-link file)))
+      (cl-destructuring-bind (file line column) match
+        (find-file file)
+        (goto-line line)
+        (move-to-column column))))

@@ -1,10 +1,14 @@
 [
   {
-    "link": "https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query={argument name=\"query\"}",
-    "name": "Search nixpkgs"
+    "name": "Search nixpkgs",
+    "link": "https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query={argument name=\"query\"}"
   },
   {
     "name": "Translate",
     "link": "https://translate.kagi.com/?from=auto&to=en&text={selection}"
+  },
+  {
+    "name": "Emacs",
+    "link": "raycast://script-commands/open?arguments={clipboard}"
   }
 ]
