@@ -1,14 +1,35 @@
-import { Detail } from "@raycast/api";
+import { closeMainWindow, ActionPanel, Detail, List, Action, Icon, showToast, Toast } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
 
 import * as emacs from "./emacs";
 
+async function closeWindow() {
+  await closeMainWindow({ clearRootSearch: true });
+}
+
 export default function Command() {
-  const { isLoading, data } = usePromise(async () => {
-    return await emacs.projectileOpenProjects();
+  const { isLoading, data, error } = usePromise(async () => {
+    return await emacs.workspaceListNames();
   }, []);
 
-  let mrkdown = `You have ${data?.length} open projects`;
-  data?.forEach((p) => (mrkdown += `\n - ${p}`));
-  return <Detail isLoading={isLoading} markdown={mrkdown} />;
+  return (
+    <List isLoading={isLoading}>
+      {error ? (
+        <List.EmptyView title="Error" description={error} />
+      ) : (
+        data?.map((project, index) => (
+          <List.Item
+            key={index}
+            icon={Icon.Folder}
+            title={project}
+            actions={
+              <ActionPanel>
+                <Action title={project} onAction={() => closeWindow().then(() => emacs.workspaceSwitch(project))} />
+              </ActionPanel>
+            }
+          />
+        ))
+      )}
+    </List>
+  );
 }

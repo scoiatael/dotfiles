@@ -20,6 +20,10 @@ export async function projectileSwitchProject(project: string): Promise<void> {
   return await run(`(projectile-switch-project-by-name "${project}")`);
 }
 
+export async function workspaceSwitch(project: string): Promise<void> {
+  return await run(`(+workspace-switch "${project}")`);
+}
+
 export async function workspaceListNames(): Promise<void> {
   return await run(`(+workspace-list-names)`);
 }
