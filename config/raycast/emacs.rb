@@ -2,7 +2,7 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Emacs:
+# @raycast.title Projectile:
 # @raycast.mode inline
 #
 # Optional parameters:

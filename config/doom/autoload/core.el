@@ -59,21 +59,34 @@ current window."
   (find-file "~/Documents/Git"))
 
 (defun parse-file-link (file-link)
-  "Parse a file link of the format \"file:///path/to/file:line:column\".
-Returns a list containing the file path, line number, and column number.
-Returns nil if the input string is not in the expected format."
-  (let ((regexp "^file://\\(.*\\):\\([0-9]+\\):\\([0-9]+\\)$"))
-    (if (string-match regexp file-link)
-        (list (match-string 1 file-link)
-              (string-to-number (match-string 2 file-link))
-              (string-to-number (match-string 3 file-link)))
-      nil)))
+  "Parse a file link of format \"file:///path/to/file:line:column\"."
+  (let ((match (s-match (rx (? "file://")
+                            (group (+ (not ":")))
+                            (? ":" (group (+ (not ":")))
+                               (? ":" (group (+ (not ":")))))) file-link)))
+    (when-let ((groups (cdr match)))
+      (pcase (length groups)
+        (3 (list :file (nth 0 groups)
+                 :line (string-to-number (nth 1 groups))
+                 :col (string-to-number (nth 2 groups))))
+        (2 (list :file (nth 0 groups)
+                 :line (string-to-number (nth 1 groups))
+                 :col nil))
+        (1 (list :file (nth 0 groups)
+                 :line nil
+                 :col nil))))))
 
 ;;;###autoload
 (defun scoiatael/open-file-url (file)
   (interactive "sfilename: \n")
   (if-let ((match (parse-file-link file)))
-      (cl-destructuring-bind (file line column) match
+      (cl-destructuring-bind (&key file line col) match
         (find-file file)
-        (goto-line line)
-        (move-to-column column))))
+        (when line
+          (forward-line line))
+        (when col
+          (move-to-column col))
+        file)
+    ;; if everything else fails
+    (find-file file)
+    file))
