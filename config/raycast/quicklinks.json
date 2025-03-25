@@ -1,0 +1,1 @@
+[{"name":"Search Google","link":"https:\/\/google.com\/search?q={argument}"},{"link":"https:\/\/duckduckgo.com\/?q={argument}","name":"Search DuckDuckGo"},{"name":"Search nixpkgs","link":"https:\/\/search.nixos.org\/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query={argument name=\"query\"}"}]
