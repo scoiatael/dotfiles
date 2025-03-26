@@ -76,17 +76,22 @@ current window."
                  :line nil
                  :col nil))))))
 
+(defun find-file-existing (file)
+  (find-file  (if (file-exists-p file) file
+                ;; else
+                (expand-file-name file (projectile-project-root)))))
+
 ;;;###autoload
 (defun scoiatael/open-file-url (file)
   (interactive "sfilename: \n")
   (if-let ((match (parse-file-link file)))
       (cl-destructuring-bind (&key file line col) match
-        (find-file file)
+        (find-file-existing file)
         (when line
-          (forward-line line))
+          (goto-line line))
         (when col
           (move-to-column col))
         file)
     ;; if everything else fails
-    (find-file file)
+    (find-file-existing file)
     file))
