@@ -4,11 +4,19 @@
     "link": "https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query={argument name=\"query\"}"
   },
   {
-    "name": "Translate",
-    "link": "https://translate.kagi.com/?from=auto&to=en&text={selection}"
+    "link": "https://translate.kagi.com/?from=auto&to=en&text={selection}",
+    "name": "Translate"
   },
   {
-    "name": "Emacs",
+    "name": "Open with Emacs",
     "link": "raycast://script-commands/open?arguments={clipboard}"
+  },
+  {
+    "link": "https://crontab.guru/#{selection}",
+    "name": "Crontab"
+  },
+  {
+    "link": "https://kagi.com/search?q=utc+now",
+    "name": "utc now"
   }
 ]
