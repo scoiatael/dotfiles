@@ -370,10 +370,9 @@
   (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
 
 (after! projectile
-  (setq projectile-require-project-root t)
-  (add-to-list #'projectile-project-root-files ".envrc")
-  (add-to-list #'projectile-project-root-files-bottom-up ".envrc")
-  (add-to-list #'projectile-project-root-files-top-down-recurring ".envrc"))
+  (setq projectile-require-project-root t
+        projectile-enable-idle-timer 90)
+  (add-hook 'projectile-idle-timer-hook #'projectile-invalidate-cache))
 
 (after! eglot
   (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-ts-mode typescript-tsx-mode rjsx-mode jtsx-typescript-mode) . ,(eglot-alternatives '(("deno" "lsp") ("vtsls" "--stdio")))))
