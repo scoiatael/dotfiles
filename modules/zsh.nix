@@ -9,6 +9,8 @@
     enableCompletion = false;
     shellAliases = let nh = lib.getExe pkgs.nh;
     in {
+      poi =
+        "gh poi --dry-run; read -q 'ok? [Y/y]' && gh poi || echo 'aborted by prompt' ";
       hmr =
         "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles' -b bp.$(date --iso-8601)";
       nor =
