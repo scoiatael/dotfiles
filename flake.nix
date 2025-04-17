@@ -76,7 +76,9 @@
         programs.emacs.package =
           # https://bitbucket.org/mituharu/emacs-mac/commits/5f6c306095c825eb01708e336f9d03c15271dfe9
           # see https://github.com/doomemacs/doomemacs/issues/7532
-          pkgs.emacs29-macport.overrideAttrs { src = emacsMacport; };
+          (pkgs.emacs29-macport.override {
+            withNativeCompilation = false;
+          }).overrideAttrs { src = emacsMacport; };
       };
       lix = { pkgs, ... }: { nix.package = pkgs.lix; };
     in {
