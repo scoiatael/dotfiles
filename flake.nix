@@ -156,6 +156,12 @@
               ./modules/tmux.nix
               (import ./modules/zsh.nix attrs)
               ./modules/neovim.nix
+              ({ pkgs, lib, ...} : {
+  programs.zsh.sessionVariables = {
+      EDITOR = lib.getExe pkgs.neovim;
+  };
+
+              })
               {
                 home = {
                   username = "lukaszczaplinski";

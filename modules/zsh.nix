@@ -2,8 +2,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  # for emacsclient.sh
-  home.packages = with pkgs; [ gnused coreutils-full ];
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -58,10 +56,6 @@
         cmd = lib.concatStrings (lib.replicate op "../");
       in acc // { "${name}" = cmd; }) { } (lib.range 2 4));
     sessionVariables = {
-      DOOMLOCALDIR = "$HOME/.emacs.local";
-      LSP_USE_PLISTS = "true";
-      EDITOR =
-        "env PATH=${config.home.homeDirectory}/.nix-profile/bin ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/emacs/emacsclient.sh";
     };
     autosuggestion = { enable = true; };
     historySubstringSearch = { enable = true; };

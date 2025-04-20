@@ -21,6 +21,10 @@ in {
       notmuch # mail
 
       nuspell # spell checking
+
+      # for emacsclient.sh
+      gnused
+      coreutils-full
     ] ++ (with pkgs.hunspellDicts; [ pl_PL en_GB-ise ]);
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
@@ -33,6 +37,12 @@ in {
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: [ epkgs.vterm epkgs.jinx ];
+  };
+  programs.zsh.sessionVariables = {
+      DOOMLOCALDIR = "$HOME/.emacs.local";
+      LSP_USE_PLISTS = "true";
+      EDITOR =
+        "env PATH=${config.home.homeDirectory}/.nix-profile/bin ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/emacs/emacsclient.sh";
   };
 
   # avoid copying into /nix/store to allow easy changes
