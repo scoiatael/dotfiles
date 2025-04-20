@@ -6,5 +6,7 @@ rustPlatform.buildRustPackage rec {
 
   src = ./.;
 
-  cargoHash = "sha256-32/AVMQvkCkaYHjIpjOmxVmi7dQizhh5z6K445sm+A8=";
+  cargoDeps = rustPlatform.importCargoLock {
+    lockFile = ./Cargo.lock;
+  };
 }

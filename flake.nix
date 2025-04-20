@@ -150,15 +150,12 @@
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             modules = [
               ./modules/home.nix
-              ./modules/electron.nix
+              ./modules/cli.nix
               ./modules/linux.nix
               (import ./modules/git.nix attrs)
               ./modules/tmux.nix
               (import ./modules/zsh.nix attrs)
               ./modules/neovim.nix
-              ({ lib, ... }: {
-                programs.alacritty.settings.font.size = lib.mkForce 10;
-              })
               {
                 home = {
                   username = "lukaszczaplinski";

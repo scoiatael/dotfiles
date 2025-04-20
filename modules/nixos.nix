@@ -202,11 +202,9 @@
     rclone
     signal-desktop
     keybase-gui
-    kgpg
     gparted
     htop
     fzf
-    ark
     sd
     zsh
     libsForQt5.kwallet
