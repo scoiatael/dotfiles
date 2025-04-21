@@ -16,6 +16,8 @@
       "bettertouchtool"
       "karabiner-elements"
       "arc"
+"balenaetcher"
+"keymapp"
     ];
     masApps = {
       "bitwarden" = 1352778147;
