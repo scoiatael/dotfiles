@@ -1,37 +1,5 @@
 {
   "nodes": {
-    "AdamWagner_stackline": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1669758007,
-        "narHash": "sha256-x7SIgKR6rwkoVVbaAvjFr1N7wTF3atni/d6xGLBBRN4=",
-        "owner": "AdamWagner",
-        "repo": "stackline",
-        "rev": "2aa0bd9a27f93bad24b0fd4da38f3c0356414098",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AdamWagner",
-        "repo": "stackline",
-        "type": "github"
-      }
-    },
-    "agzam_spacehammer": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1736390869,
-        "narHash": "sha256-A27Nxyg5FCl7WIVXpPpV/YcaMwvpO+DbnlUpowQfcjE=",
-        "owner": "agzam",
-        "repo": "spacehammer",
-        "rev": "ecd66b062865374c396454e942dc35caa40a62b2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "agzam",
-        "repo": "spacehammer",
-        "type": "github"
-      }
-    },
     "crane": {
       "locked": {
         "lastModified": 1741148495,
@@ -44,22 +12,6 @@
       "original": {
         "owner": "ipetkov",
         "repo": "crane",
-        "type": "github"
-      }
-    },
-    "cursorless_talon": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739528013,
-        "narHash": "sha256-GDBMO/VXpfGsKP62TGAxh7RXdgbzpSHtVUBBEw4wrZE=",
-        "owner": "cursorless-dev",
-        "repo": "cursorless-talon",
-        "rev": "b530ddae3595042e67b17192f1894ba5abf54889",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cursorless-dev",
-        "repo": "cursorless-talon",
         "type": "github"
       }
     },
@@ -115,23 +67,6 @@
         "owner": "doomemacs",
         "repo": "doomemacs",
         "type": "github"
-      }
-    },
-    "emacsMacport": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1743405329,
-        "narHash": "sha256-hWvApbdu/Pu674I+cAXOUOG3QNYbcNQNOjC40raAP3s=",
-        "ref": "work",
-        "rev": "47022e493fa67faea9697dd00a620152db9f4654",
-        "revCount": 167319,
-        "type": "git",
-        "url": "https://bitbucket.com/mituharu/emacs-mac"
-      },
-      "original": {
-        "ref": "work",
-        "type": "git",
-        "url": "https://bitbucket.com/mituharu/emacs-mac"
       }
     },
     "fastanime": {
@@ -309,29 +244,6 @@
         "type": "github"
       }
     },
-    "nix-vscode-extensions": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1745027517,
-        "narHash": "sha256-sMQC7M0Y9HdPcD7L8pAl5uwfHZr8H+GjGPo7Ii7AUjU=",
-        "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
-        "rev": "39613bfde3de6dc2fa1ff208e46287f935618179",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1744633460,
@@ -392,22 +304,6 @@
         "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "old_nixpkgs": {
-      "locked": {
-        "lastModified": 1716715802,
-        "narHash": "sha256-usk0vE7VlxPX8jOavrtpOqphdfqEQpf9lgedlY/r66c=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e2dd4e18cc1c7314e24154331bae07df76eb582f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e2dd4e18cc1c7314e24154331bae07df76eb582f",
         "type": "github"
       }
     },
@@ -489,23 +385,16 @@
     },
     "root": {
       "inputs": {
-        "AdamWagner_stackline": "AdamWagner_stackline",
-        "agzam_spacehammer": "agzam_spacehammer",
-        "cursorless_talon": "cursorless_talon",
         "darwin": "darwin",
         "dirsummary": "dirsummary",
         "doomemacs": "doomemacs",
-        "emacsMacport": "emacsMacport",
         "fastanime": "fastanime",
         "flake-utils": "flake-utils_2",
         "gitAlias": "gitAlias",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
-        "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "old_nixpkgs": "old_nixpkgs",
-        "talonhub_community": "talonhub_community",
         "walker": "walker"
       }
     },
@@ -557,22 +446,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
-        "type": "github"
-      }
-    },
-    "talonhub_community": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1745079803,
-        "narHash": "sha256-LzwfE+sf+Ka+XjplAlYd2WVs0fwWmXweSrpQBYD7iPQ=",
-        "owner": "talonhub",
-        "repo": "community",
-        "rev": "f1971e9d787db825e3aeeb29e3afc566ccb0ee64",
-        "type": "github"
-      },
-      "original": {
-        "owner": "talonhub",
-        "repo": "community",
         "type": "github"
       }
     },

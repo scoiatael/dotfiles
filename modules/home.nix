@@ -1,7 +1,12 @@
-{ lib, pkgs, ... }: {
-  home.language = { base = "en_GB.UTF-8"; };
+{
+  lib,
+  pkgs,
+  ...
+}: {
+  home.language = {base = "en_GB.UTF-8";};
 
   home.packages = with pkgs; [
+    coreutils-full
     elvish # until I port scripts back..
     patchutils
     html-tidy
@@ -27,22 +32,16 @@
     yarn # for yarn create
     unzip
     zip
-    bind # for dig
     pwgen
     entr
     yubikey-manager
     pry
     restic
     rsync
-    mu
     stylua
-    (callPackage ../packages/gitblame { })
-    (callPackage ../packages/inflector-rs { })
-    (callPackage ../packages/indices { })
-    # (callPackage ../packages/ternimal { })
-    # janet
-    # luakit # doesn't work on aarch64-darwin :/
-    devenv
+    (callPackage ../packages/gitblame {})
+    (callPackage ../packages/inflector-rs {})
+    (callPackage ../packages/indices {})
     nixd
 
     jetbrains-mono
@@ -57,7 +56,7 @@
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
   programs = {
-    gpg = { enable = true; };
+    gpg = {enable = true;};
     starship = {
       enable = true;
       settings = {
@@ -99,8 +98,7 @@
         };
 
         git_state = {
-          format =
-            "\\([|$state( $progress_current/$progress_total)]($style)\\)";
+          format = "\\([|$state( $progress_current/$progress_total)]($style)\\)";
           style = "bright-black";
         };
 
@@ -112,7 +110,7 @@
         };
       };
     };
-    dircolors = { enable = true; };
+    dircolors = {enable = true;};
     bat = {
       enable = true;
       themes = {
@@ -130,20 +128,19 @@
         paging = "never";
         theme = "catpuccin";
       };
-      extraPackages = with pkgs.bat-extras; [ batman ];
+      extraPackages = with pkgs.bat-extras; [batman];
     };
-    btop = { enable = true; };
+    btop = {enable = true;};
     atuin = {
       enable = true;
-      flags = [ "--disable-up-arrow" ];
+      flags = ["--disable-up-arrow"];
     };
-    eza = { enable = true; };
-    broot = { enable = true; };
-    fzf = { enable = true; };
-    zoxide = { enable = true; };
+    eza = {enable = true;};
+    fzf = {enable = true;};
+    zoxide = {enable = true;};
     direnv = {
       enable = true;
-      nix-direnv = { enable = true; };
+      nix-direnv = {enable = true;};
       stdlib = "source ${../config/direnvrc}";
     };
   };
@@ -175,7 +172,8 @@
     keyserver hkps://keys.openpgp.org/
   '';
 
-  home.file.".gnupg/gpg-agent.conf" =
-    let program = "/run/current-system/sw/bin/pinentry-mac";
-    in lib.mkIf pkgs.stdenv.isDarwin { text = "pinentry-program ${program}"; };
+  home.file.".gnupg/gpg-agent.conf" = let
+    program = "/run/current-system/sw/bin/pinentry-mac";
+  in
+    lib.mkIf pkgs.stdenv.isDarwin {text = "pinentry-program ${program}";};
 }

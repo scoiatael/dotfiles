@@ -1,24 +1,22 @@
-{ dirsummary, ... }:
-{ config, lib, pkgs, ... }:
-
-{
+{dirsummary, ...}: {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = false;
-    shellAliases = let nh = lib.getExe pkgs.nh;
+    shellAliases = let
+      nh = lib.getExe pkgs.nh;
+      date = "${pkgs.coreutils}/bin/date";
     in {
-      poi =
-        "gh poi --dry-run; read -q 'ok? [Y/y]' && gh poi || echo 'aborted by prompt' ";
-      hmr =
-        "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles' -b bp.$(date --iso-8601)";
-      nor =
-        "doas ${nh} os switch -R 'path:${config.home.homeDirectory}/dotfiles'";
-      dnr =
-        "darwin-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
-      nix-test =
-        "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
-      nix-test-python =
-        "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
+      poi = "gh poi --dry-run; read -q 'ok? [Y/y]' && gh poi || echo 'aborted by prompt' ";
+      hmr = "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles' -b bp.$(${date} --iso-8601)";
+      nor = "doas ${nh} os switch -R 'path:${config.home.homeDirectory}/dotfiles'";
+      dnr = "darwin-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
+      nix-test = "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
+      nix-test-python = "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
       # WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
       convert = "magick";
       g = "git";
@@ -36,13 +34,12 @@
       zsh_stats = ''
         atuin history list --cmd-only | awk '{CMD[$1]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10'';
       nix-tree = "nix run github:utdemir/nix-tree -- $DEVENV_PROFILE";
-      nix-dust =
-        "nix path-info --size --recursive -h $DEVENV_PROFILE | sort -hk2";
+      nix-dust = "nix path-info --size --recursive -h $DEVENV_PROFILE | sort -hk2";
       nix-du = "nix path-info -Sh $DEVENV_PROFILE";
       d = "direnv";
       gpg-fpr = "gpg -K --with-colons | grep fpr | head -n 1 | ${
-          lib.getExe pkgs.choose
-        } -f : -1";
+        lib.getExe pkgs.choose
+      } -f : -1";
       gpg-quick-expire-extend = ''
         gpg --quick-set-expire "$(gpg-fpr)" 3m && gpg --quick-set-expire "$(gpg-fpr)" 3m '*'
       '';
@@ -50,83 +47,87 @@
         ruby -r securerandom -e "puts SecureRandom.hex(ARGV.first&.to_i || 32)" "''${@}"'';
       notmuch-ui = "emacs -nw -f notmuch";
     };
-    shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
-      let
+    shellGlobalAliases =
+      {}
+      // (lib.lists.foldl' (acc: op: let
         name = "." + lib.concatStrings (lib.replicate op ".");
         cmd = lib.concatStrings (lib.replicate op "../");
-      in acc // { "${name}" = cmd; }) { } (lib.range 2 4));
+      in
+        acc // {"${name}" = cmd;}) {} (lib.range 2 4));
     sessionVariables = {
     };
-    autosuggestion = { enable = true; };
-    historySubstringSearch = { enable = true; };
+    autosuggestion = {enable = true;};
+    historySubstringSearch = {enable = true;};
     initExtraFirst = ''
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
       export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
     '';
-    initExtra = let summary = dirsummary.packages.${pkgs.stdenv.system}.default;
-    in lib.mkAfter ''
-      autoload -U compinit
-      compinit -C # assume zcompdump is fresh
+    initExtra = let
+      summary = dirsummary.packages.${pkgs.stdenv.system}.default;
+    in
+      lib.mkAfter ''
+        autoload -U compinit
+        compinit -C # assume zcompdump is fresh
 
-      bindkey "" history-beginning-search-forward
-      bindkey "" history-beginning-search-backward
-      bindkey '^W' backward-delete-word
+        bindkey "" history-beginning-search-forward
+        bindkey "" history-beginning-search-backward
+        bindkey '^W' backward-delete-word
 
-      autoload -Uz add-zsh-hook
-      # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
-      do-ls() {${summary}/bin/dir-summary $PWD;}
+        autoload -Uz add-zsh-hook
+        # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
+        do-ls() {${summary}/bin/dir-summary $PWD;}
 
-      # add do-ls to chpwd hook
-      add-zsh-hook chpwd do-ls
+        # add do-ls to chpwd hook
+        add-zsh-hook chpwd do-ls
 
-      if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-        add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
+        if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+          add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 
-        vterm_printf() {
-            if [ -n "$TMUX" ] && ([ "$TERM" = "tmux" ] || [ "$TERM" = "screen" ]); then
-                # Tell tmux to pass the escape sequences through
-                printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-            elif [ "$TERM" = "screen" ]; then
-                # GNU screen (screen, screen-256color, screen-256color-bce)
-                printf "\eP\e]%s\007\e\\" "$1"
-            else
-                printf "\e]%s\e\\" "$1"
-            fi
-        }
+          vterm_printf() {
+              if [ -n "$TMUX" ] && ([ "$TERM" = "tmux" ] || [ "$TERM" = "screen" ]); then
+                  # Tell tmux to pass the escape sequences through
+                  printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+              elif [ "$TERM" = "screen" ]; then
+                  # GNU screen (screen, screen-256color, screen-256color-bce)
+                  printf "\eP\e]%s\007\e\\" "$1"
+              else
+                  printf "\e]%s\e\\" "$1"
+              fi
+          }
 
-        alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
+          alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
 
-        vterm_prompt_end() {
-            vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-        }
+          vterm_prompt_end() {
+              vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+          }
 
-        vterm_cmd() {
-            local vterm_elisp
-            vterm_elisp=""
-            while [ $# -gt 0 ]; do
-                vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
-                shift
-            done
-            vterm_printf "51;E$vterm_elisp"
-        }
+          vterm_cmd() {
+              local vterm_elisp
+              vterm_elisp=""
+              while [ $# -gt 0 ]; do
+                  vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+                  shift
+              done
+              vterm_printf "51;E$vterm_elisp"
+          }
 
-        find_file() {
-            vterm_cmd find-file "$(realpath "$@")"
-        }
+          find_file() {
+              vterm_cmd find-file "$(realpath "$@")"
+          }
 
-        say() {
-            vterm_cmd message "%s" "$*"
-        }
+          say() {
+              vterm_cmd message "%s" "$*"
+          }
 
-        setopt PROMPT_SUBST
-        PROMPT=$PROMPT' %{$(vterm_prompt_end)%}'
+          setopt PROMPT_SUBST
+          PROMPT=$PROMPT' %{$(vterm_prompt_end)%}'
 
-        alias vi=find_file
-      fi
+          alias vi=find_file
+        fi
 
-      # TODO: fix on non-Darwin
-      path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
-    '';
+        # TODO: fix on non-Darwin
+        path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
+      '';
     envExtra = ''
       export TMUX_COLORTAG_TAG_ONLY=yes
       export TMUX_COLORTAG_USE_POWERLINE=yes
@@ -134,8 +135,7 @@
     '';
     oh-my-zsh = {
       enable = true;
-      plugins =
-        [ "tmux" "gpg-agent" "emacs" "fancy-ctrl-z" "dircycle" "gitfast" ];
+      plugins = ["tmux" "gpg-agent" "emacs" "fancy-ctrl-z" "dircycle" "gitfast"];
       extraConfig = ''
         # ZSH_TMUX_AUTOSTART=true
         ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
@@ -208,16 +208,20 @@
     script = pkgs.writeTextFile {
       name = "update.zsh";
       executable = true;
-      text = ''
-        #! ${pkgs.zsh}/bin/zsh -i
-        rm -rf "$HOME"/.zcompdump*
-        autoload -U compinit
-      '' + (lib.strings.optionalString config.programs.jujutsu.enable ''
-        source <(${pkgs.jujutsu}/bin/jj util completion zsh)
-        compdef _jj ${pkgs.jujutsu}/bin/jj
-      '') + ''
-        compinit
-      '';
+      text =
+        ''
+          #! ${pkgs.zsh}/bin/zsh -i
+          rm -rf "$HOME"/.zcompdump*
+          autoload -U compinit
+        ''
+        + (lib.strings.optionalString config.programs.jujutsu.enable ''
+          source <(${pkgs.jujutsu}/bin/jj util completion zsh)
+          compdef _jj ${pkgs.jujutsu}/bin/jj
+        '')
+        + ''
+          compinit
+        '';
     };
-  in config.lib.dag.entryAfter [ "writeBoundary" ] "${script}";
+  in
+    config.lib.dag.entryAfter ["writeBoundary"] "${script}";
 }

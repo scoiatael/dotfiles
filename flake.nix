@@ -3,8 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    old_nixpkgs.url =
-      "github:nixos/nixpkgs/e2dd4e18cc1c7314e24154331bae07df76eb582f";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,10 +26,6 @@
       url = "github:doomemacs/doomemacs";
       flake = false;
     };
-    emacsMacport = {
-      url = "git+https://bitbucket.com/mituharu/emacs-mac?ref=work";
-      flake = false;
-    };
     gitAlias = {
       url = "github:GitAlias/gitalias";
       flake = false;
@@ -44,43 +38,33 @@
     #   url = "github:raphamorim/rio/0.0.x";
     #   flake = false;
     # };
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    talonhub_community = {
-      url = "github:talonhub/community";
-      flake = false;
-    };
-    cursorless_talon = {
-      url = "github:cursorless-dev/cursorless-talon";
-      flake = false;
-    };
-    agzam_spacehammer = {
-      url = "github:agzam/spacehammer";
-      flake = false;
-    };
-    AdamWagner_stackline = {
-      url = "github:AdamWagner/stackline";
-      flake = false;
-    };
+    # nix-vscode-extensions = {
+    #   url = "github:nix-community/nix-vscode-extensions";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.flake-utils.follows = "flake-utils";
+    # };
+    # talonhub_community = {
+    #   url = "github:talonhub/community";
+    #   flake = false;
+    # };
+    # cursorless_talon = {
+    #   url = "github:cursorless-dev/cursorless-talon";
+    #   flake = false;
+    # };
+    # agzam_spacehammer = {
+    #   url = "github:agzam/spacehammer";
+    #   flake = false;
+    # };
+    # AdamWagner_stackline = {
+    #   url = "github:AdamWagner/stackline";
+    #   flake = false;
+    # };
 
     dirsummary = { url = "path:./packages/dir-summary"; };
   };
 
-  outputs = { self, flake-utils, nixpkgs, home-manager, darwin, emacsMacport
-    , ... }@attrs:
-    let
-      patchedEmacsMacport = { pkgs, ... }: {
-        programs.emacs.package =
-          # https://bitbucket.org/mituharu/emacs-mac/commits/5f6c306095c825eb01708e336f9d03c15271dfe9
-          # see https://github.com/doomemacs/doomemacs/issues/7532
-          (pkgs.emacs29-macport.override {
-            withNativeCompilation = false;
-          }).overrideAttrs { src = emacsMacport; };
-      };
-      lix = { pkgs, ... }: { nix.package = pkgs.lix; };
+  outputs = { self, flake-utils, nixpkgs, home-manager, darwin, ... }@attrs:
+    let lix = { pkgs, ... }: { nix.package = pkgs.lix; };
     in {
       homeManagerModules = {
         wooting = {
@@ -91,10 +75,12 @@
             (import ./modules/git.nix attrs)
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
-            ./modules/neovim.nix
-            ./modules/wezterm.nix
             (import ./modules/emacs.nix attrs)
-            patchedEmacsMacport
+            ./modules/wezterm.nix
+            ({ pkgs, ... }: {
+              programs.emacs.package =
+                pkgs.emacs-macport.override { withNativeCompilation = false; };
+            })
             {
               programs.git.extraConfig.user = {
                 email = "lukasz@wooting.io";
@@ -156,11 +142,10 @@
               ./modules/tmux.nix
               (import ./modules/zsh.nix attrs)
               ./modules/neovim.nix
-              ({ pkgs, lib, ...} : {
-  programs.zsh.sessionVariables = {
-      EDITOR = lib.getExe pkgs.neovim;
-  };
-
+              ({ pkgs, lib, ... }: {
+                programs.zsh.sessionVariables = {
+                  EDITOR = lib.getExe pkgs.neovim;
+                };
               })
               {
                 home = {
@@ -182,7 +167,7 @@
               ./modules/tmux.nix
               (import ./modules/zsh.nix attrs)
               ./modules/neovim.nix
-              ({ pkgs, ... }: { programs.emacs.package = pkgs.emacsMacport; })
+              ({ pkgs, ... }: { programs.emacs.package = pkgs.emacs-macport; })
               {
                 home = {
                   username = "lukaszczaplinski";
@@ -276,7 +261,6 @@
             { networking.hostName = "LsAir"; }
           ];
         };
-
       };
 
       nixosConfigurations = {
