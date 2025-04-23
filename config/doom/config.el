@@ -128,7 +128,9 @@
 ;; https://github.com/psibi/justl.el?tab=readme-ov-file#installation
 (use-package! justl
   :config
-  (map! :n "e" 'justl-exec-recipe))
+  (advice-add 'justl :around #'envrc-propagate-environment)
+  (advice-add 'justl-exec-recipe :around #'envrc-propagate-environment)
+  (map! :map #'justl-mode-map :n "e" 'justl-exec-recipe))
 
 ;; https://github.com/doomemacs/doomemacs/issues/7438
 (use-package! apheleia
