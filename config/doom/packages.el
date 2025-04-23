@@ -58,6 +58,7 @@
 (package! reason-mode :recipe (:host github :repo "reasonml-editor/reason-mode"))
 (package! rescript-mode :recipe (:host github :repo "jjlee/rescript-mode"))
 
+(package! justl :recipe (:host github :repo "psibi/justl.el"))
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
 ;; `:files' in the `:recipe':

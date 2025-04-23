@@ -125,6 +125,11 @@
       ))
   )
 
+;; https://github.com/psibi/justl.el?tab=readme-ov-file#installation
+(use-package! justl
+  :config
+  (map! :n "e" 'justl-exec-recipe))
+
 ;; https://github.com/doomemacs/doomemacs/issues/7438
 (use-package! apheleia
   :config
