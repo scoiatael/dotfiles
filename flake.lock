@@ -43,15 +43,14 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-uxTidivwR+P2OrdCNNVGS79Pgtwh/wajdEaAb9w9vuU=",
         "path": "./packages/dir-summary",
         "type": "path"
       },
       "original": {
         "path": "./packages/dir-summary",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "doomemacs": {
       "flake": false,

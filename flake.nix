@@ -64,7 +64,7 @@
   };
 
   outputs = { self, flake-utils, nixpkgs, home-manager, darwin, ... }@attrs:
-    let lix = { pkgs, ... }: { nix.package = pkgs.lix; };
+    let lix = { pkgs, lib, ... }: { nix.package = lib.mkForce pkgs.lix; };
     in {
       homeManagerModules = {
         wooting = {
@@ -228,6 +228,7 @@
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
+            lix
             home-manager.darwinModules.home-manager
             ./modules/darwin.nix
             ./modules/darwin/aerospace.nix
