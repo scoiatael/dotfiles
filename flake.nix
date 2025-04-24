@@ -191,6 +191,7 @@
             ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)
             (import ./modules/emacs.nix attrs)
+            ({ pkgs, ... }: { programs.emacs.package = pkgs.emacs-macport.override { withNativeCompilation = false; }; })
             (import ./modules/git.nix attrs)
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
