@@ -32,7 +32,7 @@
   networking.hostName = "LsFramework"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.wireless.userControlled.enable = true;
-  networking.networkmanager.enable = true;
+  # networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
@@ -42,6 +42,18 @@
   # replicates the default behaviour.
   # networking.useDHCP = false;
   # networking.interfaces.enp0s13f0u1u4.useDHCP = true;
+  networking = {
+  interfaces.enp0s13f0u1 = {
+    ipv4.addresses = [{
+      address = "192.168.1.153";
+      prefixLength = 24;
+    }];
+  };
+  defaultGateway = {
+    address = "192.168.1.1";
+    interface = "enp0s13f0u1";
+  };
+};
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
