@@ -1,12 +1,9 @@
-{ ... }:
-{
+{ ... }: {
   services.blocky = {
     enable = true;
     settings = {
       ports.dns = 53; # Port for incoming DNS Queries.
-      upstreams.groups.default = [
-        "https://dns.quad9.net/dns-query"
-      ];
+      upstreams.groups.default = [ "https://dns.quad9.net/dns-query" ];
       # For initially solving DoH/DoT Requests when no system Resolver is available.
       bootstrapDns = {
         upstream = "https://dns.quad9.net/dns-query";
@@ -16,16 +13,15 @@
       blocking = {
         blackLists = {
           #Adblocking
-          ads = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"];
+          ads = [
+            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+          ];
         };
         #Configure what block categories are used
-        clientGroupsBlock = {
-          default = [ "ads" ];
-        };
+        clientGroupsBlock = { default = [ "ads" ]; };
       };
     };
   };
- networking.firewall.allowedUDPPorts = [
-    53
-  ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
+  networking.firewall.allowedTCPPorts = [ 53 ];
 }
