@@ -256,7 +256,6 @@
             lix
             { ids.gids.nixbld = nixpkgs.lib.mkForce 30000; }
             ./modules/darwin.nix
-            ./modules/darwin/ollama.nix
             ./modules/darwin/aerospace.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/air.nix
