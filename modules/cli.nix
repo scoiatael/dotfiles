@@ -8,6 +8,7 @@ in {
   # https://lobste.rs/s/xyvwux/what_are_your_favorite_non_standard_cli
   home.packages = with pkgs;
     [
+      mosh
       choose
       ouch
       pinact # pin github actions

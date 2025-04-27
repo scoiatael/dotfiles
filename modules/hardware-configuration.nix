@@ -3,12 +3,12 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    nixos-hardware.nixosModules.common-cpu-amd
-    nixos-hardware.nixosModules.common-cpu-amd-pstate
-    nixos-hardware.nixosModules.common-cpu-amd-zenpower
-    nixos-hardware.nixosModules.common-gpu-intel
+    nixos-hardware.nixosModules.framework-11th-gen-intel
     lanzaboote.nixosModules.lanzaboote
   ];
+
+  services.fwupd.enable = true;
+  services.fwupd.extraRemotes = [ "lvfs-testing" ];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"

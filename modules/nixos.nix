@@ -5,11 +5,13 @@
     ./hardware-configuration.nix
   ];
 
+  programs.mosh.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = false;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.efiSysMountPoint = "/boot/EFI";
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelParams = [ "mem_sleep_default=deep" ];
+  boot.kernelParams = [ "mem_sleep_default=deep" "usbcore.quirks=0bda:8156:k" ];
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
   # Enroll keys once secureboot is enforced:
   # systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p1

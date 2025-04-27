@@ -278,6 +278,7 @@
           modules = [
             ./modules/nixos.nix
             ./modules/nixos/smb.nix
+            ./modules/nixos/blocky.nix
             ./modules/nixos/jellyfin.nix
             ./modules/nixos/steam.nix
           ];
