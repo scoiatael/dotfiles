@@ -316,6 +316,9 @@
 
 ;; - `after!' for running code after a package has loaded
 ;; https://github.com/hlissner/doom-emacs/issues/3327#issuecomment-710543885
+(after! markdown-mode
+  (add-hook! #'markdown-mode-hook #'scoiatael/visualize-trailing-whitespace))
+
 (after! smartparens
   (dolist (char '("f" "r"))
     (sp-local-pair '(python-mode) (concat char "'") "'")
