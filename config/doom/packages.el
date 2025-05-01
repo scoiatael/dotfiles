@@ -59,6 +59,8 @@
 (package! rescript-mode :recipe (:host github :repo "jjlee/rescript-mode"))
 
 (package! justl :recipe (:host github :repo "psibi/justl.el"))
+
+(package! eldoc-box :recipe (:host github :repo "casouri/eldoc-box"))
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
 ;; `:files' in the `:recipe':

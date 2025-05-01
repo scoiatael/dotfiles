@@ -125,12 +125,21 @@
       ))
   )
 
+(use-package! eldoc-box
+  :config
+  (map! :leader "h h" #'eldoc-box-help-at-point)
+  (after! eglot
+    (define-key eglot-mode-map (kbd "C-c I") #'eldoc-box-eglot-help-at-point)))
+
 ;; https://github.com/psibi/justl.el?tab=readme-ov-file#installation
 (use-package! justl
   :config
+  (setq justl-shell 'vterm)
   (advice-add 'justl :around #'envrc-propagate-environment)
-  (advice-add 'justl-exec-recipe :around #'envrc-propagate-environment)
-  (map! :map #'justl-mode-map :n "e" 'justl-exec-recipe))
+  (map! :leader ";" #'justl)
+  (map! :map #'justl-mode-map
+        :n "x" 'justl-exec-recipe
+        :n "X" 'justl-exec-shell))
 
 ;; https://github.com/doomemacs/doomemacs/issues/7438
 (use-package! apheleia
