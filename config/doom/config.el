@@ -131,6 +131,27 @@
   (after! eglot
     (define-key eglot-mode-map (kbd "C-c I") #'eldoc-box-eglot-help-at-point)))
 
+(use-package! ob-graphql)
+
+(use-package! org-modern :config
+              :init
+              (add-hook 'org-mode-hook #'org-modern-mode)
+              (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+              :config
+              (set-face-attribute 'org-modern-symbol nil :family "Symbols Nerd Font Mono")
+              (setq org-modern-todo-faces '(("INBOX" :background "snow" :foreground "black")
+				            ("BACKLOG" :background "peach puff" :foreground "black")
+				            ("TODO" :background "dark salmon" :foreground "black")
+				            ("IN-PROGRESS" :background  "salmon" :foreground "black")
+				            ("WAITING" :background "rosy brown" :foreground "black")
+				            ("DONE" :background "dark green" :foreground "white")
+				            ("CANCELED" :background "dark khaki" :foreground "black")
+				            ("META" :background "thistle" :foreground "black")))
+              (set-face-attribute 'org-modern-label nil :inherit nil)
+              (setq org-modern-priority-faces '((?A :background "IndianRed1" :foreground "white")
+				                (?B :background "IndianRed3" :foreground "white")
+				                (?C :background "IndianRed4" :foreground "white"))))
+
 ;; https://github.com/psibi/justl.el?tab=readme-ov-file#installation
 (use-package! justl
   :config
@@ -353,7 +374,7 @@
 
 (after! org
   (setq
-   org-archive-location (concat org-directory "archive/%s::")
+   org-archive-location (concat org-directory "/archive/%s::")
    org-ellipsis " ▼ "
    org-clock-persist t
    org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
