@@ -43,7 +43,7 @@
   # networking.useDHCP = false;
   # networking.interfaces.enp0s13f0u1u4.useDHCP = true;
   networking = {
-    interfaces.enp0s13f0u1 = {
+    interfaces.enp0s13f0u4 = {
       ipv4.addresses = [{
         address = "192.168.1.153";
         prefixLength = 24;
@@ -51,7 +51,7 @@
     };
     defaultGateway = {
       address = "192.168.1.1";
-      interface = "enp0s13f0u1";
+      interface = "enp0s13f0u4";
     };
     nameservers = [ "127.0.0.1" ];
   };
