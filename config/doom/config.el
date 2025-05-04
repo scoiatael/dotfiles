@@ -373,7 +373,9 @@
   (advice-add '+format-buffer-h :around #'envrc-propagate-environment))
 
 (after! org
+  (require 'ob-clojure)
   (setq
+   org-babel-clojure-backend 'babashka
    org-archive-location (concat org-directory "/archive/%s::")
    org-ellipsis " ▼ "
    org-clock-persist t

@@ -1,10 +1,6 @@
-{doomemacs, ...}: {
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
-  emacsPackage = config.programs.emacs.finalPackage;
+{ doomemacs, ... }:
+{ config, lib, pkgs, ... }:
+let emacsPackage = config.programs.emacs.finalPackage;
 in {
   home.packages = with pkgs;
     [
@@ -22,6 +18,8 @@ in {
       victor-mono
       nerd-fonts.symbols-only
 
+      babashka
+
       # notmuch # mail
 
       nuspell # spell checking
@@ -29,36 +27,38 @@ in {
       # for emacsclient.sh
       gnused
       coreutils-full
-    ]
-    ++ (with pkgs.hunspellDicts; [pl_PL en_GB-ise]);
+    ] ++ (with pkgs.hunspellDicts; [ pl_PL en_GB-ise ]);
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
   # programs.afew.enable = true;
 
-  programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
+  programs.zsh.sessionVariables.NOTMUCH_CONFIG =
+    "${config.home.homeDirectory}/Mail/notmuch-config";
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [epkgs.vterm epkgs.jinx];
+    extraPackages = epkgs: [ epkgs.vterm epkgs.jinx ];
   };
   programs.zsh.sessionVariables = {
     DOOMLOCALDIR = "$HOME/.emacs.local";
     LSP_USE_PLISTS = "true";
-    EDITOR = "env PATH=${config.home.homeDirectory}/.nix-profile/bin ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/emacs/emacsclient.sh";
+    EDITOR =
+      "env PATH=${config.home.homeDirectory}/.nix-profile/bin ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/emacs/emacsclient.sh";
   };
 
   # avoid copying into /nix/store to allow easy changes
   # home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink "~/dotfiles/config/doom";
-  home.activation.linkDoomConfig = config.lib.dag.entryAfter ["writeBoundary"] ''
-    test -d ~/.config || mkdir ~/.config
-    test -d ~/.config/doom || ln -sf ~/dotfiles/config/doom ~/.config/doom
+  home.activation.linkDoomConfig =
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      test -d ~/.config || mkdir ~/.config
+      test -d ~/.config/doom || ln -sf ~/dotfiles/config/doom ~/.config/doom
 
-    export DOOMLOCALDIR="~/.emacs.local/"
-    export EMACSDIR="~/.emacs.doom/"
-    export PATH=${emacsPackage}/bin/:${pkgs.git}/bin/:${pkgs.openssh}/bin/:$PATH
-    ${doomemacs}/bin/doom sync --force # Suppress prompts by auto-accepting their consequences.
-  '';
+      export DOOMLOCALDIR="~/.emacs.local/"
+      export EMACSDIR="~/.emacs.doom/"
+      export PATH=${emacsPackage}/bin/:${pkgs.git}/bin/:${pkgs.openssh}/bin/:$PATH
+      ${doomemacs}/bin/doom sync --force # Suppress prompts by auto-accepting their consequences.
+    '';
 
   home.file.".emacs.doom".source = doomemacs;
   home.file.".emacs.d/early-init.el".text = ''
