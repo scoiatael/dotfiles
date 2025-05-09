@@ -188,6 +188,7 @@
             #./modules/ghostty.nix
             #{ config.ghostty.font-size = 16; }
             ./modules/home.nix
+            ./modules/llm.nix
             ./modules/wezterm.nix
             (import ./modules/home-manager.nix attrs)
             (import ./modules/emacs.nix attrs)
