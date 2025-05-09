@@ -1,23 +1,18 @@
-#!/usr/bin/env elvish -norc
+#!/usr/bin/env zsh
 
-use re
-use str
-use github.com/zzamboni/elvish-modules/util
+HOST=$(cat ~/.ssh/known_hosts | 
+       awk '{print $1}' | 
+       sed 's/,.*//' | 
+       grep -v '^[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}$' | 
+       grep '\.' | 
+       sort | 
+       uniq | 
+       fzf-tmux --preview-window "top:3:wrap" --preview 'host {}' --layout=reverse)
 
-var HOST = (
-    cat  ~/.ssh/known_hosts |
-    each { |x| re:split "[, ]" $x | take 1 } |
-    util:select { |x| and (str:contains $x ".") (not (re:match '([0-9]{1,3}\.){3}[0-9]{1,3}' $x)) } |
-    order |
-    to-lines |
-    fzf-tmux-popup --preview-window "top:3:wrap" --preview 'host {}' --layout=reverse
-)
-
-var BASE = (str:split "." $HOST | take 1)
-var DOMAIN = (str:split "." $HOST | drop 1 | to-lines | tac | cut -c 1 | str:join ".")
-
-tmux rename-window $DOMAIN.$BASE
-try { ssh $HOST } except e {
-    put $e
-    sleep 60
-}
+if [[ -n "$HOST" ]]; then
+  BASE=$(echo "$HOST" | cut -d '.' -f 1)
+  DOMAIN=$(echo "$HOST" | cut -d '.' -f 2- | tac 2>/dev/null || rev | tr '.' '\n' | tr '\n' '.' | sed 's/\.$//g')
+  
+  tmux rename-window "$DOMAIN.$BASE"
+  ssh "$HOST" || sleep 60
+fi

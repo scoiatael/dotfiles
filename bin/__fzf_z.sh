@@ -1,18 +1,16 @@
-#!/usr/bin/env elvish -norc
+#!/usr/bin/env zsh
 
-use re
+# Interactive directory jump using zoxide and fzf
+# Select a directory with fzf and cd into it
 
-# https://github.com/zzamboni/elvish-themes/blob/master/chain.elv#L195
-fn -prompt-pwd {
-  var tmp = (tilde-abbr $pwd)
-  re:replace '(\.?[^/]{3})[^/]*/' '$1/' $tmp
-}
+# Get directory list from zoxide
+dir=$(zoxide query -l | \
+    fzf-tmux --preview 'echo {}; exa -la {}' --layout=reverse --preview-window "top:3:wrap")
 
-var DIR = (
-    zoxide query -l |
-        fzf-tmux --preview 'echo {}; exa {}' --layout=reverse --preview-window "top:3:wrap"
-)
+# Change to selected directory if one was chosen
+if [[ -n "$dir" ]]; then
+    cd "$dir"
+fi
 
-cd $DIR
-
-exec (get-env SHELL)
+# Return control to shell
+exec $SHELL

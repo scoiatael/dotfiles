@@ -3,7 +3,6 @@
 
   home.packages = with pkgs; [
     coreutils-full
-    elvish # until I port scripts back..
     patchutils
     html-tidy
     wget
@@ -29,7 +28,6 @@
     unzip
     zip
     pwgen
-    entr
     yubikey-manager
     pry
     restic

@@ -1,18 +1,12 @@
-#!/usr/bin/env elvish
+#!/usr/bin/env zsh
 
-use str
-
-var path = $args[0]
-var dst src
-if ?(test -f $path) {
-set src = $path
-set dst = [(str:split "." $path)][1]
-} else {
-set dst = $path
-set src = [(echo .$path.bak.* | str:split " " (all))][0]
-}
-e:mv $src $dst
-
-# ;; Local Variables:
-# ;; mode: elvish
-# ;; End:
+path=$1
+if [[ -f $path ]]; then
+  src=$path
+  dst=${path%%.*}
+else
+  dst=$path
+  src=(.${path}.bak.*)
+  src=$src[1]
+fi
+mv $src $dst

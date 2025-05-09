@@ -1,28 +1,26 @@
-#!/usr/bin/env elvish
-use str
+#!/usr/bin/env zsh
 
-var source_file = repos.txt
-if (> (count $args) 0) {
-  set source_file = $args[0]
-}
-var @repos = (cat $source_file)
+source_file="repos.txt"
+if [[ $# -gt 0 ]]; then
+  source_file="$1"
+fi
+repos=($(cat "$source_file"))
 
-for r $repos {
-  var path = (str:trim-prefix $r "https://")
-  if (str:has-prefix $r "git@") {
-    var @host_path = (str:split ":" $r)
-    var host = (str:trim-prefix $host_path[0] "git@")
-    set path = $host/$host_path[1]
-  }
-  var dirs = (dirname $path)
-  if ?(test -e $path) {
-    echo $path exists
-  } else {
-    mkdir -p $dirs
-    git clone $r $path
-  }
-}
-
-# Local Variables:
-# mode: elvish
-# End:
+for r in "${repos[@]}"; do
+  if [[ "$r" == "https://"* ]]; then
+    path="${r#https://}"
+  elif [[ "$r" == "git@"* ]]; then
+    host="${r#git@}"
+    host="${host%%:*}"
+    repo_path="${r#*:}"
+    path="$host/$repo_path"
+  fi
+  
+  dirs=$(dirname "$path")
+  if [[ -e "$path" ]]; then
+    echo "$path exists"
+  else
+    mkdir -p "$dirs"
+    git clone "$r" "$path"
+  fi
+done
