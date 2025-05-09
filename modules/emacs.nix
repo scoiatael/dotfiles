@@ -26,7 +26,7 @@ in {
 
       # for emacsclient.sh
       gnused
-      coreutils-full
+      uutils-coreutils-noprefix
     ] ++ (with pkgs.hunspellDicts; [ pl_PL en_GB-ise ]);
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
