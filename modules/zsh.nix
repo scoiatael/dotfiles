@@ -1,4 +1,4 @@
-{ dirsummary, ... }:
+{ ... }:
 { config, lib, pkgs, ... }: {
   programs.zsh = {
     enable = true;
@@ -65,7 +65,7 @@
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
       export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
     '';
-    initExtra = let summary = dirsummary.packages.${pkgs.stdenv.system}.default;
+    initExtra = let summary = pkgs.callPackage ../packages/dir-summary { };
     in lib.mkAfter ''
       autoload -U compinit
       compinit -C # assume zcompdump is fresh

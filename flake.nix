@@ -76,7 +76,6 @@
     #   flake = false;
     # };
 
-    dirsummary = { url = "path:./packages/dir-summary"; };
   };
 
   outputs = { self, flake-utils, nixpkgs, home-manager, darwin, ... }@attrs:
