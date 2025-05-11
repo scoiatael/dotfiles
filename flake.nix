@@ -30,6 +30,11 @@
       url = "github:GitAlias/gitalias";
       flake = false;
     };
+    nixSearch = {
+      url = "github:diamondburned/nix-search";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     # catppuccin-rio = {
     #   url = "github:catppuccin/rio";
     #   flake = false;
@@ -178,9 +183,10 @@
             ];
             extraSpecialArgs = attrs;
           };
-        "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
+        "lukaszczaplinski@LsAir" = let system = "aarch64-darwin";
+        in home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            system = "aarch64-darwin";
+            inherit system;
             config.allowBroken = true;
           };
           modules = [
@@ -201,6 +207,7 @@
             (import ./modules/zsh.nix attrs)
             #./modules/neovim.nix
             (import ./modules/fastanime.nix attrs)
+            (import ./modules/nix-search.nix attrs)
             {
               home = {
                 username = "lukaszczaplinski";
