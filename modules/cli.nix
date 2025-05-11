@@ -23,6 +23,7 @@ in {
       gitu
       (pkgs.callPackage ../packages/cometary { })
       (pkgs.callPackage ../packages/human { })
+      (pkgs.callPackage ../packages/mvbak { })
     ] ++ (lib.lists.optional (with pkgs.stdenv.hostPlatform;
       isDarwin -> lib.versionAtLeast darwinSdkVersion "11.0") ncdu);
 

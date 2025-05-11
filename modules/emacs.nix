@@ -14,6 +14,7 @@ in {
 
       vtsls # LSP for JS
       rufo # formatter for Ruby
+      gopls # LSP for Go
 
       victor-mono
       nerd-fonts.symbols-only

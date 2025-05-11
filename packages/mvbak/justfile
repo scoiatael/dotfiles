@@ -1,0 +1,22 @@
+default: build
+
+# Build both binaries
+build: mvbak unmvbak
+
+# Build mvbak binary
+[working-directory: 'bin/mvbak']
+mvbak:
+    go build -o mvbak mvbak.go
+
+# Build unmvbak binary
+[working-directory: 'bin/unmvbak']
+unmvbak:
+    go build -o unmvbak unmvbak.go
+
+# Run tests
+test:
+    go test -v ./...
+
+# Clean built binaries
+clean:
+    rm -f mvbak unmvbak
