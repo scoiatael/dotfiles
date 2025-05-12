@@ -36,6 +36,7 @@
     (callPackage ../packages/inflector-rs { })
     (callPackage ../packages/indices { })
     nixd
+    nix-tree
 
     jetbrains-mono
     dejavu_fonts
