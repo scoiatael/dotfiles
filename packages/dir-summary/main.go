@@ -51,7 +51,7 @@ func gitLog() string {
 			table.WriteString(commit + "\n")
 		}
 	}
-	return panelStyle.Width(gitLogWidth - panelVerticalPadding).Render(table.String())
+	return table.String()
 }
 
 func gitStatus() string {
@@ -62,22 +62,16 @@ func gitStatus() string {
 	return stdout
 }
 
-func lsFiles() string {
-	cmd := exec.Command("eza", "--oneline", "--color=always", "--icons=always")
+func lsFiles(flags ...string) string {
+	flags = append(flags, "--color=always", "--icons=always")
+	cmd := exec.Command("eza", flags...)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	if err := cmd.Run(); err != nil {
 		return ""
 	}
 
-	files := strings.Split(out.String(), "\n")
-	var filesContent strings.Builder
-	for _, file := range files {
-		if file != "" {
-			filesContent.WriteString(file + " ")
-		}
-	}
-	return filesContent.String()
+	return out.String()
 }
 
 func main() {
@@ -114,19 +108,21 @@ func main() {
 
 	if isGitRepo {
 		// Display git status
-		status := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(gitStatus())
-		doc.WriteString(status + "\n")
+		if status := gitStatus(); status != "" {
+			status := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(status)
+			doc.WriteString(status + "\n")
+		}
 
 		// Create side-by-side layout for git log and ls
-		gitLogOutput := gitLog()
-		filesOutput := panelStyle.Width(physicalWidth- gitLogWidth - panelVerticalPadding*3).Render(lsFiles())
+		gitLogOutput :=  panelStyle.Width(gitLogWidth - panelVerticalPadding).Render(gitLog())
+		filesOutput := panelStyle.Width(physicalWidth- gitLogWidth - panelVerticalPadding*3).Render(lsFiles("--tree", "--level=1"))
 		
 		// Join them side by side
 		row := lipgloss.JoinHorizontal(lipgloss.Top, gitLogOutput, filesOutput)
 		doc.WriteString(row + "\n")
 	} else {
 		// Just display files
-		files := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(lsFiles())
+		files := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(lsFiles("--oneline"))
 		doc.WriteString(files + "\n")
 	}
 
