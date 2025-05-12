@@ -46,9 +46,13 @@
       gpg-fpr = "gpg -K --with-colons | grep fpr | head -n 1 | ${
           lib.getExe pkgs.choose
         } -f : -1";
-      gpg-quick-expire-extend = ''
-        gpg --quick-set-expire "$(gpg-fpr)" 3m && gpg --quick-set-expire "$(gpg-fpr)" 3m '*'
+      gpg-subkeys = ''
+        gpg --list-secret-keys --with-subkey --with-colons | grep fpr | ${
+          lib.getExe pkgs.choose
+        } -f : -1 | grep -v "$(gpg-fpr)" | xargs echo
       '';
+      gpg-quick-expire-extend = ''
+        gpg --quick-set-expire "$(gpg-fpr)" 3m && gpg --quick-set-expire "$(gpg-fpr)" 3m $(gpg-subkeys)'';
       random = ''
         ruby -r securerandom -e "puts SecureRandom.hex(ARGV.first&.to_i || 32)" "''${@}"'';
       notmuch-ui = "emacs -nw -f notmuch";
