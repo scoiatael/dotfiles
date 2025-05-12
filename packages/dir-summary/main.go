@@ -74,6 +74,17 @@ func lsFiles(flags ...string) string {
 	return out.String()
 }
 
+func toOneLine(in string) string {
+	files := strings.Split(in, "\n")
+	var filesContent strings.Builder
+	for _, file := range files {
+		if file != "" {
+			filesContent.WriteString(file + " ")
+		}
+	}
+	return filesContent.String()
+}
+
 func main() {
 	flag.Parse()
 
@@ -114,15 +125,15 @@ func main() {
 		}
 
 		// Create side-by-side layout for git log and ls
-		gitLogOutput :=  panelStyle.Width(gitLogWidth - panelVerticalPadding).Render(gitLog())
-		filesOutput := panelStyle.Width(physicalWidth- gitLogWidth - panelVerticalPadding*3).Render(lsFiles("--tree", "--level=1"))
-		
+		gitLogOutput := panelStyle.Width(gitLogWidth - panelVerticalPadding).Render(gitLog())
+		filesOutput := panelStyle.Width(physicalWidth - gitLogWidth - panelVerticalPadding*3).Render(lsFiles("--tree", "--level=1"))
+
 		// Join them side by side
 		row := lipgloss.JoinHorizontal(lipgloss.Top, gitLogOutput, filesOutput)
 		doc.WriteString(row + "\n")
 	} else {
 		// Just display files
-		files := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(lsFiles("--oneline"))
+		files := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(toOneLine(lsFiles()))
 		doc.WriteString(files + "\n")
 	}
 
