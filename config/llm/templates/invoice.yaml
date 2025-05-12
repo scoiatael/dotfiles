@@ -1,0 +1,2 @@
+prompt: 'Propose a filename, based on the following pattern: DDMMYY_AMOUNT_CURRENCY_WHAT,
+    e.g. 080525_15EUR_drink for following document'
