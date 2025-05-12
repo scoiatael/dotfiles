@@ -92,6 +92,8 @@
             (import ./modules/zsh.nix attrs)
             (import ./modules/emacs.nix attrs)
             ./modules/wezterm.nix
+            ./modules/llm.nix
+            (import ./modules/nix-search.nix attrs)
             ({ pkgs, ... }: {
               programs.emacs.package =
                 pkgs.emacs-macport.override { withNativeCompilation = false; };
