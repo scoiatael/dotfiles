@@ -31,4 +31,6 @@ in {
     ../config/process-compose/catppuccin-frappe.yaml;
   home.file."${processComposeConfigDir}/process-compose/settings.yaml".source =
     ../config/process-compose/settings.yaml;
+  home.file."${processComposeConfigDir}/process-compose/shortcuts.yaml".source =
+    ../config/process-compose/shortcuts.yaml;
 }
