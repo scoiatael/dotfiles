@@ -217,6 +217,8 @@
         "g s" #'gptel-send
         "g m" #'gptel-menu))
 
+(use-package! prisma-mode)
+
 ;; (use-package kagi
 ;;   :ensure t
 ;;   :custom

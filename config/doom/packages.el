@@ -65,6 +65,8 @@
 (package! ob-graphql :recipe (:host github :repo "jdormit/ob-graphql"))
 
 (package! org-modern :recipe (:host github :repo "minad/org-modern"))
+
+(package! prisma-mode :recipe (:host github :repo "davidarenas/prisma-mode"))
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
 ;; file, or is located in a subdirectory of the repo, you'll need to specify
 ;; `:files' in the `:recipe':
