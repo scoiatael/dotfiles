@@ -14,7 +14,10 @@
  +doom-dashboard-functions '(doom-dashboard-widget-banner doom-dashboard-widget-loaded doom-dashboard-widget-shortmenu)
  fancy-splash-image "~/dotfiles/config/doom/cacochan.png"
  +doom-dashboard-menu-sections
- '(("Open project"
+ '(("Open todo list"
+    :icon (nerd-icons-octicon "nf-oct-check" :face 'doom-dashboard-menu-title)
+    :action org-todo-list)
+   ("Open project"
     :icon (nerd-icons-octicon "nf-oct-briefcase" :face 'doom-dashboard-menu-title)
     :action projectile-switch-project)
    ("Jump to bookmark"
