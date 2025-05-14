@@ -26,6 +26,6 @@ in {
 
   home.activation.linkLLMTemplates =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      ln -sf  "${config.home.homeDirectory}/dotfiles/config/llm/templates" "${configHome}/io.datasette.llm/templates"
+      [ ! -L "${configHome}/io.datasette.llm/templates" ] && ln -sf "${config.home.homeDirectory}/dotfiles/config/llm/templates" "${configHome}/io.datasette.llm/templates"
     '';
 }
