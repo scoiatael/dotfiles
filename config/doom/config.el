@@ -462,6 +462,10 @@
   (define-key dired-mode-map (kbd "\\") #'ranger-toggle-dotfiles))
 
 (after! apheleia
+  (setf (alist-get 'prisma apheleia-formatters)
+        '("~/dotfiles/bin/prisma-formatter" filepath))
+  (setf (alist-get 'prisma-mode apheleia-mode-alist)
+        '(prisma))
   (setf (alist-get 'tofu apheleia-formatters)
         '("tofu" "fmt" "-"))
   (setf (alist-get 'terraform-mode apheleia-mode-alist)

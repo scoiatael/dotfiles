@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+FILE=$1
+prisma format --schema $1 > /dev/null
+cat $1
