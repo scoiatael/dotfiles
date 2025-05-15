@@ -343,6 +343,8 @@
                  '(rescript-mode . ("rescript-language-server" "--stdio"))))
   :hook ((rescript-mode . (lambda () (electric-indent-local-mode -1)))))
 
+(use-package! org-reverse-datetree)
+
 (require-relative-list '(+private|modeline
                          +private|spellchecking))
 ;; (require '+private|llm)
@@ -386,13 +388,13 @@
    org-clock-persist t
    org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
    org-capture-templates
-   '(("t" "todo" entry (file+headline "todo.org" "Inbox")
+   '(("t" "todo" entry (file+function "todo.org" org-reverse-datetree-goto-date-in-file)
       "* [ ] %?\n%i\n%a"
       :prepend t)
-     ("d" "deadline" entry (file+headline "todo.org" "Inbox")
+     ("d" "deadline" entry (file+function "todo.org" org-reverse-datetree-goto-date-in-file)
       "* [ ] %?\nDEADLINE: <%(org-read-date)>\n\n%i\n%a"
       :prepend t)
-     ("s" "schedule" entry (file+headline "todo.org" "Inbox")
+     ("s" "schedule" entry (file+function "todo.org" org-reverse-datetree-goto-date-in-file)
       "* [ ] %?\nSCHEDULED: <%(org-read-date)>\n\n%i\n%a"
       :prepend t)
      ("c" "check out later" entry (file+headline "todo.org" "Check out later")
