@@ -25,6 +25,7 @@
       # WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
       convert = "magick";
       g = "git";
+      gb = "git checkout $(g br --color=always | fzf --ansi | choose 0)";
       watch = "viddy";
       w = "viddy";
       cat = "bat";
