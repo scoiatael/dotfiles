@@ -16,7 +16,7 @@
  +doom-dashboard-menu-sections
  '(("Open todo list"
     :icon (nerd-icons-octicon "nf-oct-check" :face 'doom-dashboard-menu-title)
-    :action org-todo-list)
+    :action scoiatael/switch-to-agenda-workspace)
    ("Open project"
     :icon (nerd-icons-octicon "nf-oct-briefcase" :face 'doom-dashboard-menu-title)
     :action projectile-switch-project)

@@ -95,3 +95,13 @@ current window."
     ;; if everything else fails
     (find-file-existing file)
     file))
+
+;;;###autoload
+(defun scoiatael/switch-to-agenda-workspace ()
+  "Switch to workspace named AGENDA or create it if it doesn't exist."
+  (interactive)
+  (let ((workspace-name "AGENDA"))
+    (unless (+workspace-exists-p workspace-name)
+      (+workspace-new workspace-name))
+    (+workspace-switch workspace-name)
+    (find-file-existing "~/org/todo.org")))
