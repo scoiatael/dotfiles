@@ -28,7 +28,6 @@
     zip
     pwgen
     yubikey-manager
-    pry
     restic
     rsync
     stylua
@@ -147,20 +146,6 @@
   home.file.".zprofile".text = ''
     export DOOMLOCALDIR="~/.emacs.local"
     export EMACSDIR="~/.emacs.doom"
-  '';
-
-  home.file.".pryrc".text = ''
-    Pry::Prompt.add(
-      :vterm,
-      "A simple `>>` w/ vterm ending.",
-      ['>> ', ' | ']
-    ) do |_, _, _, sep|
-      whoami = ENV['USER']
-      pwd = ENV['pwd']
-      sep + "\e]51;A#{whoami}@:#{pwd}\e\\"
-    end
-
-    Pry.config.prompt = Pry::Prompt[:vterm]
   '';
 
   home.file.".gnupg/dirmngr.conf".text = ''
