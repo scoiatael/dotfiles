@@ -343,7 +343,9 @@
                  '(rescript-mode . ("rescript-language-server" "--stdio"))))
   :hook ((rescript-mode . (lambda () (electric-indent-local-mode -1)))))
 
-(use-package! org-reverse-datetree)
+(use-package! org-reverse-datetree
+  :config
+  (map! :map org-mode-map :localleader "d" #'org-reverse-datetree-goto-date-in-file))
 
 (require-relative-list '(+private|modeline
                          +private|spellchecking))
