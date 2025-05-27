@@ -13,7 +13,7 @@ let
 
   };
 in {
-  home.packages = with pkgs; [ bit mergiraf tig meld ];
+  home.packages = with pkgs; [ bit mergiraf tig meld jjui gitu ];
   programs.git = {
     enable = true;
     lfs.enable = true;
