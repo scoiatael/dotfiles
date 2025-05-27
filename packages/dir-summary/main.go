@@ -74,17 +74,6 @@ func lsFiles(flags ...string) string {
 	return out.String()
 }
 
-func toOneLine(in string) string {
-	files := strings.Split(in, "\n")
-	var filesContent strings.Builder
-	for _, file := range files {
-		if file != "" {
-			filesContent.WriteString(file + " ")
-		}
-	}
-	return filesContent.String()
-}
-
 func main() {
 	flag.Parse()
 
@@ -133,7 +122,7 @@ func main() {
 		doc.WriteString(row + "\n")
 	} else {
 		// Just display files
-		files := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(toOneLine(lsFiles()))
+		files := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(lsFiles("--grid", fmt.Sprintf("--width=%d", physicalWidth-5)))
 		doc.WriteString(files + "\n")
 	}
 
