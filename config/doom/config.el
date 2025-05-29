@@ -417,8 +417,7 @@
   (setq-default web-mode-enable-engine-detection 't))
 
 (after! vterm
-  (advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args))))
-  (define-key vterm-mode-map (kbd "M-'") #'+vterm/toggle))
+  (advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args)))))
 
 (after! projectile
   (setq projectile-require-project-root t
@@ -479,9 +478,6 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
-(map! "C-`" #'+vterm/toggle)
-(map! :n "C-z" #'+eshell/toggle)
-(map! :i "C-z" #'+eshell/toggle)
 (map! :i ", SPC" (cmd! (insert ", ")))
 (map! :i ", RET" (cmd! (insert ",\n")))
 (map! :i ", f" (cmd! (call-interactively #'evil-snipe-f)))
