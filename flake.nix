@@ -230,7 +230,7 @@
           ];
           extraSpecialArgs = attrs;
         };
-        "lukas@LsWootingMBP.local" = home-manager.lib.homeManagerConfiguration {
+        "lukas@Mac.bagend" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "aarch64-darwin";
             config.allowBroken = true;
