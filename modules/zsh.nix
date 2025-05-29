@@ -1,5 +1,8 @@
 { ... }:
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let dir-summary = pkgs.callPackage ../packages/dir-summary { };
+in {
+  home.packages = [ dir-summary ];
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -69,8 +72,7 @@
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
       export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
     '';
-    initExtra = let summary = pkgs.callPackage ../packages/dir-summary { };
-    in lib.mkAfter ''
+    initExtra = lib.mkAfter ''
       autoload -U compinit
       compinit -C # assume zcompdump is fresh
 
@@ -80,7 +82,7 @@
 
       autoload -Uz add-zsh-hook
       # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
-      do-ls() {${summary}/bin/dir-summary $PWD;}
+      do-ls() {${dir-summary}/bin/dir-summary $PWD;}
 
       # add do-ls to chpwd hook
       add-zsh-hook chpwd do-ls
