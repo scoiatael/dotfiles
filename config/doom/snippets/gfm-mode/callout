@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: callout
+# uuid:
+# key: callout
+# condition: t
+# --
+> [!NOTE]
+> Highlights information that users should take into account, even when skimming.
