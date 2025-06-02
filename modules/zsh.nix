@@ -59,6 +59,7 @@ in {
       random = ''
         ruby -r securerandom -e "puts SecureRandom.hex(ARGV.first&.to_i || 32)" "''${@}"'';
       notmuch-ui = "emacs -nw -f notmuch";
+      "mkinvoice" = ''mkdir "Invoices:$(date "+%y%m")"'';
     };
     shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
       let

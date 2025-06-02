@@ -7,6 +7,10 @@ let
     config.xdg.configHome;
   pdf-convert = pkgs.writeShellScriptBin "pdf-to-jpg" ''
     convert -density 300 "$1" -quality 100 "''${1%.*}.jpg"
+    echo "''${1%.*}.jpg"
+  '';
+  llm-invoice = pkgs.writeShellScriptBin "llm-invoice" ''
+    llm -t invoice -a "$(pdf-to-jpg "$1")"
   '';
 in {
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -19,6 +23,7 @@ in {
     # for PDF conversion
     ghostscript
     pdf-convert
+    llm-invoice
   ];
 
   home.file."${configHome}/io.datasette.llm/default_model.txt".text =
