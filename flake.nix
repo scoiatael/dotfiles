@@ -153,6 +153,7 @@
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             modules = [
               ./modules/home.nix
+              ./modules/zellij.nix
               ./modules/cli.nix
               ./modules/linux.nix
               (import ./modules/git.nix attrs)

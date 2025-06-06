@@ -156,12 +156,16 @@
     let program = "/run/current-system/sw/bin/pinentry-mac";
     in lib.mkIf pkgs.stdenv.isDarwin { text = "pinentry-program ${program}"; };
 
-  home.activation.initPass = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.initPass = let
+    gpg = lib.getExe pkgs.gnupg;
+    choose = lib.getExe pkgs.choose;
+    pass = lib.getExe pkgs.pass;
+  in config.lib.dag.entryAfter [ "writeBoundary" ] ''
     if ! test -d ~/.password-store/; then
-      GPG="$(gpg -K --with-colons | grep fpr | head -n 1 | ${pkgs.choose}/bin/choose -f : -1)"
+      GPG="$(${gpg} -K --with-colons | grep fpr | head -n 1 | ${choose} -f : -1)"
       if test -n "$GPG"; then
          echo "Creating password store with gpg=$GPG"
-         ${pkgs.pass}/bin/pass init "$GPG"
+         ${pass} init "$GPG"
       fi
     fi
   '';
