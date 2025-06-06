@@ -218,7 +218,7 @@
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
             #./modules/neovim.nix
-            (import ./modules/fastanime.nix attrs)
+            # (import ./modules/\fastanime.nix attrs)
             (import ./modules/nix-search.nix attrs)
             {
               home = {
