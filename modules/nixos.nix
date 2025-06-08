@@ -200,6 +200,7 @@
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1hKsM+Xk4QAzHUI3p4stYXvLlUF6lyHn9UzkduK44A7ctN53GRtqu308cRpqOb4rIH9Ohu3ZuyvofmwxfIuKfOnTbVlnhx6w/Dbm7P+9TAq7ZjjSiHmBp+1tn81t0sdCwVSa20jFTztHB0eJ0SnZaKkBkSu8+Y8Ul66Of8R8ehtxsVLGeleOIg7peBIy2YU7Flmz0Tg3ZEsA5jNgwTkeKYKcMNIMjhDM1l5mqvsj76mPtulpJxdW2YeN4td+OW2d918bWgf245/nqyWjFVEr9ftc4MFSit16P2emm/IKxo8H7tb2Pb29JrPtjuCdPVcrj5u/wyVBAx7Hgo9l8YZsLxwN5+CelF67rHzR1yXfmVqeN+sBJC/ZrjOgubl/b/bwJWw04eZbDwoCDuC1DdLTT8SH2/QZRsIf4ay3+bLNc+RD3VsB3QPifUWMYiTJxWJ81tO/qU+IBnlN/WW0kUBLk2Md3ybJFvGh4NoSu9Gi3PguGNpth0NG3a7pgK9al5wP98/3ANidlH/r+XU5bB0ewQ64gDN0w7lpwmI2yemfnVmPxlzGODm6Vr7UbX9rwNAGHQf0oXSWd1uIL3eOfqMVXLGmMwcuh423VijajXRp32VtlAPQo7NsTz3ankf0SxBIhIsy3/kuvbvbfyIxVVoXypZnrezRaLqtgNCT6j+/b8Q== keybase"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ7QCZSnf0WDnN8EnI6h8la4xIMeetYhTh4y70YouZUF bitwarden"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHJuPvZPJb9gGxF3EczaLOAUs4uzN06sk5AOSGGGozYy9j7xV+OdgTwVn3020l7Q85F0rCFBjRXyKm6uBOrilWw= SSH-with-auth@secretive.LsAir.local"
     ];
   };
 
