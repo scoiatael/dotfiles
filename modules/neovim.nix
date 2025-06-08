@@ -1,6 +1,24 @@
 { config, lib, pkgs, ... }:
 
 {
+  nixpkgs.overlays = [
+    (self: super: {
+      vimPlugins = super.vimPlugins // {
+        coc-nvim = super.vimUtils.buildVimPlugin {
+          pname = "coc.nvim";
+          version = "2025-06-01";
+          src = super.fetchFromGitHub {
+            owner = "neoclide";
+            repo = "coc.nvim";
+            rev = "9f7f280194f70229ec667721373a74d238618220";
+            sha256 = "0bmpc1dsd796dmg4ig9i1ijl2a4p9jd1dfmwppmfdlpp9awqp7n3";
+          };
+          meta.homepage = "https://github.com/neoclide/coc.nvim/";
+          meta.hydraPlatforms = [ ];
+        };
+      };
+    })
+  ];
   programs.yazi = { enable = true; };
   programs.neovim = {
     enable = true;

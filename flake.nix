@@ -218,7 +218,7 @@
             (import ./modules/git.nix attrs)
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
-            #./modules/neovim.nix
+            ./modules/neovim.nix
             # (import ./modules/\fastanime.nix attrs)
             (import ./modules/nix-search.nix attrs)
             {
