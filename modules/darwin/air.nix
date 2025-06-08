@@ -16,6 +16,7 @@
       "proton-mail"
       "proton-pass"
       "arc"
+      "secretive"
     ];
     masApps = {
       "bitwarden" = 1352778147;
