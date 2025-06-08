@@ -4,11 +4,14 @@
   # hardware.notch = true;
 
   homebrew = {
+    taps = [{
+      name = "scoiatael/dotfiles";
+      clone_target = "https://github.com/scoiatael/dotfiles.git";
+    }];
     casks = [
       "todoist"
       "discord"
       "steam"
-      "${../../casks}/legimi-kindle"
       "bettertouchtool"
       "karabiner-elements"
       "balenaetcher"
@@ -17,6 +20,7 @@
       "proton-pass"
       "arc"
       "secretive"
+      "scoiatael/dotfiles/legimi-kindle"
     ];
     masApps = {
       "bitwarden" = 1352778147;
