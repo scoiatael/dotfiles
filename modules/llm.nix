@@ -10,7 +10,7 @@ let
     echo "''${1%.*}.jpg"
   '';
   llm-invoice = pkgs.writeShellScriptBin "llm-invoice" ''
-    llm -t invoice -a "$(pdf-to-jpg "$1")"
+    llm -t invoice -a "$1"
   '';
 in {
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -27,7 +27,7 @@ in {
   ];
 
   home.file."${configHome}/io.datasette.llm/default_model.txt".text =
-    "anthropic/claude-3-5-haiku-latest";
+    "anthropic/claude-3-7-sonnet-latest";
 
   home.activation.linkLLMTemplates =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
