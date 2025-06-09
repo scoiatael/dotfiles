@@ -10,6 +10,7 @@ in pkgs.stdenvNoCC.mkDerivation rec {
   unpackPhase = "true";
 
   bin = pkgs.writeShellScript "llm" ''
+    unset PYTHONPATH # Otherwise it breaks in Python devenvs
     export ANTHROPIC_API_KEY="$(${pass} anthropic-com-api-token)"
     exec ${pythonEnv}/bin/llm "''${@}"
   '';
