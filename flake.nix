@@ -93,6 +93,7 @@
             (import ./modules/emacs.nix attrs)
             ./modules/wezterm.nix
             ./modules/llm.nix
+            ./modules/neovim.nix
             (import ./modules/nix-search.nix attrs)
             ({ pkgs, ... }: {
               programs.emacs.package =
