@@ -9,6 +9,7 @@
       clone_target = "https://github.com/scoiatael/dotfiles.git";
     }];
     casks = [
+      "raindropio"
       "todoist"
       "discord"
       "steam"
