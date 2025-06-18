@@ -21,6 +21,7 @@ in {
       doggo
       fx
       gitu
+      spacer
       (pkgs.callPackage ../packages/cometary { })
       (pkgs.callPackage ../packages/human { })
       (pkgs.callPackage ../packages/mvbak { })
