@@ -63,6 +63,7 @@
 (package! eldoc-box :recipe (:host github :repo "casouri/eldoc-box"))
 
 (package! ob-graphql :recipe (:host github :repo "jdormit/ob-graphql"))
+(package! ob-async :recipe (:host github :repo "astahlman/ob-async"))
 
 (package! org-modern :recipe (:host github :repo "minad/org-modern"))
 

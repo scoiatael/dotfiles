@@ -135,6 +135,7 @@
     (define-key eglot-mode-map (kbd "C-c I") #'eldoc-box-eglot-help-at-point)))
 
 (use-package! ob-graphql)
+(use-package! ob-async)
 
 (use-package! org-modern :config
               :init
@@ -385,6 +386,7 @@
 
 (after! org
   (require 'ob-clojure)
+  (require 'ob-async)
   (setq
    org-babel-clojure-backend 'babashka
    org-archive-location (concat org-directory "/archive/%s::")
