@@ -12,6 +12,7 @@
       "google-drive"
       "monodraw"
       "altair-graphql-client"
+      "forklift"
     ];
     brews = [ "stlink" ];
   };
