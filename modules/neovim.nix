@@ -28,6 +28,7 @@
     withNodeJs = true;
     coc = { enable = true; };
     plugins = with pkgs.vimPlugins; [
+      smart-splits-nvim
       yankring
       vim-nix
       {
@@ -87,7 +88,7 @@
       vim.keymap.set("n", "<leader>-", function()
         yazi.yazi()
       end)
-    '';
+    '' + (builtins.readFile ../config/neovim/smart-splits.lua);
   };
   home.activation.createNvimDirectory =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''

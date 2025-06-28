@@ -1,0 +1,11 @@
+local modal = wezterm.plugin.require("https://github.com/MLFlexer/modal.wezterm")
+modal.apply_to_config(config)
+wezterm.on("modal.enter", function(name, window, pane)
+	modal.set_right_status(window, name)
+	modal.set_window_title(pane, name)
+end)
+
+wezterm.on("modal.exit", function(name, window, pane)
+	window:set_right_status("")
+	modal.reset_window_title(pane)
+end)

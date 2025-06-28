@@ -501,8 +501,13 @@
       :v "]6" #'base64-encode-region
       :v "v" #'er/expand-region)
 
-(map! :n "M-<up>" (cmd!  (transpose-lines 1)(forward-line -2))
-      :n "M-<down>" (cmd! (forward-line 1) (transpose-lines 1) (forward-line -1)) )
+;; (map! :n "M-<up>" (cmd!  (transpose-lines 1)(forward-line -2))
+;;       :n "M-<down>" (cmd! (forward-line 1) (transpose-lines 1) (forward-line -1)) )
+
+(map! :n "M-<up>" #'evil-window-up
+      :n "M-<right>"  #'evil-window-right
+      :n "M-<left>"  #'evil-window-left
+      :n "M-<down>"  #'evil-window-down)
 
 (map! :leader
       "-" #'dirvish
