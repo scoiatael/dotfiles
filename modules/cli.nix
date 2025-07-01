@@ -22,6 +22,7 @@ in {
       fx
       gitu
       spacer
+      tailspin
       (pkgs.callPackage ../packages/cometary { })
       (pkgs.callPackage ../packages/human { })
       (pkgs.callPackage ../packages/mvbak { })
