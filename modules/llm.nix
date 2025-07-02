@@ -10,7 +10,7 @@ let
     echo "''${1%.*}.jpg"
   '';
   llm-invoice = pkgs.writeShellScriptBin "llm-invoice" ''
-    llm -t invoice -a "$1"
+    llm -t invoice -a "$1" "$1"
   '';
 in {
   nixpkgs.config.allowUnfreePredicate = pkg:

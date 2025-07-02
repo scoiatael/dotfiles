@@ -1,2 +1,3 @@
-prompt: 'Propose a filename, based on the following pattern: DDMMYY_AMOUNT_CURRENCY_COMPANY_WHAT,
-    e.g. 080525_15EUR_drink for following document'
+prompt: >
+    Propose a filename, based on the following pattern: DDMMYY_AMOUNT_CURRENCY_COMPANY_WHAT,
+    e.g. 080525_15EUR_drink for following document; output Unix rename command using <mv>, e.g. <mv $input NEW_NAME.ext>
