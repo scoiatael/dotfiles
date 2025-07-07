@@ -13,6 +13,7 @@
       "monodraw"
       "altair-graphql-client"
       "forklift"
+      "zen"
     ];
     brews = [ "stlink" ];
   };
