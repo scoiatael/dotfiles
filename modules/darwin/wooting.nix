@@ -15,7 +15,7 @@
       "forklift"
       "zen"
     ];
-    brews = [ "stlink" ];
+    brews = [ "stlink" "mitmproxy" ];
   };
   nix.linux-builder = {
     enable = true;
