@@ -14,8 +14,9 @@
       "altair-graphql-client"
       "forklift"
       "zen"
+      "mitmproxy"
     ];
-    brews = [ "stlink" "mitmproxy" ];
+    brews = [ "stlink" ];
   };
   nix.linux-builder = {
     enable = true;
