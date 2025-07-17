@@ -101,7 +101,7 @@ current window."
   "Switch to workspace named AGENDA or create it if it doesn't exist."
   (interactive)
   (let ((workspace-name "AGENDA"))
-    (unless (= (+workspace-current) +workspaces-main)
+    (unless (eq (+workspace-current-name) +workspaces-main)
       (unless (+workspace-exists-p workspace-name)
         (+workspace-new workspace-name))
       (+workspace-switch workspace-name))
