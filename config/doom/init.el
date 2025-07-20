@@ -193,8 +193,33 @@
 
        :config
        ;;literate
-       (default +gnupg +bindings +smartparens))
+       (default +gnupg +bindings +smartparens)
+
+       ;; Private modules
+       :scoiatael
+       appearance
+       completion
+       editor
+       system
+       elisp
+       web
+       markup
+       data
+       devops
+       ai
+       build
+       vcs
+       lsp
+       org
+       keybinds
+       modeline
+       spellcheck
+       email
+       ;;llm               ; uncomment to enable llama models
+       ;;gleam             ; uncomment to enable gleam support
+       ;;spacehammer       ; uncomment to enable spacehammer integration
+       )
 
 ;; Local Variables:
-;; jinx-local-words: "DSLs Jupyter NERDTree ReST agda ansible auie backend beancount blockchain childframe chinese civilized clojure color csharp ctsrnm dhall dired dsp ein elisp emacs emms ess etirw faust fortran fsharp fstar gdscript geht gists github gmail gnipleh graphql gui haskell hy idris irc japanese javascript julia lsp lua macOS mispelling modeline monadic neckbeards neotree notational notmuch objed ocaml organize parinfer pdf perl's php plantuml purescript pyright repls rgb rss rst sml socialize tasing taskrunner tfel thgir tmux ui unicode uoy vcs vscode workspaces zig"
+;; jinx-local-words: "DSLs Jupyter NERDTree ReST agda ansible auie backend beancount blockchain childframe chinese civilized clojure color csharp ctsrnm dhall dired dsp ein elisp emacs emms ess etirw faust fortran fsharp fstar gdscript geht gists github gmail gnipleh graphql gui haskell hy idris irc japanese javascript julia llm lsp lua macOS mispelling modeline monadic neckbeards neotree notational notmuch objed ocaml organize parinfer pdf perl's php plantuml purescript pyright repls rgb rss rst sml socialize spacehammer tasing taskrunner tfel thgir tmux ui uncomment unicode uoy vcs vscode workspaces zig"
 ;; End:

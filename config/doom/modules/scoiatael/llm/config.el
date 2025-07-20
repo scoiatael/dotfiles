@@ -1,4 +1,4 @@
-;;; ../../dotfiles/config/doom/llm.el -*- lexical-binding: t; -*-
+;;; modules/scoiatael/llm/config.el -*- lexical-binding: t; -*-
 
 (use-package! ellama
   :init
@@ -10,7 +10,3 @@
           ;; FIXME: maybe I should port fix upstream?
 	  (make-llm-ollama
 	   :chat-model "zephyr:7b-alpha-q5_K_M" :embedding-model "zephyr:7b-alpha-q5_K_M")))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(provide '+private|llm)
