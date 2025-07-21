@@ -32,4 +32,9 @@
     historyLimit = 500000;
     prefix = "C-Space";
   };
+  programs.zsh.envExtra = ''
+    export TMUX_COLORTAG_TAG_ONLY=yes
+    export TMUX_COLORTAG_USE_POWERLINE=yes
+    export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
+  '';
 }

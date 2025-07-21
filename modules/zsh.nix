@@ -33,7 +33,6 @@ in {
       w = "viddy";
       cat = "bat";
       c = "bat";
-      tm = "tmux";
       man = "batman --paging=always";
       n = "nix";
       ns = "nix-shell";
@@ -69,11 +68,12 @@ in {
     sessionVariables = { };
     autosuggestion = { enable = true; };
     historySubstringSearch = { enable = true; };
-    initExtraFirst = ''
+    initContent  = lib.mkMerge [
+      (lib.mkBefore ''
       export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
       export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
-    '';
-    initExtra = lib.mkAfter ''
+    '')
+      (lib.mkAfter ''
       autoload -U compinit
       compinit -C # assume zcompdump is fresh
 
@@ -88,68 +88,15 @@ in {
       # add do-ls to chpwd hook
       add-zsh-hook chpwd do-ls
 
-      if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-        add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
-
-        vterm_printf() {
-            if [ -n "$TMUX" ] && ([ "$TERM" = "tmux" ] || [ "$TERM" = "screen" ]); then
-                # Tell tmux to pass the escape sequences through
-                printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-            elif [ "$TERM" = "screen" ]; then
-                # GNU screen (screen, screen-256color, screen-256color-bce)
-                printf "\eP\e]%s\007\e\\" "$1"
-            else
-                printf "\e]%s\e\\" "$1"
-            fi
-        }
-
-        alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
-
-        vterm_prompt_end() {
-            vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-        }
-
-        vterm_cmd() {
-            local vterm_elisp
-            vterm_elisp=""
-            while [ $# -gt 0 ]; do
-                vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
-                shift
-            done
-            vterm_printf "51;E$vterm_elisp"
-        }
-
-        find_file() {
-            vterm_cmd find-file "$(realpath "$@")"
-        }
-
-        say() {
-            vterm_cmd message "%s" "$*"
-        }
-
-        setopt PROMPT_SUBST
-        PROMPT=$PROMPT' %{$(vterm_prompt_end)%}'
-
-        alias vi=find_file
-      fi
-
       # TODO: fix on non-Darwin
       path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
-    '';
-    envExtra = ''
-      export TMUX_COLORTAG_TAG_ONLY=yes
-      export TMUX_COLORTAG_USE_POWERLINE=yes
-      export TMUX_COLORTAG_ROUNDED_POWERLINE=yes
-    '';
+    '')
+    ];
     oh-my-zsh = {
       enable = true;
       plugins =
-        [ "tmux" "gpg-agent" "emacs" "fancy-ctrl-z" "dircycle" "gitfast" ];
+        [ "tmux" "gpg-agent" "fancy-ctrl-z" "dircycle" "gitfast" ];
       extraConfig = ''
-        # ZSH_TMUX_AUTOSTART=true
-        ZSH_TMUX_CONFIG=~/.config/tmux/tmux.conf
-
-
         ### Fix slowness of pastes with zsh-syntax-highlighting.zsh
         pasteinit() {
           OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
@@ -199,11 +146,6 @@ in {
         src = zsh-you-should-use;
         file = "share/zsh/plugins/you-should-use/you-should-use.plugin.zsh";
       }
-      # {
-      #   name = "syntax-hightlighing";
-      #   src = zsh-syntax-highlighting;
-      #   file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
-      # }
       {
         name = "fast-syntax-hightlighing";
         src = zsh-fast-syntax-highlighting;
