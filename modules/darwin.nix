@@ -31,7 +31,6 @@
       "karabiner-elements"
     ];
     brews = [ "switchaudio-osx" ];
-    taps = [ "domt4/autoupdate" ];
     onActivation = { cleanup = "uninstall"; };
   };
 
@@ -63,15 +62,7 @@
   system.defaults.NSGlobalDomain.AppleFontSmoothing = 2;
 
   # https://github.com/LnL7/nix-darwin/blob/master/modules/system/activation-scripts.nix#L111
-  system.activationScripts.postUserActivation.text = let
-    brewPrefix = if pkgs.stdenv.hostPlatform.isAarch64 then
-      "/opt/homebrew/bin"
-    else
-      "/usr/local/bin";
-  in ''
-    echo >&2 "setting up homebrew autoupdate..."
-    PATH=${brewPrefix}:$PATH ${pkgs.bash}/bin/bash -c "brew autoupdate status | grep 'installed and running' || brew autoupdate start --upgrade --cleanup"
-
+  system.activationScripts.postActivation.text = ''
     # https://derflounder.wordpress.com/2023/09/26/managing-the-click-wallpaper-to-reveal-desktop-setting-in-macos-sonoma/
     /usr/bin/defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
 

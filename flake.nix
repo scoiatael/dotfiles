@@ -279,6 +279,7 @@
           system = "aarch64-darwin";
           modules = [
             attrs.lix-module.nixosModules.default
+            { system.primaryUser = "lukaszczaplinski"; }
             { ids.gids.nixbld = nixpkgs.lib.mkForce 30000; }
             ./modules/darwin.nix
             ./modules/darwin/aerospace.nix
