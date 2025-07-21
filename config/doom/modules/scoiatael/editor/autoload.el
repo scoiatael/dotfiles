@@ -3,7 +3,6 @@
 (defun scoiatael/yank (s)
   (message (kill-new s)))
 
-
 ;;;###autoload
 (defun scoiatael/file-relative-name ()
   (file-relative-name buffer-file-name (projectile-project-root)))
