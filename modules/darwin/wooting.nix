@@ -15,6 +15,7 @@
       "forklift"
       "zen"
       "mitmproxy"
+      "astropad-studio"
     ];
     brews = [ "stlink" ];
   };
