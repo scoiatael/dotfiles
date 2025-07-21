@@ -19,8 +19,7 @@ in {
         "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles' -b bp.$(${date} --iso-8601)";
       nor =
         "doas ${nh} os switch -R 'path:${config.home.homeDirectory}/dotfiles'";
-      dnr =
-        "darwin-rebuild switch --flake ${config.home.homeDirectory}/dotfiles";
+      dnr = "${nh} darwin switch 'path:${config.home.homeDirectory}/dotfiles'";
       nix-test =
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
       nix-test-python =
@@ -68,34 +67,33 @@ in {
     sessionVariables = { };
     autosuggestion = { enable = true; };
     historySubstringSearch = { enable = true; };
-    initContent  = lib.mkMerge [
+    initContent = lib.mkMerge [
       (lib.mkBefore ''
-      export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
-      export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
-    '')
+        export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
+        export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
+      '')
       (lib.mkAfter ''
-      autoload -U compinit
-      compinit -C # assume zcompdump is fresh
+        autoload -U compinit
+        compinit -C # assume zcompdump is fresh
 
-      bindkey "" history-beginning-search-forward
-      bindkey "" history-beginning-search-backward
-      bindkey '^W' backward-delete-word
+        bindkey "" history-beginning-search-forward
+        bindkey "" history-beginning-search-backward
+        bindkey '^W' backward-delete-word
 
-      autoload -Uz add-zsh-hook
-      # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
-      do-ls() {${dir-summary}/bin/dir-summary $PWD;}
+        autoload -Uz add-zsh-hook
+        # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
+        do-ls() {${dir-summary}/bin/dir-summary $PWD;}
 
-      # add do-ls to chpwd hook
-      add-zsh-hook chpwd do-ls
+        # add do-ls to chpwd hook
+        add-zsh-hook chpwd do-ls
 
-      # TODO: fix on non-Darwin
-      path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
-    '')
+        # TODO: fix on non-Darwin
+        path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
+      '')
     ];
     oh-my-zsh = {
       enable = true;
-      plugins =
-        [ "tmux" "gpg-agent" "fancy-ctrl-z" "dircycle" "gitfast" ];
+      plugins = [ "tmux" "gpg-agent" "fancy-ctrl-z" "dircycle" "gitfast" ];
       extraConfig = ''
         ### Fix slowness of pastes with zsh-syntax-highlighting.zsh
         pasteinit() {
