@@ -232,7 +232,7 @@
           ];
           extraSpecialArgs = attrs;
         };
-        "lukas@LsWootingMBP.local" = home-manager.lib.homeManagerConfiguration {
+        "lukas@LsWootingMBP" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "aarch64-darwin";
             config.allowBroken = true;
@@ -254,6 +254,7 @@
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
+            { system.primaryUser = "lukas"; }
             lix
             home-manager.darwinModules.home-manager
             ./modules/darwin.nix
