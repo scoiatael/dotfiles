@@ -11,6 +11,8 @@
 (after! org
   (require 'ob-clojure)
   (require 'ob-async)
+  (map! :map org-mode-map :localleader
+        "t" #'org-todo)
   (setq
    org-babel-clojure-backend 'babashka
    org-archive-location (concat org-directory "/archive/%s::")
