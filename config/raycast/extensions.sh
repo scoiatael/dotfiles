@@ -10,6 +10,7 @@ raycast://extensions/fedevitaledev/music
 raycast://extensions/sjdonado/idonthavespotify
 raycast://extensions/petra/prisma-docs-search
 raycast://extensions/limonkufu/aerospace
+raycast://extensions/thomas/color-picker
 )
 
 for ext in ${EXTENSIONS[@]}; do
