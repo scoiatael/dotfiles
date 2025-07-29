@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <command>"
+    exit 1
+fi
+
+arg="$1"
+cmd_path=$(command -v "$arg")
+
+if [ -z "$cmd_path" ]; then
+    echo "Command '$arg' not found"
+    exit 1
+fi
+
+echo "Initial path: $cmd_path"
+
+while [ -L "$cmd_path" ]; do
+    link_target=$(readlink "$cmd_path")
+
+    # If relative path, resolve relative to the directory of the symlink
+    if [[ "$link_target" != /* ]]; then
+        link_dir=$(dirname "$cmd_path")
+        cmd_path="$link_dir/$link_target"
+    else
+        cmd_path="$link_target"
+    fi
+
+    echo "Symlink to: $cmd_path"
+done
+
+echo "Final destination: $cmd_path"
