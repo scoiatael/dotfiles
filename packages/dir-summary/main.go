@@ -110,8 +110,10 @@ func main() {
 		if status, err := gitStatus(); err != nil {
 			fmt.Println(warningStyle.Render(err.Error()))
 		} else {
-			status := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(status)
-			doc.WriteString(status + "\n")
+			if status != "" {
+				status := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(status)
+				doc.WriteString(status + "\n")
+			}
 		}
 
 		var gitLogOutput string
