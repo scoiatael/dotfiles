@@ -12,12 +12,6 @@ import (
 	"golang.org/x/term"
 )
 
-var titleStyle = lipgloss.NewStyle().
-	Bold(true).
-	Foreground(lipgloss.Color("#FFFFFF")).
-	Background(lipgloss.Color("#0000AA")).
-	Padding(0, 1)
-
 var panelVerticalPadding = 2
 
 var panelStyle = lipgloss.NewStyle().
@@ -29,7 +23,6 @@ var gitLogWidth = 60
 
 var warningStyle = lipgloss.NewStyle().
 	Bold(true).
-	Foreground(lipgloss.Color("#FFB427")).
 	Background(lipgloss.Color("#0000AA")).
 	Padding(0, 1)
 
