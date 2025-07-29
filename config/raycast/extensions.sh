@@ -11,6 +11,7 @@ raycast://extensions/sjdonado/idonthavespotify
 raycast://extensions/petra/prisma-docs-search
 raycast://extensions/limonkufu/aerospace
 raycast://extensions/thomas/color-picker
+raycast://extensions/djpowers/devdocs
 )
 
 for ext in ${EXTENSIONS[@]}; do
