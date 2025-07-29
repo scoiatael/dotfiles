@@ -69,7 +69,7 @@ func gitStatus() (string, error) {
 }
 
 func lsFiles(flags ...string) (string, error) {
-	cmd := exec.Command("eza", append(flags, "--color=always", "--icons=always")...)
+	cmd := exec.Command("eza", append(flags, ".", "--color=always", "--icons=always")...)
 	stdout, stderr, err := runCmd(cmd)
 	if err != nil {
 		return stderr, err
