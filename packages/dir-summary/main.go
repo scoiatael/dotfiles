@@ -33,14 +33,17 @@ var warningStyle = lipgloss.NewStyle().
 	Background(lipgloss.Color("#0000AA")).
 	Padding(0, 1)
 
+var columnStyle = lipgloss.NewStyle().
+	Padding(0, 1)
+
 func runCmd(cmd *exec.Cmd) (stdout string, stderr string, err error) {
 	var stdoutb bytes.Buffer
 	var stderrb bytes.Buffer
 	cmd.Stdout = &stdoutb
 	cmd.Stderr = &stderrb
 	err = cmd.Run()
-	stdout = stdoutb.String()
-	stderr = stderrb.String()
+	stdout = strings.TrimRight(stdoutb.String(), "\n")
+	stderr = strings.TrimRight(stderrb.String(), "\n")
 	return
 }
 
@@ -123,18 +126,18 @@ func main() {
 			fmt.Println(warningStyle.Render(err.Error()))
 		} else {
 			// Create side-by-side layout for git log and ls
-			gitLogOutput = panelStyle.Width(gitLogWidth - panelVerticalPadding).Render(log)
+			gitLogOutput = columnStyle.Width(gitLogWidth - panelVerticalPadding).Render(log)
 		}
 
 		var filesOutput string
 		if files, err := lsFiles("--tree", "--level=1"); err != nil {
 			fmt.Println(warningStyle.Render(err.Error()))
 		} else {
-			filesOutput = panelStyle.Width(physicalWidth - gitLogWidth - panelVerticalPadding*3).Render(files)
+			filesOutput = columnStyle.Width(physicalWidth - gitLogWidth - panelVerticalPadding*3).Render(files)
 		}
 
 		// Join them side by side
-		row := lipgloss.JoinHorizontal(lipgloss.Top, gitLogOutput, filesOutput)
+		row := panelStyle.Render(lipgloss.JoinHorizontal(lipgloss.Top, gitLogOutput, filesOutput))
 		doc.WriteString(row + "\n")
 	} else {
 		// Just display files
