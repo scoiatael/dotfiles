@@ -27,6 +27,12 @@ var panelStyle = lipgloss.NewStyle().
 
 var gitLogWidth = 60
 
+var warningStyle = lipgloss.NewStyle().
+	Bold(true).
+	Foreground(lipgloss.Color("#FFB427")).
+	Background(lipgloss.Color("#0000AA")).
+	Padding(0, 1)
+
 func runCmd(cmd *exec.Cmd) (stdout string, stderr string, err error) {
 	var stdoutb bytes.Buffer
 	var stderrb bytes.Buffer
@@ -38,10 +44,10 @@ func runCmd(cmd *exec.Cmd) (stdout string, stderr string, err error) {
 	return
 }
 
-func gitLog() string {
+func gitLog() (string, error) {
 	stdout, stderr, err := runCmd(exec.Command("git", "log", "--oneline", "-n10", "--color=always", "--abbrev-commit"))
 	if err != nil {
-		panic(fmt.Errorf("Error running git log: %v; %s", err, stderr))
+		return stderr, err
 	}
 
 	commits := strings.Split(stdout, "\n")
@@ -51,27 +57,24 @@ func gitLog() string {
 			table.WriteString(commit + "\n")
 		}
 	}
-	return table.String()
+	return table.String(), nil
 }
 
-func gitStatus() string {
+func gitStatus() (string, error) {
 	stdout, stderr, err := runCmd(exec.Command("env", "GIT_STATUS_COLOR=always", "git", "--config-env=status.color=GIT_STATUS_COLOR", "status", "--short"))
 	if err != nil {
-		panic(fmt.Errorf("Error running git status: %v; %s", err, stderr))
+		return stderr, err
 	}
-	return stdout
+	return stdout, nil
 }
 
-func lsFiles(flags ...string) string {
-	flags = append(flags, "--color=always", "--icons=always")
-	cmd := exec.Command("eza", flags...)
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	if err := cmd.Run(); err != nil {
-		return ""
+func lsFiles(flags ...string) (string, error) {
+	cmd := exec.Command("eza", append(flags, "--color=always", "--icons=always")...)
+	stdout, stderr, err := runCmd(cmd)
+	if err != nil {
+		return stderr, err
 	}
-
-	return out.String()
+	return stdout, nil
 }
 
 func main() {
@@ -108,22 +111,40 @@ func main() {
 
 	if isGitRepo {
 		// Display git status
-		if status := gitStatus(); status != "" {
+		if status, err := gitStatus(); err != nil {
+			fmt.Println(warningStyle.Render(err.Error()))
+		} else {
 			status := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(status)
 			doc.WriteString(status + "\n")
 		}
 
-		// Create side-by-side layout for git log and ls
-		gitLogOutput := panelStyle.Width(gitLogWidth - panelVerticalPadding).Render(gitLog())
-		filesOutput := panelStyle.Width(physicalWidth - gitLogWidth - panelVerticalPadding*3).Render(lsFiles("--tree", "--level=1"))
+		var gitLogOutput string
+		if log, err := gitLog(); err != nil {
+			fmt.Println(warningStyle.Render(err.Error()))
+		} else {
+			// Create side-by-side layout for git log and ls
+			gitLogOutput = panelStyle.Width(gitLogWidth - panelVerticalPadding).Render(log)
+		}
+
+		var filesOutput string
+		if files, err := lsFiles("--tree", "--level=1"); err != nil {
+			fmt.Println(warningStyle.Render(err.Error()))
+		} else {
+			filesOutput = panelStyle.Width(physicalWidth - gitLogWidth - panelVerticalPadding*3).Render(files)
+		}
 
 		// Join them side by side
 		row := lipgloss.JoinHorizontal(lipgloss.Top, gitLogOutput, filesOutput)
 		doc.WriteString(row + "\n")
 	} else {
 		// Just display files
-		files := panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(lsFiles("--grid", fmt.Sprintf("--width=%d", physicalWidth-5)))
-		doc.WriteString(files + "\n")
+		var filesOutput string
+		if files, err := lsFiles("--grid", fmt.Sprintf("--width=%d", physicalWidth-5)); err != nil {
+			fmt.Println(warningStyle.Render(err.Error()))
+		} else {
+			filesOutput = panelStyle.Width(physicalWidth - panelVerticalPadding*3).Render(files)
+		}
+		doc.WriteString(filesOutput + "\n")
 	}
 
 	docStyle := lipgloss.NewStyle().Padding(1, 2, 1, 2)
