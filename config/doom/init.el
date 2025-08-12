@@ -206,7 +206,7 @@
        markup
        data
        devops
-       ai
+       llm
        build
        vcs
        lsp
