@@ -14,3 +14,6 @@
     (sp-local-pair '(python-mode) (concat char "'") "'")
     (sp-local-pair '(python-mode) (concat char "\"") "\""))
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
+
+(map! :map #'emacs-lisp-mode-map
+      :localleader "." #'scoiatael/pin-package-to-current-version)

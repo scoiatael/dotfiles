@@ -16,3 +16,28 @@
         "g r" #'gptel-rewrite
         "g s" #'gptel-send
         "g m" #'gptel-menu))
+
+(use-package! macher
+  :custom
+  ;; The org UI has structured navigation and nice content folding.
+  (macher-action-buffer-ui 'org)
+
+  :config
+  (after! gptel
+    (macher-install))
+  ;; Adjust buffer positioning to taste.
+  ;; (add-to-list
+  ;;  'display-buffer-alist
+  ;;  '("\\*macher:.*\\*"
+  ;;    (display-buffer-in-side-window)
+  ;;    (side . bottom)))
+  ;; (add-to-list
+  ;;  'display-buffer-alist
+  ;;  '("\\*macher-patch:.*\\*"
+  ;;    (display-buffer-in-side-window)
+  ;;    (side . right)))
+  )
+
+(use-package! claude-code-ide
+  ;; :bind '("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :config (claude-code-ide-emacs-tools-setup))

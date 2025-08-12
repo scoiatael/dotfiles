@@ -73,3 +73,70 @@ returns '(package! ob-graphql :recipe (:host github :repo \"jdormit/ob-graphql\"
     (when (called-interactively-p 'any)
       (insert package-spec))
     package-spec))
+
+
+;;;###autoload
+(defun scoiatael/extract-package-name-from-line (line)
+  "Extract package name from a package! declaration line."
+  (let ((match (s-match (rx "(package! "
+                            (group (one-or-more (not " ")))
+                            (zero-or-more anychar)
+                            ")")
+                        line)))
+    (when match (car (cdr match)))))
+
+(ert-deftest extracting-package-name ()
+  "Tests that scoiatael/extract-package-name-from-line works"
+  (should (equal (scoiatael/extract-package-name-from-line "(package! macher)") "macher"))
+  (should (equal (scoiatael/extract-package-name-from-line "(package! gptel :pin \"00bcdf0551f97e0b496614a6dcebd5fdeda4751b\")") "gptel"))
+  (should (equal (scoiatael/extract-package-name-from-line "(package! macher :recipe (:host github :repo \"kmontag/macher\"))") "macher")))
+
+;;;###autoload
+(defun scoiatael/get-package-current-commit (package-name)
+  "Get the current commit hash for PACKAGE-NAME from straight.el."
+  (let* ((package (intern-soft package-name))
+         (local-repo (doom-package-recipe-repo package))
+         (repo-dir (straight--repos-dir local-repo)))
+    (when (file-directory-p repo-dir)
+      (let ((default-directory repo-dir))
+        (string-trim (shell-command-to-string "git rev-parse HEAD"))))))
+
+;;;###autoload
+(defun scoiatael/pin-package-to-current-version ()
+  "Pin the package! declaration on current line to its currently installed version.
+Works with package declarations like:
+  (package! macher :recipe (:host github :repo \"kmontag/macher\"))
+  (package! gptel)
+  (package! nov :pin \"old-hash\")
+Replaces or adds :pin with current git hash from straight.el."
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (let* ((line (thing-at-point 'line t))
+           (package-name (scoiatael/extract-package-name-from-line line))
+           (current-commit (when package-name
+                             (scoiatael/get-package-current-commit package-name))))
+      (if (and package-name current-commit)
+          (let ((new-line
+                 (cond
+                  ;; Already has :pin, replace it
+                  ((string-match ":pin\\s-+\"[^\"]*\"" line)
+                   (replace-regexp-in-string ":pin\\s-+\"[^\"]*\""
+                                             (format ":pin \"%s\"" current-commit)
+                                             line))
+                  ;; Has other parameters, add :pin before closing paren
+                  ((string-match ")\\s-*$" line)
+                   (replace-regexp-in-string ")\\s-*$"
+                                             (format " :pin \"%s\")" current-commit)
+                                             line))
+                  ;; Simple case, just package name
+                  ((string-match "(package!\\s-+\\([^)]+\\))" line)
+                   (replace-regexp-in-string "(package!\\s-+\\([^)]+\\))"
+                                             (format "(package! %s :pin \"%s\")"
+                                                     package-name current-commit)
+                                             line)))))
+            (beginning-of-line)
+            (kill-line)
+            (insert (string-trim new-line))
+            (message "Pinned %s to %s" package-name (substring current-commit 0 7)))
+        (message "Could not extract package name or find current commit for line: %s" (string-trim line))))))
