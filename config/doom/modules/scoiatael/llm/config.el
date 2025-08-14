@@ -18,9 +18,10 @@
         "g m" #'gptel-menu))
 
 (use-package! macher
+  :when (modulep! +macher)
   :custom
   ;; The org UI has structured navigation and nice content folding.
-  (macher-action-buffer-ui 'org)
+  (macher-action-buffer-ui 'default)
 
   :config
   (after! gptel
@@ -39,5 +40,6 @@
   )
 
 (use-package! claude-code-ide
+  :when (modulep! +claude)
   ;; :bind '("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
   :config (claude-code-ide-emacs-tools-setup))
