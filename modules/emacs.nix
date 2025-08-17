@@ -28,6 +28,9 @@ in {
       # for emacsclient.sh
       gnused
       uutils-coreutils-noprefix
+
+      # for thumbnails in deer
+      vips
     ] ++ (with pkgs.hunspellDicts; [ pl_PL en_GB-ise ]);
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
@@ -123,5 +126,5 @@ in {
       alias vi=find_file
     fi
   '';
-  programs.zsh.oh-my-zsh.plugins = ["emacs"];
+  programs.zsh.oh-my-zsh.plugins = [ "emacs" ];
 }
