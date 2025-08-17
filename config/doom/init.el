@@ -215,7 +215,7 @@
        modeline
        spellcheck
        email
-       ;;llm               ; uncomment to enable llama models
+       narrow
        ;;gleam             ; uncomment to enable gleam support
        ;;spacehammer       ; uncomment to enable spacehammer integration
        )
