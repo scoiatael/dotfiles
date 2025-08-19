@@ -4,12 +4,11 @@
 (map! :leader
       :prefix "n"
       :desc "Narrow to defun"    "d" #'narrow-to-defun
-      :desc "Widen"              "w" #'widen)
+      :desc "Widen"              "w" #'scoiatael/widen)
 
-(map! :leader
-      :mode :visual
-      :prefix "n"
-      :desc "Narrow to region"    "r" #'narrow-to-region)
+(map! :localleader
+      :desc "Narrow to region"    "r" #'narrow-to-region
+      :desc "Narrow dwim"    "n" #'scoiatael/narrow-or-widen-dwim)
 
 (after! org
   (map! :leader
@@ -29,7 +28,7 @@
 (map! :localleader
       :mode :normal
       :map narrow-mode-map
-      :desc "Widen"              "q" #'widen)
+      :desc "Widen"              "q" #'scoiaael/widen)
 
 ;; Define narrow-mode minor mode
 (define-minor-mode narrow-mode
