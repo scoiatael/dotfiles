@@ -10,10 +10,9 @@ let
       rev = "d2b29cd2d424ccdd78ef080bd6b8e184847ce909";
       sha256 = "sha256-l7e+CLnZ0lbZ6iQb+UOeRJgeUgDmTkq3SUVyMwXbBzM=";
     };
-
   };
 in {
-  home.packages = with pkgs; [ bit mergiraf tig meld jjui gitu ];
+  home.packages = with pkgs; [ mergiraf meld gitu delta ];
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -222,12 +221,19 @@ in {
         driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P";
       };
       core.gitattributesfile = "${../config/gitattributes}";
+      core.pager = "delta";
+      interactive.diffFilter = "delta --color-only";
+      delta.navigate = "true"; # use n and N to move between diff sections
+      delta.minus-style = "bold red";
+      delta.plus-style = "syntax #002800";
+      delta.syntax-theme = "catpuccin";
+      merge.conflictStyle = "zdiff3";
     };
     signing = {
       signByDefault = true;
       key = mkDefault "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
-    includes = [{ path = "${gitAlias}/gitalias.txt"; }];
+    # includes = [{ path = "${gitAlias}/gitalias.txt"; }];
     difftastic.enable = true;
     delta.enable = false;
   };
@@ -236,11 +242,7 @@ in {
     enable = true;
     settings = {
       ui.diff-editor = "vscode";
-      ui.pager = [
-        "sh"
-        "-c"
-        "${pkgs.diff-so-fancy}/bin/diff-so-fancy | ${pkgs.less}/bin/less -RFX"
-      ];
+      ui.pager = [ "delta" ];
       ui.default-command = "l";
       aliases.la = [ "log" "-r" "(main..@):: | (main..@)-" ];
       aliases.l = [ "log" "-s" "-r" "branches() | main@origin" ];
