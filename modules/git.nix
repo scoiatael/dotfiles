@@ -1,22 +1,24 @@
-{ gitAlias, ... }:
 { config, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkDefault;
-  tig = pkgs.tig.overrideAttrs {
-    src = pkgs.fetchFromGitHub {
-      owner = "jonas";
-      repo = "tig";
-      rev = "d2b29cd2d424ccdd78ef080bd6b8e184847ce909";
-      sha256 = "sha256-l7e+CLnZ0lbZ6iQb+UOeRJgeUgDmTkq3SUVyMwXbBzM=";
-    };
-  };
+let inherit (lib) mkDefault;
 in {
-  home.packages = with pkgs; [ mergiraf meld gitu delta ];
+  home.packages = with pkgs; [
+    mergiraf
+    meld
+    gitu
+    delta
+    tig
+    git-revise
+    git-branchless
+  ];
   programs.git = {
     enable = true;
     lfs.enable = true;
     aliases = {
+      bl = "! git-branchless";
+      rv = "! git-revise";
+      sl = "! git-branchless smartlog";
+
       pp = "! git pull && git push";
       lg =
         "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
@@ -260,8 +262,4 @@ in {
   };
 
   programs.gh-dash = { enable = true; };
-
-  home.file.".tigrc".text = ''
-    set diff-highlight = "delta"
-  '';
 }

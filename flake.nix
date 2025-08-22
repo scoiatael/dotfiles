@@ -87,7 +87,7 @@
             ./modules/home.nix
             ./modules/cli.nix
             (import ./modules/home-manager.nix attrs)
-            (import ./modules/git.nix attrs)
+            ./modules/git.nix
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
             (import ./modules/emacs.nix attrs)
@@ -127,7 +127,7 @@
             ./modules/electron.nix
             ./modules/linux.nix
             ./modules/cli.nix
-            (import ./modules/git.nix attrs)
+            ./modules/git.nix
             (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
             ./modules/wezterm.nix
@@ -157,7 +157,7 @@
               ./modules/zellij.nix
               ./modules/cli.nix
               ./modules/linux.nix
-              (import ./modules/git.nix attrs)
+              ./modules/git.nix
               ./modules/tmux.nix
               (import ./modules/zsh.nix attrs)
               ./modules/neovim.nix
@@ -181,7 +181,7 @@
             pkgs = nixpkgs.legacyPackages.x86_64-darwin;
             modules = [
               ./modules/home.nix
-              (import ./modules/git.nix attrs)
+              ./modules/git.nix
               (import ./modules/emacs.nix attrs)
               ./modules/tmux.nix
               (import ./modules/zsh.nix attrs)
@@ -216,7 +216,7 @@
               programs.emacs.package =
                 pkgs.emacs-macport.override { withNativeCompilation = false; };
             })
-            (import ./modules/git.nix attrs)
+            ./modules/git.nix
             ./modules/tmux.nix
             (import ./modules/zsh.nix attrs)
             ./modules/neovim.nix
