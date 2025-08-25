@@ -22,6 +22,7 @@
       "arc"
       "secretive"
       "scoiatael/dotfiles/legimi-kindle"
+      "astropad-studio"
     ];
     masApps = {
       "bitwarden" = 1352778147;
