@@ -18,7 +18,8 @@ in {
       bl = "! git-branchless";
       rv = "! git-revise";
       sl = "! git-branchless smartlog";
-
+      d = "diff";
+      f = "fetch";
       pp = "! git pull && git push";
       lg =
         "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
