@@ -5,7 +5,7 @@
 (use-package! org-reverse-datetree
   :config
   (map! :map org-mode-map :localleader
-        "d" #'org-reverse-datetree-goto-date-in-file
+        "D" #'org-reverse-datetree-goto-date-in-file
         "a" #'org-reverse-datetree-archive-subtree))
 
 (after! org
