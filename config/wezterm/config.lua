@@ -122,6 +122,13 @@ local function string_to_color(str)
 	end
 	-- Convert the integer to a unique color
 	local c = string.format("%06X", (hash & 0x00FFFFFF))
+	local hex_color = "#" .. (string.rep("0", 6 - #c) .. c):upper()
+	local color = wezterm.color.parse(hex_color)
+	local lightness, _a, _b, _alpha = color:laba()
+	if lightness > 55 then
+		return hex_color
+	end
+	c = string.format("%06X", (~hash & 0x00FFFFFF))
 	return "#" .. (string.rep("0", 6 - #c) .. c):upper()
 end
 
@@ -185,14 +192,14 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 	end
 	if has_unseen_output(tab) then
 		return {
+			{ Foreground = { Color = select_contrasting_fg_color(color, "lighten") } },
 			{ Foreground = { Color = color } },
-			{ Foreground = { Color = select_contrasting_fg_color(color, "ligthen") } },
 			{ Text = title },
 		}
 	end
 	return {
-		{ Background = { Color = color } },
-		{ Foreground = { Color = select_contrasting_fg_color(color, "darken") } },
+		{ Background = { Color = select_contrasting_fg_color(color, "darken") } },
+		{ Foreground = { Color = color } },
 		{ Text = title },
 	}
 end)
