@@ -245,11 +245,13 @@ in {
   programs.jujutsu = {
     enable = true;
     settings = {
-      ui.diff-editor = "vscode";
       ui.pager = [ "delta" ];
       ui.default-command = "l";
       aliases.la = [ "log" "-r" "(main..@):: | (main..@)-" ];
-      aliases.l = [ "log" "-s" "-r" "branches() | main@origin" ];
+      aliases.l = [ "log" "-s" "-r" "bookmarks() | main@origin" ];
+      # https://shaddy.dev/notes/jj-tug/
+      aliases.tug =
+        [ "bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-" ];
       user = {
         name = config.programs.git.extraConfig.user.name;
         email = config.programs.git.extraConfig.user.email;
