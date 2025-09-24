@@ -1,7 +1,7 @@
 ;;; modules/scoiatael/llm/packages.el -*- lexical-binding: t; -*-
 
-(package! gptel :pin "00bcdf0551f97e0b496614a6dcebd5fdeda4751b")
+(package! gptel :pin "688fcb088b14aafb08bec57263623390d7dc6728")
 (when (modulep! +macher)
-  (package! macher :recipe (:host github :repo "kmontag/macher") :pin "1767fcaca36281f6c41e8787da05e25456f05f9d"))
+  (package! macher :recipe (:host github :repo "kmontag/macher") :pin "4fa8fbb6b250b207723d380931a463bcbc8da9ca"))
 (when (modulep! +claude)
-  (package! claude-code-ide :recipe (:host github :repo "manzaltu/claude-code-ide.el") :pin "8aa6875af332e1716aa663c330046abbb6b63d4f"))
+  (package! claude-code-ide :recipe (:host github :repo "manzaltu/claude-code-ide.el") :pin "32d853e20b9d245a6ee89c4a153a4e568250c62c"))
