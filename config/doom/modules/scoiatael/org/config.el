@@ -6,7 +6,7 @@
   :config
   (map! :map org-mode-map :localleader
         "D" #'org-reverse-datetree-goto-date-in-file
-        "a" #'org-reverse-datetree-archive-subtree))
+        "a" #'org-archive-subtree-default))
 
 (after! org
   (require 'ob-clojure)
