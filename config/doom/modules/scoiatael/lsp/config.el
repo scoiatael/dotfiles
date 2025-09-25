@@ -10,7 +10,6 @@
   (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-ts-mode typescript-tsx-mode rjsx-mode jtsx-typescript-mode) . ,(eglot-alternatives '(("deno" "lsp") ("vtsls" "--stdio")))))
   (setq eglot-events-buffer-config '(:size 2000000 :format full))
 
-  (setenv "NIXD_FLAGS"  "--inlay-hints=false")
   (setq lsp-nix-nixd-server-path "nixd"
         lsp-nix-nixd-formatting-command [ "nixfmt" ]
         lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"

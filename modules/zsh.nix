@@ -24,6 +24,8 @@ in {
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
       nix-test-python =
         "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
+      nix-tree-devshell =
+        "nix-tree --derivation '.#devShells.${pkgs.system}.default'";
       # WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
       convert = "magick";
       g = "git";
@@ -70,6 +72,7 @@ in {
     initContent = lib.mkMerge [
       (lib.mkBefore ''
         export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
+        export NIXD_FLAGS="--inlay-hints=false"
         export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
       '')
       (lib.mkAfter ''
