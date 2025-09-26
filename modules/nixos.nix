@@ -223,12 +223,6 @@
     fzf
     sd
     zsh
-    libsForQt5.kwallet
-    libsForQt5.kate
-    libsForQt5.krdc
-    libsForQt5.bismuth
-    libsForQt5.qt5ct
-    libsForQt5.powerdevil
     mpv
     shotcut
     powertop
@@ -246,7 +240,6 @@
     glib
     # Sway nice-to-haves
     wl-clipboard
-    nm-tray
     adwaita-qt
     # Screenshotting under sway
     sway-contrib.grimshot
