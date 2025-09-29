@@ -109,6 +109,7 @@
        ;;tmux              ; an API for interacting with tmux
        tree-sitter                    ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
+       llm
 
        :os
        (:if IS-MAC macos)               ; improve compatibility with macOS
@@ -206,7 +207,7 @@
        markup
        data
        devops
-       (llm +gptel)
+       llm
        build
        vcs
        lsp

@@ -1,16 +1,14 @@
 ;;; modules/scoiatael/ai/config.el -*- lexical-binding: t; -*-
 
-(use-package! gptel
-  :when (modulep! +gptel)
-  :config
+(after! gptel
   (gptel-make-kagi "Kagi"
-                   :key (lambda () (password-store-get "kagi-api-token")))
+    :key (lambda () (password-store-get "kagi-api-token")))
 
   (setq
    gptel-model 'claude-3-7-sonnet-20250219
    gptel-backend (gptel-make-anthropic "Claude"
-                                       :stream t
-                                       :key (lambda () (password-store-get "anthropic-com-api-token"))))
+                   :stream t
+                   :key (lambda () (password-store-get "anthropic-com-api-token"))))
 
   (map! :localleader
         "g g" #'gptel
