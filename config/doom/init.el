@@ -206,7 +206,7 @@
        markup
        data
        devops
-       (llm +claude +macher)
+       (llm +gptel)
        build
        vcs
        lsp
