@@ -1,82 +1,78 @@
 {
   description = "Home-manager configuration";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    flake-utils.url = "github:numtide/flake-utils/v1.0.0";
-    walker.url = "github:abenz1267/walker";
-    fastanime = {
-      url = "github:Benexl/FastAnime";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    doomemacs = {
-      url = "github:doomemacs/doomemacs";
-      flake = false;
-    };
-    gitAlias = {
-      url = "github:GitAlias/gitalias";
-      flake = false;
-    };
-    nixSearch = {
-      url = "github:diamondburned/nix-search";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    lix = {
-      url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-      flake = false;
-    };
-
-    lix-module = {
-      url =
-        "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.lix.follows = "lix";
-    };
-    # catppuccin-rio = {
-    #   url = "github:catppuccin/rio";
-    #   flake = false;
-    # };
-    # rio = {
-    #   url = "github:raphamorim/rio/0.0.x";
-    #   flake = false;
-    # };
-    # nix-vscode-extensions = {
-    #   url = "github:nix-community/nix-vscode-extensions";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   inputs.flake-utils.follows = "flake-utils";
-    # };
-    # talonhub_community = {
-    #   url = "github:talonhub/community";
-    #   flake = false;
-    # };
-    # cursorless_talon = {
-    #   url = "github:cursorless-dev/cursorless-talon";
-    #   flake = false;
-    # };
-    # agzam_spacehammer = {
-    #   url = "github:agzam/spacehammer";
-    #   flake = false;
-    # };
-    # AdamWagner_stackline = {
-    #   url = "github:AdamWagner/stackline";
-    #   flake = false;
-    # };
-
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs.home-manager = {
+    url = "github:nix-community/home-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.darwin = {
+    url = "github:LnL7/nix-darwin";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
+  inputs.lanzaboote = {
+    url = "github:nix-community/lanzaboote";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.flake-utils.url = "github:numtide/flake-utils/v1.0.0";
+  inputs.walker.url = "github:abenz1267/walker";
+  inputs.fastanime = {
+    url = "github:Benexl/FastAnime";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  inputs.doomemacs = {
+    url = "github:doomemacs/doomemacs";
+    flake = false;
+  };
+  inputs.gitAlias = {
+    url = "github:GitAlias/gitalias";
+    flake = false;
+  };
+  inputs.nixSearch = {
+    url = "github:diamondburned/nix-search";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-utils.follows = "flake-utils";
+  };
+  inputs.lix = {
+    url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
+    flake = false;
+  };
+  inputs.lix-module = {
+    url =
+      "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.lix.follows = "lix";
+  };
+  # inputs.catppuccin-rio = {
+  #   url = "github:catppuccin/rio";
+  #   flake = false;
+  # };
+  # inputs.rio = {
+  #   url = "github:raphamorim/rio/0.0.x";
+  #   flake = false;
+  # };
+  # inputs.nix-vscode-extensions = {
+  #   url = "github:nix-community/nix-vscode-extensions";
+  #   inputs.nixpkgs.follows = "nixpkgs";
+  #   inputs.flake-utils.follows = "flake-utils";
+  # };
+  # inputs.talonhub_community = {
+  #   url = "github:talonhub/community";
+  #   flake = false;
+  # };
+  # inputs.cursorless_talon = {
+  #   url = "github:cursorless-dev/cursorless-talon";
+  #   flake = false;
+  # };
+  # inputs.agzam_spacehammer = {
+  #   url = "github:agzam/spacehammer";
+  #   flake = false;
+  # };
+  # inputs.AdamWagner_stackline = {
+  #   url = "github:AdamWagner/stackline";
+  #   flake = false;
+  # };
 
   outputs = { self, flake-utils, nixpkgs, home-manager, darwin, ... }@attrs:
     let lix = { pkgs, lib, ... }: { nix.package = lib.mkForce pkgs.lix; };
