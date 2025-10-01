@@ -27,7 +27,7 @@ in {
   ];
 
   home.file."${configHome}/io.datasette.llm/default_model.txt".text =
-    "anthropic/claude-3-7-sonnet-latest";
+    "anthropic/claude-sonnet-4-0";
 
   home.activation.linkLLMTemplates =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
