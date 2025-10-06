@@ -64,6 +64,7 @@
   networking.firewall = {
     allowedTCPPorts = [
       22000 # syncthing
+      4567 # parrhasius
     ];
 
     allowedUDPPortRanges = [ ];
@@ -144,7 +145,7 @@
 
   # Enable sound.
   #sound.enable = false;
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   # https://nixos.wiki/wiki/PipeWire
   security.rtkit.enable = true;
   services.pipewire = {
