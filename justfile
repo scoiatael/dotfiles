@@ -13,3 +13,11 @@ infect target:
     echo "0fb4fe42249b7d5bbb205a45f9466ed542a3095c1cbe4452f2b60d9adf8f3375  nixos-infect" | sha256sum -c
     scp nixos-infect {{target}}:nixos-infect
     ssh -t {{target}} bash -c 'NIX_CHANNEL=nixos-25.05 NO_SWAP=1 doNetConf=y bash -ex ./nixos-infect'
+
+deploy target flake:
+    @echo 'Deploying {{flake}} to {{target}}'
+    nixos-rebuild-ng --build-host {{target}} --target-host {{target}} --flake {{flake}} switch
+
+deploy-prg-vps-1: (deploy "root@dev.scoiatael.omg.lol" ".#prg-vps-1" )
+
+
