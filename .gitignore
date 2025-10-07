@@ -11,3 +11,5 @@ scripts/startup.sh
 # ranger
 ranger/history
 ranger/bookmarks
+
+just-flake.just
