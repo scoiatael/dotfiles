@@ -304,6 +304,7 @@
             ./modules/nixos/jellyfin.nix
             ./modules/nixos/steam.nix
             ./modules/nixos/scrutiny.nix
+            ./modules/nixos/yarr.nix
           ];
         };
         demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
