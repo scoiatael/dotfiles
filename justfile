@@ -4,3 +4,12 @@ import 'just-flake.just'
 # Display the list of recipes
 default:
     @just --list
+
+# Install nixOS on target
+# Works fell with Fedora 42 64bits on Scaleway (https://console.online.net/en/vps/list)
+infect target:
+    @echo 'Infecting {{target}} with nixOS…'
+    test -f nixos-infect || wget https://raw.githubusercontent.com/elitak/nixos-infect/master/nixos-infect
+    echo "0fb4fe42249b7d5bbb205a45f9466ed542a3095c1cbe4452f2b60d9adf8f3375  nixos-infect" | sha256sum -c
+    scp nixos-infect {{target}}:nixos-infect
+    ssh -t {{target}} bash -c 'NIX_CHANNEL=nixos-25.05 NO_SWAP=1 doNetConf=y bash -ex ./nixos-infect'
