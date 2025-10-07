@@ -305,6 +305,7 @@
             ./modules/nixos/steam.nix
             ./modules/nixos/scrutiny.nix
             ./modules/nixos/yarr.nix
+            ./modules/nixos/restic.nix
           ];
         };
         demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
