@@ -14,3 +14,5 @@ ranger/bookmarks
 
 just-flake.just
 nixos-infect
+
+.cache

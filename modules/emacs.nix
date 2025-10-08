@@ -16,6 +16,7 @@ in {
       rufo # formatter for Ruby
       ruby-lsp # LSP for Ruby
       gopls # LSP for Go
+      clojure-lsp # LSP for Clojure
 
       victor-mono
       nerd-fonts.symbols-only

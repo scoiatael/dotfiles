@@ -1,0 +1,2 @@
+start-server:
+    watchexec -e clj -r clj -J-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager -J-Dlog4j2.configurationFile=$(realpath ./resources/log4j2.properties) -X octocrypt.server/main
