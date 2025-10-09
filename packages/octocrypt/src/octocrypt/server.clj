@@ -39,7 +39,10 @@
 (defn- encrypt-post-controller [key-id req]
   (if-let [key (get @user-keys key-id)]
     (if-let [value (-> req :form-params (get "secret"))]
-      {:body (encrypt-page/value-page (encrypt/with-key key value) key-id key) :headers {cache-control cache-control-public}}
+      (let [[status encrypted] (encrypt/with-key key  value)]
+        (if (= :ok status)
+          {:body (encrypt-page/value-page encrypted key-id key) :headers {cache-control cache-control-public}}
+          {:status 400 :body (errors/page encrypted)}))
       {:status 400 :body (errors/page "Missing value to encrypt")})
     {:status 400 :body (errors/page "Key not found")}))
 
