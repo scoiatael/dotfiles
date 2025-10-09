@@ -46,6 +46,7 @@ in {
     locations = {
       "/".proxyPass =
         "http://unix:${config.services.anubis.instances.default.settings.BIND}";
+      "~ .css".root = "${drv}/public";
     };
   };
 
