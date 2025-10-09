@@ -27,6 +27,7 @@
    (let [ssh-keys (github/fetch-ssh-keys username)
          gpg-keys (github/fetch-gpg-keys username)]
      (swap! user-keys (fn [old] (merge old (keys-to-map :ssh username ssh-keys) (keys-to-map :gpg username gpg-keys))))
+     (logger/info "cache has" (.size @user-keys) "entries")
      {:body (keys/page username ssh-keys gpg-keys) :headers {cache-control cache-control-public}})
    {:status 400 :body (errors/page "Username is required")}) )
 
