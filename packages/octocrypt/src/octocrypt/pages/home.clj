@@ -6,15 +6,7 @@
   (page/html5
    [:head
     [:title "GitHub Keys Fetcher"]
-    [:style "
-       body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-       .form-container { background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-       .key-block { background: #f9f9f9; padding: 15px; margin: 10px 0; border-left: 4px solid #007cba; }
-       .key-content { background: #333; color: #fff; padding: 10px; border-radius: 4px; overflow-x: auto; word-wrap: break-word; }
-       input[type=text] { padding: 8px; font-size: 16px; width: 200px; }
-       input[type=submit] { padding: 8px 16px; font-size: 16px; background: #007cba; color: white; border: none; border-radius: 4px; cursor: pointer; }
-       input[type=submit]:hover { background: #005a8b; }
-       .error { color: red; padding: 10px; background: #ffe6e6; border-radius: 4px; }"]]
+    (page/include-css "/style.css")]
    [:body
     [:h1 "GitHub Public Keys Fetcher"]
     [:div.form-container

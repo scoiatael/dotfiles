@@ -10,6 +10,7 @@ in pkgs.stdenv.mkDerivation {
   src = ./.;
   text = "";
   phases = [ "unpackPhase" "buildPhase" "installPhase" ];
+  buildInputs = [ pkgs.age pkgs.gnupg ];
 
   buildPhase = ''
     mkdir -p $out/bin

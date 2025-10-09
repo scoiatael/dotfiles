@@ -5,7 +5,6 @@
   (:import (java.net URI)
            (java.net.http HttpClient HttpRequest HttpResponse$BodyHandlers)))
 
-
 (defn- fetch-url [url]
   (let [client (HttpClient/newHttpClient)
         request (-> (HttpRequest/newBuilder)
