@@ -3,7 +3,22 @@
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
     ../../modules/nixos/octocrypt.nix
+    ../../modules/nixos/anubis.nix
   ];
+
+  services.anubis.instances.default.settings.TARGET = "http://localhost:3000";
+  services.nginx = {
+    enable = true;
+
+    # enable recommended settings
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedTlsSettings = true;
+    recommendedProxySettings = true;
+  };
+  security.acme.defaults.email = "acme@scoiatael.dev";
+  security.acme.acceptTerms = true;
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
