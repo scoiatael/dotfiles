@@ -39,6 +39,7 @@ in {
     forceSSL = true;
     enableACME = true;
     extraConfig = ''
+      error_page 500 502 503 504 ${pkgs.nginx}/html/50x.html;
       proxy_cache cache;
       add_header X-Cache $upstream_cache_status;
     '';
