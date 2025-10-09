@@ -149,7 +149,7 @@
     (cond
       (= uri "/")
       {:status 200
-       :headers {"Content-Type" "text/html"}
+       :headers {"Content-Type" "text/html" "Cache-Control" "max-age=180, public"}
        :body (home-page)}
 
       (= uri "/keys")
@@ -159,7 +159,7 @@
            :headers {"Content-Type" "text/html"}
            :body (error-page "Username is required")}
           {:status 200
-           :headers {"Content-Type" "text/html"}
+           :headers {"Content-Type" "text/html" "Cache-Control" "max-age=180, public"}
            :body (keys-page username)}))
 
       :else

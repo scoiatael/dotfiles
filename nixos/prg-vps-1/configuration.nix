@@ -15,6 +15,8 @@
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
     recommendedProxySettings = true;
+
+    proxyCachePath = { "cache" = { enable = true; }; };
   };
   security.acme.defaults.email = "acme@scoiatael.dev";
   security.acme.acceptTerms = true;
