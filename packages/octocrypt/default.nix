@@ -15,6 +15,7 @@ in pkgs.stdenv.mkDerivation {
   buildPhase = ''
     mkdir -p $out/bin
     cp -r $src/src $out/src
+    cp -r $src/public $out/public
     cp -r $src/deps.edn $out/deps.edn
     cp ${runFile} $out/bin/octocrypt
   '';
