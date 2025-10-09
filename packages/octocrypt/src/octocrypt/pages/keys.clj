@@ -10,7 +10,9 @@
      (for [key keys]
        (let [id (:id key)]
          [:div.key-block
-          [:p [:strong "ID: "] [:a {:href (str "/encrypt/" (url-encode id) )} id]]
+          [:div.title
+           [:p [:strong "ID: "] id ]
+           [:p [:a {:href (str "/encrypt/" (url-encode id))} "encrypt with this key"]]]
           (when (:title key)
             [:p [:strong "Title: "] (:title key)])
           [:pre.key-content (:key key)]]))]))
@@ -22,7 +24,9 @@
      (for [key keys]
        (let [id (:id key)]
          [:div.key-block
-          [:p [:strong "ID: "] [:a {:href (str "/encrypt/" (url-encode id))} id]]
+          [:div.title
+           [:p [:strong "ID: "] id ]
+           [:p [:a {:href (str "/encrypt/" (url-encode id))} "encrypt with this key"]]]
           (when (:name key)
             [:p [:strong "Name: "] (:name key)])
           (when (:email key)
