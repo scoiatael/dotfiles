@@ -29,6 +29,7 @@ in {
         "HOME=/var/cache/octocrypt"
         "LOG4J_CONFIGURATION_FILE=${logConfFile}"
       ];
+      MemoryMax = "300M";
     };
   };
 
