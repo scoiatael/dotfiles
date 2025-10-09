@@ -3,10 +3,8 @@
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
     ../../modules/nixos/octocrypt.nix
-    ../../modules/nixos/anubis.nix
   ];
 
-  services.anubis.instances.default.settings.TARGET = "http://localhost:3000";
   services.nginx = {
     enable = true;
 
