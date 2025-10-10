@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
     ../../modules/nixos/octocrypt.nix
+    ../../modules/nixos/wh.nix
   ];
 
   services.nginx = {
