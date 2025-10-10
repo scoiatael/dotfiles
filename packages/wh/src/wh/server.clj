@@ -35,7 +35,7 @@
   (template [:div.form-container
              [:form {:method "POST" :action "/channel"}
               [:input {:type "submit" :value "Generate new webhook channel"}]]]
-            [:p "To use this app you require a channel to receive webhooks."]))
+            [:p "To use this app you first need a channel to receive webhooks."]))
 
 (defn insert-channel [id]
   (-> (helpers/insert-into :channels)
