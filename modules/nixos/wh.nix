@@ -25,18 +25,17 @@ in {
       MemoryMax = "300M";
     };
   };
-  # services.nginx.virtualHosts."wh.scoiatael.dev" = {
-  #   forceSSL = true;
-  #   enableACME = true;
-  #   extraConfig = ''
-  #     error_page 500 502 503 504 =200 ${pkgs.nginx}/html/50x.html;
-  #     proxy_cache cache;
-  #     add_header X-Cache $upstream_cache_status;
-  #   '';
-  #   locations = {
-  #     "/".proxyPass =
-  #       "http://unix:${config.services.anubis.instances.default.settings.BIND}";
-  #     "~ .css".root = "${drv}/public";
-  #   };
-  # };
+  services.nginx.virtualHosts."wh.scoiatael.dev" = {
+    forceSSL = true;
+    enableACME = true;
+    extraConfig = ''
+      error_page 500 502 503 504 =200 ${pkgs.nginx}/html/50x.html;
+      proxy_cache cache;
+      add_header X-Cache $upstream_cache_status;
+    '';
+    locations = {
+      "/".proxyPass = "http://localhost:3001";
+      "~ .css".root = "${drv}/public";
+    };
+  };
 }
