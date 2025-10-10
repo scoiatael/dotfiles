@@ -1,0 +1,2 @@
+{:paths ["src"]
+ :tasks {server (shell "watchexec -e clj -r bb -m wh.server")} }
