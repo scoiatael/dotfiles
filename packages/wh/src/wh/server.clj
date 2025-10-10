@@ -1,215 +1,129 @@
-;; Source: https://github.com/prestancedesign/babashka-htmx-todoapp
 (ns wh.server 
-    (:require [org.httpkit.server :as srv]
-              [clojure.java.browse :as browse]
-              [clojure.core.match :refer [match]]
-              [clojure.pprint :refer [cl-format]]
-              [clojure.string :as str]
-              [hiccup.core :as h])
+  (:require [org.httpkit.server :as srv]
+            [clojure.math :as math]
+            [ring.middleware.file :as file]
+            [cprop.core :refer [load-config]]
+            [cprop.source :refer [from-env]]
+            [ring.middleware.params :as params]
+            [babashka.json :as json]
+            [clojure.core.match :refer [match]]
+            [clojure.string :as str]
+            [pod.babashka.go-sqlite3 :as sqlite]
+            [wh.uuid :as uuid]
+            [honeysql.core :as sql]
+            [honeysql.helpers :as helpers]
+            [hiccup.page :as page]))
 
-    (:import [java.net URLDecoder]))
+(def db (atom ":memory:"))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Config
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn- prepare-db []
+  (sqlite/execute! @db ["create table if not exists channels (id TEXT)"])
+  (sqlite/execute! @db ["create table if not exists webhooks (id TEXT, channel_id TEXT, payload TEXT)"]))
 
-(def port 3000)
+(defn template [& body]
+  (page/html5
+   [:head
+    [:title "Webhook2RSS"]
+    (page/include-css "/style.css")]
+   [:body
+    [:section.todoapp
+     [:header.header
+      [:h1 "Webhook2RSS"]]
+     body]]))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Mimic DB (in-memory)
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn app-index [_req]
+  (template [:div.form-container
+             [:form {:method "POST" :action "/channel"}
+              [:input {:type "submit" :value "Generate new webhook channel"}]]]
+            [:p "To use this app you require a channel to receive webhooks."]))
 
-(def todos (atom (sorted-map 1 {:id 1 :name "Taste htmx with Babashka" :done true}
-                             2 {:id 2 :name "Buy a unicorn" :done false})))
+(defn insert-channel [id]
+  (-> (helpers/insert-into :channels)
+      (helpers/columns :id)
+      (helpers/values
+       [[id]])
+      sql/format))
 
-(def todos-id (atom (count @todos)))
+(defn insert-webhook [{:keys [channel-id id payload]}]
+  (-> (helpers/insert-into :webhooks)
+      (helpers/columns :id :channel-id :payload)
+      (helpers/values
+       [[id channel-id payload]])
+      sql/format))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; "DB" queries
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn get-webhooks [{:keys [channel-id offset limit]}]
+  (sql/format {:select [:id :payload]
+               :from   [:webhooks]
+               :offset offset
+               :limit limit
+               :where  [:= :channel-id channel-id]}))
 
-(defn add-todo! [name]
-  (let [id (swap! todos-id inc)]
-    (swap! todos assoc id {:id id :name name :done false})))
+(defn self-channel-url [id {:keys [headers scheme]}]
+  (let [host (-> headers (get "host"))]
+    (str (name scheme) "://" host "/channel/" id)))
 
-(defn toggle-todo! [id]
-  (swap! todos update-in [(Integer. id) :done] not))
+(defn self-webhook-url [id {:keys [headers scheme]}]
+  (let [host (-> headers (get "host"))]
+    (str (name scheme) "://" host "/webhook/" id)))
 
-(defn remove-todo! [id]
-  (swap! todos dissoc (Integer. id)))
+(defn post-channel [{:as req}]
+  (let [id (uuid/gen-uuid)
+        post-url (self-webhook-url id req)
+        self-url (self-channel-url id req) ]
+    (sqlite/execute! @db (insert-channel id))
+    {:body
+     (template [:div
+                [:h3 "Channel setup"]
+                [:div.key-block
+                 [:p "POST your webhooks to: " [:code post-url]]]
+                [:div.key-block
+                 [:p "Read it on " [:a {:href self-url} [:code self-url]]]] ])}))
 
-(defn filtered-todo [filter-name todos]
-  (case filter-name
-    "active" (remove #(:done (val %)) todos)
-    "completed" (filter #(:done (val %)) todos)
-    "all" todos
-    todos))
+(defn- serialize [{:keys [remote-addr start-time headers content-length websocket? content-type character-encoding uri server-name query-string scheme request-method body]}]
+  (json/write-str
+   {:remote-addr remote-addr
+    :start-time start-time
+    :headers headers
+    :content-length content-length
+    :websocket? websocket?
+    :content-type content-type
+    :character-encoding character-encoding
+    :uri uri
+    :server-name server-name
+    :query-string query-string
+    :scheme scheme
+    :request-method request-method
+    :body (slurp body)}))
 
-(defn get-items-left []
-  (count (remove #(:done (val %)) @todos)))
+(defn post-webhook [channel-id req]
+  (let [id (uuid/gen-uuid)
+        insert-sql (insert-webhook {:channel-id channel-id :id id :payload (serialize req)})   ]
+    (sqlite/execute! @db insert-sql)
+    {:status 204}))
 
-(defn todos-completed []
-  (count (filter #(:done (val %)) @todos)))
-
-(defn remove-all-completed-todo []
-  (reset! todos (into {} (remove #(:done (val %)) @todos))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Template and components
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn todo-item [{:keys [id name done]}]
-  [:li {:id (str "todo-" id)
-        :class (when done "completed")}
-   [:div.view
-    [:input.toggle {:hx-patch (str "/todos/" id)
-                    :type "checkbox"
-                    :checked done
-                    :hx-target (str "#todo-" id)
-                    :hx-swap "outerHTML"}]
-    [:label {:hx-get (str "/todos/edit/" id)
-             :hx-target (str "#todo-" id)
-             :hx-swap "outerHTML"} name]
-    [:button.destroy {:hx-delete (str "/todos/" id)
-                      :_ (str "on htmx:afterOnLoad remove #todo-" id)}]]])
-
-(defn todo-list [todos]
-  (for [todo todos]
-    (todo-item (val todo))))
-
-(defn todo-edit [id name]
-  [:form {:hx-post (str "/todos/update/" id)}
-   [:input.edit {:type "text"
-                 :name "name"
-                 :value name}]])
-
-(defn item-count []
-  (let [items-left (get-items-left)]
-    [:span#todo-count.todo-count {:hx-swap-oob "true"}
-     [:strong items-left] (cl-format nil " item~p " items-left) "left"]))
-
-(defn todo-filters [filter]
-  [:ul#filters.filters {:hx-swap-oob "true"}
-   [:li [:a {:hx-get "/?filter=all"
-             :hx-push-url "true"
-             :hx-target "#todo-list"
-             :class (when (= filter "all") "selected")} "All"]]
-   [:li [:a {:hx-get "/?filter=active"
-             :hx-push-url "true"
-             :hx-target "#todo-list"
-             :class (when (= filter "active") "selected")} "Active"]]
-   [:li [:a {:hx-get "/?filter=completed"
-             :hx-push-url "true"
-             :hx-target "#todo-list"
-             :class (when (= filter "completed") "selected")} "Completed"]]])
-
-(defn clear-completed-button []
-  [:button#clear-completed.clear-completed
-   {:hx-delete "/todos"
-    :hx-target "#todo-list"
-    :hx-swap-oob "true"
-    :hx-push-url "/"
-    :class (when-not (pos? (todos-completed)) "hidden")}
-   "Clear completed"])
-
-(defn template [filter]
-  (str
-   "<!DOCTYPE html>"
-   (h/html
-    [:head
-     [:meta {:charset "UTF-8"}]
-     [:title "Htmx + Babashka"]
-     [:link {:href "https://unpkg.com/todomvc-app-css@2.4.1/index.css" :rel "stylesheet"}]
-     [:script {:src "https://unpkg.com/htmx.org@1.5.0/dist/htmx.min.js" :defer true}]
-     [:script {:src "https://unpkg.com/hyperscript.org@0.8.1/dist/_hyperscript.min.js" :defer true}]]
-    [:body
-     [:section.todoapp
-      [:header.header
-       [:h1 "todos"]
-       [:form
-        {:hx-post "/todos"
-         :hx-target "#todo-list"
-         :hx-swap "beforeend"
-         :_ "on htmx:afterOnLoad set #txtTodo.value to ''"}
-        [:input#txtTodo.new-todo
-         {:name "todo"
-          :placeholder "What needs to be done?"
-          :autofocus ""}]]]
-      [:section.main
-       [:input#toggle-all.toggle-all {:type "checkbox"}]
-       [:label {:for "toggle-all"} "Mark all as complete"]]
-      [:ul#todo-list.todo-list
-       (todo-list (filtered-todo filter @todos))]
-      [:footer.footer
-       (item-count)
-       (todo-filters filter)
-       (clear-completed-button)]]
-     [:footer.info
-      [:p "Click to edit a todo"]
-      [:p "Created by "
-       [:a {:href "https://twitter.com/PrestanceDesign"} "Michaël Sλlihi"]]
-      [:p "Part of "
-       [:a {:href "http://todomvc.com"} "TodoMVC"]]]])))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Helpers
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn parse-body [body]
-  (-> body
-      slurp
-      (str/split #"=")
-      second
-      URLDecoder/decode))
-
-(defn parse-query-string [query-string]
-  (when query-string
-    (-> query-string
-        (str/split #"=")
-        second)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Handlers
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn app-index [{:keys [query-string headers]}]
-  (let [filter (parse-query-string query-string)
-        ajax-request? (get headers "hx-request")]
-    (if (and filter ajax-request?)
-      (h/html (todo-list (filtered-todo filter @todos))
-              (todo-filters filter))
-      (template filter))))
-
-(defn add-item [{body :body}]
-  (let [name (parse-body body)
-        todo (add-todo! name)]
-    (h/html (todo-item (val (last todo)))
-            (item-count))))
-
-(defn edit-item [id]
-  (let [{:keys [id name]} (get @todos (Integer. id))]
-    (h/html (todo-edit id name))))
-
-(defn update-item [{body :body} id]
-  (let [name (parse-body body)
-        todo (swap! todos assoc-in [(Integer. id) :name] name)]
-    (h/html (todo-item (get todo (Integer. id))))))
-
-(defn patch-item [id]
-  (let [todo (toggle-todo! id)]
-    (h/html (todo-item (get todo (Integer. id)))
-            (item-count)
-            (clear-completed-button))))
-
-(defn delete-item [id]
-  (remove-todo! id)
-  (h/html (item-count)))
-
-(defn clear-completed []
-  (remove-all-completed-todo)
-  (h/html (todo-list @todos)
-          (item-count)
-          (clear-completed-button)))
+(defn get-channel [id {:keys [params] :as req}]
+  (let [offset (Integer/parseInt (get params "offset" "0"))
+        limit (min (Integer/parseInt (get params "limit" "20")) 100)
+        total (-> (sqlite/query @db (sql/format {:select [[:%count.* :total]] :from   [:webhooks] :where  [:= :channel-id id]})) first :total)
+        webhooks (sqlite/query @db (get-webhooks {:channel-id id :offset offset :limit limit}))
+        next-page-url (str "?offset=" (+ limit offset) "&limit=" limit)
+        prev-page-url (str "?offset=" (- offset limit) "&limit=" limit)
+        pages (int (math/floor (/ total limit)))
+        current-page (int (math/ceil  (/ offset limit)))               ]
+    {:body
+     (template [:div
+                [:h3 "Channel " id]
+                [:div
+                 [:h4 "Recorded " total " webhooks"]]
+                [:div.summary
+                 [:div.back-link [:a {:disabled (not (< 0 current-page)) :href prev-page-url} "Previous"]]
+                 [:span "page " (inc current-page) " out of " (inc pages)]
+                 [:div.back-link [:a {:disabled (not (> pages  current-page)) :href next-page-url} "Next"]]]
+                (for [{:keys [id payload]} webhooks]
+                  [:div.key-block
+                   [:div.title
+                    [:p [:strong "ID: "] id ]]
+                   [:pre.key-content payload]])])}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Routes
@@ -219,21 +133,20 @@
   (let [path (vec (rest (str/split uri #"/")))]
     (match [request-method path]
       [:get []] {:body (app-index req)}
-      [:get ["todos" "edit" id]] {:body (edit-item id)}
-      [:post ["todos"]] {:body (add-item req)}
-      [:post ["todos" "update" id]] {:body (update-item req id)}
-      [:patch ["todos" id]] {:body (patch-item id)}
-      [:delete ["todos" id]] {:body (delete-item id)}
-      [:delete ["todos"]] {:body (clear-completed)}
+      [:post ["channel"]] (post-channel req)
+      [:post ["webhook" id]] (post-webhook id req)
+      [:get ["channel" id]] (get-channel id req)
       :else {:status 404 :body "Error 404: Page not found"})))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Server
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn -main []
-  (let [url (str "http://localhost:" port "/")]
-    (srv/run-server #'routes {:port port})
-    (println "serving" url)
-    (browse/browse-url url)
+(defn -main [& args]
+  (let [config (load-config :merge [(from-env)])
+               port (:port config)
+               db-location (:db config) ]
+    (reset! db db-location)
+    (prepare-db)
+    (srv/run-server (-> routes (file/wrap-file "./public") params/wrap-params) {:port port})
     @(promise)))
