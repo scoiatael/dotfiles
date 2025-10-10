@@ -2,6 +2,7 @@
   (:require [org.httpkit.server :as srv]
             [clojure.math :as math]
             [ring.middleware.file :as file]
+            [clojure.pprint :as pprint]
             [cprop.core :refer [load-config]]
             [cprop.source :refer [from-env]]
             [ring.middleware.params :as params]
@@ -95,13 +96,26 @@
     :query-string query-string
     :scheme scheme
     :request-method request-method
-    :body (slurp body)}))
+    :body (when body (slurp body))}))
 
 (defn post-webhook [channel-id req]
   (let [id (uuid/gen-uuid)
         insert-sql (insert-webhook {:channel-id channel-id :id id :payload (serialize req)})   ]
     (sqlite/execute! @db insert-sql)
     {:status 204}))
+
+(defn render-webhook [{:keys [id payload]}]
+  (let [parsed (json/read-str payload)
+               rest (dissoc parsed :body) 
+               body (:body parsed)
+               out (java.io.StringWriter.)]
+(pprint/pprint rest out)
+    [:div.key-block
+     [:div.title
+      [:p [:strong "ID: "] id ]]
+     [:div [:p "Request details & headers"]
+           [:pre.key-content (.toString out)]]
+     (when body [:div [:p "Request content"] [:pre.key-content body]])]))
 
 (defn get-channel [id {:keys [params] :as req}]
   (let [offset (Integer/parseInt (get params "offset" "0"))
@@ -121,11 +135,8 @@
                  [:div.back-link [:a {:disabled (not (< 0 current-page)) :href prev-page-url} "Previous"]]
                  [:span "page " (inc current-page) " out of " (inc pages)]
                  [:div.back-link [:a {:disabled (not (> pages  current-page)) :href next-page-url} "Next"]]]
-                (for [{:keys [id payload]} webhooks]
-                  [:div.key-block
-                   [:div.title
-                    [:p [:strong "ID: "] id ]]
-                   [:pre.key-content payload]])])}))
+                (for [webhook webhooks]
+                  (render-webhook webhook))])}))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Routes
@@ -145,12 +156,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn -main [& args]
-  (let [config (load-config :merge [(from-env)])
-        port (:port config)
-        db-location (:db config)
-        proxy (:proxy config)
-        wrap-proxy (if proxy (fn [h] (-> h ssl/wrap-forwarded-scheme proxy-headers/wrap-forwarded-remote-addr)) (fn [h] h)) ]
-    (reset! db db-location)
-    (prepare-db)
-    (srv/run-server (-> routes (file/wrap-file "./public") params/wrap-params wrap-proxy) {:port port})
-    @(promise)))
+      (let [config (load-config :merge [(from-env)])
+                   port (:port config)
+                   db-location (:db config)
+                   proxy (:proxy config)
+                   wrap-proxy (if proxy (fn [h] (-> h ssl/wrap-forwarded-scheme proxy-headers/wrap-forwarded-remote-addr)) (fn [h] h)) ]
+        (reset! db db-location)
+        (prepare-db)
+        (srv/run-server (-> routes (file/wrap-file "./public") params/wrap-params wrap-proxy) {:port port})
+        @(promise)))
