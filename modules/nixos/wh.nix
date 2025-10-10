@@ -19,6 +19,7 @@ in {
         "DB=/var/lib/wh/db.sqlite3"
         "PORT=3001"
         "BABASHKA_PODS_DIR=/var/cache/wh/pods"
+        "PROXY=true"
       ];
       # Required for babashka pods to work
       ExecPaths = "/var/cache/wh/pods";

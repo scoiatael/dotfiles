@@ -3,6 +3,8 @@
  :deps {ring/ring-core {:mvn/version "1.15.0"}
         honeysql/honeysql {:mvn/version "1.0.444"}
         org.babashka/json {:mvn/version "0.1.6"}
+        ring/ring-headers {:mvn/version "0.4.0"}
+        ring/ring-ssl {:mvn/version "0.4.0"}
         cprop/cprop {:mvn/version "0.1.21"}
         hiccup/hiccup {:mvn/version "2.0.0"}}
  :pods {org.babashka/go-sqlite3 {:version "0.3.9"}}}

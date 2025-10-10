@@ -5,6 +5,8 @@
             [cprop.core :refer [load-config]]
             [cprop.source :refer [from-env]]
             [ring.middleware.params :as params]
+            [ring.middleware.proxy-headers :as proxy-headers]
+            [ring.middleware.ssl :as ssl]
             [babashka.json :as json]
             [clojure.core.match :refer [match]]
             [clojure.string :as str]
@@ -144,9 +146,11 @@
 
 (defn -main [& args]
   (let [config (load-config :merge [(from-env)])
-               port (:port config)
-               db-location (:db config) ]
+        port (:port config)
+        db-location (:db config)
+        proxy (:proxy config)
+        wrap-proxy (if proxy (fn [h] (-> h ssl/wrap-forwarded-scheme proxy-headers/wrap-forwarded-remote-addr)) (fn [h] h)) ]
     (reset! db db-location)
     (prepare-db)
-    (srv/run-server (-> routes (file/wrap-file "./public") params/wrap-params) {:port port})
+    (srv/run-server (-> routes (file/wrap-file "./public") params/wrap-params wrap-proxy) {:port port})
     @(promise)))
