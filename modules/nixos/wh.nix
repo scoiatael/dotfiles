@@ -35,8 +35,11 @@ in {
       add_header X-Cache $upstream_cache_status;
     '';
     locations = {
-      "/".proxyPass = "http://localhost:3001";
+      "/".proxyPass =
+        "http://unix:${config.services.anubis.instances.wh.settings.BIND}";
+      "/webhook".proxyPass = "http://localhost:3001";
       "~ .css".root = "${drv}/public";
     };
   };
+  services.anubis.instances.wh.settings.TARGET = "http://localhost:3001";
 }
