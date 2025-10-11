@@ -3,7 +3,7 @@
 let
   runFile = pkgs.writeShellApplication {
     name = "wh";
-    runtimeInputs = with pkgs; [ babashka clojure ];
+    runtimeInputs = with pkgs; [ babashka clojure age ];
     text = ''
       cd "$(dirname "$0")/../" || exit 1
       bb -m wh.server

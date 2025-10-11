@@ -2,4 +2,4 @@
 
 with pkgs;
 
-mkShell { buildInputs = with pkgs; [ babashka watchexec ]; }
+mkShell { buildInputs = with pkgs; [ babashka watchexec age ]; }
