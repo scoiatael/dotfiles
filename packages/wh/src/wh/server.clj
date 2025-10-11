@@ -172,8 +172,9 @@
         port (:port config)
         db-location (:db config)
         proxy (:proxy config)
-        wrap-proxy (if proxy (fn [h] (-> h ssl/wrap-forwarded-scheme proxy-headers/wrap-forwarded-remote-addr)) (fn [h] h)) ]
-    (reset! db db-location)
+        wrap-proxy (if proxy (fn [h] (-> h ssl/wrap-forwarded-scheme proxy-headers/wrap-forwarded-remote-addr)) (fn [h] h))
+        db-conn (sqlite/get-connection db-location) ]
+    (reset! db db-conn)
     (prepare-db)
     (srv/run-server (-> routes (file/wrap-file "./public") params/wrap-params wrap-proxy cookies/wrap-cookies) {:port port})
     @(promise)))
