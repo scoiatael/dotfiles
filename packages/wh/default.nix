@@ -1,9 +1,10 @@
 { pkgs ? import <nixpkgs> { }, ... }:
 
 let
+  clojure = pkgs.clojure.override { jdk = pkgs.graalvmPackages.graalvm-ce; };
   runFile = pkgs.writeShellApplication {
     name = "wh";
-    runtimeInputs = with pkgs; [ clojure age ];
+    runtimeInputs = [ clojure pkgs.age ];
     text = ''
       cd "$(dirname "$0")/../" || exit 1
       clj -M -m wh.server
