@@ -3,10 +3,10 @@
 let
   runFile = pkgs.writeShellApplication {
     name = "wh";
-    runtimeInputs = with pkgs; [ babashka clojure age ];
+    runtimeInputs = with pkgs; [ clojure age ];
     text = ''
       cd "$(dirname "$0")/../" || exit 1
-      bb -m wh.server
+      clj -M -m wh.server
     '';
   };
 in pkgs.stdenv.mkDerivation {
@@ -18,7 +18,7 @@ in pkgs.stdenv.mkDerivation {
     mkdir -p $out/bin
     cp -r $src/src $out/src
     cp -r $src/public $out/public
-    cp -r $src/bb.edn $out/bb.edn
+    cp -r $src/deps.edn $out/deps.edn
     cp ${pkgs.lib.getExe runFile} $out/bin/wh
   '';
 }

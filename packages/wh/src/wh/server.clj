@@ -13,8 +13,8 @@
             [babashka.json :as json]
             [clojure.core.match :refer [match]]
             [clojure.string :as str]
-            [pod.babashka.go-sqlite3 :as sqlite]
             [wh.uuid :as uuid]
+            [next.jdbc :as jdbc]
             [honeysql.core :as sql]
             [honeysql.helpers :as helpers]
             [hiccup.page :as page]))
@@ -22,8 +22,8 @@
 (def db (atom ":memory:"))
 
 (defn- prepare-db []
-  (sqlite/execute! @db ["create table if not exists channels (id TEXT, public_key TEXT, created_at TEXT)"])
-  (sqlite/execute! @db ["create table if not exists webhooks (id TEXT, channel_id TEXT, payload TEXT)"]))
+  (jdbc/execute! @db ["create table if not exists channels (id TEXT, public_key TEXT, created_at TEXT)"])
+  (jdbc/execute! @db ["create table if not exists webhooks (id TEXT, channel_id TEXT, payload TEXT)"]))
 
 (defn template [& body]
   (page/html5
@@ -76,7 +76,7 @@
         post-url (self-webhook-url id req)
         self-url (self-channel-url id req)
         key (age/keygen) ]
-    (sqlite/execute! @db (insert-channel id key))
+    (jdbc/execute! @db (insert-channel id key))
     {:cookies {id (:secret-key key)}
      :body (template [:div
                       [:h3 "Channel setup"]
@@ -106,14 +106,14 @@
        (age/encrypt public-key)))
 
 (defn post-webhook [channel-id req]
-  (if-let [public-key (-> (sqlite/query @db (sql/format {:select [:public-key] :from [:channels] :where [:= :id channel-id]})) first :public_key)]
+  (if-let [public-key (-> (jdbc/execute-one! @db (sql/format {:select [:public-key] :from [:channels] :where [:= :id channel-id]})) :channels/public_key)]
     (let [id (uuid/gen-uuid)
           insert-sql (insert-webhook {:channel-id channel-id :id id :payload (serialize req public-key)})   ]
-      (sqlite/execute! @db insert-sql)
+      (jdbc/execute! @db insert-sql)
       {:status 204})
     {:status 400}))
 
-(defn render-webhook [{:keys [id payload]} secret-key]
+(defn render-webhook [{:keys [webhooks/id webhooks/payload]} secret-key]
   (let [parsed (->> payload (age/decrypt secret-key) json/read-str)
         rest (dissoc parsed :body) 
         body (:body parsed)
@@ -131,8 +131,8 @@
     (let [offset (Integer/parseInt (get params "offset" "0"))
           secret-key (:value channel-cookie)
           limit (min (Integer/parseInt (get params "limit" "20")) 100)
-          total (-> (sqlite/query @db (sql/format {:select [[:%count.* :total]] :from   [:webhooks] :where  [:= :channel-id id]})) first :total)
-          webhooks (sqlite/query @db (get-webhooks {:channel-id id :offset offset :limit limit}))
+          total (-> (jdbc/execute-one! @db (sql/format {:select [[:%count.* :total]] :from   [:webhooks] :where  [:= :channel-id id]})) :total)
+          webhooks (jdbc/execute! @db (get-webhooks {:channel-id id :offset offset :limit limit}))
           next-page-url (str "?offset=" (+ limit offset) "&limit=" limit)
           prev-page-url (str "?offset=" (- offset limit) "&limit=" limit)
           pages (int (math/floor (/ total limit)))
@@ -173,8 +173,9 @@
         db-location (:db config)
         proxy (:proxy config)
         wrap-proxy (if proxy (fn [h] (-> h ssl/wrap-forwarded-scheme proxy-headers/wrap-forwarded-remote-addr)) (fn [h] h))
-        db-conn (sqlite/get-connection db-location) ]
+        db-conn (jdbc/get-datasource (str "jdbc:sqlite:" db-location))]
     (reset! db db-conn)
     (prepare-db)
-    (srv/run-server (-> routes (file/wrap-file "./public") params/wrap-params wrap-proxy cookies/wrap-cookies) {:port port})
-    @(promise)))
+    (srv/run-server
+     (-> routes (file/wrap-file "./public") params/wrap-params wrap-proxy cookies/wrap-cookies)
+     {:port port})))
