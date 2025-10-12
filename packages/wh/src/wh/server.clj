@@ -1,4 +1,5 @@
 (ns wh.server 
+ (:gen-class)
   (:require [org.httpkit.server :as srv]
             [clojure.math :as math]
             [wh.age :as age]
@@ -168,7 +169,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn -main [& args]
-  (let [config (load-config :merge [(from-env)])
+  (let [config (load-config :file "config.edn" :merge [(from-env)])
         port (:port config)
         db-location (:db config)
         proxy (:proxy config)

@@ -1,6 +1,22 @@
 { config, lib, pkgs, ... }:
 
-let drv = pkgs.callPackage ../../packages/wh { };
+let
+  drv = pkgs.callPackage ../../packages/wh { };
+  build = pkgs.writeShellScript "build-wh" ''
+    set -exuo pipefail
+    cd /run/wh-build
+    cp -r ${drv}/deps.edn ./
+    cp -r ${drv}/src ./
+    cp -r ${drv}/build* ./
+    ${pkgs.clojure}/bin/clj -T:build uber
+    ${pkgs.graalvmPackages.graalvm-ce}/bin/native-image \
+         --report-unsupported-elements-at-runtime \
+         -H:-CheckToolchain \
+         --initialize-at-build-time \
+         --no-server \
+         -jar ./target/lib1-0.0.0-standalone.jar \
+         -H:Name=./target/hello-world
+  '';
 in {
   systemd.services.wh = {
     enable = true;
@@ -9,18 +25,21 @@ in {
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
     serviceConfig = {
-      ExecStart = "${drv}/bin/wh";
+      ExecStart = "/var/cache/target/hello-world";
+      ExecStartPre = build;
+      ExecPaths = "/run/wh-build";
       DynamicUser = true;
       Restart = "on-failure";
       CacheDirectory = "wh";
       StateDirectory = "wh";
+      RuntimeDirectory = "wh-build";
       Environment = [
         "HOME=/var/cache/wh"
         "DB=/var/lib/wh/db.sqlite3"
         "PORT=3001"
         "PROXY=true"
       ];
-      MemoryMax = "300M";
+      TimeoutStartSec = "infinity";
     };
   };
   services.nginx.virtualHosts."wh.scoiatael.dev" = {

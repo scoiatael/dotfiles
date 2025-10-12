@@ -20,6 +20,7 @@ in pkgs.stdenv.mkDerivation {
     cp -r $src/src $out/src
     cp -r $src/public $out/public
     cp -r $src/deps.edn $out/deps.edn
+    cp -r $src/build.clj $out/build.clj
     cp ${pkgs.lib.getExe runFile} $out/bin/wh
   '';
 }
