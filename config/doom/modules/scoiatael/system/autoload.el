@@ -33,14 +33,21 @@ current window."
       (ignore)
     (apply old-fun format args)))
 
-(defvar scoiatael/+format-on-save-enabled-modes nil)
+(defvar-local scoiatael/+format-on-save-disabled-modes nil)
 
 ;;;###autoload
 (defun scoiatael/toggle-format-on-save ()
   (interactive)
-  (let ((oldvalue scoiatael/+format-on-save-enabled-modes))
-    (setq scoiatael/+format-on-save-enabled-modes +format-on-save-enabled-modes)
-    (setq +format-on-save-enabled-modes oldvalue)))
+  (let ((oldvalue scoiatael/+format-on-save-disabled-modes))
+    (if oldvalue
+        ;; Return to previous values
+        (progn
+          (setq scoiatael/+format-on-save-disabled-modes nil)
+          (setq +format-on-save-disabled-modes oldvalue))
+      ;; Add current mode to disabled modes
+      (progn
+        (setq scoiatael/+format-on-save-disabled-modes +format-on-save-disabled-modes)
+        (pushnew! +format-on-save-disabled-modes major-mode)))))
 
 ;;;###autoload
 (defmacro scoiatael/defer (&rest body) `(run-at-time 1 nil (lambda () ,(cons 'progn body))))
