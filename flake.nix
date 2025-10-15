@@ -321,6 +321,11 @@
               specialArgs = attrs;
               modules = [ ./nixos/prg-vps-1/configuration.nix ];
             };
+            sd-161581 = nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              specialArgs = attrs;
+              modules = [ ./nixos/sd-161581/configuration.nix ];
+            };
             demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
               system = "aarch64-linux";
               specialArgs = attrs;

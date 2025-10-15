@@ -20,4 +20,6 @@ deploy target flake:
 
 deploy-prg-vps-1: (deploy "root@dev.scoiatael.omg.lol" ".#prg-vps-1" )
 
+deploy-sd-161581: (deploy "root@sd-161581.scoiatael.omg.lol" ".#sd-161581" )
+
 
