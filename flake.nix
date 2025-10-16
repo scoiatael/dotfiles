@@ -1,6 +1,8 @@
 {
   description = "Home-manager configuration";
 
+  inputs.nix-index-database.url = "github:nix-community/nix-index-database";
+  inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   inputs.just-flake.url = "github:wootingkb/just-flake";
   inputs.flake-parts.url = "github:hercules-ci/flake-parts";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -226,6 +228,8 @@
                 ./modules/neovim.nix
                 # (import ./modules/\fastanime.nix attrs)
                 (import ./modules/nix-search.nix attrs)
+                attrs.nix-index-database.homeModules.nix-index
+                { programs.nix-index-database.comma.enable = true; }
                 {
                   home = {
                     username = "lukaszczaplinski";
