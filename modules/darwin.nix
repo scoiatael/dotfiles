@@ -21,7 +21,7 @@
   homebrew = {
     enable = true;
     casks = [
-      "syncthing"
+      "syncthing-app"
       "raycast"
       "signal"
       "yubico-authenticator"

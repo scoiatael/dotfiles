@@ -10,7 +10,7 @@
     }];
     casks = [
       "raindropio"
-      "todoist"
+      "todoist-app"
       "discord"
       "steam"
       "bettertouchtool"
