@@ -18,24 +18,25 @@
   inputs.lanzaboote = {
     url = "github:nix-community/lanzaboote";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-parts.follows = "flake-parts";
   };
-  inputs.walker.url = "github:abenz1267/walker";
-  inputs.fastanime = {
-    url = "github:Benexl/FastAnime";
+  inputs.walker = {
+    url = "github:abenz1267/walker";
     inputs.nixpkgs.follows = "nixpkgs";
+    inputs.elephant.inputs.nixpkgs.follows = "nixpkgs";
   };
+  # inputs.fastanime = {
+  #   url = "github:Benexl/FastAnime";
+  #   inputs.nixpkgs.follows = "nixpkgs";
+  # };
   inputs.doomemacs = {
     url = "github:doomemacs/doomemacs";
     flake = false;
   };
-  inputs.gitAlias = {
-    url = "github:GitAlias/gitalias";
-    flake = false;
-  };
-  inputs.nixSearch = {
-    url = "github:diamondburned/nix-search";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  # inputs.gitAlias = {
+  #   url = "github:GitAlias/gitalias";
+  #   flake = false;
+  # };
   inputs.lix = {
     url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
     flake = false;
@@ -96,7 +97,6 @@
                 ./modules/wezterm.nix
                 ./modules/llm.nix
                 ./modules/neovim.nix
-                (import ./modules/nix-search.nix attrs)
                 ({ pkgs, ... }: {
                   programs.emacs.package = pkgs.emacs-macport.override {
                     withNativeCompilation = false;
@@ -226,8 +226,6 @@
                 ./modules/tmux.nix
                 (import ./modules/zsh.nix attrs)
                 ./modules/neovim.nix
-                # (import ./modules/\fastanime.nix attrs)
-                (import ./modules/nix-search.nix attrs)
                 attrs.nix-index-database.homeModules.nix-index
                 { programs.nix-index-database.comma.enable = true; }
                 {
