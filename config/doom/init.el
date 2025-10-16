@@ -218,6 +218,7 @@
        email
        narrow
        ruby
+       just
        ;;gleam             ; uncomment to enable gleam support
        ;;spacehammer       ; uncomment to enable spacehammer integration
        )
