@@ -300,25 +300,10 @@
           };
 
           nixosConfigurations = {
-            LsNixOS = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = attrs;
-              # Naming is getting fun...
-              modules = [ ./modules/framework.nix ./modules/nixos/keyd.nix ];
-            };
             LsFramework = nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               specialArgs = attrs;
-              modules = [
-                ./modules/nixos.nix
-                ./modules/nixos/smb.nix
-                ./modules/nixos/blocky.nix
-                ./modules/nixos/jellyfin.nix
-                ./modules/nixos/steam.nix
-                ./modules/nixos/scrutiny.nix
-                ./modules/nixos/yarr.nix
-                ./modules/nixos/restic.nix
-              ];
+              modules = [ ./nixos/framework/configuration.nix ];
             };
             prg-vps-1 = nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";

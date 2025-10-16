@@ -1,7 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    ../modules/smb.nix
+    ../modules/blocky.nix
+    ../modules/jellyfin.nix
+    ../modules/steam.nix
+    ../modules/scrutiny.nix
+    ../modules/yarr.nix
+    ../modules/restic.nix
     ./hardware-configuration.nix
   ];
 

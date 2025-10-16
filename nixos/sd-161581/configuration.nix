@@ -2,7 +2,7 @@
   imports = [
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
-    ../../modules/nixos/cli.nix
+    ../modules/cli.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
