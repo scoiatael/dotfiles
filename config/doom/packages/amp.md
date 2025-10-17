@@ -1,56 +1,66 @@
-# Amp.el Security Review Session
+# Amp.el Development Sessions
 
-## Context
-- Reviewed authentication implementation in amp.el (Emacs integration for Amp IDE)
-- File: /Users/lukas/dotfiles/config/doom/packages/amp.el
-- Focus: Authentication security vulnerabilities
+## Session 1: Security Review (Completed)
 
-## Issues Identified (Priority Order)
-1. **CRITICAL: No token validation** - Authentication handler auto-approved without checking token
-2. **CRITICAL: Insecure file permissions** - Lockfile readable by all users with disk access  
+### Issues Fixed
+1. ✅ **CRITICAL: Token Validation** - Authentication handler now validates tokens (lines 213-218)
+2. ✅ **CRITICAL: File Permissions** - Lockfile has restricted permissions (600 file, 700 directory)
+
+### Remaining Security Issues
 3. **HIGH: Insecure token generation** - Uses basic PRNG instead of cryptographically secure random
 4. **MEDIUM: Plain-text token storage** - Token stored unencrypted in JSON file
 5. **LOW: Missing access controls** - No rate limiting or error handling for auth failures
 6. **LOW: No token expiration/rotation** - Tokens persist indefinitely until server restart
 
-## Fixes Applied
-### Issue #1: Token Validation (COMPLETED)
-- Location: Lines 210-216 
-- Changed: Authentication handler now validates provided token against amp--auth-token
-- Before: Auto-approved all auth requests
-- After: Validates token, returns error -32603 for invalid/missing tokens
+## Session 2: IDE Launcher Features (Completed)
 
-### Issue #2: File Permissions (COMPLETED)  
-- Location: Lines 148-154
-- Changed: Set restrictive permissions on lockfile and directory
-- Directory: 700 (owner only)
-- File: 600 (owner read/write only)
-- Always enforces permissions even if directory exists
+### Features Implemented
+1. ✅ **amp-launch-ide command** - Launch amp --ide in terminal
+   - Auto-detects terminal: vterm → term → compile mode
+   - Lines: 636-695
+   - Interactive command: `M-x amp-launch-ide`
 
-## Current Todo State
-```json
-[
-  {"id":"fix-auth-validation","content":"Fix authentication handler to validate tokens instead of auto-approving","status":"completed","priority":"high"},
-  {"id":"fix-file-permissions","content":"Set restrictive permissions on lockfile and directory (600 for file, 700 for directory)","status":"completed","priority":"high"},
-  {"id":"ensure-dir-permissions","content":"Always set directory permissions even if directory already exists","status":"completed","priority":"medium"}
-]
+2. ✅ **project.el integration** - Use project root as workspace
+   - Functions: `amp--get-project-root`, `amp--get-workspace-folders`
+   - Lines: 127-139
+   - Lockfile now uses project root in workspaceFolders
+
+3. ✅ **Connection info display** - Show launch command on server start
+   - Lines: 593-603
+   - Displays in message and *amp-log* buffer
+   - Shows workspace, port, and full command
+
+### New Configuration Options
+- `amp-executable` - Path to amp executable (default: "amp")
+- `amp-ide-terminal-function` - Custom terminal launcher (default: auto-detect)
+
+### Usage
+```elisp
+;; Start server
+M-x amp-start
+
+;; Launch IDE in terminal
+M-x amp-launch-ide
+
+;; Customize amp executable path
+(setq amp-executable "/usr/local/bin/amp")
+
+;; Use custom terminal function
+(setq amp-ide-terminal-function #'my-custom-launcher)
 ```
 
-## Remaining Issues to Address
-3. **Insecure token generation** (amp--generate-auth-token, lines 130-136)
-4. **Plain-text token storage** (lockfile creation, lines 138-152)  
-5. **Missing access controls** (request handling, lines 202-267)
-6. **No token expiration/rotation** (server lifecycle)
-
 ## Key Code Locations
-- Token generation: lines 130-136
-- Lockfile creation: lines 138-152  
-- Authentication handler: lines 210-216
-- WebSocket request handling: lines 190-267
-- Auth token storage: line 63 (amp--auth-token variable)
+- Configuration: lines 45-66
+- Project integration: lines 127-139
+- Token generation: lines 158-164
+- Lockfile creation: lines 166-182
+- Authentication handler: lines 213-218
+- IDE launcher: lines 636-695
+- WebSocket request handling: lines 204-287
 
 ## Implementation Notes
-- Auth token stored in global var amp--auth-token
-- Lockfile path: ~/.local/share/amp/ide/{port}.json
+- Auth token stored in global var `amp--auth-token`
+- Lockfile path: `~/.local/share/amp/ide/{port}.json`
 - WebSocket server handles IDE protocol requests
 - Uses websocket.el package for WebSocket functionality
+- Requires project.el for workspace detection

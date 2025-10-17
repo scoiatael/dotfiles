@@ -34,6 +34,7 @@
 (require 'json)
 (require 'websocket)
 (require 'cl-lib)
+(require 'project)
 
 ;;; Configuration
 
@@ -46,10 +47,23 @@
   "Logging level for Amp plugin.
 One of: trace, debug, info, warn, error."
   :type '(choice (const :tag "Trace" trace)
-                 (const :tag "Debug" debug)
-                 (const :tag "Info" info)
-                 (const :tag "Warn" warn)
-                 (const :tag "Error" error))
+          (const :tag "Debug" debug)
+          (const :tag "Info" info)
+          (const :tag "Warn" warn)
+          (const :tag "Error" error))
+  :group 'amp)
+
+(defcustom amp-executable "amp"
+  "Path to the amp executable."
+  :type 'string
+  :group 'amp)
+
+(defcustom amp-ide-terminal-function nil
+  "Function to launch amp --ide in a terminal.
+If nil, auto-detect based on available terminals (vterm, term, compile).
+Function should accept a command string as argument."
+  :type '(choice (const :tag "Auto-detect" nil)
+          (function :tag "Custom function"))
   :group 'amp)
 
 ;;; State
@@ -110,6 +124,20 @@ One of: trace, debug, info, warn, error."
 
 ;;; Utility Functions
 
+(defun amp--get-project-root ()
+  "Get the current project root directory."
+  (when-let ((project (project-current)))
+    (if (fboundp 'project-root)
+        (project-root project)
+      (car (project-roots project)))))
+
+(defun amp--get-workspace-folders ()
+  "Get workspace folders for the current project."
+  (let ((root (amp--get-project-root)))
+    (if root
+        (vector root)
+      ["/"])))
+
 (defun amp--get-data-home ()
   "Get the data directory for Amp, following the same logic as amp.nvim."
   (or (getenv "AMP_DATA_HOME")
@@ -143,7 +171,7 @@ One of: trace, debug, info, warn, error."
                      `((port . ,port)
                        (authToken . ,auth-token)
                        (pid . ,(emacs-pid))
-                       (workspaceFolders . ["/"])
+                       (workspaceFolders . ,(amp--get-workspace-folders))
                        (ideName . ,(format "Emacs %s" emacs-version))))))
     (unless (file-directory-p lock-dir)
       (make-directory lock-dir t))
@@ -241,21 +269,21 @@ One of: trace, debug, info, warn, error."
           (if (not full-content)
               (amp--send-ide ws (amp--wrap-error id '((code . -32602) (message . "Invalid params") (data . "editFile requires fullContent parameter"))))
             (condition-case err
-            (let* ((full-path (expand-file-name path))
-            (bufnr (or (find-buffer-visiting full-path)
-            (find-file-noselect full-path))))
-            (with-current-buffer bufnr
-            (let ((saved-point (point))
-                  (saved-window-start (and (get-buffer-window bufnr)
-                                          (window-start (get-buffer-window bufnr)))))
-                (erase-buffer)
-                       (insert full-content)
-                       (goto-char (min saved-point (point-max)))
-                       (when saved-window-start
-                         (set-window-start (get-buffer-window bufnr)
+                (let* ((full-path (expand-file-name path))
+                       (bufnr (or (find-buffer-visiting full-path)
+                                  (find-file-noselect full-path))))
+                  (with-current-buffer bufnr
+                    (let ((saved-point (point))
+                          (saved-window-start (and (get-buffer-window bufnr)
+                                                   (window-start (get-buffer-window bufnr)))))
+                      (erase-buffer)
+                      (insert full-content)
+                      (goto-char (min saved-point (point-max)))
+                      (when saved-window-start
+                        (set-window-start (get-buffer-window bufnr)
                                           (min saved-window-start (point-max))))
-                       (save-buffer)))
-                   (amp--send-ide ws (amp--wrap-response id `((editFile . ((success . t) (message . ,(format "Edit applied successfully to %s" path)) (appliedChanges . t)))))))
+                      (save-buffer)))
+                  (amp--send-ide ws (amp--wrap-response id `((editFile . ((success . t) (message . ,(format "Edit applied successfully to %s" path)) (appliedChanges . t)))))))
               (error
                (amp--send-ide ws (amp--wrap-response id `((editFile . ((success . :json-false) (message . ,(error-message-string err)))))))))))))
 
@@ -324,12 +352,12 @@ One of: trace, debug, info, warn, error."
              (line (1- (line-number-at-pos pos)))
              (col (- pos (line-beginning-position)))
              (line-content (buffer-substring-no-properties
-                           (line-beginning-position)
-                           (line-end-position))))
+                            (line-beginning-position)
+                            (line-end-position))))
         `((text . "")
           (fileUrl . ,uri)
           (selection . ((start . ((line . ,line) (character . ,col)))
-                       (end . ((line . ,line) (character . ,col)))))
+                        (end . ((line . ,line) (character . ,col)))))
           (lineContent . ,line-content))))))
 
 (defun amp--get-visual-selection ()
@@ -346,7 +374,7 @@ One of: trace, debug, info, warn, error."
       `((text . ,text)
         (fileUrl . ,uri)
         (selection . ((start . ((line . ,start-line) (character . ,start-col)))
-                     (end . ((line . ,end-line) (character . ,end-col)))))))))
+                      (end . ((line . ,end-line) (character . ,end-col)))))))))
 
 (defun amp--get-current-selection ()
   "Get the current selection (visual or cursor)."
@@ -358,10 +386,10 @@ One of: trace, debug, info, warn, error."
   (let ((sel (alist-get 'selection selection)))
     `((uri . ,(alist-get 'fileUrl selection))
       (selections . [((range . ((startLine . ,(alist-get 'line (alist-get 'start sel)))
-                               (startCharacter . ,(alist-get 'character (alist-get 'start sel)))
-                               (endLine . ,(alist-get 'line (alist-get 'end sel)))
-                               (endCharacter . ,(alist-get 'character (alist-get 'end sel)))))
-                     (content . ,(alist-get 'text selection)))]))))
+                                (startCharacter . ,(alist-get 'character (alist-get 'start sel)))
+                                (endLine . ,(alist-get 'line (alist-get 'end sel)))
+                                (endCharacter . ,(alist-get 'character (alist-get 'end sel)))))
+                      (content . ,(alist-get 'text selection)))]))))
 
 (defun amp--selection-changed-p (new-selection)
   "Check if NEW-SELECTION is different from the last broadcast selection."
@@ -438,8 +466,8 @@ One of: trace, debug, info, warn, error."
            (end-line (progn (goto-char end) (1- (line-number-at-pos))))
            (end-col (- end (line-beginning-position)))
            (line-content (buffer-substring-no-properties
-                         (line-beginning-position)
-                         (line-end-position))))
+                          (line-beginning-position)
+                          (line-end-position))))
       `((range . ((startLine . ,beg-line)
                   (startCharacter . ,beg-col)
                   (endLine . ,end-line)
@@ -463,15 +491,15 @@ Returns an array of entries with uri and diagnostics."
           (when (string-prefix-p abs-path abs-buf-name)
             (with-current-buffer buf
               (when (and (featurep 'flymake)
-                        (bound-and-true-p flymake-mode))
+                         (bound-and-true-p flymake-mode))
                 (let ((diags (mapcar #'amp--diagnostic-to-protocol
-                                   (flymake-diagnostics))))
+                                     (flymake-diagnostics))))
                   (when diags
                     (let ((uri (concat "file://" abs-buf-name)))
                       (puthash uri
-                              `((uri . ,uri)
-                                (diagnostics . ,(vconcat diags)))
-                              entries-by-uri))))))))))
+                               `((uri . ,uri)
+                                 (diagnostics . ,(vconcat diags)))
+                               entries-by-uri))))))))))
     ;; Convert hash table to array
     (let ((entries nil))
       (maphash (lambda (_key value)
@@ -529,7 +557,7 @@ Returns an array of entries with uri and diagnostics."
                :on-message #'amp--handle-websocket-message
                :on-close #'amp--on-client-disconnect
                :on-error (lambda (_ws type err)
-                          (amp--log 'error "server" "WebSocket error (%s): %s" type err))))
+                           (amp--log 'error "server" "WebSocket error (%s): %s" type err))))
       (error
        (amp--log 'error "server" "Failed to start server: %s" (error-message-string err))
        (user-error "Failed to start Amp server: %s" (error-message-string err))))
@@ -563,7 +591,17 @@ Returns an array of entries with uri and diagnostics."
                        `((pluginMetadata . ((version . "0.1.0")))))))
 
     (amp--log 'info "server" "Server started on port %d" port)
-    (message "Amp server started on port %d" port)))
+    (let* ((workspace (or (amp--get-project-root) default-directory))
+           (cmd (format "%s --ide --workspace %s" amp-executable (shell-quote-argument workspace))))
+      (message "Amp server started on port %d. Launch IDE with: M-x amp-launch-ide" port)
+      (with-current-buffer (get-buffer-create amp--log-buffer)
+        (goto-char (point-max))
+        (insert (format "\n=== Connection Info ===\n"))
+        (insert (format "Port: %d\n" port))
+        (insert (format "Workspace: %s\n" workspace))
+        (insert (format "Command: %s\n" cmd))
+        (insert (format "Or run: M-x amp-launch-ide\n"))
+        (insert (format "======================\n\n"))))))
 
 ;;;###autoload
 (defun amp-stop ()
@@ -602,6 +640,40 @@ Returns an array of entries with uri and diagnostics."
           (amp--log 'info "status" "Last error: %s" (caddr amp--last-error))))
     (message "Amp server is not running")
     (amp--log 'info "status" "Server is not running")))
+
+;;; Amp IDE Launcher
+
+(defun amp--launch-in-vterm (workspace)
+  "Launch amp --ide directly in vterm with WORKSPACE as default directory."
+  (require 'vterm)
+  (let* ((default-directory workspace)
+         (buf-name (format "*amp-ide: %s*" (file-name-nondirectory (directory-file-name workspace))))
+         (buf (get-buffer buf-name)))
+    (if buf
+        (progn
+          (pop-to-buffer buf)
+          buf)
+      (let ((vterm-shell (format "%s --ide" amp-executable)))
+        (vterm buf-name)
+        (with-current-buffer buf-name
+          (use-local-map (copy-keymap vterm-mode-map))
+          (local-set-key (kbd "C-c C-c") #'vterm-send-C-c)
+          (local-set-key (kbd "C-g") #'vterm-send-C-g)
+          (current-buffer))))))
+
+;;;###autoload
+(defun amp-launch-ide ()
+  "Launch amp --ide in vterm with the current project workspace."
+  (interactive)
+  (unless amp--server
+    (user-error "Amp server is not running. Start it with M-x amp-start"))
+  (unless (fboundp 'vterm)
+    (user-error "vterm is required to launch amp --ide"))
+  
+  (let ((workspace (or (amp--get-project-root) default-directory)))
+    (amp--log 'info "launcher" "Launching amp --ide in %s" workspace)
+    (amp--launch-in-vterm workspace)
+    (message "Launched amp --ide for workspace: %s" workspace)))
 
 ;;;###autoload
 (defun amp-send-message (message)
