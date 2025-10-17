@@ -47,3 +47,6 @@
   :when (modulep! +shell)
   :custom
   (chatgpt-shell-anthropic-key (lambda () (password-store-get "anthropic-com-api-token"))))
+
+(use-package! amp
+  :when (modulep! +amp))
