@@ -44,7 +44,11 @@ in {
 
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: [ epkgs.vterm epkgs.jinx ];
+    extraPackages = epkgs: [
+      epkgs.vterm
+      epkgs.jinx
+      epkgs.treesit-grammars.with-all-grammars
+    ];
   };
   programs.zsh.sessionVariables = {
     DOOMLOCALDIR = "$HOME/.emacs.local";
@@ -74,9 +78,6 @@ in {
     (setenv "SSH_AUTH_SOCK" (expand-file-name "S.gpg-agent.ssh" (file-name-as-directory "~/.gnupg/")))
     (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)
   '';
-  home.file.".emacs.d/tree-sitter".source =
-    # TODO: make it smaller?
-    (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p));
   home.file.".config/enchant/hunspell/".source = pkgs.symlinkJoin {
     name = "hunspell-dicts";
     paths = [
