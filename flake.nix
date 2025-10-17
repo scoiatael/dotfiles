@@ -23,7 +23,6 @@
   inputs.walker = {
     url = "github:abenz1267/walker";
     inputs.nixpkgs.follows = "nixpkgs";
-    inputs.elephant.inputs.nixpkgs.follows = "nixpkgs";
   };
   # inputs.fastanime = {
   #   url = "github:Benexl/FastAnime";
