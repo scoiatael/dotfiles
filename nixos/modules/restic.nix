@@ -25,6 +25,14 @@
       passwordFile = "/etc/nixos/secrets/restic-password";
       initialize = true;
     };
+    org-roam = {
+      inherit user;
+      inherit package;
+      paths = [ "/home/lukaszczaplinski/org/roam" ];
+      repository = "/srv/nfs/backups/org-roam";
+      passwordFile = "/etc/nixos/secrets/restic-password";
+      initialize = true;
+    };
     yarr = {
       user = "root"; # Getting r/w on /var/lib/yarr/storage.db is freaking hard
       inherit package;
