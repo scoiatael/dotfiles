@@ -13,7 +13,10 @@
   (require 'ob-async)
   (map! :map org-mode-map :localleader
         "t" #'org-todo)
+  (add-hook 'text-mode-hook #'scoiatael/org-roam-fontify-mode)
+  (add-hook 'prog-mode-hook #'scoiatael/org-roam-fontify-mode)
   (setq
+   org-todo-keywords '((sequence "TODO" "HOLD" "DONE"))
    org-babel-clojure-backend 'babashka
    org-archive-location (concat org-directory "/archive/%s::")
    org-ellipsis " ¼ "
@@ -41,3 +44,4 @@
    org-roam-dailies-capture-templates
    `(("d" "default" plain ""
       :target (file+head "%<%Y-%m-%d>.org" ,(format "%%[%s/template/journal.org]" org-roam-directory))))))
+

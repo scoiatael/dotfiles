@@ -41,7 +41,7 @@
       "g -" #'git-switch-previous-branch
       "s c" #'evil-ex-nohighlight
       "s e" #'iedit-mode
-      "r R" (cmd! (find-file (projectile-rails-expand-root "README.md"))))
+      "r r" #'scoiatael/org-roam-open-id-at-point)
 
 (map! :leader
       "w <left>" #'evil-window-left
