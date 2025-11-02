@@ -22,7 +22,7 @@ in {
       fx
       gitu
       spacer
-      tailspin
+      tailspin # [[id:8042e9e2-b2cb-4c24-bd34-64cc6b56aac7][tailspin]]
       oha
       (pkgs.callPackage ../packages/cometary { })
       (pkgs.callPackage ../packages/human { })
