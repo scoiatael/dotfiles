@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <command>"
+    exit 1
+fi
+
+cmd_path="$(,locate "$1")"
+shift
+
+exec bat "${@}" $cmd_path
+

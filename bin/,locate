@@ -5,6 +5,10 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
+log_error() {
+    echo "$1" >&2
+}
+
 arg="$1"
 cmd_path=$(command -v "$arg")
 
@@ -13,7 +17,7 @@ if [ -z "$cmd_path" ]; then
     exit 1
 fi
 
-echo "Initial path: $cmd_path"
+log_error "Initial path: $cmd_path"
 
 while [ -L "$cmd_path" ]; do
     link_target=$(readlink "$cmd_path")
@@ -26,7 +30,7 @@ while [ -L "$cmd_path" ]; do
         cmd_path="$link_target"
     fi
 
-    echo "Symlink to: $cmd_path"
+    log_error "Symlink to: $cmd_path"
 done
 
-echo "Final destination: $cmd_path"
+echo "$cmd_path"
