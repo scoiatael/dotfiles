@@ -219,6 +219,7 @@
        narrow
        ruby
        just
+       time-zones
        ;;gleam             ; uncomment to enable gleam support
        ;;spacehammer       ; uncomment to enable spacehammer integration
        )
