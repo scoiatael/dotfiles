@@ -97,9 +97,7 @@
                 ./modules/llm.nix
                 ./modules/neovim.nix
                 ({ pkgs, ... }: {
-                  programs.emacs.package = pkgs.emacs-macport.override {
-                    withNativeCompilation = false;
-                  };
+                  programs.emacs.package = pkgs.emacs-macport;
                 })
                 (import ./modules/comma.nix attrs)
                 {
