@@ -101,6 +101,7 @@
                     withNativeCompilation = false;
                   };
                 })
+                (import ./modules/comma.nix attrs)
                 {
                   programs.git.extraConfig.user = {
                     email = "lukasz@wooting.io";
@@ -225,8 +226,7 @@
                 ./modules/tmux.nix
                 (import ./modules/zsh.nix attrs)
                 ./modules/neovim.nix
-                attrs.nix-index-database.homeModules.nix-index
-                { programs.nix-index-database.comma.enable = true; }
+                (import ./modules/comma.nix attrs)
                 {
                   home = {
                     username = "lukaszczaplinski";
