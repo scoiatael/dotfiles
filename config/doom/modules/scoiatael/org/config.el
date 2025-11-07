@@ -39,6 +39,16 @@
       "%(+beancount/clone-transaction)"))))
 
 (after! org-roam
+  (map! :map org-mode-map :localleader
+        "r" #'org-roam-ref-add)
+  (map! :leader
+        :n "N" (lambda ()
+                 (interactive)
+                 (evil-append-line 1)
+                 (insert " ")
+                 (sp-comment)
+                 (org-roam-node-insert)
+                 (evil-normal-state)))
   (setq
    ;; Use human readable dates for dailies titles
    org-roam-dailies-capture-templates
