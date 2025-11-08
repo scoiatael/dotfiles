@@ -96,9 +96,6 @@
                 ./modules/wezterm.nix
                 ./modules/llm.nix
                 ./modules/neovim.nix
-                ({ pkgs, ... }: {
-                  programs.emacs.package = pkgs.emacs-macport;
-                })
                 (import ./modules/comma.nix attrs)
                 {
                   programs.git.extraConfig.user = {
@@ -187,9 +184,6 @@
                   ./modules/tmux.nix
                   (import ./modules/zsh.nix attrs)
                   ./modules/neovim.nix
-                  ({ pkgs, ... }: {
-                    programs.emacs.package = pkgs.emacs-macport;
-                  })
                   {
                     home = {
                       username = "lukaszczaplinski";
@@ -215,11 +209,6 @@
                 ./modules/wezterm.nix
                 (import ./modules/home-manager.nix attrs)
                 (import ./modules/emacs.nix attrs)
-                ({ pkgs, ... }: {
-                  programs.emacs.package = pkgs.emacs-macport.override {
-                    withNativeCompilation = false;
-                  };
-                })
                 ./modules/git.nix
                 ./modules/tmux.nix
                 (import ./modules/zsh.nix attrs)

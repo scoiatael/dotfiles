@@ -49,6 +49,8 @@ in {
       epkgs.jinx
       epkgs.treesit-grammars.with-all-grammars
     ];
+  } // lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+    package = pkgs.emacs-macport;
   };
   programs.zsh.sessionVariables = {
     DOOMLOCALDIR = "$HOME/.emacs.local";
