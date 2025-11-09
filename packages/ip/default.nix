@@ -1,22 +1,15 @@
 { pkgs ? import <nixpkgs> { }, ... }:
 
-let
-  inherit (pkgs) lib;
-  runFile = pkgs.writeShellApplication {
-    name = "ip";
-    text = ''
-      cd "$(dirname "$0")/../" || exit 1
-      ${lib.getExe pkgs.babashka} server.clj
-    '';
-  };
-in pkgs.stdenv.mkDerivation {
-  name = "ip";
+pkgs.buildGoModule {
+  pname = "ip";
+  version = "0.1.0";
   src = ./.;
-  phases = [ "unpackPhase" "buildPhase" "installPhase" ];
 
-  buildPhase = ''
-    mkdir -p $out/bin
-    cp -r $src/* $out/
-    cp ${pkgs.lib.getExe runFile} $out/bin/ip
-  '';
+  vendorHash = null;
+
+  meta = with pkgs.lib; {
+    description = "Simple HTTP server that returns the client's IP address";
+    license = licenses.mit;
+    mainProgram = "ip";
+  };
 }

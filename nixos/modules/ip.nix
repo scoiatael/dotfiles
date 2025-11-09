@@ -12,10 +12,8 @@ in {
       ExecStart = "${drv}/bin/ip";
       DynamicUser = true;
       Restart = "on-failure";
-      CacheDirectory = "ip";
-      StateDirectory = "ip";
-      Environment = [ "HOME=/var/cache/ip" "PORT=3002" "PROXY=true" ];
-      MemoryMax = "300M";
+      Environment = [ "PORT=3002" "PROXY=true" ];
+      MemoryMax = "100M";
     };
   };
   services.nginx.virtualHosts."ip.scoiatael.dev" = {
