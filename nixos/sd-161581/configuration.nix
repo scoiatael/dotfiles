@@ -12,6 +12,8 @@
     ../modules/ip.nix
   ];
 
+  services.kubo.enable = true;
+
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = false;
   networking.hostName = "sd-161581";

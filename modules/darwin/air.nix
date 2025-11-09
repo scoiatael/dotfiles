@@ -33,4 +33,14 @@
       "Proton Pass for Safari" = 6502835663;
     };
   };
+
+  # NOTE: might require
+  # sudo nix store ping --store ssh-ng://builder@linux-builder
+  # to get it working
+  nix.linux-builder = {
+    enable = true;
+    systems = [ "x86_64-linux" ];
+    package = pkgs.darwin.linux-builder-x86_64;
+  };
+  nix.settings.sandbox = true;
 }
