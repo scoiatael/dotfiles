@@ -9,6 +9,7 @@
     ../modules/scrutiny.nix
     ../modules/yarr.nix
     ../modules/restic.nix
+    ../modules/tailscale.nix
     ./hardware-configuration.nix
   ];
 

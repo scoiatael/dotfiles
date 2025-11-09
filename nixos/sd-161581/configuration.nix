@@ -3,6 +3,9 @@
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
     ../modules/cli.nix
+    ../modules/tailscale.nix
+    ../modules/base.nix
+    ../modules/security.nix
   ];
 
   boot.tmp.cleanOnBoot = true;

@@ -5,6 +5,9 @@
     ../modules/octocrypt.nix
     ../modules/wh.nix
     ../modules/ip.nix
+    ../modules/tailscale.nix
+    ../modules/base.nix
+    ../modules/security.nix
   ];
 
   services.nginx = {
