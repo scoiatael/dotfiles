@@ -8,6 +8,8 @@
     ../modules/security.nix
     ../modules/wh.nix
     ../modules/nginx.nix
+    ../modules/octocrypt.nix
+    ../modules/ip.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
