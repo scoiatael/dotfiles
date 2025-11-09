@@ -10,6 +10,7 @@ in {
       nh = lib.getExe pkgs.nh;
       date = "${pkgs.coreutils}/bin/date";
     in {
+      imgcat = "wezterm imgcat";
       da = "direnv allow";
       jl = ''
         just --list --list-heading="" | fzf --reverse | choose 0 | xargs just
