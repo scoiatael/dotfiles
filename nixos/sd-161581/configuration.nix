@@ -6,6 +6,8 @@
     ../modules/tailscale.nix
     ../modules/base.nix
     ../modules/security.nix
+    ../modules/wh.nix
+    ../modules/nginx.nix
   ];
 
   boot.tmp.cleanOnBoot = true;

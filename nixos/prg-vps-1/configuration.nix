@@ -3,27 +3,12 @@
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
     ../modules/octocrypt.nix
-    ../modules/wh.nix
     ../modules/ip.nix
     ../modules/tailscale.nix
     ../modules/base.nix
     ../modules/security.nix
+    ../modules/nginx.nix
   ];
-
-  services.nginx = {
-    enable = true;
-
-    # enable recommended settings
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedTlsSettings = true;
-    recommendedProxySettings = true;
-
-    proxyCachePath = { "cache" = { enable = true; }; };
-  };
-  security.acme.defaults.email = "acme@scoiatael.dev";
-  security.acme.acceptTerms = true;
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
