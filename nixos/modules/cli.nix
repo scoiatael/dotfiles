@@ -9,5 +9,7 @@
     tree
     dust
     tailspin
+    nix-tree
+    doggo
   ];
 }
