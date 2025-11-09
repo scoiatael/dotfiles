@@ -10,6 +10,7 @@
     ../modules/nginx.nix
     ../modules/octocrypt.nix
     ../modules/ip.nix
+    ../modules/telegraf.nix
   ];
 
   services.kubo.enable = true;

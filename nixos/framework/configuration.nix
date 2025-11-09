@@ -10,6 +10,7 @@
     ../modules/yarr.nix
     ../modules/restic.nix
     ../modules/tailscale.nix
+    ../modules/telegraf.nix
     ./hardware-configuration.nix
   ];
 
