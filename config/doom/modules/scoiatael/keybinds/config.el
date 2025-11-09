@@ -23,6 +23,11 @@
       :n "M-<left>"  #'evil-window-left
       :n "M-<down>"  #'evil-window-down)
 
+(map! :n "s-[" #'+workspace/switch-left
+      :n "s-]"  #'+workspace/switch-right
+      :n "s-{" #'+workspace/swap-left
+      :n "s-}"  #'+workspace/swap-right)
+
 ;; Leader keybinds
 (map! :leader
       "-" #'dirvish
