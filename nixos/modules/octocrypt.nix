@@ -33,8 +33,6 @@ in {
     };
   };
 
-  # required due to unix socket permissions
-  users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
   services.nginx.virtualHosts."octocrypt.scoiatael.dev" = {
     forceSSL = true;
     enableACME = true;

@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  # required due to unix socket permissions
+  users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
 
   services.nginx = {
     enable = true;
