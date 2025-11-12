@@ -1,12 +1,13 @@
 ;;; modules/scoiatael/keybinds/config.el -*- lexical-binding: t; -*-
 
 ;; Insert mode keybinds
-(map! :i ", SPC" (cmd! (insert ", ")))
-(map! :i ", RET" (cmd! (insert ",\n")))
+(map! :i ", SPC" (cmd! (scoiatael/insert ", ")))
+(map! :i ", ," (cmd! (scoiatael/insert ",")))
+(map! :i ", RET" (cmd! (scoiatael/insert ",\n")))
 (map! :i ", f" (cmd! (call-interactively #'evil-snipe-f)))
 (map! :i ", F" (cmd! (call-interactively #'evil-snipe-F)))
 (map! :i ", ;" (cmd! (save-excursion (up-list) (insert ";") )))
-(map! :i ", ESC" (cmd! (insert ",") (evil-escape)))
+(map! :i ", ESC" (cmd! (scoiatael/insert ",") (evil-escape)))
 (map! :i "<C-i>" #'up-list)
 
 ;; Normal mode keybinds
