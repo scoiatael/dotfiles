@@ -11,6 +11,7 @@
     ../modules/restic.nix
     ../modules/tailscale.nix
     ../modules/telegraf.nix
+    ../modules/parrhasius.nix
     ./hardware-configuration.nix
   ];
 
