@@ -11,7 +11,7 @@ in {
       date = "${pkgs.coreutils}/bin/date";
     in {
       wssh = ''
-        (){ local TAB; TAB="$(wezterm  cli spawn --domain-name SSH:$1)"; test $0 -eq 0 && wezterm cli set-tab-title --tab-id $TAB "[ssh] $1" && exit  }'';
+        (){ local TAB; TAB="$(wezterm  cli spawn --domain-name SSH:$1)"; test $? -eq 0 && wezterm cli set-tab-title --tab-id $TAB "[ssh] $1" && exit  }'';
       imgcat = "wezterm imgcat";
       da = "direnv allow";
       jl = ''
