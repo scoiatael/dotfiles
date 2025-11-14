@@ -17,6 +17,14 @@
 
   programs.mosh.enable = true;
 
+  services.syncthing = {
+    enable = true;
+    user = "lukaszczaplinski";
+    overrideDevices = false;
+    overrideFolders = false;
+    dataDir = "/home/lukaszczaplinski";
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.efiSysMountPoint = "/boot/EFI";
