@@ -1,7 +1,8 @@
 (ns octocrypt.github
   (:require [clojure.data.json :as json]
             [org.corfield.logging4j2 :as logger]
-            [ring.util.codec :as codec :refer [url-encode]])
+            [ring.util.codec :as codec :refer [url-encode]]
+            [octocrypt.gpg :as gpg])
   (:import (java.net URI)
            (java.net.http HttpClient HttpRequest HttpResponse$BodyHandlers)))
 
@@ -25,6 +26,7 @@
         keys
         []))))
 
+
 (defn fetch-gpg-keys [username]
   (let [url (str "https://api.github.com/users/" (url-encode username) "/gpg_keys")]
     (logger/with-log-context {:url url :username username}
@@ -32,5 +34,5 @@
     (let [response (fetch-url url)
           keys (json/read-str response :key-fn keyword)]
       (if (vector? keys)
-        keys
+        (mapv gpg/extract-key-details keys)
         []))))
