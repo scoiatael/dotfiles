@@ -1,6 +1,7 @@
 (ns octocrypt.pages.keys
     (:require
    [ring.util.codec :as codec :refer [url-encode]]
+   [octocrypt.gpg :as gpg]
    [hiccup.util :refer [escape-html]]
    [hiccup.page :as page]))
 
@@ -37,9 +38,9 @@
         (when fingerprint
           [:p [:strong "Fingerprint: "] [:code fingerprint]])
         (when primary-uid
-          [:p [:strong "Primary UID: "] primary-uid])
+          [:p [:strong "Primary UID: "] (escape-html primary-uid)])
         (when key-type
-          [:p [:strong "Key Type: "] key-type
+          [:p [:strong "Key Type: "] (gpg/key-type->name key-type)
            (when key-size (str " (" key-size " bits)"))])
         (when created
           [:p [:strong "Created: "] (-> created escape-html)])

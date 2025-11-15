@@ -87,3 +87,22 @@ fpr:::::::::954E21D29336CE157AE08336A479B7097786412E:")
      {:raw-output result-colons
       :readable-output result-readable}
      (-> result-colons parse-gpg-output post-process))))
+
+(def ^:private gpg-key-type-map
+  {"1"   "RSA"
+   "2"   "RSA (encrypt only)"
+   "3"   "RSA (sign only)"
+   "16"  "ElGamal (encrypt only)"
+   "17"  "DSA"
+   "18"  "ECDH"
+   "19"  "ECDSA"
+   "20"  "ElGamal (encrypt and sign)"
+   "21"  "DH (X9.42)"
+   "22"  "Ed25519"
+   "23"  "AEAD"})
+
+(defn key-type->name
+  "Convert GPG key type number to human-readable name.
+   Returns 'Unknown' for unrecognized key types."
+  [key-type]
+  (get gpg-key-type-map key-type key-type))
