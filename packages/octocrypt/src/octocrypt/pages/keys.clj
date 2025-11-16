@@ -15,7 +15,7 @@
          [:p [:strong "ID: "] id ]
          [:p [:a {:href (str "/encrypt/" (url-encode id))} "encrypt with this key"]]]
         (when title
-          [:p [:strong "Title: "] title])
+          [:p [:strong "Title: "] (escape-html title)])
         [:p [:strong "Created at: "] created_at ]
         [:p [:strong "Last used: "] last_used ]
         [:pre.key-content key]])]))
@@ -24,15 +24,15 @@
   (when (seq keys)
     [:div
      [:h2 "GPG Public Keys"]
-     (for [{:as key :keys [id expired? name email key_id fingerprint primary-uid key-type key-size created uids readable-output]} keys]
+     (for [{:keys [id raw_key expired? name email key_id fingerprint primary-uid key-type key-size created uids readable-output]} keys]
        [:div.key-block {:class (if expired? "expired" "")}
         [:div.title
          [:p [:strong "ID: "] id]
          [:p [:a {:href (str "/encrypt/" (url-encode id)) :class (if expired? "expired-link-disabled" "")} "encrypt with this key"]]]
         (when name
-          [:p [:strong "Name: "] (-> name escape-html)])
+          [:p [:strong "Name: "] (escape-html name)])
         (when email
-          [:p [:strong "Email: "] (-> email escape-html)])
+          [:p [:strong "Email: "] (escape-html email)])
         [:p [:strong "Key ID: "] key_id]
         ;; Display GPG CLI extracted details
         (when fingerprint
@@ -43,7 +43,7 @@
           [:p [:strong "Key Type: "] (gpg/key-type->name key-type)
            (when key-size (str " (" key-size " bits)"))])
         (when created
-          [:p [:strong "Created: "] (-> created escape-html)])
+          [:p [:strong "Created: "] (escape-html created)])
         (when (seq uids)
           [:div
            [:p [:strong "User IDs:"]]
@@ -52,17 +52,17 @@
         (when  readable-output
           [:details
            [:summary "GPG Key Details"]
-           [:pre.gpg-output (-> readable-output escape-html)]])
-        [:pre.key-content (-> :raw_key key escape-html)]])]))
+           [:pre.gpg-output (escape-html readable-output)]])
+        [:pre.key-content (escape-html raw_key)]])]))
 
 (defn page [username ssh-keys gpg-keys]
   (page/html5
    [:head
-    [:title (str "Keys for " username " - GitHub Keys Fetcher")]
+    [:title (str "Keys for " (escape-html username) " - GitHub Keys Fetcher")]
     (page/include-css "/style.css")]
    [:body
     [:div.back-link [:a {:href "/"} "Back to search"]]
-    [:h1 (str "Public Keys for " username)]
+    [:h1 (str "Public Keys for " (escape-html username))]
     [:div.form-container
      [:form {:method "GET" :action "/keys"}
       [:label {:for "username"} "GitHub Username: "]

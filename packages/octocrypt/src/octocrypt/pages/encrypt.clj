@@ -2,7 +2,7 @@
   (:require
    [clojure.string :refer [upper-case]]
    [hiccup.page :as page]
-   [hiccup.util :as util]
+   [hiccup.util :refer [escape-html]]
    [ring.util.codec :as codec :refer [url-encode]]))
 
 (defn form-page [key-id {:keys [type raw_key username]}]
@@ -12,7 +12,7 @@
     (page/include-css "/style.css")]
    [:body
     [:div.back-link [:a {:href "/"} "Back to search"]]
-    [:h1 (str "Encryption using key " (url-encode key-id) " ("  (-> type name upper-case) " of " (url-encode username) ")")]
+    [:h1 (str "Encryption using key " (url-encode key-id) " ("  (-> type name upper-case) " of " (escape-html username) ")")]
     [:div.key-block
      [:p [:strong "ID: "] key-id]
      [:pre.key-content raw_key]]
@@ -35,4 +35,4 @@
     [:div.key-block
      [:p [:strong "ID: "] key-id]
      [:pre.key-content raw_key]]
-    [:div.encrypted (util/escape-html value)]]))
+    [:div.encrypted (escape-html value)]]))
