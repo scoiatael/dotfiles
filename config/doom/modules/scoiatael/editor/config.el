@@ -12,7 +12,7 @@
   (advice-add #'vterm--redraw :around (lambda (fun &rest args) (let ((cursor-type cursor-type)) (apply fun args)))))
 
 (after! projectile
-  (setq projectile-require-project-root t
+  (setq projectile-require-project-root "prompt"
         projectile-enable-idle-timer 90)
   (add-hook 'projectile-idle-timer-hook #'projectile-invalidate-cache))
 

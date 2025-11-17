@@ -139,7 +139,6 @@
     };
   };
 
-  home.file.".envrc".text = ""; # for direnv to load in HOME
   home.file.".direnvrc".source =
     ../config/direnvrc; # for direnv to load in HOME
 

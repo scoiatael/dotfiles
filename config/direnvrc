@@ -17,5 +17,3 @@ function use_sops() {
     direnv_load sops exec-env "$SECRET_FILE" "$direnv dump"
     watch_file "$SECRET_FILE"
 }
-
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
