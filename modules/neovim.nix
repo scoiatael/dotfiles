@@ -48,6 +48,7 @@
       mini-nvim
       yazi-nvim
       catppuccin-nvim
+      ale
     ];
     extraPackages = with pkgs; [ code-minimap ];
     extraConfig = ''
@@ -69,6 +70,12 @@
       let maplocalleader = ","
     '';
     extraLuaConfig = ''
+      -- line numbers
+      vim.opt.numberwidth = 3
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+      vim.opt.ruler = false
+
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', ';', builtin.find_files, {})
       vim.keymap.set('n', '<leader>g', builtin.live_grep, {})

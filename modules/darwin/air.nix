@@ -41,6 +41,7 @@
     enable = true;
     systems = [ "x86_64-linux" ];
     package = pkgs.darwin.linux-builder-x86_64;
+    config.virtualisation.cores = 8;
   };
   nix.settings.sandbox = true;
 }

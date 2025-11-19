@@ -15,6 +15,7 @@ in {
     enable = true;
     lfs.enable = true;
     aliases = {
+      diff-patch = "! env GIT_PAGER= git diff -P --no-ext-diff";
       bl = "! git-branchless";
       rv = "! git-revise";
       sl = "! git-branchless smartlog";

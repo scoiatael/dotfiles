@@ -17,8 +17,14 @@
       "mitmproxy"
       "astropad-studio"
       "claude"
+      "utm"
     ];
     brews = [ "stlink" ];
+  };
+  nix.linux-builder = {
+    enable = true;
+    systems = [ "x86_64-linux" ];
+    package = pkgs.darwin.linux-builder-x86_64;
   };
   #  nix.linux-builder = {
   #   enable = true;
