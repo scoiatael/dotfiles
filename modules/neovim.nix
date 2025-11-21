@@ -49,6 +49,9 @@
       yazi-nvim
       catppuccin-nvim
       ale
+      vim-surround
+      vim-repeat
+      vim-unimpaired
     ];
     extraPackages = with pkgs; [ code-minimap ];
     extraConfig = ''
@@ -88,7 +91,6 @@
       "mini.ai"
       "mini.operators"
       "mini.pairs"
-      "mini.surround"
       "mini.bracketed"
       "mini.files"
       "mini.jump2d"
