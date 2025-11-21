@@ -10,6 +10,7 @@ in {
       nh = lib.getExe pkgs.nh;
       date = "${pkgs.coreutils}/bin/date";
     in {
+      gpg-wake = "echo 'foo' | gpg -e -r $(gpg-fpr) --armour | gpg -d";
       xzf = "ouch decompress";
       lzf = "ouch list";
       wssh = ''
@@ -82,6 +83,7 @@ in {
         export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
       '')
       (lib.mkAfter ''
+        source ~/dotfiles/config/qq.zsh
         autoload -U compinit
         compinit -C # assume zcompdump is fresh
 

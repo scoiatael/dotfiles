@@ -42,6 +42,12 @@ in {
       bms = "! git branch --merged | grep -v '*'";
       bmc = "! git branch --merged | grep -v '*' | xargs git branch -d";
 
+      aliases = "config --get-regexp alias";
+      ap = "add -p";
+      commit-ne = "commit --amend --no-edit";
+      fixup = "commit --fixup";
+      please = "push --force-with-lease";
+      wip = "commit -a -n -m 'wip'";
       la = "config --get-regexp alias";
       cm = "checkout master";
       cmp = "! git checkout master && git pull --rebase";
