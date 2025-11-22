@@ -201,6 +201,7 @@
                 config.allowBroken = true;
               };
               modules = [
+                ./modules/secretive.nix
                 ./modules/cli.nix
                 #./modules/ghostty.nix
                 #{ config.ghostty.font-size = 16; }
