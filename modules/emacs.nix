@@ -33,6 +33,8 @@ in {
 
       # for thumbnails in deer
       vips
+
+      (notmuch.overrideAttrs (x: { withEmacs = false; }))
     ] ++ (with pkgs.hunspellDicts; [ pl_PL en_GB-ise ]);
 
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
