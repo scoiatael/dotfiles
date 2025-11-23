@@ -12,6 +12,7 @@
     ../modules/tailscale.nix
     ../modules/telegraf.nix
     ../modules/parrhasius.nix
+    ../modules/mail.nix
     ./hardware-configuration.nix
   ];
 
