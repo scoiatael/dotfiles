@@ -4,10 +4,14 @@
   # hardware.notch = true;
 
   homebrew = {
-    taps = [{
-      name = "scoiatael/dotfiles";
-      clone_target = "https://github.com/scoiatael/dotfiles.git";
-    }];
+    taps = [
+      {
+        name = "scoiatael/dotfiles";
+        clone_target = "https://github.com/scoiatael/dotfiles.git";
+      }
+      "RhetTbull/osxphotos"
+    ];
+    brews = [ "rhettbull/osxphotos/osxphotos" ];
     casks = [
       "raindropio"
       "todoist-app"
