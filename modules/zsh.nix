@@ -32,7 +32,7 @@ in {
       nix-test-python =
         "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
       nix-tree-devshell =
-        "nix-tree --derivation '.#devShells.${pkgs.system}.default'";
+        "nix-tree --derivation '.#devShells.${pkgs.stdenv.hostPlatform.system}.default'";
       # WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
       convert = "magick";
       g = "git";
@@ -158,7 +158,8 @@ in {
       {
         name = "fast-syntax-hightlighing";
         src = zsh-fast-syntax-highlighting;
-        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
+        file =
+          "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
       }
     ];
   };

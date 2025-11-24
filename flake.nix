@@ -18,7 +18,6 @@
   inputs.lanzaboote = {
     url = "github:nix-community/lanzaboote";
     inputs.nixpkgs.follows = "nixpkgs";
-    inputs.flake-parts.follows = "flake-parts";
   };
   inputs.walker = {
     url = "github:abenz1267/walker";
@@ -98,7 +97,7 @@
                 ./modules/neovim.nix
                 (import ./modules/comma.nix attrs)
                 {
-                  programs.git.extraConfig.user = {
+                  programs.git.settings.user = {
                     email = "lukasz@wooting.io";
                     name = "Lukas Czaplinski";
                     signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
@@ -132,7 +131,7 @@
                 (import ./modules/home-manager.nix attrs)
                 (import ./modules/emacs.nix attrs)
                 {
-                  programs.git.extraConfig.user = {
+                  programs.git.settings.user = {
                     email = "lukasz@wooting.io";
                     name = "Lukas Czaplinski";
                     signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";

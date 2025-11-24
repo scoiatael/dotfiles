@@ -1,7 +1,7 @@
 { nixSearch, ... }:
 { config, pkgs, ... }:
 
-let nix-search = nixSearch.packages.${pkgs.system}.default;
+let nix-search = nixSearch.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   home.packages = [
     nix-search

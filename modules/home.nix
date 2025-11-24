@@ -11,7 +11,7 @@
     dive
     gnutar
     tokei
-    du-dust
+    dust
     fd
     jq
     ripgrep

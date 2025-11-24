@@ -14,7 +14,7 @@ in {
   programs.git = {
     enable = true;
     lfs.enable = true;
-    aliases = {
+    settings.alias = {
       diff-patch = "! env GIT_PAGER= git diff -P --no-ext-diff";
       bl = "! git-branchless";
       rv = "! git-revise";
@@ -197,7 +197,7 @@ in {
       # mvbak
       "*.bak.*"
     ];
-    extraConfig = {
+    settings = {
       color = {
         branch = "auto";
         diff = "auto";
@@ -245,8 +245,10 @@ in {
       key = mkDefault "EAB800957676ADBE2E29E1B61F748B25B736F0A8";
     };
     # includes = [{ path = "${gitAlias}/gitalias.txt"; }];
-    difftastic.enable = true;
-    delta.enable = false;
+  };
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
   };
 
   programs.jujutsu = {
@@ -260,8 +262,8 @@ in {
       aliases.tug =
         [ "bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-" ];
       user = {
-        name = config.programs.git.extraConfig.user.name;
-        email = config.programs.git.extraConfig.user.email;
+        name = config.programs.git.settings.user.name;
+        email = config.programs.git.settings.user.email;
       };
     };
   };
