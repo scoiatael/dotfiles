@@ -68,11 +68,14 @@ in {
       notmuch-ui = "emacs -nw -f notmuch";
       "mkinvoice" = ''mkdir "Invoices:$(date "+%y%m")"'';
     };
-    shellGlobalAliases = { } // (lib.lists.foldl' (acc: op:
-      let
-        name = "." + lib.concatStrings (lib.replicate op ".");
-        cmd = lib.concatStrings (lib.replicate op "../");
-      in acc // { "${name}" = cmd; }) { } (lib.range 2 4));
+    shellGlobalAliases = let
+      # expand ... to ../..; .... to ../../../ etc
+      dots = (lib.lists.foldl' (acc: op:
+        let
+          name = "." + lib.concatStrings (lib.replicate op ".");
+          cmd = lib.concatStrings (lib.replicate op "../");
+        in acc // { "${name}" = cmd; }) { } (lib.range 2 4));
+    in { } // dots;
     sessionVariables = { };
     autosuggestion = { enable = true; };
     historySubstringSearch = { enable = true; };
