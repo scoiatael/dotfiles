@@ -16,7 +16,6 @@ in {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [ "claude-code" "amp-cli" ];
   home.packages = with pkgs; [
-    claude-code
     # llm.withPlugins has been deprecated
     (pkgs.callPackage ../packages/llm-with-plugins { })
 
@@ -25,8 +24,9 @@ in {
     pdf-convert
     llm-invoice
 
-    # Amp
-    amp-cli
+    # claude-code
+    # # Amp
+    # amp-cli
   ];
 
   home.file."${configHome}/io.datasette.llm/default_model.txt".text =
