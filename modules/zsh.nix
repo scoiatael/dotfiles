@@ -10,6 +10,8 @@ in {
       nh = lib.getExe pkgs.nh;
       date = "${pkgs.coreutils}/bin/date";
     in {
+      ee = "emacsclient --eval";
+      kh = "edit ~/.ssh/known_hosts";
       gpg-wake = "echo 'foo' | gpg -e -r $(gpg-fpr) --armour | gpg -d";
       xzf = "ouch decompress";
       lzf = "ouch list";

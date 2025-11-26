@@ -17,3 +17,13 @@
 
 (map! :map #'emacs-lisp-mode-map
       :localleader "." #'scoiatael/pin-package-to-current-version)
+
+(use-package dwim-shell-command
+  :ensure t
+  :bind (([remap shell-command] . dwim-shell-command)
+         :map dired-mode-map
+         ([remap dired-do-shell-command] . dwim-shell-command))
+  :config
+  (require 'dwim-shell-commands)
+  (setq  dwim-shell-commands-git-clone-dirs '("~/Documents/" "~/Desktop" "~/Downloads")))
+
