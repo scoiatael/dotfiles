@@ -38,6 +38,7 @@ local process_icons = {
 	["vim"] = wezterm.nerdfonts.dev_vim,
 	["wget"] = wezterm.nerdfonts.mdi_arrow_down_box,
 	["zsh"] = wezterm.nerdfonts.dev_terminal,
+	["sh"] = wezterm.nerdfonts.cod_terminal_bash,
 	[".nh-wrapped"] = "󱄅",
 }
 
@@ -63,7 +64,17 @@ end
 
 -- Return the concise name or icon of the running process for display
 local function get_process(tab)
-	if not tab.active_pane or tab.active_pane.foreground_process_name == "" then
+	if not tab.active_pane then
+		return "[?]"
+	end
+
+	local pane = tab.active_pane
+
+	if pane.domain_name ~= "local" then
+		return string.format("[%s]", tab.active_pane.domain_name):gsub("SSH", wezterm.nerdfonts.dev_ssh)
+	end
+
+	if tab.active_pane.foreground_process_name == "" then
 		return "[?]"
 	end
 
