@@ -16,7 +16,7 @@
       nil)))
 
 
-;; ###autoload
+;;;###autoload
 (defun scoiatael/insert (char)
   (interactive)
   (if (eq major-mode #'vterm-mode)
