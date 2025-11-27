@@ -20,6 +20,7 @@ in {
         (){ local TAB; TAB="$(wezterm  cli spawn --domain-name SSH:$1)"; test $? -eq 0 && wezterm cli set-tab-title --tab-id $TAB "[ssh] $1" && exit  }'';
       imgcat = "wezterm imgcat";
       da = "direnv allow";
+      dr = "direnv reload";
       jl = ''
         just --list --list-heading="" | fzf --reverse | choose 0 | xargs just
       '';
