@@ -6,8 +6,6 @@ in {
     enable = true;
 
     inherit port;
-    address = "192.168.1.153";
+    address = "0.0.0.0";
   };
-
-  networking.firewall.allowedTCPPorts = [ port ];
 }

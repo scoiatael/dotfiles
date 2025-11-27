@@ -13,9 +13,10 @@
     ../modules/telegraf.nix
     ../modules/parrhasius.nix
     ../modules/mail.nix
+    ./tailscale-services.nix
+    ./caddy.nix
     ./hardware-configuration.nix
   ];
-
   programs.mosh.enable = true;
 
   services.syncthing = {
@@ -83,7 +84,6 @@
   networking.firewall = {
     allowedTCPPorts = [
       22000 # syncthing
-      4567 # parrhasius
     ];
 
     allowedUDPPortRanges = [ ];

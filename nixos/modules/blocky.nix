@@ -20,6 +20,19 @@
         #Configure what block categories are used
         clientGroupsBlock = { default = [ "ads" ]; };
       };
+      # This would work if LAN included tailscale routing
+      # conditional = {
+      #   fallbackUpstream = false;
+      #   # Resolve tailscale addresses
+      #   mapping."ts.net" = "100.100.100.100";
+      # };
+      customDNS.mapping = {
+        "parrhasius.heron-pollux.ts.net" = "192.168.1.153";
+        "yarr.heron-pollux.ts.net" = "192.168.1.153";
+        "scrutiny.heron-pollux.ts.net" = "192.168.1.153";
+        "jellyfin.heron-pollux.ts.net" = "192.168.1.153";
+        "influxdb.heron-pollux.ts.net" = "192.168.1.153";
+      };
     };
   };
   networking.firewall.allowedUDPPorts = [ 53 ];

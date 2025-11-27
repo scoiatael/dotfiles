@@ -9,8 +9,6 @@
   services.scrutiny.influxdb.enable = true;
   services.scrutiny.settings.web.listen.port = 8053;
 
-  # Open influxdb port; Scrutiny will setup user / password
   # Tip: remember to change admin password from password12345 :p
   # Tip: create token for telegraf in /root/influx_token
-  networking.firewall.allowedTCPPorts = [ 8086 ];
 }
