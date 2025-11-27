@@ -113,3 +113,15 @@ current window."
         (+workspace-new workspace-name))
       (+workspace-switch workspace-name))
     (find-file-existing "~/org/todo.org")))
+
+;;;###autoload
+(defun scoiatael/switch-to-nixpkgs-workspace ()
+  "Switch to workspace named NIXPKGS or create it if it doesn't exist."
+  (interactive)
+  (let ((workspace-name "NIXPKGS"))
+    (unless (eq (+workspace-current-name) +workspaces-main)
+      (unless (+workspace-exists-p workspace-name)
+        (+workspace-new workspace-name))
+      (+workspace-switch workspace-name))
+    (dired (car (last (split-string (getenv "NIX_PATH") "="))))))
+

@@ -11,6 +11,9 @@
  '(("Open todo list"
     :icon (nerd-icons-octicon "nf-oct-check" :face 'doom-dashboard-menu-title)
     :action scoiatael/switch-to-agenda-workspace)
+   ("Open nixpkgs"
+    :icon (nerd-icons-devicon "nf-dev-nixos" :face 'doom-dashboard-menu-title)
+    :action scoiatael/switch-to-nixpkgs-workspace )
    ("Open project"
     :icon (nerd-icons-octicon "nf-oct-briefcase" :face 'doom-dashboard-menu-title)
     :action projectile-switch-project)
