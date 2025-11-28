@@ -16,8 +16,7 @@ in {
       gpg-wake = "echo 'foo' | gpg -e -r $(gpg-fpr) --armour | gpg -d";
       xzf = "ouch decompress";
       lzf = "ouch list";
-      wssh = ''
-        (){ local TAB; TAB="$(wezterm  cli spawn --domain-name SSH:$1)"; test $? -eq 0 && wezterm cli set-tab-title --tab-id $TAB "[ssh] $1" && exit  }'';
+      wssh = "(){ wezterm  cli spawn --domain-name SSH:$1 && exit  }";
       imgcat = "wezterm imgcat";
       da = "direnv allow";
       dr = "direnv reload";
