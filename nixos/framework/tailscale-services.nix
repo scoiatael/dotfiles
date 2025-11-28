@@ -20,5 +20,6 @@
       scrutiny = { port = 8053; };
       jellyfin = { port = 8096; };
       influxdb = { port = 8086; };
+      grafana = { port = 3000; };
     };
 }

@@ -18,6 +18,9 @@
     "influxdb.heron-pollux.ts.net".extraConfig = ''
       reverse_proxy :8086
     '';
+    "grafana.heron-pollux.ts.net".extraConfig = ''
+      reverse_proxy :3000
+    '';
   };
 
   services.tailscale.permitCertUid = config.services.caddy.user;

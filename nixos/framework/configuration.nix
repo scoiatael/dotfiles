@@ -13,6 +13,7 @@
     ../modules/telegraf.nix
     ../modules/parrhasius.nix
     ../modules/mail.nix
+    ../modules/grafana.nix
     ./tailscale-services.nix
     ./caddy.nix
     ./hardware-configuration.nix
