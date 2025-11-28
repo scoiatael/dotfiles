@@ -14,10 +14,14 @@
 (map! :n "]p" #'evil-unimpaired-paste-below
       :n "[p" #'evil-unimpaired-paste-above
       :n "!" #'+default/yank-pop
+      :n ";" #'affe-find
       :n "\\" #'+vterm/toggle
       :v "[6" #'base64-decode-region
       :v "]6" #'base64-encode-region
       :v "v" #'er/expand-region)
+
+(map! :mode #'dired-mode
+      :n "; ;" #'affe-find)
 
 (map! :n "M-<up>" #'evil-window-up
       :n "M-<right>"  #'evil-window-right

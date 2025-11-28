@@ -16,7 +16,9 @@
   (sp-local-pair '(python-mode) "\"\"\"" "\"\"\""))
 
 (map! :map #'emacs-lisp-mode-map
-      :localleader "." #'scoiatael/pin-package-to-current-version)
+      :localleader
+      "g h" #'scoiatael/github-url-to-package-spec
+      "." #'scoiatael/pin-package-to-current-version)
 
 (use-package dwim-shell-command
   :ensure t

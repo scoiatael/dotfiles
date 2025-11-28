@@ -23,8 +23,6 @@ in {
 
       babashka
 
-      # notmuch # mail
-
       nuspell # spell checking
 
       # for emacsclient.sh

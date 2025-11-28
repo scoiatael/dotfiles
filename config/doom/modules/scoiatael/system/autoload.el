@@ -123,5 +123,6 @@ current window."
       (unless (+workspace-exists-p workspace-name)
         (+workspace-new workspace-name))
       (+workspace-switch workspace-name))
-    (dired (car (last (split-string (getenv "NIX_PATH") "="))))))
+    (let ((nixpkgs-dir (car (last (split-string (getenv "NIX_PATH") "=")))))
+      (affe-find nixpkgs-dir))))
 

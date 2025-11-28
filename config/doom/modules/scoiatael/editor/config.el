@@ -21,3 +21,11 @@
 
 (after! dired
   (define-key dired-mode-map (kbd "\\") #'ranger-toggle-dotfiles))
+
+(use-package! affe
+  :config
+  (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+    (setq input (cdr (orderless-compile input)))
+    (cons input (apply-partially #'orderless--highlight input t)))
+  (setq affe-regexp-compiler #'affe-orderless-regexp-compiler
+        affe-find-command "fd . . --type f --exclude \"Application Support\" --exclude Library --exclude Pictures --exclude Music"))
