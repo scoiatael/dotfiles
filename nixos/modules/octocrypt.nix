@@ -43,10 +43,14 @@ in {
     '';
     locations = {
       "/".proxyPass =
-        "http://unix:${config.services.anubis.instances.default.settings.BIND}";
+        "http://unix:${config.services.anubis.instances.octocrypt.settings.BIND}";
       "~ .css".root = "${drv}/public";
     };
   };
 
-  services.anubis.instances.default.settings.TARGET = "http://localhost:3000";
+  services.anubis.instances.octocrypt.settings = {
+    TARGET = "http://localhost:3000";
+    BIND = "/run/anubis/anubis-octocrypt/anubis.sock";
+    METRICS_BIND = "/run/anubis/anubis-octocrypt/anubis-metrics.sock";
+  };
 }

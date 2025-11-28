@@ -38,5 +38,9 @@ in {
       "~ .css".root = "${drv}/public";
     };
   };
-  services.anubis.instances.wh.settings.TARGET = "http://localhost:3001";
+  services.anubis.instances.wh.settings = {
+    BIND = "/run/anubis/anubis-wh/anubis.sock";
+    TARGET = "http://localhost:3001";
+    METRICS_BIND = "/run/anubis/anubis-wh/anubis-metrics.sock";
+  };
 }

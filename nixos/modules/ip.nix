@@ -29,5 +29,9 @@ in {
         "http://unix:${config.services.anubis.instances.ip.settings.BIND}";
     };
   };
-  services.anubis.instances.ip.settings.TARGET = "http://localhost:3002";
+  services.anubis.instances.ip.settings = {
+    TARGET = "http://localhost:3002";
+    BIND = "/run/anubis/anubis-ip/anubis.sock";
+    METRICS_BIND = "/run/anubis/anubis-ip/anubis-metrics.sock";
+  };
 }
