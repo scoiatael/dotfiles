@@ -34,10 +34,6 @@
       smart-splits-nvim
       yankring
       vim-nix
-      {
-        plugin = vim-startify;
-        config = "let g:startify_change_to_vcs_root = 0";
-      }
       telescope-manix
       telescope-nvim
       nvim-treesitter
@@ -62,6 +58,9 @@
 
       " For Neovim 0.1.3 and 0.1.4
       let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+      let g:ale_sign_column_always = 1
+      let g:startify_change_to_vcs_root = 0
 
       " Theme
       syntax enable
