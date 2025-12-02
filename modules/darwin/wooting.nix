@@ -5,19 +5,16 @@
   homebrew = {
     casks = [
       "bitwarden"
-      "arc"
-      "wezterm"
       "slack"
-      "zed"
       "google-drive"
       "monodraw"
       "altair-graphql-client"
       "forklift"
-      "zen"
       "mitmproxy"
       "astropad-studio"
-      "claude"
       "utm"
+      "notion"
+      "thebrowsercompany-dia"
     ];
     brews = [ "stlink" ];
   };

@@ -29,6 +29,9 @@
       "domzilla-caffeine"
       "betterdisplay"
       "karabiner-elements"
+      "wezterm"
+      "arc"
+      "zen"
     ];
     brews = [ "switchaudio-osx" ];
     onActivation = { cleanup = "uninstall"; };
