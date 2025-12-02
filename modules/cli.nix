@@ -8,6 +8,7 @@ in {
   # https://lobste.rs/s/xyvwux/what_are_your_favorite_non_standard_cli
   home.packages = with pkgs;
     [
+      tokei # [[id:6119b4ab-d542-4a83-91a4-e65e02642443][tokei]]
       mosh # [[id:3ef5214a-337e-485d-997f-ef9dfb9c7539][mosh]]
       choose # [[id:6d09c895-e12b-4230-894d-691e34d91913][choose]]
       ouch # [[id:e7780a1a-1c8a-40bd-a80f-4ca4077d84d3][ouch]]

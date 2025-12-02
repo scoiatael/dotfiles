@@ -10,7 +10,6 @@
     xh
     dive
     gnutar
-    tokei
     dust
     fd
     jq
