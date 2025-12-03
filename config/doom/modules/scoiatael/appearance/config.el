@@ -14,12 +14,26 @@
    ("Open nixpkgs"
     :icon (nerd-icons-devicon "nf-dev-nixos" :face 'doom-dashboard-menu-title)
     :action scoiatael/switch-to-nixpkgs-workspace )
+   ("Open home-manager"
+    :icon (nerd-icons-mdicon "nf-md-home_assistant" :face 'doom-dashboard-menu-title)
+    :action scoiatael/switch-to-home-manager-workspace )
+   ("Open nix-darwin"
+    :icon (nerd-icons-devicon "nf-dev-apple" :face 'doom-dashboard-menu-title)
+    :action scoiatael/switch-to-nix-darwin-workspace )
    ("Open project"
     :icon (nerd-icons-octicon "nf-oct-briefcase" :face 'doom-dashboard-menu-title)
     :action projectile-switch-project)
    ("Jump to bookmark"
     :icon (nerd-icons-octicon "nf-oct-bookmark" :face 'doom-dashboard-menu-title)
     :action bookmark-jump)))
+
+(map! :mode #'+doom-dashboard-mode
+      :n "q" #'+workspace/kill
+      :n "1" #'scoiatael/switch-to-agenda-workspace
+      :n "2" #'scoiatael/switch-to-nixpkgs-workspace
+      :n "3" #'scoiatael/switch-to-home-manager-workspace
+      :n "4" #'scoiatael/switch-to-nix-darwin-workspace
+      :n ";" #'projectile-switch-project)
 
 ;; Transparency (commented out)
 ;; (set-frame-parameter nil 'alpha-background 70)

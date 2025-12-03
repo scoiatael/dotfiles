@@ -126,3 +126,35 @@ current window."
     (let ((nixpkgs-dir (car (last (split-string (getenv "NIX_PATH") "=")))))
       (affe-find nixpkgs-dir))))
 
+
+(defun scoiatael/nix-flake-metadata (flake)
+  "Get nix flake metadata for FLAKE as parsed JSON."
+  (let ((command (format "nix flake metadata %s --json" flake)))
+    (with-temp-buffer
+      (when (zerop (call-process-shell-command command nil t))
+        (goto-char (point-min))
+        (json-parse-buffer :object-type 'alist :array-type 'list)))))
+
+;;;###autoload
+(defun scoiatael/switch-to-home-manager-workspace ()
+  "Switch to workspace named HOME_MANAGER or create it if it doesn't exist."
+  (interactive)
+  (let ((workspace-name "HOME_MANAGER"))
+    (unless (eq (+workspace-current-name) +workspaces-main)
+      (unless (+workspace-exists-p workspace-name)
+        (+workspace-new workspace-name))
+      (+workspace-switch workspace-name))
+    (let ((dir (alist-get 'path (scoiatael/nix-flake-metadata "home-manager"))))
+      (affe-find dir))))
+
+;;;###autoload
+(defun scoiatael/switch-to-nix-darwin-workspace ()
+  "Switch to workspace named NIX_DARWIN or create it if it doesn't exist."
+  (interactive)
+  (let ((workspace-name "NIX_DARWIN"))
+    (unless (eq (+workspace-current-name) +workspaces-main)
+      (unless (+workspace-exists-p workspace-name)
+        (+workspace-new workspace-name))
+      (+workspace-switch workspace-name))
+    (let ((dir (alist-get 'path (scoiatael/nix-flake-metadata "nix-darwin"))))
+      (affe-find dir))))
