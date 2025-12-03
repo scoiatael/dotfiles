@@ -17,6 +17,7 @@ in {
     settings.alias = {
       diff-patch = "! env GIT_PAGER= git diff -P --no-ext-diff";
       bl = "! git-branchless";
+      branchless = "! git-branchless";
       rv = "! git-revise";
       sl = "! git-branchless smartlog";
       d = "diff";
