@@ -43,8 +43,26 @@
       minimap-vim
       mini-nvim
       yazi-nvim
-      catppuccin-nvim
-      ale
+      {
+        plugin = catppuccin-nvim;
+        config = ''
+          colorscheme catppuccin-frappe
+          " set lighline theme inside lightline config
+          let g:lightline = {'colorscheme': 'catppuccin'}
+        '';
+
+      }
+      {
+        plugin = vim-startify;
+        config = "let g:startify_change_to_vcs_root = 0";
+      }
+      {
+        plugin = ale;
+        config = ''
+          let g:ale_use_neovim_diagnostics_api = 0
+          let g:ale_sign_column_always = 1
+        '';
+      }
       vim-surround
       vim-repeat
       vim-unimpaired
@@ -59,15 +77,7 @@
       " For Neovim 0.1.3 and 0.1.4
       let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-      let g:ale_use_neovim_diagnostics_api = 0
-      let g:ale_sign_column_always = 1
-      let g:startify_change_to_vcs_root = 0
-
-      " Theme
       syntax enable
-      colorscheme catppuccin-frappe
-      " set lighline theme inside lightline config
-      let g:lightline = {'colorscheme': 'catppuccin'}
 
       let mapleader = " "
       let maplocalleader = ","
@@ -88,7 +98,7 @@
     '' + (lib.strings.concatMapStrings (plugin: ''
       require('${plugin}').setup()
     '') [
-      "mini.ai"
+      "mini.ai" # [[id:04024110-7404-407d-b7f9-9e3817acd9db][mini-ai]]
       "mini.operators"
       "mini.pairs"
       "mini.bracketed"
