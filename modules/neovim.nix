@@ -13,18 +13,56 @@
     withNodeJs = true;
     coc = { enable = true; };
     plugins = with pkgs.vimPlugins; [
-      smart-splits-nvim
+      {
+        plugin = smart-splits-nvim;
+        config = (builtins.readFile ../config/neovim/smart-splits.lua);
+        type = "lua";
+      }
       yankring
       vim-nix
       telescope-manix
-      telescope-nvim
+      {
+        plugin = telescope-nvim;
+        config = ''
+          local builtin = require('telescope.builtin')
+          vim.keymap.set('n', ';', builtin.find_files, {})
+          vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+          vim.keymap.set('n', '<leader>b', builtin.buffers, {})
+          vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
+          vim.keymap.set('n', '<leader>t', builtin.treesitter, {})
+        '';
+        type = "lua";
+      }
       nvim-treesitter
       tender-vim
       lightline-vim
       # https://github.com/echasnovski/mini.nvim/tree/main
       minimap-vim
-      mini-nvim
-      yazi-nvim
+      {
+        plugin = mini-nvim;
+        config = (lib.strings.concatMapStrings (plugin: ''
+          require('${plugin}').setup()
+        '') [
+          "mini.ai" # [[id:04024110-7404-407d-b7f9-9e3817acd9db][mini-ai]]
+          "mini.operators"
+          "mini.pairs"
+          "mini.bracketed"
+          "mini.files"
+          "mini.jump2d"
+          "mini.pick"
+        ]);
+        type = "lua";
+      }
+      {
+        plugin = yazi-nvim;
+        config = ''
+          local yazi = require("yazi")
+          vim.keymap.set("n", "<leader>-", function()
+            yazi.yazi()
+          end)
+        '';
+        type = "lua";
+      }
       {
         plugin = catppuccin-nvim;
         config = ''
@@ -32,7 +70,6 @@
           " set lighline theme inside lightline config
           let g:lightline = {'colorscheme': 'catppuccin'}
         '';
-
       }
       {
         plugin = vim-startify;
@@ -63,36 +100,12 @@
 
       let mapleader = " "
       let maplocalleader = ","
-    '';
-    extraLuaConfig = ''
-      -- line numbers
-      vim.opt.numberwidth = 3
-      vim.opt.number = true
-      vim.opt.relativenumber = true
-      vim.opt.ruler = false
 
-      local builtin = require('telescope.builtin')
-      vim.keymap.set('n', ';', builtin.find_files, {})
-      vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
-      vim.keymap.set('n', '<leader>b', builtin.buffers, {})
-      vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
-      vim.keymap.set('n', '<leader>t', builtin.treesitter, {})
-    '' + (lib.strings.concatMapStrings (plugin: ''
-      require('${plugin}').setup()
-    '') [
-      "mini.ai" # [[id:04024110-7404-407d-b7f9-9e3817acd9db][mini-ai]]
-      "mini.operators"
-      "mini.pairs"
-      "mini.bracketed"
-      "mini.files"
-      "mini.jump2d"
-      "mini.pick"
-    ]) + ''
-      local yazi = require("yazi")
-      vim.keymap.set("n", "<leader>-", function()
-        yazi.yazi()
-      end)
-    '' + (builtins.readFile ../config/neovim/smart-splits.lua);
+      " line numbers
+      set numberwidth=3
+      set number
+      set relativenumber
+    '';
   };
   home.activation.createNvimDirectory =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
