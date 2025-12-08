@@ -18,6 +18,7 @@ in {
       xzf = "ouch decompress";
       lzf = "ouch list";
       wssh = "(){ wezterm  cli spawn --domain-name SSH:$1 && exit  }";
+      pk = ''(){  pgr "''${@}" | choose 1 | xargs kill }'';
       imgcat = "wezterm imgcat";
       da = "direnv allow";
       dr = "direnv reload";
