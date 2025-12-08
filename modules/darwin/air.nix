@@ -44,9 +44,10 @@
   nix.buildMachines = [{
     hostName = "192.168.1.153";
     sshUser = "remotebuild";
-    sshKey = "/root/.ssh/remotebuild";
+    sshKey = "/etc/nix/builder_ed25519";
     system = "x86_64-linux";
     supportedFeatures = [ "nixos-test" "big-parallel" "kvm" ];
+    protocol = "ssh-ng";
   }];
 
   # nix.linux-builder = {

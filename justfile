@@ -18,8 +18,5 @@ deploy target flake build=target:
     @echo 'Deploying {{flake}} to {{target}} using {{build}}'
     nixos-rebuild-ng --build-host {{build}} --target-host {{target}} --flake {{flake}} switch
 
-deploy-prg-vps-1: (deploy "root@dev.scoiatael.omg.lol" ".#prg-vps-1" "sd-161581" )
-
 deploy-sd-161581: (deploy "root@sd-161581.scoiatael.omg.lol" ".#sd-161581" )
-
-
+deploy-framework: (deploy "root@192.168.1.153" ".#LsFramework" )
