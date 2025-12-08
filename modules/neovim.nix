@@ -36,7 +36,6 @@
       nvim-treesitter
       tender-vim
       lightline-vim
-      # https://github.com/echasnovski/mini.nvim/tree/main
       minimap-vim
       {
         plugin = mini-nvim;
@@ -86,7 +85,7 @@
       vim-repeat
       vim-unimpaired
     ];
-    extraPackages = with pkgs; [ code-minimap ];
+    extraPackages = with pkgs; [ code-minimap manix ];
     extraConfig = ''
       " If you have vim >=8.0 or Neovim >= 0.1.5
       if (has("termguicolors"))
