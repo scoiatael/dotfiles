@@ -14,11 +14,16 @@
     ../modules/parrhasius.nix
     ../modules/mail.nix
     ../modules/grafana.nix
+    ../modules/remote-builder.nix
     ./tailscale-services.nix
     ./caddy.nix
     ./hardware-configuration.nix
   ];
   programs.mosh.enable = true;
+
+  users.users.remotebuild.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIESt/O98FeSfgnLBfit9jE0hgNP3Ww0wpP+r1QGjaeNc builder@localhost" # builder key on LsAir
+  ];
 
   services.syncthing = {
     enable = true;
@@ -152,7 +157,7 @@
     # require public key authentication for better security
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
-    settings.PermitRootLogin = "no";
+    settings.PermitRootLogin = "prohibit-password";
   };
 
   services.clamav = {
@@ -224,6 +229,10 @@
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHJuPvZPJb9gGxF3EczaLOAUs4uzN06sk5AOSGGGozYy9j7xV+OdgTwVn3020l7Q85F0rCFBjRXyKm6uBOrilWw= SSH-with-auth@secretive.LsAir.local"
     ];
   };
+
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHqPfAOEkybKC4aBtpysiR0zqLJGqZfL2JIMhQc5HTR0AOt6MWT3u7RgxqguoZGeLofrA0Egbf55+KSy9+jE/8E= air@scoiatael.dev"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

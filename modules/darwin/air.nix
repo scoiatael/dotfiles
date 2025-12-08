@@ -38,14 +38,20 @@
     };
   };
 
-  # NOTE: might require
-  # sudo nix store ping --store ssh-ng://builder@linux-builder
-  # to get it working
-  nix.linux-builder = {
-    enable = true;
-    systems = [ "x86_64-linux" ];
-    package = pkgs.darwin.linux-builder-x86_64;
-    config.virtualisation.cores = 8;
-  };
+  nix.distributedBuilds = true;
+  nix.settings.builders-use-substitutes = true;
+
+  nix.buildMachines = [{
+    hostName = "192.168.1.153";
+    sshUser = "remotebuild";
+    sshKey = "/root/.ssh/remotebuild";
+    system = "x86_64-linux";
+    supportedFeatures = [ "nixos-test" "big-parallel" "kvm" ];
+  }];
+
+  # nix.linux-builder = {
+  #   enable = true;
+  #   config.virtualisation.cores = 8;
+  # };
   nix.settings.sandbox = true;
 }
