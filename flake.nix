@@ -193,42 +193,36 @@
                 ];
                 extraSpecialArgs = attrs;
               };
-            "lukaszczaplinski@LsAir" = let system = "aarch64-darwin";
-            in home-manager.lib.homeManagerConfiguration {
-              pkgs = import nixpkgs {
-                inherit system;
-                config.allowBroken = true;
+            "lukaszczaplinski@LsAir" =
+              home-manager.lib.homeManagerConfiguration {
+                pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+                modules = [
+                  ./modules/secretive.nix
+                  ./modules/cli.nix
+                  #./modules/ghostty.nix
+                  #{ config.ghostty.font-size = 16; }
+                  ./modules/home.nix
+                  ./modules/llm.nix
+                  ./modules/wezterm.nix
+                  (import ./modules/home-manager.nix attrs)
+                  (import ./modules/emacs.nix attrs)
+                  ./modules/git.nix
+                  ./modules/tmux.nix
+                  (import ./modules/zsh.nix attrs)
+                  ./modules/neovim.nix
+                  (import ./modules/comma.nix attrs)
+                  {
+                    home = {
+                      username = "lukaszczaplinski";
+                      homeDirectory = "/Users/lukaszczaplinski";
+                      stateVersion = "22.05";
+                    };
+                  }
+                ];
+                extraSpecialArgs = attrs;
               };
-              modules = [
-                ./modules/secretive.nix
-                ./modules/cli.nix
-                #./modules/ghostty.nix
-                #{ config.ghostty.font-size = 16; }
-                ./modules/home.nix
-                ./modules/llm.nix
-                ./modules/wezterm.nix
-                (import ./modules/home-manager.nix attrs)
-                (import ./modules/emacs.nix attrs)
-                ./modules/git.nix
-                ./modules/tmux.nix
-                (import ./modules/zsh.nix attrs)
-                ./modules/neovim.nix
-                (import ./modules/comma.nix attrs)
-                {
-                  home = {
-                    username = "lukaszczaplinski";
-                    homeDirectory = "/Users/lukaszczaplinski";
-                    stateVersion = "22.05";
-                  };
-                }
-              ];
-              extraSpecialArgs = attrs;
-            };
             "lukas@LsWootingMBP" = home-manager.lib.homeManagerConfiguration {
-              pkgs = import nixpkgs {
-                system = "aarch64-darwin";
-                config.allowBroken = true;
-              };
+              pkgs = nixpkgs.legacyPackages.aarch64-darwin;
               modules = [ self.homeManagerModules.wooting ];
               extraSpecialArgs = attrs;
             };
