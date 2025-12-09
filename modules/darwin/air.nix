@@ -50,9 +50,11 @@
     protocol = "ssh-ng";
   }];
 
-  # nix.linux-builder = {
-  #   enable = true;
-  #   config.virtualisation.cores = 8;
-  # };
+  nix.linux-builder = {
+    enable = true;
+    config.virtualisation.cores = 8;
+    systems = [ "x86_64-linux" ];
+    package = pkgs.darwin.linux-builder-x86_64;
+  };
   nix.settings.sandbox = true;
 }
