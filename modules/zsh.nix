@@ -10,7 +10,7 @@ in {
       nh = lib.getExe pkgs.nh;
       date = "${pkgs.coreutils}/bin/date";
     in {
-      mv-desktop = "mv ~/Desktop/* ~/Google\ Drive/My\ Drive/Desktop/";
+      mv-desktop = "mv ~/Desktop/* '~/Google Drive/My Drive/Desktop/'";
       pgr = ''() {ps aux | grep "$1" | grep -v grep}'';
       ee = "emacsclient --eval";
       kh = "edit ~/.ssh/known_hosts";
@@ -29,13 +29,14 @@ in {
         "gh poi --dry-run; read -q 'ok? [Y/y]' && gh poi || echo 'aborted by prompt' ";
       hmr =
         "${nh} home switch 'path:${config.home.homeDirectory}/dotfiles' -b bp.$(${date} --iso-8601)";
+      os-switch = if pkgs.hostPlatform.isDarwin then "dnr" else "nor";
       nor =
         "doas ${nh} os switch -R 'path:${config.home.homeDirectory}/dotfiles'";
       dnr = "${nh} darwin switch 'path:${config.home.homeDirectory}/dotfiles'";
       nix-test =
         "nix-build --keep-failed --expr 'with import <nixpkgs> {}; callPackage ./default.nix {}'";
       nix-test-python =
-        "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in with pkgs; with python3Packages; callPackage ./default.nix {}'";
+        "nix-build --keep-failed --expr 'let pkgs = import <nixpkgs> {}; in pkgs.python3Packages.callPackage ./default.nix {}'";
       nix-tree-devshell =
         "nix-tree --derivation '.#devShells.${pkgs.stdenv.hostPlatform.system}.default'";
       # WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
