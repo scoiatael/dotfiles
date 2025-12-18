@@ -34,3 +34,18 @@
                                `((,scoiatael/org-roam-node-regexp 0 'scoiatael/org-roam-node-face t))))
   (font-lock-flush))
 
+
+;;;###autoload
+(defun scoiatael/replace-pipes-with-todo (start end)
+  "Replace first occurrence of |text| with ** TODO on each line in region."
+  (interactive "r")
+  (if (use-region-p)
+      (save-excursion
+        (goto-char start)
+        (while (< (point) end)
+          (beginning-of-line)
+          (when (re-search-forward "|[^|]+|" (line-end-position) t)
+            (replace-match "** TODO"))
+          (forward-line 1)
+          (setq end (+ end (- (length "** TODO") (length (match-string 0)))))))
+    (message "No region selected")))

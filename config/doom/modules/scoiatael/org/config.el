@@ -5,6 +5,7 @@
 (use-package! org-reverse-datetree
   :config
   (map! :map org-mode-map :localleader
+        "T" #'scoiatael/replace-pipes-with-todo
         "D" #'org-reverse-datetree-goto-date-in-file
         "a" #'org-archive-subtree-default))
 
