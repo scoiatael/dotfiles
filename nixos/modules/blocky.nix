@@ -3,7 +3,11 @@
     enable = true;
     settings = {
       ports.dns = 53; # Port for incoming DNS Queries.
-      upstreams.groups.default = [ "https://dns.quad9.net/dns-query" ];
+      upstreams.groups.default = [
+        "https://dns.quad9.net/dns-query"
+        "https://dns.mullvad.net/dns-query"
+        "https://cloudflare-dns.com/dns-query"
+      ];
       # For initially solving DoH/DoT Requests when no system Resolver is available.
       bootstrapDns = {
         upstream = "https://dns.quad9.net/dns-query";
