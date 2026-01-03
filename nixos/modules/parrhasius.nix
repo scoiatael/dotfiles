@@ -18,6 +18,8 @@
         "DEVENV_ROOT=/home/lukaszczaplinski/Documents/parrhasius"
       ];
 
+      EnvironmentFile = [ "/etc/nixos/secrets/parrhasius.env" ];
+
       ExecStartPre = [
         "${pkgs.bash}/bin/bash -c '${pkgs.nix}/bin/nix develop --impure -c bundle install'"
         "${pkgs.bash}/bin/bash -c '${pkgs.nix}/bin/nix develop --impure -c rake build'"
