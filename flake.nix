@@ -74,6 +74,10 @@
   #   url = "github:AdamWagner/stackline";
   #   flake = false;
   # };
+  inputs.parrhasius = {
+    url = "git+https://git.sr.ht/~scoiatael/parrhasius";
+    flake = false;
+  };
 
   outputs = { self, flake-parts, nixpkgs, home-manager, darwin, ... }@attrs:
     flake-parts.lib.mkFlake { inputs = attrs; }

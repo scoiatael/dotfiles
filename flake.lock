@@ -326,6 +326,22 @@
         "type": "github"
       }
     },
+    "parrhasius": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767277994,
+        "narHash": "sha256-98OCvvbvDeVObnlOFpeSq5wcLxpvZg5zL558amRVkgs=",
+        "ref": "refs/heads/master",
+        "rev": "67b0ec251aff2a8790cf7f2aebdd051ff711879b",
+        "revCount": 185,
+        "type": "git",
+        "url": "https://git.sr.ht/~scoiatael/parrhasius"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.sr.ht/~scoiatael/parrhasius"
+      }
+    },
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -362,6 +378,7 @@
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "parrhasius": "parrhasius",
         "walker": "walker"
       }
     },
