@@ -43,8 +43,7 @@
       RACK_ENV = "production";
       C_INCLUDE_PATH = "${pkgs.libyaml.dev}/include";
       LIBRARY_PATH = "${pkgs.libyaml}/lib";
-      SOLID_QUEUE_IN_PUMA = 1;
-      WEB_CONCURRENCY = 4;
+      WEB_CONCURRENCY = "4";
     };
 
     serviceConfig = {

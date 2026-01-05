@@ -329,11 +329,11 @@
     "parrhasius": {
       "flake": false,
       "locked": {
-        "lastModified": 1767277994,
-        "narHash": "sha256-98OCvvbvDeVObnlOFpeSq5wcLxpvZg5zL558amRVkgs=",
+        "lastModified": 1767636862,
+        "narHash": "sha256-DjUCyIrHHgCw/Aj5Vzg+mzLvo4N0OT1jO4ObKHJWIbo=",
         "ref": "refs/heads/master",
-        "rev": "67b0ec251aff2a8790cf7f2aebdd051ff711879b",
-        "revCount": 185,
+        "rev": "545a39b4dfbcec83a1c38debd0b2e1b5dfe80847",
+        "revCount": 186,
         "type": "git",
         "url": "https://git.sr.ht/~scoiatael/parrhasius"
       },
