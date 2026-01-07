@@ -22,3 +22,9 @@ Takes a URL like 'git@github.com:WootingKb/just-flake.git' or
     (when (called-interactively-p 'any)
       (insert flake-input))
     flake-input))
+
+;;;###autoload
+(defun scoiatael/nix-prefetch-url (start end)
+  (interactive (list (region-beginning) (region-end)))
+  (shell-command-on-region start end "ruby -e 'p `nix-prefetch-url --unpack #{$stdin.read} 2> /dev/null`.strip'" :replace t))
+
