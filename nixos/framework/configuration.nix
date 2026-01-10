@@ -15,6 +15,7 @@
     ../modules/mail.nix
     ../modules/grafana.nix
     ../modules/remote-builder.nix
+    ../modules/deluge.nix
     ./tailscale-services.nix
     ./caddy.nix
     ./hardware-configuration.nix
