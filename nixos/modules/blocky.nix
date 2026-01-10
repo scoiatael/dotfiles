@@ -37,6 +37,7 @@
         "jellyfin.heron-pollux.ts.net" = "192.168.1.153";
         "influxdb.heron-pollux.ts.net" = "192.168.1.153";
         "grafana.heron-pollux.ts.net" = "192.168.1.153";
+        "deluge.heron-pollux.ts.net" = "192.168.1.153";
       };
     };
   };

@@ -21,5 +21,6 @@
       jellyfin = { port = 8096; };
       influxdb = { port = 8086; };
       grafana = { port = 3000; };
+      deluge = { port = 8112; };
     };
 }

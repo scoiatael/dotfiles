@@ -21,6 +21,9 @@
     "grafana.heron-pollux.ts.net".extraConfig = ''
       reverse_proxy :3000
     '';
+    "deluge.heron-pollux.ts.net".extraConfig = ''
+      reverse_proxy :8112
+    '';
   };
 
   services.tailscale.permitCertUid = config.services.caddy.user;
