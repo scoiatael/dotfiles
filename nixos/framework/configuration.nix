@@ -239,6 +239,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = (with pkgs; [
+    helix
     pciutils
     lm_sensors
     yubioath-flutter
