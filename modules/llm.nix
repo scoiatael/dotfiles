@@ -19,6 +19,8 @@ in {
     # llm.withPlugins has been deprecated
     (pkgs.callPackage ../packages/llm-with-plugins { })
 
+    (pkgs.callPackage ../packages/markitdown { })
+
     # for PDF conversion
     ghostscript
     pdf-convert
