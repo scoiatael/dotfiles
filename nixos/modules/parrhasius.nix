@@ -16,8 +16,7 @@
     path = [
       pkgs.ruby_3_3.devEnv
       pkgs.go
-      pkgs.yarn
-      pkgs.nodejs
+      pkgs.bun
       pkgs.sqlite
       pkgs.gnumake
       pkgs.gcc
