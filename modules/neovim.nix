@@ -47,7 +47,6 @@
           "mini.pairs"
           "mini.bracketed"
           "mini.files"
-          "mini.jump2d"
           "mini.pick"
         ]);
         type = "lua";
