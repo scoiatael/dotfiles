@@ -13,8 +13,8 @@ let
     llm -t invoice -a "$1" "$1"
   '';
 in {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "claude-code" "amp-cli" ];
+  allowUnfreePackages = [ "claude-code" "amp-cli" ];
+
   home.packages = with pkgs; [
     # llm.withPlugins has been deprecated
     (pkgs.callPackage ../packages/llm-with-plugins { })

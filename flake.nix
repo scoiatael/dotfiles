@@ -89,6 +89,7 @@
           homeManagerModules = {
             wooting = {
               imports = [
+                ./modules/unfree.nix
                 ./modules/home.nix
                 ./modules/cli.nix
                 (import ./modules/home-manager.nix attrs)
@@ -107,6 +108,7 @@
                     signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
                   };
                 }
+                ./modules/git/graphite.nix
                 {
                   home = {
                     username = "lukas";
