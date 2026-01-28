@@ -26,7 +26,7 @@ in {
     pdf-convert
     llm-invoice
 
-    # claude-code
+    claude-code
     # # Amp
     # amp-cli
   ];
