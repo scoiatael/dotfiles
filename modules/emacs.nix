@@ -12,10 +12,10 @@ in {
       zstd.bin
       pass
 
-      vtsls # LSP for JS
       rufo # formatter for Ruby
       gopls # LSP for Go
       clojure-lsp # LSP for Clojure
+      typescript-language-server
 
       victor-mono
       nerd-fonts.symbols-only
