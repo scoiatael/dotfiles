@@ -42,7 +42,7 @@
   nix.settings.builders-use-substitutes = true;
 
   nix.buildMachines = [{
-    hostName = "192.168.1.153";
+    hostName = "192.168.180.153";
     sshUser = "remotebuild";
     sshKey = "/etc/nix/builder_ed25519";
     system = "x86_64-linux";

@@ -31,13 +31,13 @@
       #   mapping."ts.net" = "100.100.100.100";
       # };
       customDNS.mapping = {
-        "parrhasius.heron-pollux.ts.net" = "192.168.1.153";
-        "yarr.heron-pollux.ts.net" = "192.168.1.153";
-        "scrutiny.heron-pollux.ts.net" = "192.168.1.153";
-        "jellyfin.heron-pollux.ts.net" = "192.168.1.153";
-        "influxdb.heron-pollux.ts.net" = "192.168.1.153";
-        "grafana.heron-pollux.ts.net" = "192.168.1.153";
-        "deluge.heron-pollux.ts.net" = "192.168.1.153";
+        "parrhasius.heron-pollux.ts.net" = "192.168.180.153";
+        "yarr.heron-pollux.ts.net" = "192.168.180.153";
+        "scrutiny.heron-pollux.ts.net" = "192.168.180.153";
+        "jellyfin.heron-pollux.ts.net" = "192.168.180.153";
+        "influxdb.heron-pollux.ts.net" = "192.168.180.153";
+        "grafana.heron-pollux.ts.net" = "192.168.180.153";
+        "deluge.heron-pollux.ts.net" = "192.168.180.153";
       };
     };
   };
