@@ -22,5 +22,6 @@
       influxdb = { port = 8086; };
       grafana = { port = 3000; };
       deluge = { port = 8112; };
+      dashy = { port = 443; };
     };
 }

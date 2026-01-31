@@ -38,6 +38,7 @@
         "influxdb.heron-pollux.ts.net" = "192.168.180.153";
         "grafana.heron-pollux.ts.net" = "192.168.180.153";
         "deluge.heron-pollux.ts.net" = "192.168.180.153";
+        "dashy.heron-pollux.ts.net" = "192.168.180.153";
       };
     };
   };

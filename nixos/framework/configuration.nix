@@ -17,6 +17,7 @@
     ../modules/remote-builder.nix
     ../modules/deluge.nix
     ../modules/clamav.nix
+    ../modules/dashy.nix
     ./tailscale-services.nix
     ./caddy.nix
     ./hardware-configuration.nix
