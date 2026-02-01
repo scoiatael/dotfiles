@@ -11,6 +11,7 @@
     ../modules/octocrypt.nix
     ../modules/ip.nix
     ../modules/telegraf.nix
+    ../modules/magic-wormhole.nix
   ];
 
   services.kubo.enable = true;
