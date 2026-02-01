@@ -99,6 +99,12 @@
               title = "Webhooks";
               url = "https://wh.scoiatael.dev/";
             }
+            {
+              description = "Send file over TCP";
+              icon = "generative";
+              title = "Magic wormhole";
+              url = "https://hole.scoiatael.dev/";
+            }
           ];
           name = "scoiatael.dev";
         }
@@ -121,6 +127,19 @@
             }
           ];
           name = "Documentation";
+        }
+        {
+          displayData = {
+            collapsed = false;
+            cols = 2;
+          };
+          items = [{
+            description = "Temporary file hoster.";
+            icon = "generative";
+            title = "0x0";
+            url = "https://0x0.st/";
+          }];
+          name = "Tools";
         }
       ];
     };
