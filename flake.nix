@@ -203,6 +203,7 @@
               home-manager.lib.homeManagerConfiguration {
                 pkgs = nixpkgs.legacyPackages.aarch64-darwin;
                 modules = [
+                  ./modules/unfree.nix
                   ./modules/secretive.nix
                   ./modules/cli.nix
                   #./modules/ghostty.nix
