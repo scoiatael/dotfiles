@@ -23,7 +23,6 @@ in {
       tealdeer # [[id:d069b405-6ea1-4742-89e8-7b4db610c696][tealdeer]]
       fx # [[id:631d0161-8081-4c64-8356-9c8391142dd6][fx]]
       yq # [[id:bd1d7422-0b72-4af4-a3fe-64b32ee727c5][yq]]
-      gitu # [[id:4d118287-a703-4845-89b6-7cd14ee47390][gitu]]
       spacer # [[id:9e83cbf2-83f4-4cda-90ea-3363736a07e9][spacer]]
       tailspin # [[id:8042e9e2-b2cb-4c24-bd34-64cc6b56aac7][tailspin]]
       oha # [[id:607d4762-4482-47b8-a9c2-c5c7f5ec113c][oha]]

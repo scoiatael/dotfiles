@@ -40,8 +40,7 @@
     flake = false;
   };
   inputs.lix-module = {
-    url =
-      "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
+    url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.lix.follows = "lix";
   };
@@ -79,81 +78,100 @@
     flake = false;
   };
 
-  outputs = { self, flake-parts, nixpkgs, home-manager, darwin, ... }@attrs:
-    flake-parts.lib.mkFlake { inputs = attrs; }
-    (top@{ config, withSystem, moduleWithSystem, ... }: {
-      imports = [ attrs.just-flake.flakeModule ];
-      flake =
-        let lix = { pkgs, lib, ... }: { nix.package = lib.mkForce pkgs.lix; };
-        in {
-          homeManagerModules = {
-            wooting = {
-              imports = [
-                ./modules/unfree.nix
-                ./modules/home.nix
-                ./modules/cli.nix
-                (import ./modules/home-manager.nix attrs)
-                ./modules/git.nix
-                ./modules/tmux.nix
-                (import ./modules/zsh.nix attrs)
-                (import ./modules/emacs.nix attrs)
-                ./modules/wezterm.nix
-                ./modules/llm.nix
-                ./modules/neovim.nix
-                (import ./modules/comma.nix attrs)
-                {
-                  programs.git.settings.user = {
-                    email = "lukasz@wooting.io";
-                    name = "Lukas Czaplinski";
-                    signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
-                  };
-                }
-                ./modules/git/graphite.nix
-                {
-                  home = {
-                    username = "lukas";
-                    homeDirectory = "/Users/lukas";
-                    stateVersion = "22.05";
-                  };
-                }
-              ];
+  outputs =
+    {
+      self,
+      flake-parts,
+      nixpkgs,
+      home-manager,
+      darwin,
+      ...
+    }@attrs:
+    flake-parts.lib.mkFlake { inputs = attrs; } (
+      top@{
+        config,
+        withSystem,
+        moduleWithSystem,
+        ...
+      }:
+      {
+        imports = [ attrs.just-flake.flakeModule ];
+        flake =
+          let
+            lix =
+              { pkgs, lib, ... }:
+              {
+                nix.package = lib.mkForce pkgs.lix;
+              };
+          in
+          {
+            homeManagerModules = {
+              wooting = {
+                imports = [
+                  ./modules/unfree.nix
+                  ./modules/home.nix
+                  ./modules/cli.nix
+                  (import ./modules/home-manager.nix attrs)
+                  ./modules/git.nix
+                  ./modules/tmux.nix
+                  (import ./modules/zsh.nix attrs)
+                  (import ./modules/emacs.nix attrs)
+                  ./modules/wezterm.nix
+                  ./modules/llm.nix
+                  ./modules/neovim.nix
+                  (import ./modules/comma.nix attrs)
+                  {
+                    programs.git.settings.user = {
+                      email = "lukasz@wooting.io";
+                      name = "Lukas Czaplinski";
+                      signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
+                    };
+                  }
+                  ./modules/git/graphite.nix
+                  {
+                    home = {
+                      username = "lukas";
+                      homeDirectory = "/Users/lukas";
+                      stateVersion = "22.05";
+                    };
+                  }
+                ];
+              };
             };
-          };
-          homeConfigurations = {
-            "l@LsNixOS" = home-manager.lib.homeManagerConfiguration {
-              pkgs = nixpkgs.legacyPackages.x86_64-linux;
-              modules = [
-                attrs.walker.homeManagerModules.default
-                ./modules/walker.nix
-                ./modules/home.nix
-                ./modules/ghostty.nix
-                ./modules/electron.nix
-                ./modules/linux.nix
-                ./modules/cli.nix
-                ./modules/git.nix
-                (import ./modules/zsh.nix attrs)
-                ./modules/neovim.nix
-                ./modules/wezterm.nix
-                (import ./modules/home-manager.nix attrs)
-                (import ./modules/emacs.nix attrs)
-                {
-                  programs.git.settings.user = {
-                    email = "lukasz@wooting.io";
-                    name = "Lukas Czaplinski";
-                    signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
-                  };
-                }
-                {
-                  home = {
-                    username = "l";
-                    homeDirectory = "/home/l";
-                    stateVersion = "24.11";
-                  };
-                }
-              ];
-            };
-            "lukaszczaplinski@LsFramework" =
-              home-manager.lib.homeManagerConfiguration {
+            homeConfigurations = {
+              "l@LsNixOS" = home-manager.lib.homeManagerConfiguration {
+                pkgs = nixpkgs.legacyPackages.x86_64-linux;
+                modules = [
+                  attrs.walker.homeManagerModules.default
+                  ./modules/walker.nix
+                  ./modules/home.nix
+                  ./modules/ghostty.nix
+                  ./modules/electron.nix
+                  ./modules/linux.nix
+                  ./modules/cli.nix
+                  ./modules/git.nix
+                  (import ./modules/zsh.nix attrs)
+                  ./modules/neovim.nix
+                  ./modules/wezterm.nix
+                  (import ./modules/home-manager.nix attrs)
+                  (import ./modules/emacs.nix attrs)
+                  {
+                    programs.git.settings.user = {
+                      email = "lukasz@wooting.io";
+                      name = "Lukas Czaplinski";
+                      signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
+                    };
+                  }
+                  {
+                    home = {
+                      username = "l";
+                      homeDirectory = "/home/l";
+                      stateVersion = "24.11";
+                    };
+                  }
+                ];
+              };
+              "lukaszczaplinski@LsFramework" = home-manager.lib.homeManagerConfiguration {
                 pkgs = nixpkgs.legacyPackages.x86_64-linux;
                 modules = [
                   ./modules/home.nix
@@ -164,11 +182,14 @@
                   ./modules/tmux.nix
                   (import ./modules/zsh.nix attrs)
                   ./modules/neovim.nix
-                  ({ pkgs, lib, ... }: {
-                    programs.zsh.sessionVariables = {
-                      EDITOR = lib.getExe pkgs.neovim;
-                    };
-                  })
+                  (
+                    { pkgs, lib, ... }:
+                    {
+                      programs.zsh.sessionVariables = {
+                        EDITOR = lib.getExe pkgs.neovim;
+                      };
+                    }
+                  )
                   {
                     home = {
                       username = "lukaszczaplinski";
@@ -179,8 +200,7 @@
                 ];
                 extraSpecialArgs = attrs;
               };
-            "lukaszczaplinski@LsGamingDarwin" =
-              home-manager.lib.homeManagerConfiguration {
+              "lukaszczaplinski@LsGamingDarwin" = home-manager.lib.homeManagerConfiguration {
                 pkgs = nixpkgs.legacyPackages.x86_64-darwin;
                 modules = [
                   ./modules/home.nix
@@ -199,8 +219,7 @@
                 ];
                 extraSpecialArgs = attrs;
               };
-            "lukaszczaplinski@LsAir" =
-              home-manager.lib.homeManagerConfiguration {
+              "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
                 pkgs = nixpkgs.legacyPackages.aarch64-darwin;
                 modules = [
                   ./modules/unfree.nix
@@ -228,133 +247,148 @@
                 ];
                 extraSpecialArgs = attrs;
               };
-            "lukas@LsWootingMBP" = home-manager.lib.homeManagerConfiguration {
-              pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-              modules = [ self.homeManagerModules.wooting ];
-              extraSpecialArgs = attrs;
+              "lukas@LsWootingMBP" = home-manager.lib.homeManagerConfiguration {
+                pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+                modules = [ self.homeManagerModules.wooting ];
+                extraSpecialArgs = attrs;
+              };
             };
-          };
-          darwinConfigurations = {
-            LsGamingDarwin = darwin.lib.darwinSystem {
-              system = "x86_64-darwin";
-              modules = [
-                ./modules/darwin.nix
-                ./modules/darwin/yabai.nix
-                ./modules/darwin/sketchybar.nix
-                ./modules/darwin/gaming.nix
-              ];
-            };
-            LsWootingMBP = darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              modules = [
-                { system.primaryUser = "lukas"; }
-                lix
-                home-manager.darwinModules.home-manager
-                ./modules/darwin.nix
-                ./modules/darwin/aerospace.nix
-                ./modules/darwin/wooting.nix
-                ./modules/darwin/sketchybar.nix
-                {
-                  users.users.lukas = {
-                    name = "lukas";
-                    home = "/Users/lukas";
-                  };
-                }
-                {
-                  # TODO: these break some thing
-                  # read up on them.
-                  #home-manager.useGlobalPkgs = true;
-                  #home-manager.useUserPackages = true;
-                  home-manager.users.lukas = self.homeManagerModules.wooting;
-                }
-              ];
-            };
-            LsAir = darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              modules = [
-                attrs.lix-module.nixosModules.default
-                { system.primaryUser = "lukaszczaplinski"; }
-                { ids.gids.nixbld = nixpkgs.lib.mkForce 30000; }
-                ./modules/darwin.nix
-                ./modules/darwin/aerospace.nix
-                ./modules/darwin/sketchybar.nix
-                ./modules/darwin/air.nix
-                { networking.hostName = "LsAir"; }
-              ];
-            };
-          };
-
-          nixosConfigurations = {
-            LsFramework = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = attrs;
-              modules = [ ./nixos/framework/configuration.nix ];
-            };
-            prg-vps-1 = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = attrs;
-              modules = [ ./nixos/prg-vps-1/configuration.nix ];
-            };
-            sd-161581 = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = attrs;
-              modules = [ ./nixos/sd-161581/configuration.nix ];
-            };
-            demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
-              system = "aarch64-linux";
-              specialArgs = attrs;
-              modules = [
-                ({ pkgs, ... }: {
-                  users.users = {
-                    me = {
-                      isNormalUser = true;
-                      extraGroups = [ "wheel" ];
+            darwinConfigurations = {
+              LsGamingDarwin = darwin.lib.darwinSystem {
+                system = "x86_64-darwin";
+                modules = [
+                  ./modules/darwin.nix
+                  ./modules/darwin/yabai.nix
+                  ./modules/darwin/sketchybar.nix
+                  ./modules/darwin/gaming.nix
+                ];
+              };
+              LsWootingMBP = darwin.lib.darwinSystem {
+                system = "aarch64-darwin";
+                modules = [
+                  { system.primaryUser = "lukas"; }
+                  lix
+                  home-manager.darwinModules.home-manager
+                  ./modules/darwin.nix
+                  ./modules/darwin/aerospace.nix
+                  ./modules/darwin/wooting.nix
+                  ./modules/darwin/sketchybar.nix
+                  {
+                    users.users.lukas = {
+                      name = "lukas";
+                      home = "/Users/lukas";
                     };
-                  };
+                  }
+                  {
+                    # TODO: these break some thing
+                    # read up on them.
+                    #home-manager.useGlobalPkgs = true;
+                    #home-manager.useUserPackages = true;
+                    home-manager.users.lukas = self.homeManagerModules.wooting;
+                  }
+                ];
+              };
+              LsAir = darwin.lib.darwinSystem {
+                system = "aarch64-darwin";
+                modules = [
+                  attrs.lix-module.darwinModules.default
+                  { system.primaryUser = "lukaszczaplinski"; }
+                  { ids.gids.nixbld = nixpkgs.lib.mkForce 30000; }
+                  ./modules/darwin.nix
+                  ./modules/darwin/aerospace.nix
+                  ./modules/darwin/sketchybar.nix
+                  ./modules/darwin/air.nix
+                  { networking.hostName = "LsAir"; }
+                ];
+              };
+            };
 
-                  virtualisation.vmVariant = {
-                    virtualisation = {
-                      graphics = false;
-                      host.pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-                    };
-                  };
+            nixosConfigurations = {
+              LsFramework = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                specialArgs = attrs;
+                modules = [ ./nixos/framework/configuration.nix ];
+              };
+              prg-vps-1 = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                specialArgs = attrs;
+                modules = [ ./nixos/prg-vps-1/configuration.nix ];
+              };
+              sd-161581 = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                specialArgs = attrs;
+                modules = [ ./nixos/sd-161581/configuration.nix ];
+              };
+              demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
+                system = "aarch64-linux";
+                specialArgs = attrs;
+                modules = [
+                  (
+                    { pkgs, ... }:
+                    {
+                      users.users = {
+                        me = {
+                          isNormalUser = true;
+                          extraGroups = [ "wheel" ];
+                        };
+                      };
 
-                  services.openssh = { enable = true; };
+                      virtualisation.vmVariant = {
+                        virtualisation = {
+                          graphics = false;
+                          host.pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+                        };
+                      };
 
-                  environment.systemPackages = with pkgs; [ htop ];
+                      services.openssh = {
+                        enable = true;
+                      };
 
-                  system.stateVersion = "23.05";
-                })
-              ];
+                      environment.systemPackages = with pkgs; [ htop ];
+
+                      system.stateVersion = "23.05";
+                    }
+                  )
+                ];
+              };
             };
           };
-        };
 
-      systems = [ "x86_64-linux" "aarch64-darwin" ];
-      perSystem = { system, config, pkgs, ... }:
-        let
-          machine =
-            self.nixosConfigurations."demo-vm-${system}".config.system.build.vm;
+        systems = [
+          "x86_64-linux"
+          "aarch64-darwin"
+        ];
+        perSystem =
+          {
+            system,
+            config,
+            pkgs,
+            ...
+          }:
+          let
+            machine = self.nixosConfigurations."demo-vm-${system}".config.system.build.vm;
 
-          program = pkgs.writeShellScript "run-vm.sh" ''
-            export NIX_DISK_IMAGE=$(mktemp -u -t nixos.qcow2)
+            program = pkgs.writeShellScript "run-vm.sh" ''
+              export NIX_DISK_IMAGE=$(mktemp -u -t nixos.qcow2)
 
-            trap "rm -f $NIX_DISK_IMAGE" EXIT
+              trap "rm -f $NIX_DISK_IMAGE" EXIT
 
-            ${machine}/bin/run-nixos-vm
-          '';
-        in {
-          apps = {
-            default = {
-              type = "app";
+              ${machine}/bin/run-nixos-vm
+            '';
+          in
+          {
+            apps = {
+              default = {
+                type = "app";
 
-              program = "${program}";
+                program = "${program}";
+              };
+            };
+            devShells.default = pkgs.mkShellNoCC {
+              inputsFrom = [ config.just-flake.outputs.devShell ];
+              buildInputs = [ pkgs.nixos-rebuild-ng ];
             };
           };
-          devShells.default = pkgs.mkShellNoCC {
-            inputsFrom = [ config.just-flake.outputs.devShell ];
-            buildInputs = [ pkgs.nixos-rebuild-ng ];
-          };
-        };
-    });
+      }
+    );
 }

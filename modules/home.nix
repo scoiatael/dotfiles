@@ -121,7 +121,7 @@
         paging = "never";
         theme = "catpuccin";
       };
-      extraPackages = with pkgs.bat-extras; [ batman ];
+      # extraPackages = with pkgs.bat-extras; [ batman ];
     };
     btop = { enable = true; };
     atuin = {

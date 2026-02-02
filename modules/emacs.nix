@@ -5,7 +5,7 @@ in {
   home.packages = with pkgs;
     [
       #recutils
-      nixfmt-classic
+      nixfmt
       sqlite
       clang
       # TODO: https://github.com/aca/emmet-ls

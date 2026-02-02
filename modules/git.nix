@@ -5,8 +5,8 @@ in {
   home.packages = with pkgs; [
     mergiraf
     meld
-    gitu
     delta
+    # gitu # [[id:4d118287-a703-4845-89b6-7cd14ee47390][gitu]]
     tig
     git-revise
     git-branchless
