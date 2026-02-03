@@ -49,3 +49,25 @@
           (forward-line 1)
           (setq end (+ end (- (length "** TODO") (length (match-string 0)))))))
     (message "No region selected")))
+
+;;;###autoload
+(defun scoiatael/export-subtree-to-markdown-buffer ()
+  "Export current org subtree to markdown in a new buffer."
+  (interactive)
+  (save-restriction
+    (org-narrow-to-subtree)
+    (let* ((subtree-heading (org-get-heading t t t t))
+           (org-export-with-toc nil)
+           (buffer-name (format "*Markdown Export: %s*" (or subtree-heading "Subtree")))
+           (markdown-content (org-export-as 'md nil nil t)))
+      (widen)
+      (with-current-buffer (get-buffer-create buffer-name)
+        (erase-buffer)
+        (insert markdown-content)
+        (markdown-mode)
+        (goto-char (point-min))
+        (save-excursion
+          (while (re-search-forward "^[[:space:]]*\n" nil t)
+            (replace-match "")))
+        (markdown-mode)
+        (display-buffer (current-buffer))))))
