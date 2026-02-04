@@ -7,7 +7,7 @@
     (define-key eglot-mode-map (kbd "C-c I") #'eldoc-box-eglot-help-at-point)))
 
 (after! eglot
-  (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-ts-mode typescript-tsx-mode rjsx-mode jtsx-typescript-mode) . ,(eglot-alternatives '(("deno" "lsp")))))
+  (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-ts-mode typescript-tsx-mode rjsx-mode jtsx-typescript-mode) . ,(eglot-alternatives '(("deno" "lsp") ("typescript-language-server" "--stdio")))))
   (setq eglot-events-buffer-config '(:size 2000000 :format full))
 
   (setq lsp-nix-nixd-server-path "nixd"
