@@ -1,5 +1,27 @@
-{ config, lib, pkgs, parrhasius, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  parrhasius,
+  ...
+}:
 
+let
+  environmentFile = pkgs.writeTextFile {
+    name = "parrhasius.env";
+    text = ''
+      SERVE="/srv/nfs/downloads/parrhasius.db/"
+      RAILS_ENV="production"
+      RACK_ENV="production"
+      SOLID_QUEUE_IN_PUMA="1"
+      C_INCLUDE_PATH="${pkgs.libyaml.dev}/include"
+      LIBRARY_PATH="${pkgs.libyaml}/lib"
+      WEB_CONCURRENCY="4"
+      BUNDLE_HOME="/var/lib/parrhasius-gems"
+      DATABASE_URL="sqlite3:///var/lib/parrhasius-db/production.sqlite3"
+    '';
+  };
+in
 {
   users.users.parrhasius = {
     isSystemUser = true;
@@ -23,6 +45,7 @@
       pkgs.gnutar
       pkgs.gzip
       pkgs.pkg-config
+      pkgs.imagemagick
     ];
 
     preStart = ''
@@ -30,6 +53,7 @@
       chmod u+w -R ./
       bundle install
       bundle exec rake build
+      bundle exec rake db:migrate
     '';
 
     script = ''
@@ -37,12 +61,6 @@
     '';
 
     environment = {
-      SERVE = "/srv/nfs/downloads/parrhasius.db/";
-      RAILS_ENV = "production";
-      RACK_ENV = "production";
-      C_INCLUDE_PATH = "${pkgs.libyaml.dev}/include";
-      LIBRARY_PATH = "${pkgs.libyaml}/lib";
-      WEB_CONCURRENCY = "4";
     };
 
     serviceConfig = {
@@ -50,8 +68,11 @@
       WorkingDirectory = config.users.users.parrhasius.home;
       Restart = "on-failure";
       User = config.users.users.parrhasius.name;
-
-      EnvironmentFile = [ "/etc/nixos/secrets/parrhasius.env" ];
+      StateDirectory = "parrhasius-db parrhasius-gems parrhasius-bun";
+      EnvironmentFile = [
+        "/etc/nixos/secrets/parrhasius.env"
+        environmentFile
+      ];
     };
   };
 }
