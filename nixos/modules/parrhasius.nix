@@ -19,6 +19,7 @@ let
       WEB_CONCURRENCY="4"
       BUNDLE_HOME="/var/lib/parrhasius-gems"
       DATABASE_URL="sqlite3:///var/lib/parrhasius-db/production.sqlite3"
+      LD_LIBRARY_PATH="${pkgs.vips.out}/lib"
     '';
   };
 in
@@ -37,7 +38,6 @@ in
     wantedBy = [ "default.target" ];
     path = [
       pkgs.ruby_3_3.devEnv
-      pkgs.go
       pkgs.bun
       pkgs.sqlite
       pkgs.gnumake
