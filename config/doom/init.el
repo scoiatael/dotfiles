@@ -207,7 +207,7 @@
        markup
        data
        devops
-       (llm +amp)
+       (llm +tools)
        build
        vcs
        lsp
