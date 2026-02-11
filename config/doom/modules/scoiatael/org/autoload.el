@@ -37,17 +37,23 @@
 
 ;;;###autoload
 (defun scoiatael/replace-pipes-with-todo (start end)
-  "Replace first occurrence of |text| with ** TODO on each line in region."
+  "Convert pipe-delimited Linear table lines to org headings in region."
   (interactive "r")
   (if (use-region-p)
       (save-excursion
-        (goto-char start)
-        (while (< (point) end)
-          (beginning-of-line)
-          (when (re-search-forward "|[^|]+|" (line-end-position) t)
-            (replace-match "** TODO"))
-          (forward-line 1)
-          (setq end (+ end (- (length "** TODO") (length (match-string 0)))))))
+        (save-restriction
+          (narrow-to-region start end)
+          (goto-char (point-min))
+          (while (re-search-forward
+                  "^| *\\([^|]+\\)| *\\([^|]+\\)| *\\([^|]+\\)| *\\([^|]+\\)|"
+                  nil t)
+            (let ((status (upcase (string-trim (match-string 1))))
+                  (id     (string-trim (match-string 2)))
+                  (desc   (string-trim (match-string 3)))
+                  (url    (string-trim (match-string 4))))
+              (replace-match
+               (format "** %s %s | %s\n| %s |" status id desc url)
+               t t)))))
     (message "No region selected")))
 
 ;;;###autoload
