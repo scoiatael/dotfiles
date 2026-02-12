@@ -1,5 +1,7 @@
 ;;; modules/scoiatael/elisp/config.el -*- lexical-binding: t; -*-
 
+(require 'straight)
+
 (add-hook! #'emacs-lisp-mode
   (when (doom-real-buffer-p (current-buffer))
     (when (seq-find (lambda (dir) (file-in-directory-p (buffer-file-name) dir))
