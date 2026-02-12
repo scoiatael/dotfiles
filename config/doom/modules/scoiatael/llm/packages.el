@@ -8,7 +8,7 @@
   (package! shell-maker :recipe '(:type git :host github :repo "xenodium/shell-maker"))
   (package! chatgpt-shell :recipe '(:host github :repo "xenodium/chatgpt-shell"  :files ("chatgpt-shell*.el")) :pin "32bf4bf930d7226bc9df876805b80a936813efe5"))
 (when (modulep! +tools)
-  (package! llm-tool-collection :recipe '(:host github :repo "skissue/llm-tool-collection")))
+  (package! llm-tool-collection :recipe '(:host github :repo "skissue/llm-tool-collection")) :pin "a383ccf3df6c86684da77fb61ea4ebe67a21eedb")
 
 (when (modulep! +amp)
   (package! amp
