@@ -18,8 +18,10 @@
 
 (use-package! llm-tool-collection
   :when (modulep! +tools)
-  :config (after! gptel (mapcar (apply-partially #'apply #'gptel-make-tool)
-                                (llm-tool-collection-get-all))))
+  :config
+  (after! gptel
+    (setq gptel-tools (mapcar (apply-partially #'apply #'gptel-make-tool)
+                              (llm-tool-collection-get-all)))))
 
 (use-package! macher
   :when (modulep! +gptel +macher)
