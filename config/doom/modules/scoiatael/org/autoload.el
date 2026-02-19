@@ -47,12 +47,13 @@
           (while (re-search-forward
                   "^| *\\([^|]+\\)| *\\([^|]+\\)| *\\([^|]+\\)| *\\([^|]+\\)|"
                   nil t)
-            (let ((status (upcase (string-trim (match-string 1))))
-                  (id     (string-trim (match-string 2)))
-                  (desc   (string-trim (match-string 3)))
-                  (url    (string-trim (match-string 4))))
+            (let* ((status (upcase (string-trim (match-string 1))))
+                   (org-status (if (string= "BACKLOG" status) "TODO" status))
+                   (id     (string-trim (match-string 2)))
+                   (desc   (string-trim (match-string 3)))
+                   (url    (string-trim (match-string 4))))
               (replace-match
-               (format "** %s %s | %s\n| %s |" status id desc url)
+               (format "** %s %s | %s\n| %s |" org-status id desc url)
                t t)))))
     (message "No region selected")))
 
