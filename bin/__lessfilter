@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+if command -v bat >/dev/null 2>&1; then
+        # we don't just do this because then the other lessfilters never have a chance to run
+        # bat --paging never --color always --style plain "$1"
+        # exit 0
+        for ext in $(bat -L | cut -d: -f2 | tr ',' ' '); do
+                trimmed="${1%$ext}"
+                # If the file *has an extension* and that extension matches, or if the *entire* filename matches, highlight it.
+                # This avoids cases where the filename ends with "d", but not with ".d", for instance.
+                if [ "$trimmed" = "${1%.*}." ] || [ "$trimmed" = "" ]; then
+                        bat --paging never --color always --style plain --language "$ext" <"$1"
+                        exit 0
+                fi
+        done
+fi
+
+exit 1

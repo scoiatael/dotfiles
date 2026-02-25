@@ -17,6 +17,10 @@ in
   programs.zsh = {
     enable = true;
     enableCompletion = false;
+
+    envExtra = ''
+      export LESSOPEN="|${../bin/__lessfilter} %s"
+    '';
     shellAliases =
       let
         nh = lib.getExe pkgs.nh;
