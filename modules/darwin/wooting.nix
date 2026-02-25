@@ -15,6 +15,7 @@
       "utm"
       "notion"
       "thebrowsercompany-dia"
+      "tailscale-app"
     ];
     brews = [ "stlink" ];
   };
