@@ -1,9 +1,21 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.yazi = {
     enable = true;
-    settings = { tasks = { image_bound = [ 65535 65535 ]; }; };
+    settings = {
+      tasks = {
+        image_bound = [
+          65535
+          65535
+        ];
+      };
+    };
   };
   programs.neovim = {
     enable = true;
@@ -11,7 +23,9 @@
     vimAlias = true;
     vimdiffAlias = true;
     withNodeJs = true;
-    coc = { enable = true; };
+    coc = {
+      enable = true;
+    };
     plugins = with pkgs.vimPlugins; [
       {
         plugin = smart-splits-nvim;
@@ -21,6 +35,7 @@
       yankring
       vim-nix
       telescope-manix
+      vim-commentary
       {
         plugin = telescope-nvim;
         config = ''
@@ -39,16 +54,20 @@
       minimap-vim
       {
         plugin = mini-nvim;
-        config = (lib.strings.concatMapStrings (plugin: ''
-          require('${plugin}').setup()
-        '') [
-          "mini.ai" # [[id:04024110-7404-407d-b7f9-9e3817acd9db][mini-ai]]
-          "mini.operators"
-          "mini.pairs"
-          "mini.bracketed"
-          "mini.files"
-          "mini.pick"
-        ]);
+        config = (
+          lib.strings.concatMapStrings
+            (plugin: ''
+              require('${plugin}').setup()
+            '')
+            [
+              "mini.ai" # [[id:04024110-7404-407d-b7f9-9e3817acd9db][mini-ai]]
+              "mini.operators"
+              "mini.pairs"
+              "mini.bracketed"
+              "mini.files"
+              "mini.pick"
+            ]
+        );
         type = "lua";
       }
       {
@@ -83,8 +102,12 @@
       vim-surround
       vim-repeat
       vim-unimpaired
+      vim-commentary
     ];
-    extraPackages = with pkgs; [ code-minimap manix ];
+    extraPackages = with pkgs; [
+      code-minimap
+      manix
+    ];
     extraConfig = ''
       " If you have vim >=8.0 or Neovim >= 0.1.5
       if (has("termguicolors"))
@@ -103,11 +126,12 @@
       set numberwidth=3
       set number
       set relativenumber
+
+      vmap <A-;> <Plug>Commentary
     '';
   };
-  home.activation.createNvimDirectory =
-    config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      test -d ~/.local/state/nvim/swap/ || mkdir -p ~/.local/state/nvim/swap/
-      chown -R $(whoami) ~/.local/state/nvim/swap/
-    '';
+  home.activation.createNvimDirectory = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    test -d ~/.local/state/nvim/swap/ || mkdir -p ~/.local/state/nvim/swap/
+    chown -R $(whoami) ~/.local/state/nvim/swap/
+  '';
 }

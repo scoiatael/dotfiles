@@ -298,3 +298,4 @@ config.tab_max_width = 128
 -- Useful for debugging new tab commands
 -- exit_behavior = 'Hold',
 config.front_end = "WebGpu"
+config.enable_kitty_keyboard = false
