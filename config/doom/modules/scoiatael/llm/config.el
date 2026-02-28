@@ -14,7 +14,15 @@
         "g g" #'gptel
         "g r" #'gptel-rewrite
         "g s" #'gptel-send
-        "g m" #'gptel-menu))
+        "g m" #'gptel-menu)
+
+  ;; https://github.com/emacs-evil/evil-collection/issues/642
+  (map! :map gptel-context-buffer-mode-map
+        :n "q" #'gptel-context-quit
+        :n "n" #'gptel-context-next
+        :n "p" #'gptel-context-previous
+        :n "d" #'gptel-context-flag-deletion
+        :n "RET" #'gptel-context-visit) )
 
 (use-package! llm-tool-collection
   :when (modulep! +tools)
