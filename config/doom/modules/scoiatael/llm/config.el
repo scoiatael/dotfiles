@@ -29,7 +29,10 @@
   :config
   (after! gptel
     (setq gptel-tools (mapcar (apply-partially #'apply #'gptel-make-tool)
-                              (llm-tool-collection-get-all)))))
+                              (mapcar #'symbol-value (-filter (lambda (tool)
+                                                                (not (member (symbol-name tool)
+                                                                             '("llm-tc/create-file" "llm-tc/create-directory"))))
+                                                              llm-tool-collection--all-tools))))))
 
 (use-package! macher
   :when (modulep! +gptel +macher)
