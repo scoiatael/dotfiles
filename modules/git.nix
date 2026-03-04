@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let inherit (lib) mkDefault;
-in {
+let
+  inherit (lib) mkDefault;
+in
+{
   home.packages = with pkgs; [
     mergiraf
     meld
@@ -24,12 +31,9 @@ in {
       f = "fetch";
       p = "pull";
       pp = "! git pull && git push";
-      lg =
-        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-      lga =
-        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all";
-      lgd =
-        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p";
+      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+      lga = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all";
+      lgd = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p";
 
       rbc = "rebase --continue";
       rba = "rebase --abort";
@@ -48,7 +52,6 @@ in {
       commit-ne = "commit --amend --no-edit";
       fixup = "commit --fixup";
       please = "push --force-with-lease";
-      wip = "commit -a -n -m 'wip'";
       la = "config --get-regexp alias";
       cm = "checkout master";
       cmp = "! git checkout master && git pull --rebase";
@@ -62,9 +65,14 @@ in {
       search = "!git rev-list --all | xargs git grep -F";
       last = "log -1 HEAD --stat";
       continue = "!$HOME/dotfiles/bin/__git_continue.sh";
-      br =
-        "branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
+      br = "branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate";
       l1 = "rev-parse --short HEAD";
+
+      # https://github.com/GitAlias/gitalias/blob/main/gitalias.txt#L1290
+      # Add files using the message "wip"
+      wip = "!git add --all; git ls-files --deleted -z | xargs -r -0 git rm; git commit --message=wip";
+      # Restore the deleted files to the working tree.
+      unwip = "!git log --max-count=1 | grep -q -c wip && git reset HEAD~1";
     };
     ignores = [
       "/result"
@@ -257,11 +265,26 @@ in {
     settings = {
       ui.pager = [ "delta" ];
       ui.default-command = "l";
-      aliases.la = [ "log" "-r" "(main..@):: | (main..@)-" ];
-      aliases.l = [ "log" "-s" "-r" "bookmarks() | main@origin" ];
+      aliases.la = [
+        "log"
+        "-r"
+        "(main..@):: | (main..@)-"
+      ];
+      aliases.l = [
+        "log"
+        "-s"
+        "-r"
+        "bookmarks() | main@origin"
+      ];
       # https://shaddy.dev/notes/jj-tug/
-      aliases.tug =
-        [ "bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-" ];
+      aliases.tug = [
+        "bookmark"
+        "move"
+        "--from"
+        "heads(::@- & bookmarks())"
+        "--to"
+        "@-"
+      ];
       user = {
         name = config.programs.git.settings.user.name;
         email = config.programs.git.settings.user.email;
@@ -271,9 +294,16 @@ in {
 
   programs.gh = {
     enable = true;
-    extensions = [ pkgs.gh-eco (pkgs.callPackage ../packages/gh-poi { }) ];
-    settings = { git_protocol = "ssh"; };
+    extensions = [
+      pkgs.gh-eco
+      (pkgs.callPackage ../packages/gh-poi { })
+    ];
+    settings = {
+      git_protocol = "ssh";
+    };
   };
 
-  programs.gh-dash = { enable = true; };
+  programs.gh-dash = {
+    enable = true;
+  };
 }
