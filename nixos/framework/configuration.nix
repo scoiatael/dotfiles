@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -40,11 +45,16 @@
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.efiSysMountPoint = "/boot/EFI";
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelParams = [ "mem_sleep_default=deep" "usbcore.quirks=0bda:8156:k" ];
+  boot.kernelParams = [
+    "mem_sleep_default=deep"
+    "usbcore.quirks=0bda:8156:k"
+  ];
   boot.kernel.sysctl."net.core.rmem_max" = 2500000;
   # Enroll keys once secureboot is enforced:
   # systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p1
-  boot.initrd.systemd = { enable = true; };
+  boot.initrd.systemd = {
+    enable = true;
+  };
 
   hardware.graphics.extraPackages = with pkgs; [
     intel-compute-runtime
@@ -52,7 +62,9 @@
   ];
 
   security.sudo.enable = false;
-  security.doas = { enable = true; };
+  security.doas = {
+    enable = true;
+  };
 
   users.extraUsers.root.shell = pkgs.bash;
   users.defaultUserShell = pkgs.zsh;
@@ -72,15 +84,17 @@
   # networking.useDHCP = false;
   # networking.interfaces.enp0s13f0u1u4.useDHCP = true;
   networking = {
-    interfaces.enp0s13f0u2 = {
-      ipv4.addresses = [{
-        address = "192.168.180.153";
-        prefixLength = 24;
-      }];
+    interfaces.enp191s0 = {
+      ipv4.addresses = [
+        {
+          address = "192.168.180.153";
+          prefixLength = 24;
+        }
+      ];
     };
     defaultGateway = {
       address = "192.168.180.1";
-      interface = "enp0s13f0u2:";
+      interface = "enp191s0";
     };
     nameservers = [ "127.0.0.1" ];
   };
@@ -239,46 +253,49 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = (with pkgs; [
-    helix
-    pciutils
-    lm_sensors
-    yubioath-flutter
-    git
-    lsof
-    go
-    xsel
-    xclip
-    rclone
-    signal-desktop
-    keybase-gui
-    gparted
-    htop
-    fzf
-    sd
-    zsh
-    mpv
-    shotcut
-    powertop
-    cpupower-gui
-    # For waybar tray support
-    libappindicator
-    libappindicator-gtk3
-    # modify external screen brightness
-    brightnessctl
-    ddcutil
-    ddcui
-    # soundcontrol
-    pavucontrol
-    # gsettings
-    glib
-    # Sway nice-to-haves
-    wl-clipboard
-    adwaita-qt
-    # Screenshotting under sway
-    sway-contrib.grimshot
-    aria2
-  ]);
+  environment.systemPackages = (
+    with pkgs;
+    [
+      helix
+      pciutils
+      lm_sensors
+      yubioath-flutter
+      git
+      lsof
+      go
+      xsel
+      xclip
+      rclone
+      signal-desktop
+      keybase-gui
+      gparted
+      htop
+      fzf
+      sd
+      zsh
+      mpv
+      shotcut
+      powertop
+      cpupower-gui
+      # For waybar tray support
+      libappindicator
+      libappindicator-gtk3
+      # modify external screen brightness
+      brightnessctl
+      ddcutil
+      ddcui
+      # soundcontrol
+      pavucontrol
+      # gsettings
+      glib
+      # Sway nice-to-haves
+      wl-clipboard
+      adwaita-qt
+      # Screenshotting under sway
+      sway-contrib.grimshot
+      aria2
+    ]
+  );
 
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
@@ -322,7 +339,11 @@
   hardware.i2c.enable = true;
 
   hardware.bluetooth.enable = true;
-  hardware.bluetooth.settings = { General = { Experimental = true; }; };
+  hardware.bluetooth.settings = {
+    General = {
+      Experimental = true;
+    };
+  };
 
   # https://nixos.wiki/wiki/Fwupd
   services.fwupd.enable = true;
