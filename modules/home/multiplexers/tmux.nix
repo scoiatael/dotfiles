@@ -3,7 +3,7 @@
 {
   programs.tmux = {
     enable = true;
-    extraConfig = "source-file ${../config/tmux.conf}";
+    extraConfig = "source-file ${../../../config/tmux.conf}";
     plugins = with pkgs; [
       tmuxPlugins.yank
       tmuxPlugins.jump
@@ -11,7 +11,7 @@
       tmuxPlugins.extrakto
       tmuxPlugins.tmux-fzf
       tmuxPlugins.open
-      (callPackage ../packages/tmux-colortag { })
+      (callPackage ../../../packages/tmux-colortag { })
       {
         plugin = tmuxPlugins.prefix-highlight;
         extraConfig = ''

@@ -6,8 +6,8 @@
   ...
 }:
 let
-  dir-summary = pkgs.callPackage ../packages/dir-summary { };
-  batman = pkgs.callPackage ../packages/batman { };
+  dir-summary = pkgs.callPackage ../../../packages/dir-summary { };
+  batman = pkgs.callPackage ../../../packages/batman { };
 in
 {
   home.packages = [
@@ -19,7 +19,7 @@ in
     enableCompletion = false;
 
     envExtra = ''
-      export LESSOPEN="|${../bin/__lessfilter} %s"
+      export LESSOPEN="|${../../../bin/__lessfilter} %s"
     '';
     shellAliases =
       let

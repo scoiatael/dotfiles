@@ -21,18 +21,10 @@
     url = "github:abenz1267/walker";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  # inputs.fastanime = {
-  #   url = "github:Benexl/FastAnime";
-  #   inputs.nixpkgs.follows = "nixpkgs";
-  # };
   inputs.doomemacs = {
     url = "github:doomemacs/doomemacs";
     flake = false;
   };
-  # inputs.gitAlias = {
-  #   url = "github:GitAlias/gitalias";
-  #   flake = false;
-  # };
   inputs.lix = {
     url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
     flake = false;
@@ -42,35 +34,6 @@
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.lix.follows = "lix";
   };
-  # inputs.catppuccin-rio = {
-  #   url = "github:catppuccin/rio";
-  #   flake = false;
-  # };
-  # inputs.rio = {
-  #   url = "github:raphamorim/rio/0.0.x";
-  #   flake = false;
-  # };
-  # inputs.nix-vscode-extensions = {
-  #   url = "github:nix-community/nix-vscode-extensions";
-  #   inputs.nixpkgs.follows = "nixpkgs";
-  #   inputs.flake-utils.follows = "flake-utils";
-  # };
-  # inputs.talonhub_community = {
-  #   url = "github:talonhub/community";
-  #   flake = false;
-  # };
-  # inputs.cursorless_talon = {
-  #   url = "github:cursorless-dev/cursorless-talon";
-  #   flake = false;
-  # };
-  # inputs.agzam_spacehammer = {
-  #   url = "github:agzam/spacehammer";
-  #   flake = false;
-  # };
-  # inputs.AdamWagner_stackline = {
-  #   url = "github:AdamWagner/stackline";
-  #   flake = false;
-  # };
   inputs.parrhasius = {
     url = "git+https://git.sr.ht/~scoiatael/parrhasius";
     flake = false;
@@ -100,20 +63,64 @@
     in
     {
       homeManagerModules = {
+        # Base preset - universal modules for all machines
+        base = {
+          imports = [
+            ./modules/home/default.nix
+            ./modules/home/dev/git.nix
+            ./modules/home/editors/neovim.nix
+          ];
+        };
+
+        # CLI tooling preset
+        cli-full = {
+          imports = [
+            ./modules/home/cli.nix
+          ];
+        };
+
+        # Development stack preset
+        dev-full = {
+          imports = [
+            ./modules/home/multiplexers/tmux.nix
+            (import ./modules/home/shells/zsh.nix attrs)
+            (import ./modules/home/editors/emacs.nix attrs)
+            ./modules/home/terminals/wezterm.nix
+            (import ./modules/home/home-manager.nix attrs)
+            (import ./modules/home/comma.nix attrs)
+          ];
+        };
+
+        # Linux-specific preset
+        linux-extras = {
+          imports = [
+            ./modules/platform/linux.nix
+            ./modules/platform/electron.nix
+          ];
+        };
+
+        # Darwin-specific preset
+        darwin-extras = {
+          imports = [
+            ./modules/platform/unfree.nix
+            ./modules/platform/secretive.nix
+          ];
+        };
+
         wooting = {
           imports = [
-            ./modules/unfree.nix
-            ./modules/home.nix
-            ./modules/cli.nix
-            (import ./modules/home-manager.nix attrs)
-            ./modules/git.nix
-            ./modules/tmux.nix
-            (import ./modules/zsh.nix attrs)
-            (import ./modules/emacs.nix attrs)
-            ./modules/wezterm.nix
-            ./modules/llm.nix
-            ./modules/neovim.nix
-            (import ./modules/comma.nix attrs)
+            ./modules/platform/unfree.nix
+            ./modules/home/default.nix
+            ./modules/home/cli.nix
+            (import ./modules/home/home-manager.nix attrs)
+            ./modules/home/dev/git.nix
+            ./modules/home/multiplexers/tmux.nix
+            (import ./modules/home/shells/zsh.nix attrs)
+            (import ./modules/home/editors/emacs.nix attrs)
+            ./modules/home/terminals/wezterm.nix
+            ./modules/home/dev/llm.nix
+            ./modules/home/editors/neovim.nix
+            (import ./modules/home/comma.nix attrs)
             {
               programs.git.settings.user = {
                 email = "lukasz@wooting.io";
@@ -137,19 +144,13 @@
         "l@LsNixOS" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
+            self.homeManagerModules.base
+            self.homeManagerModules.cli-full
+            self.homeManagerModules.dev-full
+            self.homeManagerModules.linux-extras
             attrs.walker.homeManagerModules.default
-            ./modules/walker.nix
-            ./modules/home.nix
-            ./modules/ghostty.nix
-            ./modules/electron.nix
-            ./modules/linux.nix
-            ./modules/cli.nix
-            ./modules/git.nix
-            (import ./modules/zsh.nix attrs)
-            ./modules/neovim.nix
-            ./modules/wezterm.nix
-            (import ./modules/home-manager.nix attrs)
-            (import ./modules/emacs.nix attrs)
+            ./modules/platform/walker.nix
+            ./modules/home/terminals/ghostty.nix
             {
               programs.git.settings.user = {
                 email = "lukasz@wooting.io";
@@ -169,14 +170,12 @@
         "lukaszczaplinski@LsFramework" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
-            ./modules/home.nix
-            ./modules/zellij.nix
-            ./modules/cli.nix
-            ./modules/linux.nix
-            ./modules/git.nix
-            ./modules/tmux.nix
-            (import ./modules/zsh.nix attrs)
-            ./modules/neovim.nix
+            self.homeManagerModules.base
+            self.homeManagerModules.cli-full
+            self.homeManagerModules.linux-extras
+            ./modules/home/multiplexers/zellij.nix
+            ./modules/home/multiplexers/tmux.nix
+            (import ./modules/home/shells/zsh.nix attrs)
             (
               { pkgs, lib, ... }:
               {
@@ -198,12 +197,10 @@
         "lukaszczaplinski@LsGamingDarwin" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-darwin;
           modules = [
-            ./modules/home.nix
-            ./modules/git.nix
-            (import ./modules/emacs.nix attrs)
-            ./modules/tmux.nix
-            (import ./modules/zsh.nix attrs)
-            ./modules/neovim.nix
+            self.homeManagerModules.base
+            ./modules/home/multiplexers/tmux.nix
+            (import ./modules/home/shells/zsh.nix attrs)
+            (import ./modules/home/editors/emacs.nix attrs)
             {
               home = {
                 username = "lukaszczaplinski";
@@ -217,21 +214,13 @@
         "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           modules = [
-            ./modules/unfree.nix
-            ./modules/secretive.nix
-            ./modules/cli.nix
-            #./modules/ghostty.nix
+            self.homeManagerModules.base
+            self.homeManagerModules.cli-full
+            self.homeManagerModules.dev-full
+            self.homeManagerModules.darwin-extras
+            ./modules/home/dev/llm.nix
+            #./modules/home/terminals/ghostty.nix
             #{ config.ghostty.font-size = 16; }
-            ./modules/home.nix
-            ./modules/llm.nix
-            ./modules/wezterm.nix
-            (import ./modules/home-manager.nix attrs)
-            (import ./modules/emacs.nix attrs)
-            ./modules/git.nix
-            ./modules/tmux.nix
-            (import ./modules/zsh.nix attrs)
-            ./modules/neovim.nix
-            (import ./modules/comma.nix attrs)
             {
               home = {
                 username = "lukaszczaplinski";
@@ -253,7 +242,7 @@
         LsGamingDarwin = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
           modules = [
-            ./modules/darwin.nix
+            ./modules/darwin/default.nix
             ./modules/darwin/yabai.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/gaming.nix
@@ -265,7 +254,7 @@
             { system.primaryUser = "lukas"; }
             lix
             home-manager.darwinModules.home-manager
-            ./modules/darwin.nix
+            ./modules/darwin/default.nix
             ./modules/darwin/aerospace.nix
             ./modules/darwin/wooting.nix
             ./modules/darwin/sketchybar.nix
@@ -290,7 +279,7 @@
             attrs.lix-module.darwinModules.default
             { system.primaryUser = "lukaszczaplinski"; }
             { ids.gids.nixbld = nixpkgs.lib.mkForce 30000; }
-            ./modules/darwin.nix
+            ./modules/darwin/default.nix
             ./modules/darwin/aerospace.nix
             ./modules/darwin/sketchybar.nix
             ./modules/darwin/air.nix

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(nix flake check:*)",
+      "Bash(nix flake show:*)"
+    ]
+  }
+}

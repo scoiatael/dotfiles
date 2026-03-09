@@ -26,22 +26,22 @@ in {
       spacer # [[id:9e83cbf2-83f4-4cda-90ea-3363736a07e9][spacer]]
       tailspin # [[id:8042e9e2-b2cb-4c24-bd34-64cc6b56aac7][tailspin]]
       oha # [[id:607d4762-4482-47b8-a9c2-c5c7f5ec113c][oha]]
-      (pkgs.callPackage ../packages/magika
+      (pkgs.callPackage ../../packages/magika
         { }) # [[id:10fe56e4-553b-4d19-ab1f-9c12287e81d4][magika]]
-      (pkgs.callPackage ../packages/cometary
+      (pkgs.callPackage ../../packages/cometary
         { }) # [[id:09791008-55e2-47e7-9100-53ee1a1ae6bd][cometary]]
-      (pkgs.callPackage ../packages/human
+      (pkgs.callPackage ../../packages/human
         { }) # [[id:802d01e4-e1f0-4843-aa4e-53943330e763][human]]
-      (pkgs.callPackage ../packages/mvbak
+      (pkgs.callPackage ../../packages/mvbak
         { }) # [[id:80944be2-1ab0-4400-a143-f73deaab1522][mvbak]]
     ] ++ (lib.lists.optional (with pkgs.stdenv.hostPlatform;
       isDarwin -> lib.versionAtLeast darwinSdkVersion "11.0")
       ncdu); # [[id:3142c82d-fc4d-4467-8190-f2aea83677d7][ncdu]]
 
   home.file."${processComposeConfigDir}/process-compose/theme.yaml".source =
-    ../config/process-compose/catppuccin-frappe.yaml;
+    ../../config/process-compose/catppuccin-frappe.yaml;
   home.file."${processComposeConfigDir}/process-compose/settings.yaml".source =
-    ../config/process-compose/settings.yaml;
+    ../../config/process-compose/settings.yaml;
   home.file."${processComposeConfigDir}/process-compose/shortcuts.yaml".source =
-    ../config/process-compose/shortcuts.yaml;
+    ../../config/process-compose/shortcuts.yaml;
 }

@@ -29,7 +29,7 @@
     plugins = with pkgs.vimPlugins; [
       {
         plugin = smart-splits-nvim;
-        config = (builtins.readFile ../config/neovim/smart-splits.lua);
+        config = (builtins.readFile ../../../config/neovim/smart-splits.lua);
         type = "lua";
       }
       yankring

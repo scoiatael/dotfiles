@@ -7,22 +7,22 @@
 
 {
   imports = [
-    ../modules/smb.nix
-    ../modules/blocky.nix
-    ../modules/jellyfin.nix
-    ../modules/steam.nix
-    ../modules/scrutiny.nix
-    ../modules/yarr.nix
-    ../modules/restic.nix
-    ../modules/tailscale.nix
-    ../modules/telegraf.nix
-    ../modules/parrhasius.nix
-    ../modules/mail.nix
-    ../modules/grafana.nix
-    ../modules/remote-builder.nix
-    ../modules/deluge.nix
-    ../modules/clamav.nix
-    ../modules/dashy.nix
+    ../../modules/nixos/services/smb.nix
+    ../../modules/nixos/services/blocky.nix
+    ../../modules/nixos/services/jellyfin.nix
+    ../../modules/nixos/hardware/steam.nix
+    ../../modules/nixos/services/scrutiny.nix
+    ../../modules/nixos/services/yarr.nix
+    ../../modules/nixos/services/restic.nix
+    ../../modules/nixos/tailscale.nix
+    ../../modules/nixos/services/telegraf.nix
+    ../../modules/nixos/services/parrhasius.nix
+    ../../modules/nixos/services/mail.nix
+    ../../modules/nixos/services/grafana.nix
+    ../../modules/nixos/services/remote-builder.nix
+    ../../modules/nixos/services/deluge.nix
+    ../../modules/nixos/security/clamav.nix
+    ../../modules/nixos/services/dashy.nix
     ./tailscale-services.nix
     ./caddy.nix
     ./hardware-configuration.nix

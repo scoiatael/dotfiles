@@ -30,9 +30,9 @@
     restic
     rsync
     stylua
-    (callPackage ../packages/gitblame { })
-    (callPackage ../packages/inflector-rs { })
-    (callPackage ../packages/indices { })
+    (callPackage ../../packages/gitblame { })
+    (callPackage ../../packages/inflector-rs { })
+    (callPackage ../../packages/indices { })
     nixd
     nix-tree
 
@@ -134,12 +134,12 @@
     direnv = {
       enable = true;
       nix-direnv = { enable = true; };
-      stdlib = "source ${../config/direnvrc}";
+      stdlib = "source ${../../config/direnvrc}";
     };
   };
 
   home.file.".direnvrc".source =
-    ../config/direnvrc; # for direnv to load in HOME
+    ../../config/direnvrc; # for direnv to load in HOME
 
   home.file.".zprofile".text = ''
     export DOOMLOCALDIR="~/.emacs.local"
