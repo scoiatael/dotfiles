@@ -1,9 +1,17 @@
-{ config, lib, pkgs, modulesPath, nixos-hardware, lanzaboote, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  nixos-hardware,
+  lanzaboote,
+  ...
+}:
 
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    nixos-hardware.nixosModules.framework-11th-gen-intel
+    nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
     lanzaboote.nixosModules.lanzaboote
   ];
 
@@ -22,21 +30,19 @@
     "cryptd"
   ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" "nct6775" ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "nct6775"
+  ];
   boot.extraModulePackages = [ ];
   boot.tmp.useTmpfs = true;
-  boot.kernelParams = [ "i915.force_probe=56a5" ];
-
-  hardware.intelgpu.driver = "xe";
+  boot.kernelParams = [ ];
 
   # https://nixos.wiki/wiki/TPM
   security.tpm2.enable = true;
-  security.tpm2.pkcs11.enable =
-    true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
-  security.tpm2.tctiEnvironment.enable =
-    true; # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  users.users.lukaszczaplinski.extraGroups =
-    [ "tss" ]; # tss group has access to TPM devices
+  security.tpm2.pkcs11.enable = true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
+  security.tpm2.tctiEnvironment.enable = true; # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
+  users.users.lukaszczaplinski.extraGroups = [ "tss" ]; # tss group has access to TPM devices
 
   # https://nixos.wiki/wiki/Secure_Boot
   boot.bootspec.enable = true;
@@ -106,8 +112,7 @@
   powerManagement.cpuFreqGovernor = "ondemand";
   # hardware.cpu.intel.updateMicrocode =
   #   config.hardware.enableRedistributableFirmware;
-  hardware.cpu.amd.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   security.pam.services.login.fprintAuth = false;
   security.pam.services.xscreensaver.fprintAuth = false;
