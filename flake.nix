@@ -54,12 +54,6 @@
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs systems;
-
-      lix =
-        { pkgs, lib, ... }:
-        {
-          nix.package = lib.mkForce pkgs.lix;
-        };
     in
     {
       homeManagerModules = {
@@ -241,29 +235,21 @@
       darwinConfigurations = {
         LsGamingDarwin = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
-          modules = [
-            ./modules/darwin/default.nix
-            ./modules/darwin/yabai.nix
-            ./modules/darwin/sketchybar.nix
-            ./modules/darwin/gaming.nix
-          ];
+          specialArgs = {
+            inherit attrs;
+            inherit self;
+          };
+          modules = [ ./darwin/LsGamingDarwin/configuration.nix ];
         };
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
+          specialArgs = {
+            inherit attrs;
+            inherit self;
+          };
           modules = [
-            { system.primaryUser = "lukas"; }
-            lix
             home-manager.darwinModules.home-manager
-            ./modules/darwin/default.nix
-            ./modules/darwin/aerospace.nix
-            ./modules/darwin/wooting.nix
-            ./modules/darwin/sketchybar.nix
-            {
-              users.users.lukas = {
-                name = "lukas";
-                home = "/Users/lukas";
-              };
-            }
+            ./darwin/LsWootingMBP/configuration.nix
             {
               # TODO: these break some thing
               # read up on them.
@@ -275,16 +261,8 @@
         };
         LsAir = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          modules = [
-            attrs.lix-module.darwinModules.default
-            { system.primaryUser = "lukaszczaplinski"; }
-            { ids.gids.nixbld = nixpkgs.lib.mkForce 30000; }
-            ./modules/darwin/default.nix
-            ./modules/darwin/aerospace.nix
-            ./modules/darwin/sketchybar.nix
-            ./modules/darwin/air.nix
-            { networking.hostName = "LsAir"; }
-          ];
+          specialArgs = attrs;
+          modules = [ ./darwin/LsAir/configuration.nix ];
         };
       };
 
