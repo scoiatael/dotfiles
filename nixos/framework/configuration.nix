@@ -26,6 +26,7 @@
     ./tailscale-services.nix
     ./caddy.nix
     ./hardware-configuration.nix
+    ./rocm.nix
   ];
   programs.mosh.enable = true;
 
