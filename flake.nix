@@ -235,18 +235,12 @@
       darwinConfigurations = {
         LsGamingDarwin = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
-          specialArgs = {
-            inherit attrs;
-            inherit self;
-          };
+          specialArgs = attrs;
           modules = [ ./darwin/LsGamingDarwin/configuration.nix ];
         };
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = {
-            inherit attrs;
-            inherit self;
-          };
+          specialArgs = attrs;
           modules = [
             home-manager.darwinModules.home-manager
             ./darwin/LsWootingMBP/configuration.nix

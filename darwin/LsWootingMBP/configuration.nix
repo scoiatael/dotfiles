@@ -9,7 +9,6 @@
   imports = [
     ../../modules/darwin/default.nix
     ../../modules/darwin/aerospace.nix
-    ../../modules/darwin/wooting.nix
     ../../modules/darwin/sketchybar.nix
     ../../modules/darwin/lix.nix
   ];
@@ -21,5 +20,34 @@
     home = "/Users/lukas";
   };
 
-  # Note: lix package is set via the lix module imported in flake.nix
+  # hardware.notch = false;
+  homebrew = {
+    casks = [
+      "bitwarden"
+      "slack"
+      "google-drive"
+      "monodraw"
+      "altair-graphql-client"
+      "forklift"
+      "mitmproxy"
+      "astropad-studio"
+      "utm"
+      "notion"
+      "thebrowsercompany-dia"
+      "tailscale-app"
+    ];
+    brews = [ "stlink" ];
+  };
+  nix.linux-builder = {
+    enable = true;
+    systems = [ "x86_64-linux" ];
+    package = pkgs.darwin.linux-builder-x86_64;
+  };
+  #  nix.linux-builder = {
+  #   enable = true;
+  #  systems = [ "x86_64-linux" "aarch64-linux" ];
+  #  config.boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+  # };
+  # nix.settings.trusted-users = [ "@admin" ];
+  # services.aerospace.settings.gaps.outer.top = lib.mkForce 42;
 }
