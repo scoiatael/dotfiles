@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let drv = pkgs.callPackage ../../packages/wh { };
-in {
+let
+  drv = pkgs.callPackage ../../../packages/wh { };
+in
+{
   systemd.services.wh = {
     enable = true;
     description = "Webhook2RSS Web service";
@@ -32,8 +39,7 @@ in {
       add_header X-Cache $upstream_cache_status;
     '';
     locations = {
-      "/".proxyPass =
-        "http://unix:${config.services.anubis.instances.wh.settings.BIND}";
+      "/".proxyPass = "http://unix:${config.services.anubis.instances.wh.settings.BIND}";
       "/webhook".proxyPass = "http://localhost:3001";
       "~ .css".root = "${drv}/public";
     };

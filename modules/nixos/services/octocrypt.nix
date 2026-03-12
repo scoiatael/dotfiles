@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  drv = pkgs.callPackage ../../packages/octocrypt { };
+  drv = pkgs.callPackage ../../../packages/octocrypt { };
   logConfFile = pkgs.writeText "octocrypt-log4j2.properties" ''
     rootLogger.level = info
     rootLogger.appenderRef.stdout.ref = STDOUT
@@ -13,7 +18,8 @@ let
     appender.console.layout.type = PatternLayout
     appender.console.layout.pattern = [%c] %x %X %highlight{%m}%n
   '';
-in {
+in
+{
   systemd.services.octocrypt = {
     enable = true;
     description = "Octocrypt Web service";
@@ -42,8 +48,7 @@ in {
       add_header X-Cache $upstream_cache_status;
     '';
     locations = {
-      "/".proxyPass =
-        "http://unix:${config.services.anubis.instances.octocrypt.settings.BIND}";
+      "/".proxyPass = "http://unix:${config.services.anubis.instances.octocrypt.settings.BIND}";
       "~ .css".root = "${drv}/public";
     };
   };

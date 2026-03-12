@@ -257,60 +257,60 @@
           specialArgs = attrs;
           modules = [ ./nixos/sd-161581/configuration.nix ];
         };
-        demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          specialArgs = attrs;
-          modules = [
-            (
-              { pkgs, ... }:
-              {
-                users.users = {
-                  me = {
-                    isNormalUser = true;
-                    extraGroups = [ "wheel" ];
-                  };
-                };
+        # demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
+        #   system = "aarch64-linux";
+        #   specialArgs = attrs;
+        #   modules = [
+        #     (
+        #       { pkgs, ... }:
+        #       {
+        #         users.users = {
+        #           me = {
+        #             isNormalUser = true;
+        #             extraGroups = [ "wheel" ];
+        #           };
+        #         };
 
-                virtualisation.vmVariant = {
-                  virtualisation = {
-                    graphics = false;
-                    host.pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-                  };
-                };
+        #         virtualisation.vmVariant = {
+        #           virtualisation = {
+        #             graphics = false;
+        #             host.pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+        #           };
+        #         };
 
-                services.openssh = {
-                  enable = true;
-                };
+        #         services.openssh = {
+        #           enable = true;
+        #         };
 
-                environment.systemPackages = with pkgs; [ htop ];
+        #         environment.systemPackages = with pkgs; [ htop ];
 
-                system.stateVersion = "23.05";
-              }
-            )
-          ];
-        };
+        #         system.stateVersion = "23.05";
+        #       }
+        #     )
+        #   ];
+        # };
       };
 
-      apps = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-          machine = self.nixosConfigurations."demo-vm-${system}".config.system.build.vm;
-          program = pkgs.writeShellScript "run-vm.sh" ''
-            export NIX_DISK_IMAGE=$(mktemp -u -t nixos.qcow2)
+      # apps = forAllSystems (
+      #   system:
+      #   let
+      #     pkgs = nixpkgs.legacyPackages.${system};
+      #     machine = self.nixosConfigurations."demo-vm-${system}".config.system.build.vm;
+      #     program = pkgs.writeShellScript "run-vm.sh" ''
+      #       export NIX_DISK_IMAGE=$(mktemp -u -t nixos.qcow2)
 
-            trap "rm -f $NIX_DISK_IMAGE" EXIT
+      #       trap "rm -f $NIX_DISK_IMAGE" EXIT
 
-            ${machine}/bin/run-nixos-vm
-          '';
-        in
-        {
-          default = {
-            type = "app";
-            program = "${program}";
-          };
-        }
-      );
+      #       ${machine}/bin/run-nixos-vm
+      #     '';
+      #   in
+      #   {
+      #     default = {
+      #       type = "app";
+      #       program = "${program}";
+      #     };
+      #   }
+      # );
 
       devShells = forAllSystems (
         system:
