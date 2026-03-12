@@ -1,17 +1,17 @@
-{ ... }: {
+{
   imports = [
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
-    ../../modules/nixos/cli.nix
-    ../../modules/nixos/tailscale.nix
-    ../../modules/nixos/base.nix
-    ../../modules/nixos/security/security.nix
-    ../../modules/nixos/services/wh.nix
-    ../../modules/nixos/services/nginx.nix
-    ../../modules/nixos/services/octocrypt.nix
-    ../../modules/nixos/ip.nix
-    ../../modules/nixos/services/telegraf.nix
-    ../../modules/nixos/services/magic-wormhole.nix
+    ../modules/cli.nix
+    ../modules/tailscale.nix
+    ../modules/base.nix
+    ../modules/security/security.nix
+    ../modules/services/wh.nix
+    ../modules/services/nginx.nix
+    ../modules/services/octocrypt.nix
+    ../modules/ip.nix
+    ../modules/services/telegraf.nix
+    ../modules/services/magic-wormhole.nix
   ];
 
   services.kubo.enable = true;

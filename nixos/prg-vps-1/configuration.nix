@@ -1,11 +1,11 @@
-{ ... }: {
+{
   imports = [
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
-    ../../modules/nixos/tailscale.nix
-    ../../modules/nixos/base.nix
-    ../../modules/nixos/security/security.nix
-    ../../modules/nixos/services/nginx.nix
+    ../modules/tailscale.nix
+    ../modules/base.nix
+    ../modules/security/security.nix
+    ../modules/services/nginx.nix
   ];
 
   boot.tmp.cleanOnBoot = true;

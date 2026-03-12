@@ -1,28 +1,26 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
 
 {
   imports = [
-    ../../modules/nixos/services/smb.nix
-    ../../modules/nixos/services/blocky.nix
-    ../../modules/nixos/services/jellyfin.nix
-    ../../modules/nixos/hardware/steam.nix
-    ../../modules/nixos/services/scrutiny.nix
-    ../../modules/nixos/services/yarr.nix
-    ../../modules/nixos/services/restic.nix
-    ../../modules/nixos/tailscale.nix
-    ../../modules/nixos/services/telegraf.nix
-    ../../modules/nixos/services/parrhasius.nix
-    ../../modules/nixos/services/mail.nix
-    ../../modules/nixos/services/grafana.nix
-    ../../modules/nixos/services/remote-builder.nix
-    ../../modules/nixos/services/deluge.nix
-    ../../modules/nixos/security/clamav.nix
-    ../../modules/nixos/services/dashy.nix
+    ../modules/services/smb.nix
+    ../modules/services/blocky.nix
+    ../modules/services/jellyfin.nix
+    ../modules/hardware/steam.nix
+    ../modules/services/scrutiny.nix
+    ../modules/services/yarr.nix
+    ../modules/services/restic.nix
+    ../modules/tailscale.nix
+    ../modules/services/telegraf.nix
+    ../modules/services/parrhasius.nix
+    ../modules/services/mail.nix
+    ../modules/services/grafana.nix
+    ../modules/services/remote-builder.nix
+    ../modules/services/deluge.nix
+    ../modules/security/clamav.nix
+    ../modules/services/dashy.nix
     ./tailscale-services.nix
     ./caddy.nix
     ./hardware-configuration.nix
