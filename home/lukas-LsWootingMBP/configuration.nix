@@ -1,18 +1,17 @@
 {
   imports = [
-    ../../modules/platform/unfree.nix
     ../modules/default.nix
     ../modules/cli.nix
     ../modules/home-manager.nix
-    ../modules/dev/git.nix
+    ../modules/git.nix
     ../modules/multiplexers/tmux.nix
     ../modules/shells/zsh.nix
     ../modules/editors/emacs.nix
     ../modules/terminals/wezterm.nix
-    ../modules/dev/llm.nix
+    ../modules/llm.nix
     ../modules/editors/neovim.nix
     ../modules/comma.nix
-    ../../modules/git/graphite.nix
+    ../modules/graphite.nix
   ];
 
   programs.git.settings.user = {

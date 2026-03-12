@@ -4,7 +4,7 @@
     ./networking.nix # generated at runtime by nixos-infect
     ../modules/tailscale.nix
     ../modules/base.nix
-    ../modules/security/security.nix
+    ../modules/security.nix
     ../modules/services/nginx.nix
   ];
 

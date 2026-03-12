@@ -1,11 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   on-workspace-change = pkgs.writeShellScript "on-workspace-change.sh" ''
     ${pkgs.sketchybar}/bin/sketchybar --trigger aerospace_workspace_change \
       FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE
   '';
-in {
+in
+{
   launchd.user.agents.jankyborders = {
     path = [ config.environment.systemPath ];
     serviceConfig.ProgramArguments = [
@@ -19,9 +20,11 @@ in {
   };
   services.aerospace = {
     enable = true;
-    settings = let
-      toml = builtins.fromTOML (builtins.readFile ../../config/aerospace.toml);
-    in toml // { exec-on-workspace-change = [ "${on-workspace-change}" ]; };
+    settings =
+      let
+        toml = builtins.fromTOML (builtins.readFile ../../config/aerospace.toml);
+      in
+      toml // { exec-on-workspace-change = [ "${on-workspace-change}" ]; };
   };
   services.sketchybar.config = ''
     sketchybar --add event aerospace_workspace_change

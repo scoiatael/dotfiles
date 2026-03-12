@@ -7,7 +7,7 @@
   imports = [
     # Base preset
     ../modules/default.nix
-    ../modules/dev/git.nix
+    ../modules/git.nix
     ../modules/editors/neovim.nix
 
     # Multiplexers and shells

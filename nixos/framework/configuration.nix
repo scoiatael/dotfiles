@@ -8,7 +8,7 @@
     ../modules/services/smb.nix
     ../modules/services/blocky.nix
     ../modules/services/jellyfin.nix
-    ../modules/hardware/steam.nix
+    ../modules/steam.nix
     ../modules/services/scrutiny.nix
     ../modules/services/yarr.nix
     ../modules/services/restic.nix
@@ -19,7 +19,7 @@
     ../modules/services/grafana.nix
     ../modules/services/remote-builder.nix
     ../modules/services/deluge.nix
-    ../modules/security/clamav.nix
+    ../modules/clamav.nix
     ../modules/services/dashy.nix
     ./tailscale-services.nix
     ./caddy.nix

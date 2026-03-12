@@ -5,7 +5,7 @@
     ../modules/cli.nix
     ../modules/tailscale.nix
     ../modules/base.nix
-    ../modules/security/security.nix
+    ../modules/security.nix
     ../modules/services/wh.nix
     ../modules/services/nginx.nix
     ../modules/services/octocrypt.nix

@@ -9,7 +9,6 @@
     ../modules/default.nix
     ../modules/aerospace.nix
     ../modules/sketchybar.nix
-    ../modules/air.nix
     ../modules/lix.nix
   ];
 
@@ -53,20 +52,20 @@
   nix.distributedBuilds = true;
   nix.settings.builders-use-substitutes = true;
 
-  nix.buildMachines = [
-    {
-      hostName = "192.168.180.153";
-      sshUser = "remotebuild";
-      sshKey = "/etc/nix/builder_ed25519";
-      system = "x86_64-linux";
-      supportedFeatures = [
-        "nixos-test"
-        "big-parallel"
-        "kvm"
-      ];
-      protocol = "ssh-ng";
-    }
-  ];
+  # nix.buildMachines = [
+  #   {
+  #     hostName = "192.168.180.153";
+  #     sshUser = "remotebuild";
+  #     sshKey = "/etc/nix/builder_ed25519";
+  #     system = "x86_64-linux";
+  #     supportedFeatures = [
+  #       "nixos-test"
+  #       "big-parallel"
+  #       "kvm"
+  #     ];
+  #     protocol = "ssh-ng";
+  #   }
+  # ];
 
   nix.linux-builder = {
     enable = true;
