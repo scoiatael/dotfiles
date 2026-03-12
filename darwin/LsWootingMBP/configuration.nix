@@ -1,12 +1,13 @@
 {
-  config,
-  lib,
   pkgs,
+  home-manager,
+  self,
   ...
 }:
 
 {
   imports = [
+    home-manager.darwinModules.home-manager
     ../../modules/darwin/default.nix
     ../../modules/darwin/aerospace.nix
     ../../modules/darwin/sketchybar.nix
@@ -50,4 +51,9 @@
   # };
   # nix.settings.trusted-users = [ "@admin" ];
   # services.aerospace.settings.gaps.outer.top = lib.mkForce 42;
+  # TODO: these break some thing
+  # read up on them.
+  #home-manager.useGlobalPkgs = true;
+  #home-manager.useUserPackages = true;
+  # home-manager.users.lukas = self.homeManagerModules.wooting;
 }
