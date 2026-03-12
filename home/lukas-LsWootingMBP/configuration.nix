@@ -1,17 +1,17 @@
 {
   imports = [
     ../../modules/platform/unfree.nix
-    ../../modules/home/default.nix
-    ../../modules/home/cli.nix
-    ../../modules/home/home-manager.nix
-    ../../modules/home/dev/git.nix
-    ../../modules/home/multiplexers/tmux.nix
-    ../../modules/home/shells/zsh.nix
-    ../../modules/home/editors/emacs.nix
-    ../../modules/home/terminals/wezterm.nix
-    ../../modules/home/dev/llm.nix
-    ../../modules/home/editors/neovim.nix
-    ../../modules/home/comma.nix
+    ../modules/default.nix
+    ../modules/cli.nix
+    ../modules/home-manager.nix
+    ../modules/dev/git.nix
+    ../modules/multiplexers/tmux.nix
+    ../modules/shells/zsh.nix
+    ../modules/editors/emacs.nix
+    ../modules/terminals/wezterm.nix
+    ../modules/dev/llm.nix
+    ../modules/editors/neovim.nix
+    ../modules/comma.nix
     ../../modules/git/graphite.nix
   ];
 

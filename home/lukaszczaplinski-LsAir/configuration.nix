@@ -1,30 +1,30 @@
 {
   imports = [
     # Base preset
-    ../../modules/home/default.nix
-    ../../modules/home/dev/git.nix
-    ../../modules/home/editors/neovim.nix
+    ../modules/default.nix
+    ../modules/dev/git.nix
+    ../modules/editors/neovim.nix
 
     # CLI preset
-    ../../modules/home/cli.nix
+    ../modules/cli.nix
 
     # Dev preset
-    ../../modules/home/multiplexers/tmux.nix
-    ../../modules/home/shells/zsh.nix
-    ../../modules/home/editors/emacs.nix
-    ../../modules/home/terminals/wezterm.nix
-    ../../modules/home/home-manager.nix
-    ../../modules/home/comma.nix
+    ../modules/multiplexers/tmux.nix
+    ../modules/shells/zsh.nix
+    ../modules/editors/emacs.nix
+    ../modules/terminals/wezterm.nix
+    ../modules/home-manager.nix
+    ../modules/comma.nix
 
     # Darwin extras
     ../../modules/platform/unfree.nix
     ../../modules/platform/secretive.nix
 
     # LLM tools
-    ../../modules/home/dev/llm.nix
+    ../modules/dev/llm.nix
 
     # Ghostty (commented out)
-    #../../modules/home/terminals/ghostty.nix
+    #../modules/terminals/ghostty.nix
   ];
 
   # Ghostty config (commented out)

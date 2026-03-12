@@ -7,20 +7,20 @@
 {
   imports = [
     # Base preset
-    ../../modules/home/default.nix
-    ../../modules/home/dev/git.nix
-    ../../modules/home/editors/neovim.nix
+    ../modules/default.nix
+    ../modules/dev/git.nix
+    ../modules/editors/neovim.nix
 
     # CLI preset
-    ../../modules/home/cli.nix
+    ../modules/cli.nix
 
     # Linux extras
     ../../modules/platform/linux.nix
 
     # Multiplexers
-    ../../modules/home/multiplexers/zellij.nix
-    ../../modules/home/multiplexers/tmux.nix
-    ../../modules/home/shells/zsh.nix
+    ../modules/multiplexers/zellij.nix
+    ../modules/multiplexers/tmux.nix
+    ../modules/shells/zsh.nix
   ];
 
   programs.zsh.sessionVariables = {

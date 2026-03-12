@@ -6,14 +6,14 @@
 {
   imports = [
     # Base preset
-    ../../modules/home/default.nix
-    ../../modules/home/dev/git.nix
-    ../../modules/home/editors/neovim.nix
+    ../modules/default.nix
+    ../modules/dev/git.nix
+    ../modules/editors/neovim.nix
 
     # Multiplexers and shells
-    ../../modules/home/multiplexers/tmux.nix
-    ../../modules/home/shells/zsh.nix
-    ../../modules/home/editors/emacs.nix
+    ../modules/multiplexers/tmux.nix
+    ../modules/shells/zsh.nix
+    ../modules/editors/emacs.nix
   ];
 
   home = {
