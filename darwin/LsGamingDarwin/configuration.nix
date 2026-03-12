@@ -1,8 +1,8 @@
 { ... }: {
   imports = [
-    ../../modules/darwin/default.nix
-    ../../modules/darwin/yabai.nix
-    ../../modules/darwin/sketchybar.nix
-    ../../modules/darwin/gaming.nix
+    ../modules/default.nix
+    ../modules/yabai.nix
+    ../modules/sketchybar.nix
+    ../modules/gaming.nix
   ];
 }

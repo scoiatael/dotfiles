@@ -32,7 +32,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       home-manager,
       darwin,

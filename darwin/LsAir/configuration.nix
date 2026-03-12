@@ -6,11 +6,11 @@
 
 {
   imports = [
-    ../../modules/darwin/default.nix
-    ../../modules/darwin/aerospace.nix
-    ../../modules/darwin/sketchybar.nix
-    ../../modules/darwin/air.nix
-    ../../modules/darwin/lix.nix
+    ../modules/default.nix
+    ../modules/aerospace.nix
+    ../modules/sketchybar.nix
+    ../modules/air.nix
+    ../modules/lix.nix
   ];
 
   system.primaryUser = "lukaszczaplinski";

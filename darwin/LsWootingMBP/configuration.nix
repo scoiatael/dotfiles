@@ -1,17 +1,18 @@
 {
   pkgs,
   home-manager,
-  self,
+  nix-index-database,
+  doomemacs,
   ...
 }:
 
 {
   imports = [
     home-manager.darwinModules.home-manager
-    ../../modules/darwin/default.nix
-    ../../modules/darwin/aerospace.nix
-    ../../modules/darwin/sketchybar.nix
-    ../../modules/darwin/lix.nix
+    ../modules/default.nix
+    ../modules/aerospace.nix
+    ../modules/sketchybar.nix
+    ../modules/lix.nix
   ];
 
   system.primaryUser = "lukas";
@@ -57,4 +58,9 @@
   #home-manager.useGlobalPkgs = true;
   #home-manager.useUserPackages = true;
   home-manager.users.lukas.imports = [ ../../home/lukas-LsWootingMBP/configuration.nix ];
+  home-manager.extraSpecialArgs = {
+    inherit nix-index-database;
+    inherit home-manager;
+    inherit doomemacs;
+  };
 }
