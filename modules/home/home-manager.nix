@@ -1,5 +1,9 @@
-{ home-manager, ... }:
-{ config, pkgs, ... }:
+{
+  home-manager,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   home.packages = [

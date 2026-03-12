@@ -47,179 +47,31 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
-      homeManagerModules = {
-        # Base preset - universal modules for all machines
-        base = {
-          imports = [
-            ./modules/home/default.nix
-            ./modules/home/dev/git.nix
-            ./modules/home/editors/neovim.nix
-          ];
-        };
-
-        # CLI tooling preset
-        cli-full = {
-          imports = [
-            ./modules/home/cli.nix
-          ];
-        };
-
-        # Development stack preset
-        dev-full = {
-          imports = [
-            ./modules/home/multiplexers/tmux.nix
-            (import ./modules/home/shells/zsh.nix attrs)
-            (import ./modules/home/editors/emacs.nix attrs)
-            ./modules/home/terminals/wezterm.nix
-            (import ./modules/home/home-manager.nix attrs)
-            (import ./modules/home/comma.nix attrs)
-          ];
-        };
-
-        # Linux-specific preset
-        linux-extras = {
-          imports = [
-            ./modules/platform/linux.nix
-            ./modules/platform/electron.nix
-          ];
-        };
-
-        # Darwin-specific preset
-        darwin-extras = {
-          imports = [
-            ./modules/platform/unfree.nix
-            ./modules/platform/secretive.nix
-          ];
-        };
-
-        wooting = {
-          imports = [
-            ./modules/platform/unfree.nix
-            ./modules/home/default.nix
-            ./modules/home/cli.nix
-            (import ./modules/home/home-manager.nix attrs)
-            ./modules/home/dev/git.nix
-            ./modules/home/multiplexers/tmux.nix
-            (import ./modules/home/shells/zsh.nix attrs)
-            (import ./modules/home/editors/emacs.nix attrs)
-            ./modules/home/terminals/wezterm.nix
-            ./modules/home/dev/llm.nix
-            ./modules/home/editors/neovim.nix
-            (import ./modules/home/comma.nix attrs)
-            {
-              programs.git.settings.user = {
-                email = "lukasz@wooting.io";
-                name = "Lukas Czaplinski";
-                signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
-              };
-            }
-            ./modules/git/graphite.nix
-            {
-              home = {
-                username = "lukas";
-                homeDirectory = "/Users/lukas";
-                stateVersion = "22.05";
-              };
-            }
-          ];
-        };
-      };
-
       homeConfigurations = {
         "l@LsNixOS" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            self.homeManagerModules.base
-            self.homeManagerModules.cli-full
-            self.homeManagerModules.dev-full
-            self.homeManagerModules.linux-extras
-            attrs.walker.homeManagerModules.default
-            ./modules/platform/walker.nix
-            ./modules/home/terminals/ghostty.nix
-            {
-              programs.git.settings.user = {
-                email = "lukasz@wooting.io";
-                name = "Lukas Czaplinski";
-                signingkey = "E871295C0EFA7DBFA9E673CC7135745D2C62273D";
-              };
-            }
-            {
-              home = {
-                username = "l";
-                homeDirectory = "/home/l";
-                stateVersion = "24.11";
-              };
-            }
-          ];
+          extraSpecialArgs = attrs;
+          modules = [ ./home/l-LsNixOS/configuration.nix ];
         };
         "lukaszczaplinski@LsFramework" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            self.homeManagerModules.base
-            self.homeManagerModules.cli-full
-            self.homeManagerModules.linux-extras
-            ./modules/home/multiplexers/zellij.nix
-            ./modules/home/multiplexers/tmux.nix
-            (import ./modules/home/shells/zsh.nix attrs)
-            (
-              { pkgs, lib, ... }:
-              {
-                programs.zsh.sessionVariables = {
-                  EDITOR = lib.getExe pkgs.neovim;
-                };
-              }
-            )
-            {
-              home = {
-                username = "lukaszczaplinski";
-                homeDirectory = "/home/lukaszczaplinski";
-                stateVersion = "22.11";
-              };
-            }
-          ];
           extraSpecialArgs = attrs;
+          modules = [ ./home/lukaszczaplinski-LsFramework/configuration.nix ];
         };
         "lukaszczaplinski@LsGamingDarwin" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-darwin;
-          modules = [
-            self.homeManagerModules.base
-            ./modules/home/multiplexers/tmux.nix
-            (import ./modules/home/shells/zsh.nix attrs)
-            (import ./modules/home/editors/emacs.nix attrs)
-            {
-              home = {
-                username = "lukaszczaplinski";
-                homeDirectory = "/Users/lukaszczaplinski";
-                stateVersion = "22.05";
-              };
-            }
-          ];
           extraSpecialArgs = attrs;
+          modules = [ ./home/lukaszczaplinski-LsGamingDarwin/configuration.nix ];
         };
         "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          modules = [
-            self.homeManagerModules.base
-            self.homeManagerModules.cli-full
-            self.homeManagerModules.dev-full
-            self.homeManagerModules.darwin-extras
-            ./modules/home/dev/llm.nix
-            #./modules/home/terminals/ghostty.nix
-            #{ config.ghostty.font-size = 16; }
-            {
-              home = {
-                username = "lukaszczaplinski";
-                homeDirectory = "/Users/lukaszczaplinski";
-                stateVersion = "22.05";
-              };
-            }
-          ];
           extraSpecialArgs = attrs;
+          modules = [ ./home/lukaszczaplinski-LsAir/configuration.nix ];
         };
         "lukas@LsWootingMBP" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          modules = [ self.homeManagerModules.wooting ];
           extraSpecialArgs = attrs;
+          modules = [ ./home/lukas-LsWootingMBP/configuration.nix ];
         };
       };
 

@@ -1,9 +1,8 @@
-attrs:
-{ config, lib, pkgs, ... }:
+{ nix-index-database, ... }:
 
 {
   imports = [
-    attrs.nix-index-database.homeModules.nix-index
+    nix-index-database.homeModules.nix-index
     { programs.nix-index-database.comma.enable = true; }
   ];
 }
