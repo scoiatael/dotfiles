@@ -36,6 +36,7 @@
       "notion"
       "thebrowsercompany-dia"
       "tailscale-app"
+      "eqmac"
     ];
     brews = [ "stlink" ];
   };
