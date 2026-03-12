@@ -55,5 +55,5 @@
   # read up on them.
   #home-manager.useGlobalPkgs = true;
   #home-manager.useUserPackages = true;
-  # home-manager.users.lukas = self.homeManagerModules.wooting;
+  home-manager.users.lukas = self.homeManagerModules.wooting;
 }

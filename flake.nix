@@ -5,7 +5,7 @@
   inputs.nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
   inputs.home-manager = {
-    url = "github:nix-community/home-manager";
+    url = "github:nix-community/home-manager/release-25.11";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.darwin = {
