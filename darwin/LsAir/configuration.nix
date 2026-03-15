@@ -40,6 +40,8 @@
       "scoiatael/dotfiles/legimi-kindle"
       "astropad-studio"
       "tailscale-app"
+      "eqmac"
+      "petrichor"
     ];
     masApps = {
       "bitwarden" = 1352778147;
