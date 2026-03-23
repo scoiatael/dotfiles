@@ -240,7 +240,7 @@ in
         name = "mergiraf";
         driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P";
       };
-      core.gitattributesfile = "${../../../config/gitattributes}";
+      core.gitattributesfile = "${../../config/gitattributes}";
       core.pager = "delta";
       interactive.diffFilter = "delta --color-only";
       delta.navigate = "true"; # use n and N to move between diff sections
@@ -296,7 +296,7 @@ in
     enable = true;
     extensions = [
       pkgs.gh-eco
-      (pkgs.callPackage ../../../packages/gh-poi { })
+      (pkgs.callPackage ../../packages/gh-poi { })
     ];
     settings = {
       git_protocol = "ssh";

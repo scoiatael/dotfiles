@@ -24,9 +24,9 @@ in
 
   home.packages = with pkgs; [
     # llm.withPlugins has been deprecated
-    (pkgs.callPackage ../../../packages/llm-with-plugins { })
+    (pkgs.callPackage ../../packages/llm-with-plugins { })
 
-    (pkgs.callPackage ../../../packages/markitdown { })
+    (pkgs.callPackage ../../packages/markitdown { })
 
     # for PDF conversion
     ghostscript
