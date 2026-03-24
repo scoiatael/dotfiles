@@ -1,11 +1,15 @@
 {
   pkgs,
   lib,
+  home-manager,
+  nix-index-database,
+  doomemacs,
   ...
 }:
 
 {
   imports = [
+    home-manager.darwinModules.home-manager
     ../modules/default.nix
     ../modules/aerospace.nix
     ../modules/sketchybar.nix
@@ -76,4 +80,18 @@
     package = pkgs.darwin.linux-builder-x86_64;
   };
   nix.settings.sandbox = true;
+
+  users.users.lukaszczaplinski = {
+    name = "lukaszczaplinski";
+    home = "/Users/lukaszczaplinski";
+  };
+
+  home-manager.users.lukaszczaplinski.imports = [
+    ../../home/lukaszczaplinski-LsAir/configuration.nix
+  ];
+  home-manager.extraSpecialArgs = {
+    inherit nix-index-database;
+    inherit home-manager;
+    inherit doomemacs;
+  };
 }
