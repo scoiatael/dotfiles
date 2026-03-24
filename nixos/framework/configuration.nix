@@ -1,10 +1,14 @@
 {
   pkgs,
+  home-manager,
+  nix-index-database,
+  doomemacs,
   ...
 }:
 
 {
   imports = [
+    home-manager.nixosModules.home-manager
     ../modules/services/smb.nix
     ../modules/services/blocky.nix
     ../modules/services/jellyfin.nix
@@ -364,6 +368,15 @@
     '';
 
     mode = "0550";
+  };
+
+  home-manager.users.lukaszczaplinski.imports = [
+    ../../home/lukaszczaplinski-LsFramework/configuration.nix
+  ];
+  home-manager.extraSpecialArgs = {
+    inherit nix-index-database;
+    inherit home-manager;
+    inherit doomemacs;
   };
 
   # This value determines the NixOS release from which the default
