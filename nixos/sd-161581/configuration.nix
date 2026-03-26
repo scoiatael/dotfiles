@@ -12,6 +12,7 @@
     ../modules/ip.nix
     ../modules/services/telegraf.nix
     ../modules/services/magic-wormhole.nix
+    ../modules/services/prism-tools.nix
   ];
 
   services.kubo.enable = true;
