@@ -17,7 +17,9 @@
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(rubocop-autocorrect-command "rubocop -A --format emacs")
  '(safe-local-variable-values
-   '((+format-with . rubocop) (+format-with . rubocop-format-current-file-silent)
+   '((eglot-server-programs (ruby-mode ("solargraph" "socket" "--port" :autoport)))
+     (+format-with . rubocop)
+     (+format-with . rubocop-format-current-file-silent)
      (+format-with quote rubocop-format-current-file-silent)
      (+format-with . "eslint") (engine . jinja2)
      (flycheck-disabled-checkers emacs-lisp-checkdoc))))
