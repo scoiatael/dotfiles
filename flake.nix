@@ -21,6 +21,10 @@
     url = "github:abenz1267/walker";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.sops-nix = {
+    url = "github:Mic92/sops-nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.doomemacs = {
     url = "github:doomemacs/doomemacs";
     flake = false;

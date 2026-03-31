@@ -3,16 +3,19 @@
   home-manager,
   nix-index-database,
   doomemacs,
+  sops-nix,
   ...
 }:
 
 {
   imports = [
+    sops-nix.darwinModules.sops
     home-manager.darwinModules.home-manager
     ../modules/default.nix
     ../modules/aerospace.nix
     ../modules/sketchybar.nix
     ../modules/lix.nix
+    ../modules/openssh-host-keys.nix
   ];
 
   system.primaryUser = "lukas";
