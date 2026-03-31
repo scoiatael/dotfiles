@@ -1,4 +1,4 @@
-;;; modules/scoiatael/ai/config.el -*- lexical-binding: t; -*-
+;;; modules/scoiatael/llm/config.el -*- lexical-binding: t; -*-
 
 (after! gptel
   (gptel-make-kagi "Kagi"
@@ -10,10 +10,12 @@
                    :stream t
                    :key (lambda () (password-store-get "anthropic-com-api-token"))))
 
+  (transient-suffix-put 'gptel-menu (kbd "RET") :key "<f8>")
   (map! :localleader
+        "g n" #'scoiatael/gptel-send-to-new-buffer
+        "g s" #'gptel-send
         "g g" #'gptel
         "g r" #'gptel-rewrite
-        "g s" #'gptel-send
         "g m" #'gptel-menu)
 
   ;; https://github.com/emacs-evil/evil-collection/issues/642
