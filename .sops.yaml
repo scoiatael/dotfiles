@@ -8,6 +8,7 @@ keys:
   - &LsAir age1yp8zxc8yn8af7numgt069cwe85yzgsyjec08x26sy606ap3z6g4qqqz5xd
   - &keybase-gpg-fpr EAB800957676ADBE2E29E1B61F748B25B736F0A8
   - &LsFramework age1akdwemj3v9w3hczj3xa6tdalcfa0mx2p0hsuhrzjakc5thndrv0she82w5
+  - &sd-161581 age1x94ufwycmr4qqzlaj5963vvn3l8qnrn7z09dm5z4tdk35ze5guxsl32prh
 creation_rules:
   - path_regex: ^darwin/LsWootingMBP/secrets/[^/]+$
     age:
@@ -26,5 +27,10 @@ creation_rules:
   - path_regex: ^nixos/framework/secrets/[^/]+$
     age:
     - *LsFramework
+    pgp:
+    - *keybase-gpg-fpr
+  - path_regex: ^nixos/sd-161581/secrets/[^/]+$
+    age:
+    - *sd-161581
     pgp:
     - *keybase-gpg-fpr

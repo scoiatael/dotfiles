@@ -1,5 +1,11 @@
 {
+  sops-nix,
+  lib,
+  ...
+}:
+{
   imports = [
+    sops-nix.nixosModules.sops
     ./hardware-configuration.nix
     ./networking.nix # generated at runtime by nixos-infect
     ../modules/cli.nix
@@ -14,6 +20,12 @@
     ../modules/services/magic-wormhole.nix
     ../modules/services/prism-tools.nix
   ];
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.influx-token = {
+    sopsFile = ./secrets/influx-token;
+    format = "binary";
+  };
 
   services.kubo.enable = true;
 
