@@ -1,25 +1,37 @@
 {
+  config,
   pkgs,
   lib,
   home-manager,
   nix-index-database,
   doomemacs,
+  sops-nix,
   ...
 }:
 
 {
   imports = [
+    sops-nix.darwinModules.sops
     home-manager.darwinModules.home-manager
     ../modules/default.nix
     ../modules/aerospace.nix
     ../modules/sketchybar.nix
     ../modules/lix.nix
+    ../modules/openssh-host-keys.nix
   ];
 
   system.primaryUser = "lukaszczaplinski";
   ids.gids.nixbld = lib.mkForce 30000;
   networking.hostName = "LsAir";
   # hardware.notch = true;
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.lukas_ssh_config = {
+    format = "binary";
+    sopsFile = ./secrets/ssh_config;
+    owner = config.system.primaryUser;
+    path = "${config.users.users.${config.system.primaryUser}.home}/.ssh/config";
+  };
 
   homebrew = {
     taps = [

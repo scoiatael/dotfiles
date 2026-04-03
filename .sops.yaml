@@ -5,13 +5,20 @@
 keys:
   - &lukas-LsWootingMBP age1mm8ejmjpmnepjjdvxnqj9twlee85fe9dl3l7ws2ujeeehk9nj5rsty3s8c
   - &LsWootingMBP age1m6zyqeydal8weye55lag3pw24k45rp0xst23r2hvpd9xjnqsu49qzy3zh5
+  - &LsAir age1yp8zxc8yn8af7numgt069cwe85yzgsyjec08x26sy606ap3z6g4qqqz5xd
+  - &keybase-gpg-fpr EAB800957676ADBE2E29E1B61F748B25B736F0A8
 creation_rules:
-  - path_regex: secrets/[^/]+$
-    key_groups:
-    - age:
-      - *lukas-LsWootingMBP
-  - path_regex: darwin/LsWootingMBP/secrets/[^/]+$
-    key_groups:
-    - age:
-      - *lukas-LsWootingMBP
-      - *LsWootingMBP
+  - path_regex: ^darwin/LsWootingMBP/secrets/[^/]+$
+    age:
+    - *lukas-LsWootingMBP
+    - *LsWootingMBP
+  - path_regex: ^darwin/LsAir/secrets/[^/]+$
+    age:
+    - *LsAir
+    pgp:
+    - *keybase-gpg-fpr
+  - path_regex: ^secrets/[^/]+$
+    age:
+    - *lukas-LsWootingMBP
+    gpg:
+    - &keybase-gpg-fpr
