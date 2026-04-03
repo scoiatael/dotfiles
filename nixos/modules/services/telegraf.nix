@@ -1,12 +1,11 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
 
 {
-  systemd.services.telegraf.serviceConfig.EnvironmentFile = "/root/influx_token";
+  systemd.services.telegraf.serviceConfig.EnvironmentFile = config.sops.secrets.influx-token.path;
   services.telegraf.enable = true;
   services.telegraf.extraConfig = {
     outputs.influxdb_v2 = {

@@ -7,6 +7,7 @@ keys:
   - &LsWootingMBP age1m6zyqeydal8weye55lag3pw24k45rp0xst23r2hvpd9xjnqsu49qzy3zh5
   - &LsAir age1yp8zxc8yn8af7numgt069cwe85yzgsyjec08x26sy606ap3z6g4qqqz5xd
   - &keybase-gpg-fpr EAB800957676ADBE2E29E1B61F748B25B736F0A8
+  - &LsFramework age1akdwemj3v9w3hczj3xa6tdalcfa0mx2p0hsuhrzjakc5thndrv0she82w5
 creation_rules:
   - path_regex: ^darwin/LsWootingMBP/secrets/[^/]+$
     age:
@@ -21,4 +22,9 @@ creation_rules:
     age:
     - *lukas-LsWootingMBP
     gpg:
-    - &keybase-gpg-fpr
+    - *keybase-gpg-fpr
+  - path_regex: ^nixos/framework/secrets/[^/]+$
+    age:
+    - *LsFramework
+    pgp:
+    - *keybase-gpg-fpr

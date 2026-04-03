@@ -1,13 +1,16 @@
 {
   pkgs,
+  lib,
   home-manager,
   nix-index-database,
   doomemacs,
+  sops-nix,
   ...
 }:
 
 {
   imports = [
+    sops-nix.nixosModules.sops
     home-manager.nixosModules.home-manager
     ../modules/services/smb.nix
     ../modules/services/blocky.nix
@@ -31,6 +34,45 @@
     ./rocm.nix
   ];
   programs.mosh.enable = true;
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets =
+    lib.mapAttrs'
+      (
+        name: config:
+        lib.nameValuePair "${name}" (
+          {
+            format = "binary";
+          }
+          // config
+        )
+      )
+      {
+        deluge-auth = {
+          sopsFile = ./secrets/deluge-auth;
+          # TODO: migrate
+          path = "/etc/nixos/secrets/deluge-auth";
+        };
+        offlineimap = {
+          sopsFile = ./secrets/offlineimap;
+          # TODO: migrate
+          path = "/etc/nixos/secrets/offlineimap";
+        };
+        "parrhasius.env" = {
+          sopsFile = ./secrets/parrhasius.env;
+          # TODO: migrate
+          path = "/etc/nixos/secrets/parrhasius.env";
+          format = "dotenv";
+        };
+        restic-password = {
+          sopsFile = ./secrets/restic-password;
+          # TODO: migrate
+          path = "/etc/nixos/secrets/restic-password";
+        };
+        influx-token = {
+          sopsFile = ./secrets/influx-token;
+        };
+      };
 
   users.users.remotebuild.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIESt/O98FeSfgnLBfit9jE0hgNP3Ww0wpP+r1QGjaeNc builder@localhost" # builder key on LsAir
