@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   parrhasius,
   ...
@@ -70,7 +69,7 @@ in
       User = config.users.users.parrhasius.name;
       StateDirectory = "parrhasius-db parrhasius-gems parrhasius-bun";
       EnvironmentFile = [
-        "/etc/nixos/secrets/parrhasius.env"
+        config.sops.secrets.parrhasius-env.path
         environmentFile
       ];
     };

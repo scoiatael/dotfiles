@@ -37,7 +37,7 @@
         Restart = "on-failure";
         User = "lukaszczaplinski";
 
-        EnvironmentFile = "/etc/nixos/secrets/offlineimap";
+        EnvironmentFile = config.sops.secrets.offlineimap.path;
 
         ExecStart = lib.getExe runFile;
         CacheDirectoryMode = "0700";

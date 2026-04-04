@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   services.deluge = {
     enable = true;
     web.enable = true;
     declarative = true;
-    authFile = "/etc/nixos/secrets/deluge-auth";
+    authFile = config.sops.secrets.deluge-auth.path;
     config = {
       download_location = "/srv/nfs/quarantine/";
       max_upload_speed = "1000.0";
