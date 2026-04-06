@@ -10,7 +10,6 @@
                    :stream t
                    :key (lambda () (password-store-get "anthropic-com-api-token"))))
 
-  (transient-suffix-put 'gptel-menu (kbd "RET") :key "<f8>")
   (map! :localleader
         "g n" #'scoiatael/gptel-send-to-new-buffer
         "g s" #'gptel-send
