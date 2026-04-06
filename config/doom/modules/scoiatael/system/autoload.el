@@ -129,11 +129,9 @@ current window."
 
 (defun scoiatael/nix-flake-metadata (flake)
   "Get nix flake metadata for FLAKE as parsed JSON."
-  (let ((command (format "nix flake metadata %s --json" flake)))
-    (with-temp-buffer
-      (when (zerop (call-process-shell-command command nil t))
-        (goto-char (point-min))
-        (json-parse-buffer :object-type 'alist :array-type 'list)))))
+  (let* ((command (format "nix flake metadata %s --json --quiet" flake))
+         (json-string (shell-command-to-string command)))
+    (json-parse-string json-string :object-type 'alist)))
 
 ;;;###autoload
 (defun scoiatael/switch-to-home-manager-workspace ()
