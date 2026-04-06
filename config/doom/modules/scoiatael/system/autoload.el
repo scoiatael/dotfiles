@@ -33,21 +33,10 @@ current window."
       (ignore)
     (apply old-fun format args)))
 
-(defvar-local scoiatael/+format-on-save-disabled-modes nil)
-
 ;;;###autoload
 (defun scoiatael/toggle-format-on-save ()
   (interactive)
-  (let ((oldvalue scoiatael/+format-on-save-disabled-modes))
-    (if oldvalue
-        ;; Return to previous values
-        (progn
-          (setq scoiatael/+format-on-save-disabled-modes nil)
-          (setq +format-on-save-disabled-modes oldvalue))
-      ;; Add current mode to disabled modes
-      (progn
-        (setq scoiatael/+format-on-save-disabled-modes +format-on-save-disabled-modes)
-        (pushnew! +format-on-save-disabled-modes major-mode)))))
+  (apheleia-mode))
 
 ;;;###autoload
 (defmacro scoiatael/defer (&rest body) `(run-at-time 1 nil (lambda () ,(cons 'progn body))))
@@ -57,7 +46,6 @@ current window."
   (interactive)
   (f-touch ".project")
   (projectile-add-known-project default-directory))
-
 
 ;;;###autoload
 (defun scoiatael/find-project ()
@@ -104,55 +92,40 @@ current window."
     file))
 
 ;;;###autoload
-(defun scoiatael/switch-to-agenda-workspace ()
-  "Switch to workspace named AGENDA or create it if it doesn't exist."
-  (interactive)
-  (let ((workspace-name "AGENDA"))
-    (unless (eq (+workspace-current-name) +workspaces-main)
-      (unless (+workspace-exists-p workspace-name)
-        (+workspace-new workspace-name))
-      (+workspace-switch workspace-name))
-    (find-file-existing "~/org/todo.org")))
+(defmacro scoiatael/define-workspace-switcher (name workspace-name &rest body)
+  "Define an autoloaded workspace-switcher command NAME.
+Switches to WORKSPACE-NAME (creating it if needed), then evaluates BODY."
+  `(defun ,name ()
+     ,(format "Switch to workspace named %s or create it if it doesn't exist." workspace-name)
+     (interactive)
+     (let ((workspace-name ,workspace-name))
+       (unless (eq (+workspace-current-name) +workspaces-main)
+         (unless (+workspace-exists-p workspace-name)
+           (+workspace-new workspace-name))
+         (+workspace-switch workspace-name)))
+     ,@body))
+
 
 ;;;###autoload
-(defun scoiatael/switch-to-nixpkgs-workspace ()
-  "Switch to workspace named NIXPKGS or create it if it doesn't exist."
-  (interactive)
-  (let ((workspace-name "NIXPKGS"))
-    (unless (eq (+workspace-current-name) +workspaces-main)
-      (unless (+workspace-exists-p workspace-name)
-        (+workspace-new workspace-name))
-      (+workspace-switch workspace-name))
-    (let ((nixpkgs-dir (car (last (split-string (getenv "NIX_PATH") "=")))))
-      (affe-find nixpkgs-dir))))
-
-
-(defun scoiatael/nix-flake-metadata (flake)
-  "Get nix flake metadata for FLAKE as parsed JSON."
-  (let* ((command (format "nix flake metadata %s --json --quiet" flake))
-         (json-string (shell-command-to-string command)))
-    (json-parse-string json-string :object-type 'alist)))
+(scoiatael/define-workspace-switcher
+ scoiatael/switch-to-nixpkgs-workspace
+ "NIXPKGS"
+ (affe-find (car (last (split-string (getenv "NIX_PATH") "=")))))
 
 ;;;###autoload
-(defun scoiatael/switch-to-home-manager-workspace ()
-  "Switch to workspace named HOME_MANAGER or create it if it doesn't exist."
-  (interactive)
-  (let ((workspace-name "HOME_MANAGER"))
-    (unless (eq (+workspace-current-name) +workspaces-main)
-      (unless (+workspace-exists-p workspace-name)
-        (+workspace-new workspace-name))
-      (+workspace-switch workspace-name))
-    (let ((dir (alist-get 'path (scoiatael/nix-flake-metadata "home-manager"))))
-      (affe-find dir))))
+(scoiatael/define-workspace-switcher
+ scoiatael/switch-to-home-manager-workspace
+ "HOME_MANAGER"
+ (affe-find (alist-get 'path (scoiatael/nix-flake-metadata "home-manager"))))
 
 ;;;###autoload
-(defun scoiatael/switch-to-nix-darwin-workspace ()
-  "Switch to workspace named NIX_DARWIN or create it if it doesn't exist."
-  (interactive)
-  (let ((workspace-name "NIX_DARWIN"))
-    (unless (eq (+workspace-current-name) +workspaces-main)
-      (unless (+workspace-exists-p workspace-name)
-        (+workspace-new workspace-name))
-      (+workspace-switch workspace-name))
-    (let ((dir (alist-get 'path (scoiatael/nix-flake-metadata "nix-darwin"))))
-      (affe-find dir))))
+(scoiatael/define-workspace-switcher
+ scoiatael/switch-to-nix-darwin-workspace
+ "NIX_DARWIN"
+ (affe-find (alist-get 'path (scoiatael/nix-flake-metadata "nix-darwin"))))
+
+;;;###autoload
+(scoiatael/define-workspace-switcher
+ scoiatael/switch-to-agenda-workspace
+ "AGENDA"
+ (find-file-existing "~/org/todo.org"))
