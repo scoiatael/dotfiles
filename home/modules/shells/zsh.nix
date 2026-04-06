@@ -75,7 +75,13 @@ in
         random = ''ruby -r securerandom -e "puts SecureRandom.hex(ARGV.first&.to_i || 32)" "''${@}"'';
         notmuch-ui = "emacs -nw -f notmuch";
         "mkinvoice" = ''mkdir "Invoices:$(date "+%y%m")"'';
-      };
+      }
+      // (lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
+        # NOTE: Available since macOS 15
+        # See https://github.com/sindresorhus/macos-trash
+        rm = "trash";
+        r = "rm";
+      });
     shellGlobalAliases =
       let
         # expand ... to ../..; .... to ../../../ etc
