@@ -32,6 +32,7 @@
     ./caddy.nix
     ./hardware-configuration.nix
     ./rocm.nix
+    ./nfs.nix
   ];
   programs.mosh.enable = true;
 
