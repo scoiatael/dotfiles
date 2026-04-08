@@ -1,6 +1,6 @@
 {
+  config,
   pkgs,
-  lib,
   home-manager,
   nix-index-database,
   doomemacs,
@@ -41,6 +41,7 @@
     deluge-auth = {
       sopsFile = ./secrets/deluge-auth;
       format = "binary";
+      owner = config.users.users.deluge.name;
     };
     offlineimap = {
       sopsFile = ./secrets/offlineimap;
