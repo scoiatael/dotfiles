@@ -1,10 +1,14 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   # TODO: https://github.com/gilacost/dot-files/blob/master/darwin-configuration.nix
   # TODO: https://the-empire.systems/linux-macos-setup
   # TODO: https://notes.alinpanaitiu.com/Keyboard%20tricks%20from%20a%20macOS%20app%20dev
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ vim pinentry_mac ];
+  environment.systemPackages = with pkgs; [
+    vim
+    pinentry_mac
+  ];
 
   # programs.fish.enable = true;
   programs.zsh = {
@@ -34,12 +38,13 @@
       "zen"
     ];
     brews = [ "switchaudio-osx" ];
-    onActivation = { cleanup = "uninstall"; };
+    onActivation = {
+      cleanup = "uninstall";
+    };
   };
 
   system.keyboard.enableKeyMapping = true;
-  system.keyboard.remapCapsLockToControl =
-    true; # Works alongside ControlEscape for better Caps :)
+  system.keyboard.remapCapsLockToControl = true; # Works alongside ControlEscape for better Caps :)
 
   system.defaults.dock.autohide = true;
   system.defaults.dock.mru-spaces = false;
@@ -51,8 +56,6 @@
   system.defaults.finder.QuitMenuItem = true;
   system.defaults.finder.FXEnableExtensionChangeWarning = false;
   system.defaults.finder.ShowStatusBar = true;
-
-  system.defaults.spaces.spans-displays = true;
 
   system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
 
@@ -91,5 +94,8 @@
 
   nix.nixPath = [ "nixpkgs=${pkgs.path}" ];
   nix.package = lib.mkDefault pkgs.nix;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }

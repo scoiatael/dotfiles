@@ -47,4 +47,5 @@ in
     done
   '';
 
+  system.defaults.spaces.spans-displays = false;
 }
