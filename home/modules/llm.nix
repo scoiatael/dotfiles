@@ -38,7 +38,7 @@ in
     # amp-cli
   ];
 
-  home.file."${configHome}/io.datasette.llm/default_model.txt".text = "anthropic/claude-sonnet-4-0";
+  home.file."${configHome}/io.datasette.llm/default_model.txt".text = "anthropic/claude-sonnet-4-5";
 
   home.activation.linkLLMTemplates = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     [ ! -L "${configHome}/io.datasette.llm/templates" ] && ln -sf "${config.home.homeDirectory}/dotfiles/config/llm/templates" "${configHome}/io.datasette.llm/templates"
