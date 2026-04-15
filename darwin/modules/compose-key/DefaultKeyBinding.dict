@@ -1,0 +1,264 @@
+{
+    "§" = {
+        "$\UF700" = ("insertText:", "↑"); /* (Shift) Up arrow */
+        "$\UF701" = ("insertText:", "↓"); /* (Shift) Down arrow */
+        "$\UF702" = ("insertText:", "←"); /* (Shift) Left arrow */
+        "$\UF703" = ("insertText:", "→"); /* (Shift) Right arrow */
+        "$~\UF700" = ("insertText:", "⇈"); /* (Shift-opt) Double-up arrow */
+        "$~\UF701" = ("insertText:", "⇊"); /* (Shift-opt) Double-down arrow */
+        "$~\UF702" = ("insertText:", "⇇"); /* (Shift-opt) Double-left arrow */
+        "$~\UF703" = ("insertText:", "⇉"); /* (Shift-opt) Double-right arrow */
+        "\$" = ("insertText:", "💰");
+        "*" = ("insertText:", "★");
+        " " = {
+            " " = ("insertText:", "\U00A0"); /* Non-breaking space */
+        };
+        "." = {
+            "." = ("insertText:", "…");
+            "," = ("insertText:", "∵");
+            "=" = ("insertText:", "•");
+        };
+        ":" = {
+            "-" = ("insertText:", "÷");
+        };
+        "," = {
+            "." = ("insertText:", "∴");
+            "u" = ("insertText:", "µ");
+        };
+        "+" = {
+            "1" = ("insertText:", "👍");
+            "-" = ("insertText:", "±");
+        };
+        "-" = {
+            ">" = ("insertText:", "→");
+            "-" = {
+                "-" = ("insertText:", "—");
+                "." = ("insertText:", "–");
+            };
+            ":" = ("insertText:", "÷");
+            "1" = ("insertText:", "👎");
+        };
+        "=" = {
+            "_" = ("insertText:", "≡");
+            "/" = ("insertText:", "≠");
+        };
+        "!" = {
+            "!" = ("insertText:", "¡");
+            "?" = ("insertText:", "‽");
+        };
+        "?" = {
+            "?" = ("insertText:", "¿");
+            "!" = ("insertText:", "⸘");
+        };
+        ":" = {
+            "(" = ("insertText:", "🙁");
+            ")" = ("insertText:", "🙂");
+        };
+        "<" = {
+            "\"" = ("insertText:", "“");
+            "'" = ("insertText:", "‘");
+            "3" = ("insertText:", "❤️");
+            "<" = ("insertText:", "«");
+            ">" = ("insertText:", "⋄");
+            "=" = ("insertText:", "≤");
+            "-" = ("insertText:", "←");
+        };
+        ">" = {
+            "\"" = ("insertText:", "”");
+            "'" = ("insertText:", "’");
+            ">" = ("insertText:", "»");
+            "=" = ("insertText:", "≥");
+        };
+        "_" = {
+            "0" = ("insertText:", "₀"); /* Subscript 0 */
+            "1" = ("insertText:", "₁"); /* Subscript 1 */
+            "2" = ("insertText:", "₂"); /* Subscript 2 */
+            "3" = ("insertText:", "₃"); /* Subscript 3 */
+            "4" = ("insertText:", "₄"); /* Subscript 4 */
+            "5" = ("insertText:", "₅"); /* Subscript 5 */
+            "6" = ("insertText:", "₆"); /* Subscript 6 */
+            "7" = ("insertText:", "₇"); /* Subscript 7 */
+            "8" = ("insertText:", "₈"); /* Subscript 8 */
+            "9" = ("insertText:", "₉"); /* Subscript 9 */
+        };
+        "1" = {
+            "1" = {
+                "0" = ("insertText:", "⅒");
+            };
+            "2" = ("insertText:", "½");
+            "3" = ("insertText:", "⅓");
+            "4" = ("insertText:", "¼");
+            "5" = ("insertText:", "⅕");
+            "6" = ("insertText:", "⅙");
+            "7" = ("insertText:", "⅐");
+            "8" = ("insertText:", "⅛");
+            "9" = ("insertText:", "⅑");
+            "s" = ("insertText:", "¹");
+        };
+        "2" = {
+            "3" = ("insertText:", "⅔");
+            "5" = ("insertText:", "⅖");
+            "s" = ("insertText:", "²");
+        };
+        "3" = {
+            "4" = ("insertText:", "¾");
+            "5" = ("insertText:", "⅗");
+            "8" = ("insertText:", "⅜");
+            "s" = ("insertText:", "³");
+        };
+        "4" = {
+            "5" = ("insertText:", "⅘");
+        };
+        "5" = {
+            "6" = ("insertText:", "⅚");
+            "8" = ("insertText:", "⅝");
+        };
+        "7" = {
+            "8" = ("insertText:", "⅞");
+        };
+        "8" = {
+            "8" = ("insertText:", "∞");
+        };
+        "a" = {
+            "a" = ("insertText:", "å");
+        };
+        "b" = {
+            "|" = {
+                "|" = ("insertText:", "₿");
+            };
+            "u" = {
+                "m" = {
+                    "p" = ("insertText:", "👊");
+                };
+                "r" = {
+                    "r" = {
+                        "i" = {
+                            "t" = {
+                                "o" = ("insertText:", "🌯");
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        "c" = {
+            "|" = ("insertText:", "¢");
+            "/" = {
+                "/" = ("insertText:", "₡");
+            };
+            "=" = ("insertText:", "€");
+            "h" = {
+                "e" = {
+                    "c" = {
+                        "k" = ("insertText:", "✓");
+                    };
+                };
+            };
+            "l" = {
+                "o" = {
+                    "u" = {
+                        "d" = ("insertText:", "☁️");
+                    };
+                };
+            };
+            "o" = ("insertText:", "©");
+            "r" = {
+                "y" = {
+                    "p" = {
+                        "t" = {
+                            "o" = ("insertText:", "C̶̳̰̮̩̞͉̝R͎̩͇͎̲͕Y͇P̯̤͜T̝̩͔͞O̷̭͈̜͈̮");
+                        };
+                    };
+                };
+            };
+        };
+        "d" = {
+            "a" = {
+                "n" = {
+                    "c" = {
+                        "e" = ("insertText:", "💃");
+                    };
+                };
+            };
+        };
+        "e" = {
+            "y" = {
+                "e" = {
+                    "s" = ("insertText:", "👀");
+                };
+            };
+        };
+        "k" = {
+          "e" = {
+            "y" = {
+              " " = ("insertText:", "␣"); /* Space */
+              "s" = ("insertText:", "⇧"); /* Shift */
+              "o" = ("insertText:", "⌥"); /* Option */
+              "c" = ("insertText:", "⌘"); /* Cmd */
+              "r" = ("insertText:", "⏎"); /* Return */
+              "e" = ("insertText:", "⎋"); /* Escape */
+              "b" = ("insertText:", "⌫"); /* Backspace */
+              "d" = ("insertText:", "⌦"); /* Delete */
+              "t" = ("insertText:", "⇥"); /* Tab */
+            };
+          };
+          "i" = {
+            "s" = {
+              "s" = ("insertText:", "😘");
+            };
+          };
+        };
+        "l" = {
+            "=" = ("insertText:", "₤");
+            "-" = ("insertText:", "£");
+            "i" = {
+                "p" = {
+                    "s" = ("insertText:", "💋");
+                };
+            };
+        };
+        "o" = {
+            "/" = ("insertText:", "ø");
+            "c" = ("insertText:", "©");
+            "o" = ("insertText:", "°");
+            "r" = ("insertText:", "®");
+            "s" = ("insertText:", "§");
+            "x" = ("insertText:", "¤");
+        };
+        "p" = {
+            "!" = ("insertText:", "¶");
+            "a" = {
+                "r" = {
+                    "t" = {
+                        "y" = ("insertText:", "🎉");
+                    };
+                };
+            };
+            "o" = {
+                "o" = ("insertText:", "💩");
+            };
+            "l" = {
+                "a" = {
+                    "n" = {
+                        e = ("insertText:", "✈️");
+                    };
+                };
+            };
+        };
+        "r" = {
+            "s" = ("insertText:", "₨");
+        };
+        "t" = {
+            "m" = ("insertText:", "™");
+        };
+        "v" = {
+            "/" = ("insertText:", "√");
+        };
+        "x" = {
+            "x" = ("insertText:", "×");
+        };
+        "y" = {
+            "-" = ("insertText:", "¥");
+        };
+    };
+}

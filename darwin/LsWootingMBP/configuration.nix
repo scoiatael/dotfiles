@@ -16,6 +16,7 @@
     ../modules/sketchybar.nix
     ../modules/lix.nix
     ../modules/openssh-host-keys.nix
+    ../modules/compose-key/default.nix
   ];
 
   system.primaryUser = "lukas";
