@@ -48,7 +48,6 @@
       "discord"
       "steam"
       "bettertouchtool"
-      "karabiner-elements"
       "balenaetcher"
       "proton-pass"
       "arc"

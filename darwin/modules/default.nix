@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   # TODO: https://github.com/gilacost/dot-files/blob/master/darwin-configuration.nix
   # TODO: https://the-empire.systems/linux-macos-setup
@@ -42,6 +47,12 @@
       cleanup = "uninstall";
     };
   };
+
+  home-manager.users.${config.system.primaryUser}.imports = [
+    {
+      home.file.".config/karabiner/karabiner.json".source = ../../config/karabiner.json;
+    }
+  ];
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true; # Works alongside ControlEscape for better Caps :)
