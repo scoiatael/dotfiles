@@ -48,7 +48,7 @@
                   "^| *\\([^|]+\\)| *\\([^|]+\\)| *\\([^|]+\\)| *\\([^|]+\\)|"
                   nil t)
             (let* ((status (upcase (string-trim (match-string 1))))
-                   (org-status (if (string= "BACKLOG" status) "TODO" status))
+                   (org-status (cond ((string= "BACKLOG" status) "TODO") ((string= "TRIAGE" status) "TODO") (t status)))
                    (id     (string-trim (match-string 2)))
                    (desc   (string-trim (match-string 3)))
                    (url    (string-trim (match-string 4))))
