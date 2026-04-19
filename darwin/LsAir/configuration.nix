@@ -63,6 +63,7 @@
       "Affinity Photo 2" = 1616822987;
       "DaisyDisk" = 411643860;
       "Proton Pass for Safari" = 6502835663;
+      "(beat)" = 1549538329;
     };
   };
 
