@@ -4,7 +4,8 @@
   :config
   (map! :leader "h h" #'eldoc-box-help-at-point)
   (after! eglot
-    (define-key eglot-mode-map (kbd "C-c I") #'eldoc-box-eglot-help-at-point)))
+    (define-key eglot-mode-map (kbd "C-c I") #'eldoc-box-help-at-point)
+    (add-hook 'eldoc-box-buffer-setup-hook #'eldoc-box-prettify-ts-errors 0 t)))
 
 (after! eglot
   (add-to-list 'eglot-server-programs `((js-mode typescript-mode typescript-ts-mode typescript-tsx-mode rjsx-mode jtsx-typescript-mode) . ,(eglot-alternatives '(("deno" "lsp") ("typescript-language-server" "--stdio")))))

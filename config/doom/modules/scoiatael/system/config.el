@@ -12,10 +12,9 @@
 ;; macOS specific settings
 (when (featurep :system 'macos) (setq mac-right-option-modifier nil))
 
-;; Custom settings and autoloads
-(let ((custom-config-file (expand-file-name "./custom.el" (dir!))))
-  (when (file-exists-p custom-config-file)
-    (load-file custom-config-file)))
+;; NOTE: I'd really like it but it clashes with :ui workspaces
+;; https://github.com/doomemacs/doomemacs/issues/6205
+;; (setq uniquify-buffer-name-style 'forward)
 
 ;; Used by customization system
 (setq custom-file "~/dotfiles/config/doom/emacs-custom.el")
