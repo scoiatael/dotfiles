@@ -7,7 +7,7 @@
   :config
   (setq justl-shell 'vterm)
   (advice-add 'justl :around #'envrc-propagate-environment)
-  (map! :leader ";" #'justl)
+  (map! :leader "j ;" #'justl)
   (map! :map #'justl-mode-map
         :n "x" 'justl-exec-recipe
         :n "X" 'justl-exec-shell))

@@ -47,7 +47,6 @@
       "w 2" #'split-window-below
       "w 3" #'split-window-right
       "f d" #'dired-jump
-      "f Y" #'scoiatael/yank-file-location
       "g -" #'git-switch-previous-branch
       "s c" #'evil-ex-nohighlight
       "s e" #'iedit-mode
