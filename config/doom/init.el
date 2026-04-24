@@ -90,7 +90,7 @@
        ;;ansible
        ;;biblio            ; Writes a PhD for you (citation needed)
        debugger              ; FIXME stepping through code, to help you add bugs
-       direnv
+       ;; direnv
        docker
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
@@ -222,6 +222,7 @@
        time-zones
        fountain
        eat     ; emulate a terminal
+       direnv  ; direnv setup via ben
        ;;gleam             ; uncomment to enable gleam support
        ;;spacehammer       ; uncomment to enable spacehammer integration
        )
