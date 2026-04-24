@@ -29,3 +29,5 @@
     (cons input (apply-partially #'orderless--highlight input t)))
   (setq affe-regexp-compiler #'affe-orderless-regexp-compiler
         affe-find-command "fd . . --type f --exclude \"Application Support\" --exclude Library --exclude Pictures --exclude Music"))
+
+(use-package! comment-dwim-2 :config (bind-keys ("M-;" . comment-dwim-2)))
