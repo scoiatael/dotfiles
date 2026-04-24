@@ -221,6 +221,7 @@
        just
        time-zones
        fountain
+       eat     ; emulate a terminal
        ;;gleam             ; uncomment to enable gleam support
        ;;spacehammer       ; uncomment to enable spacehammer integration
        )

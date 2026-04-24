@@ -99,6 +99,9 @@ in
   };
 
   programs.zsh.initContent = lib.mkAfter ''
+    [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+        source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+
     if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
       add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 
