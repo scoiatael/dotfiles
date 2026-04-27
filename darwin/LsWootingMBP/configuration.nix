@@ -42,6 +42,7 @@
       "thebrowsercompany-dia"
       "tailscale-app"
       "eqmac"
+      "keymapp"
     ];
     brews = [ "stlink" ];
   };
