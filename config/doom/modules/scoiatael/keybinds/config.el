@@ -23,11 +23,6 @@
 (map! :mode #'dired-mode
       :n "; ;" #'affe-find)
 
-(map! :n "M-<up>" #'evil-window-up
-      :n "M-<right>"  #'evil-window-right
-      :n "M-<left>"  #'evil-window-left
-      :n "M-<down>"  #'evil-window-down)
-
 (map! :n "s-[" #'+workspace/switch-left
       :n "s-]"  #'+workspace/switch-right
       :n "s-{" #'+workspace/swap-left
