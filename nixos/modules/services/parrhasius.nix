@@ -60,6 +60,7 @@ in
     '';
 
     environment = {
+      TAILWINDCSS_INSTALL_DIR = "${pkgs.tailwindcss_4}/bin";
     };
 
     serviceConfig = {
