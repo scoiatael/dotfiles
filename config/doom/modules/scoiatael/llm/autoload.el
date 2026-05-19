@@ -14,7 +14,7 @@ With prefix ARG, prompt for a gptel directive."
   (let* ((query (if (use-region-p)
                     (buffer-substring-no-properties (region-beginning) (region-end))
                   (buffer-substring-no-properties (point-min) (point-max))))
-         (file-buffer (buffer-name))
+         (file-buffer (or (buffer-file-name) (buffer-name)))
          (system-message (when arg
                            (read-string "System message: " gptel--system-message)))
          ;; Generate a unique buffer name
@@ -39,7 +39,7 @@ With prefix ARG, prompt for a gptel directive."
         (setq gptel--system-message system-message))
       ;; Format initial query as proper org mode text
       (insert "* Code Fix Request\n\n")
-      (insert "Please review and fix the code according to the instructions in the region below:\n")
+      (insert (read-string  "prompt:" "Please review and fix the code according to the instructions in the region below:") "\n")
       (insert (format "Root: %s\n\n" root))
       (insert (format "Current buffer: %s\n\n" file-buffer))
       (when agents-md-exists
