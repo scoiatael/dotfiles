@@ -78,3 +78,29 @@
             (replace-match "")))
         (markdown-mode)
         (display-buffer (current-buffer))))))
+
+
+;;;###autoload
+(defun scoiatael/gptel-export-subtree-to-notion-buffer ()
+  "Export current org subtree to Notion-compatible markdown via gptel."
+  (interactive)
+  (save-restriction
+    (org-narrow-to-subtree)
+    (let* ((subtree-heading (org-get-heading t t t t))
+           (buffer-name (format "*Notion Export: %s*" (or subtree-heading "Subtree")))
+           (content (org-copy-subtree)))
+      (widen)
+      (with-current-buffer (get-buffer-create buffer-name)
+        (text-mode)
+        (setq-local
+         gptel-use-tools nil
+         gptel-system "You are a formatter. Output only the converted content, no commentary.")
+        (gptel-mode)
+        (erase-buffer)
+        (insert "Convert the following TEXT to Notion markdown format suitable for pasting into Notion web page:\n")
+        (insert "Don't output any headings - the whole text should cleanly fit under ### heading for a single person and be concise enough to skim quickly\n")
+        (insert "Convert daily entries into single text blocks, avoid unnecessary details in each entry\n")
+        (insert "Leave any outstanding TODOs as a list\n")
+        (insert (format "<<TEXT\n %s\nTEXT\n" content))
+        (gptel-send))
+      (display-buffer buffer-name))))
