@@ -112,6 +112,11 @@
           specialArgs = attrs;
           modules = [ ./nixos/sd-161581/configuration.nix ];
         };
+        tabletop-nixos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = attrs;
+          modules = [ ./nixos/tabletop-nixos/configuration.nix ];
+        };
         # demo-vm-aarch64-darwin = nixpkgs.lib.nixosSystem {
         #   system = "aarch64-linux";
         #   specialArgs = attrs;
