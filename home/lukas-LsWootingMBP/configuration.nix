@@ -1,3 +1,5 @@
+{ pkgs, lib, ... }:
+
 {
   imports = [
     ../modules/default.nix
@@ -13,6 +15,26 @@
     ../modules/comma.nix
     ../modules/graphite.nix
   ];
+
+  accounts.email.accounts = {
+    "lukasz@wooting.io" = {
+      primary = true;
+      himalaya.enable = true;
+      imap = {
+        port = 993;
+        host = "imap.gmail.com";
+      };
+      realName = "Lukas Czaplinski";
+      userName = "lukasz@wooting.io";
+      passwordCommand = [
+        (lib.getExe pkgs.pass)
+        "himalaya-gmail-app-password"
+      ];
+      address = "lukasz@wooting.io";
+    };
+  };
+
+  programs.himalaya.enable = true;
 
   programs.git.settings.user = {
     email = "lukasz@wooting.io";
