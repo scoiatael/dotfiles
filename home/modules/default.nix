@@ -1,5 +1,13 @@
-{ config, lib, pkgs, ... }: {
-  home.language = { base = "en_GB.UTF-8"; };
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  home.language = {
+    base = "en_GB.UTF-8";
+  };
 
   home.packages = with pkgs; [
     patchutils
@@ -48,7 +56,9 @@
   fonts.fontconfig.enable = true; # required to autoload fonts from packages
 
   programs = {
-    gpg = { enable = true; };
+    gpg = {
+      enable = true;
+    };
     starship = {
       enable = true;
       settings = {
@@ -90,8 +100,7 @@
         };
 
         git_state = {
-          format =
-            "\\([|$state( $progress_current/$progress_total)]($style)\\)";
+          format = "\\([|$state( $progress_current/$progress_total)]($style)\\)";
           style = "bright-black";
         };
 
@@ -103,7 +112,9 @@
         };
       };
     };
-    dircolors = { enable = true; };
+    dircolors = {
+      enable = true;
+    };
     bat = {
       enable = true;
       themes = {
@@ -123,23 +134,32 @@
       };
       # extraPackages = with pkgs.bat-extras; [ batman ];
     };
-    btop = { enable = true; };
+    btop = {
+      enable = true;
+    };
     atuin = {
       enable = true;
       flags = [ "--disable-up-arrow" ];
     };
-    eza = { enable = true; };
-    fzf = { enable = true; };
-    zoxide = { enable = true; };
+    eza = {
+      enable = true;
+    };
+    fzf = {
+      enable = true;
+    };
+    zoxide = {
+      enable = true;
+    };
     direnv = {
       enable = true;
-      nix-direnv = { enable = true; };
+      nix-direnv = {
+        enable = true;
+      };
       stdlib = "source ${../../config/direnvrc}";
     };
   };
 
-  home.file.".direnvrc".source =
-    ../../config/direnvrc; # for direnv to load in HOME
+  home.file.".direnvrc".source = ../../config/direnvrc; # for direnv to load in HOME
 
   home.file.".zprofile".text = ''
     export DOOMLOCALDIR="~/.emacs.local"
@@ -151,20 +171,26 @@
   '';
 
   home.file.".gnupg/gpg-agent.conf" =
-    let program = "/run/current-system/sw/bin/pinentry-mac";
-    in lib.mkIf pkgs.stdenv.isDarwin { text = "pinentry-program ${program}"; };
+    let
+      program = "/run/current-system/sw/bin/pinentry-mac";
+    in
+    lib.mkIf pkgs.stdenv.isDarwin { text = "pinentry-program ${program}"; };
 
-  home.activation.initPass = let
-    gpg = lib.getExe pkgs.gnupg;
-    choose = lib.getExe pkgs.choose;
-    pass = lib.getExe pkgs.pass;
-  in config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    if ! test -d ~/.password-store/; then
-      GPG="$(${gpg} -K --with-colons | grep fpr | head -n 1 | ${choose} -f : -1)"
-      if test -n "$GPG"; then
-         echo "Creating password store with gpg=$GPG"
-         ${pass} init "$GPG"
+  home.activation.initPass =
+    let
+      gpg = lib.getExe pkgs.gnupg;
+      choose = lib.getExe pkgs.choose;
+      pass = lib.getExe pkgs.pass;
+    in
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      if ! test -d ~/.password-store/; then
+        GPG="$(${gpg} -K --with-colons | grep fpr | head -n 1 | ${choose} -f : -1 || true)"
+        if test -n "$GPG"; then
+           echo "Creating password store with gpg=$GPG"
+           ${pass} init "$GPG"
+      else
+        echo "No GPG key found; skipping password store init" >&2
+        fi
       fi
-    fi
-  '';
+    '';
 }
