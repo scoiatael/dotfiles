@@ -59,7 +59,6 @@
       "petrichor"
     ];
     masApps = {
-      "bitwarden" = 1352778147;
       "Affinity Photo 2" = 1616822987;
       "DaisyDisk" = 411643860;
       "Proton Pass for Safari" = 6502835663;
