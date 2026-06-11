@@ -62,11 +62,6 @@
     in
     {
       homeConfigurations = {
-        "l@LsNixOS" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = attrs;
-          modules = [ ./home/l-LsNixOS/configuration.nix ];
-        };
         "lukaszczaplinski@LsFramework" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = attrs;
