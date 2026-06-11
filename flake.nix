@@ -72,11 +72,6 @@
           extraSpecialArgs = attrs;
           modules = [ ./home/lukaszczaplinski-LsFramework/configuration.nix ];
         };
-        "lukaszczaplinski@LsGamingDarwin" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-darwin;
-          extraSpecialArgs = attrs;
-          modules = [ ./home/lukaszczaplinski-LsGamingDarwin/configuration.nix ];
-        };
         "lukas@LsWootingMBP" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           extraSpecialArgs = attrs;
@@ -85,11 +80,6 @@
       };
 
       darwinConfigurations = {
-        LsGamingDarwin = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
-          specialArgs = attrs;
-          modules = [ ./darwin/LsGamingDarwin/configuration.nix ];
-        };
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = attrs;
