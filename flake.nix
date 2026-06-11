@@ -33,12 +33,15 @@
     url = "git+https://git.sr.ht/~scoiatael/parrhasius";
     flake = false;
   };
+  inputs.import-tree.url = "github:denful/import-tree";
+  inputs.den.url = "github:denful/den";
 
   outputs =
     {
       nixpkgs,
       home-manager,
       darwin,
+      import-tree,
       ...
     }@attrs:
     let
@@ -48,6 +51,14 @@
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs systems;
+
+      den =
+        (nixpkgs.lib.evalModules {
+          modules = [ (import-tree ./modules) ];
+          specialArgs.inputs = attrs;
+        }).config;
+
+      inherit (den.den.hosts.aarch64-darwin) lsair;
     in
     {
       homeConfigurations = {
@@ -65,11 +76,6 @@
           pkgs = nixpkgs.legacyPackages.x86_64-darwin;
           extraSpecialArgs = attrs;
           modules = [ ./home/lukaszczaplinski-LsGamingDarwin/configuration.nix ];
-        };
-        "lukaszczaplinski@LsAir" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          extraSpecialArgs = attrs;
-          modules = [ ./home/lukaszczaplinski-LsAir/configuration.nix ];
         };
         "lukas@LsWootingMBP" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
@@ -92,7 +98,7 @@
         LsAir = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = attrs;
-          modules = [ ./darwin/LsAir/configuration.nix ];
+          modules = [ lsair.mainModule ];
         };
       };
 
