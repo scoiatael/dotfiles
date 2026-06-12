@@ -108,100 +108,104 @@ in
     historySubstringSearch = {
       enable = true;
     };
-    initContent = lib.mkMerge [
-      (lib.mkBefore ''
-        export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
-        export NIXD_FLAGS="--inlay-hints=false"
-        export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
-        if [ -n "''${ZSH_DEBUGRC+1}" ]; then
-            zmodload zsh/zprof
-        fi
-      '')
-      # https://github.com/theunraveler/zsh-fancy_ctrl_z/blob/master/fancy_ctrl_z.plugin.zsh
-      (lib.mkOrder 550 ''
-        fancy-ctrl-z () {
-          if [[ $#BUFFER -eq 0 ]]; then
-            BUFFER="fg"
-            zle accept-line
-          else
-            zle push-input
-            zle clear-screen
+    initContent =
+      let
+        qq = ../../../config/qq.zsh;
+      in
+      lib.mkMerge [
+        (lib.mkBefore ''
+          export ZSH_AUTOSUGGEST_MANUAL_REBIND=false
+          export NIXD_FLAGS="--inlay-hints=false"
+          export FZF_CTRL_T_COMMAND="fd --type f --hidden --follow --exclude .git --exclude .devenv --exclude .direnv"
+          if [ -n "''${ZSH_DEBUGRC+1}" ]; then
+              zmodload zsh/zprof
           fi
-        }
-        zle -N fancy-ctrl-z
-        bindkey '^Z' fancy-ctrl-z
-      '')
-      (lib.mkOrder 560 (
-        lib.strings.concatMapStrings (opt: "setopt ${lib.strings.toUpper opt}\n") (
-          lib.splitString "\n" ''
-            alwaystoend
-            noappendhistory
-            autocd
-            autopushd
-            completeinword
-            noflowcontrol
-            histfcntllock
-            histignoredups
-            histignorespace
-            histverify
-            interactive
-            interactivecomments
-            login
-            longlistjobs
-            monitor
-            promptsubst
-            pushdignoredups
-            pushdminus
-            sharehistory
-            zle''
-        )
-      ))
-      (lib.mkOrder 565 ''
-        zstyle ':completion:*:*:*:*:processes' command 'ps -u lukas -o pid,user,comm -w -w'
-        zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm ldap lp mail mailman mailnull man messagebus mldonkey mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp usbmux uucp vcsa wwwrun xfs '_*'
-        zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-        zstyle ':completion:*' list-grouped false
-        zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|=*' 'l:|=* r:|=*'
-        zstyle ':completion:*:*:*:*:*' menu select
-        zstyle '*' single-ignored show
-        zstyle ':completion:*' special-dirs true
-        zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
-        zstyle :plugin:fast-syntax-highlighting theme default
-        zstyle zle-hook types isearch-exit isearch-update line-pre-redraw line-init line-finish history-line-set keymap-select
-        zstyle -e :url-quote-magic url-globbers $'zmodload -i zsh/parameter;\n\t reply=( noglob\n\t\t ''${(k)galiases[(R)(* |)(noglob|urlglobber|globurl) *]:-}\n\t\t ''${(k)aliases[(R)(* |)(noglob|urlglobber|globurl) *]:-} )'
-        zstyle :urlglobber url-local-schema ftp file
-        zstyle ':url-quote-magic:*' url-metas '*?[]^(|)~#{}='
-        zstyle :urlglobber url-other-schema http https ftp
-        zstyle -e ':url-quote-magic:*' url-seps 'reply=(";&<>''${histchars[1]}")'
-        zstyle ':completion:*' use-cache yes
-      '')
-      (lib.mkOrder 570 ''
-        if  [[ ! -f ~/.zcompdump || -n "''${ZSH_COMPINIT+1}" ]]; then
-            autoload -Uz compinit && compinit
-        else
-            autoload -Uz compinit && compinit -C # assume zcompdump is fresh
-        fi
-      '')
-      (lib.mkAfter ''
-        source ~/dotfiles/config/qq.zsh
-        bindkey "" history-beginning-search-forward
-        bindkey "" history-beginning-search-backward
-        bindkey '^W' backward-delete-word
+        '')
+        # https://github.com/theunraveler/zsh-fancy_ctrl_z/blob/master/fancy_ctrl_z.plugin.zsh
+        (lib.mkOrder 550 ''
+          fancy-ctrl-z () {
+            if [[ $#BUFFER -eq 0 ]]; then
+              BUFFER="fg"
+              zle accept-line
+            else
+              zle push-input
+              zle clear-screen
+            fi
+          }
+          zle -N fancy-ctrl-z
+          bindkey '^Z' fancy-ctrl-z
+        '')
+        (lib.mkOrder 560 (
+          lib.strings.concatMapStrings (opt: "setopt ${lib.strings.toUpper opt}\n") (
+            lib.splitString "\n" ''
+              alwaystoend
+              noappendhistory
+              autocd
+              autopushd
+              completeinword
+              noflowcontrol
+              histfcntllock
+              histignoredups
+              histignorespace
+              histverify
+              interactive
+              interactivecomments
+              login
+              longlistjobs
+              monitor
+              promptsubst
+              pushdignoredups
+              pushdminus
+              sharehistory
+              zle''
+          )
+        ))
+        (lib.mkOrder 565 ''
+          zstyle ':completion:*:*:*:*:processes' command 'ps -u lukas -o pid,user,comm -w -w'
+          zstyle ':completion:*:*:*:users' ignored-patterns adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm ldap lp mail mailman mailnull man messagebus mldonkey mysql nagios named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp usbmux uucp vcsa wwwrun xfs '_*'
+          zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+          zstyle ':completion:*' list-grouped false
+          zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|=*' 'l:|=* r:|=*'
+          zstyle ':completion:*:*:*:*:*' menu select
+          zstyle '*' single-ignored show
+          zstyle ':completion:*' special-dirs true
+          zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+          zstyle :plugin:fast-syntax-highlighting theme default
+          zstyle zle-hook types isearch-exit isearch-update line-pre-redraw line-init line-finish history-line-set keymap-select
+          zstyle -e :url-quote-magic url-globbers $'zmodload -i zsh/parameter;\n\t reply=( noglob\n\t\t ''${(k)galiases[(R)(* |)(noglob|urlglobber|globurl) *]:-}\n\t\t ''${(k)aliases[(R)(* |)(noglob|urlglobber|globurl) *]:-} )'
+          zstyle :urlglobber url-local-schema ftp file
+          zstyle ':url-quote-magic:*' url-metas '*?[]^(|)~#{}='
+          zstyle :urlglobber url-other-schema http https ftp
+          zstyle -e ':url-quote-magic:*' url-seps 'reply=(";&<>''${histchars[1]}")'
+          zstyle ':completion:*' use-cache yes
+        '')
+        (lib.mkOrder 570 ''
+          if  [[ ! -f ~/.zcompdump || -n "''${ZSH_COMPINIT+1}" ]]; then
+              autoload -Uz compinit && compinit
+          else
+              autoload -Uz compinit && compinit -C # assume zcompdump is fresh
+          fi
+        '')
+        (lib.mkAfter ''
+          source ${qq}
+          bindkey "" history-beginning-search-forward
+          bindkey "" history-beginning-search-backward
+          bindkey '^W' backward-delete-word
 
-        autoload -Uz add-zsh-hook
-        # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
-        do-ls() {${dir-summary}/bin/dir-summary $PWD;}
+          autoload -Uz add-zsh-hook
+          # https://github.com/rothgar/mastering-zsh/blob/master/docs/config/hooks.md#add-function-to-hook
+          do-ls() {${dir-summary}/bin/dir-summary $PWD;}
 
-        # add do-ls to chpwd hook
-        add-zsh-hook chpwd do-ls
+          # add do-ls to chpwd hook
+          add-zsh-hook chpwd do-ls
 
-        # TODO: fix on non-Darwin
-        path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
-        if [ -n "''${ZSH_DEBUGRC+1}" ]; then
-            zprof
-        fi
-      '')
-    ];
+          # TODO: fix on non-Darwin
+          path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
+          if [ -n "''${ZSH_DEBUGRC+1}" ]; then
+              zprof
+          fi
+        '')
+      ];
     plugins = with pkgs; [
       {
         name = "forgit";

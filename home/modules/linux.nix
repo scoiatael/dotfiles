@@ -19,7 +19,6 @@
     procs # broken on macOS
     libnotify # doesn't work on macOS
     lm_sensors # for temp display in i3status-rust?
-    bitwarden-desktop
     librewolf
   ];
   services.unclutter.enable = true;

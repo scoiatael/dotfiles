@@ -13,8 +13,12 @@ infect target:
 
 deploy target flake build=target:
     @echo 'Deploying {{flake}} to {{target}} using {{build}}'
-    nixos-rebuild-ng --build-host {{build}} --target-host {{target}} --flake {{flake}} switch
+    nixos-rebuild --build-host {{build}} --target-host {{target}} --flake {{flake}} switch
 
 deploy-sd-161581: (deploy "root@sd-161581.scoiatael.omg.lol" ".#sd-161581" )
 deploy-framework: (deploy "root@192.168.180.153" ".#LsFramework" )
 deploy-tabletop-nixos: (deploy "root@tabletop-nixos" ".#tabletop-nixos" )
+
+# Update flake.* files from modules/
+write-flake:
+    nix run '.#write-flake'

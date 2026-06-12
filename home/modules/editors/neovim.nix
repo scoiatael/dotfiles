@@ -6,8 +6,13 @@
 }:
 
 {
+  imports = [ ../../../.nix/unfree.nix ];
+  allowUnfreePackages = [
+    "YankRing.vim"
+  ];
   programs.yazi = {
     enable = true;
+    shellWrapperName = "y";
     settings = {
       tasks = {
         image_bound = [
@@ -18,6 +23,8 @@
     };
   };
   programs.neovim = {
+    withRuby = true;
+    withPython3 = true;
     enable = true;
     viAlias = true;
     vimAlias = true;
@@ -32,7 +39,7 @@
         config = (builtins.readFile ../../../config/neovim/smart-splits.lua);
         type = "lua";
       }
-      yankring
+      YankRing-vim
       vim-nix
       telescope-manix
       vim-commentary
@@ -87,10 +94,12 @@
           " set lighline theme inside lightline config
           let g:lightline = {'colorscheme': 'catppuccin'}
         '';
+        type = "viml";
       }
       {
         plugin = vim-startify;
         config = "let g:startify_change_to_vcs_root = 0";
+        type = "viml";
       }
       {
         plugin = ale;
@@ -98,6 +107,7 @@
           let g:ale_use_neovim_diagnostics_api = 0
           let g:ale_sign_column_always = 1
         '';
+        type = "viml";
       }
       vim-surround
       vim-repeat

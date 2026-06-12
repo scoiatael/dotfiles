@@ -1,18 +1,13 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
-  nixos-hardware,
-  lanzaboote,
   ...
 }:
 
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
-    lanzaboote.nixosModules.lanzaboote
   ];
 
   services.fwupd.enable = true;

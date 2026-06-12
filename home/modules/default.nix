@@ -13,7 +13,7 @@
     patchutils
     html-tidy
     wget
-    neofetch
+    fastfetch.minimal
     curlie
     xh
     dive
