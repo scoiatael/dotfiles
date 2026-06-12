@@ -39,7 +39,6 @@
   outputs =
     {
       nixpkgs,
-      home-manager,
       darwin,
       import-tree,
       ...
@@ -59,6 +58,7 @@
         }).config;
 
       inherit (den.den.hosts.aarch64-darwin) lsair;
+      inherit (den.den.hosts.aarch64-darwin) lswootingmbp;
       inherit (den.den.hosts.x86_64-linux) lsframework;
       inherit (den.den.hosts.x86_64-linux) sd-161581;
     in
@@ -67,7 +67,7 @@
         LsWootingMBP = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = attrs;
-          modules = [ ./darwin/LsWootingMBP/configuration.nix ];
+          modules = [ lswootingmbp.mainModule ];
         };
         LsAir = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
