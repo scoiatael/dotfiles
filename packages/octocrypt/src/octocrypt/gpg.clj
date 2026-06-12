@@ -54,9 +54,10 @@ fpr:::::::::954E21D29336CE157AE08336A479B7097786412E:")
   [{:keys [fingerprints]}]
   (first fingerprints))
 
-(defn- subkey-expired? [{:keys [expires]}]  (t/< (-> expires Integer/parseInt (* 1000) t/instant ) (t/now)))
+(defn- subkey-expired? [{:keys [expires]}]  (if-not (str/blank? expires) (t/< (-> expires Integer/parseInt (* 1000) t/instant ) (t/now)) false))
 
 (subkey-expired? {:expires "2092914088"})
+(subkey-expired? {:expires ""})
 
 (defn- expired?
   [{:keys [subkeys]}]
