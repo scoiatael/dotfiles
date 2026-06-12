@@ -61,6 +61,7 @@
       inherit (den.den.hosts.aarch64-darwin) lswootingmbp;
       inherit (den.den.hosts.x86_64-linux) lsframework;
       inherit (den.den.hosts.x86_64-linux) sd-161581;
+      inherit (den.den.hosts.x86_64-linux) tabletop-nixos;
     in
     {
       darwinConfigurations = {
@@ -90,7 +91,7 @@
         tabletop-nixos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = attrs;
-          modules = [ ./nixos/tabletop-nixos/configuration.nix ];
+          modules = [ tabletop-nixos.mainModule ];
         };
       };
 
