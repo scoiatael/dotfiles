@@ -3,7 +3,7 @@
   den.hosts.x86_64-linux.LsFramework.users.lukaszczaplinski = { };
   den.aspects.LsFramework = {
     includes = [ den.aspects.parrhasius ];
-
+    provides.lukaszczaplinski.includes = [ den.aspects.nnn ];
     provides.lukaszczaplinski.homeManager =
       { pkgs, lib, ... }:
       {
