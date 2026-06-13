@@ -111,6 +111,7 @@ in
     initContent =
       let
         qq = ../../../config/qq.zsh;
+        p10k = ../../../config/p10k.zsh;
       in
       lib.mkMerge [
         (lib.mkBefore ''
@@ -199,6 +200,8 @@ in
           # add do-ls to chpwd hook
           add-zsh-hook chpwd do-ls
 
+          source ${p10k}
+
           # TODO: fix on non-Darwin
           path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")
           if [ -n "''${ZSH_DEBUGRC+1}" ]; then
@@ -248,9 +251,13 @@ in
         src = zsh-fast-syntax-highlighting;
         file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
       }
+      {
+        name = "powerlevel10k";
+        src = zsh-powerlevel10k;
+        file = "share/zsh/themes/powerlevel10k/powerlevel10k.zsh-theme";
+      }
     ];
   };
-  programs.starship.enableZshIntegration = true;
 
   home.activation.updateZcompdump =
     let

@@ -59,59 +59,6 @@
     gpg = {
       enable = true;
     };
-    starship = {
-      enable = true;
-      settings = {
-        format = ''
-          $cmd_duration┌$fill$git_branch$git_stateǂ$directory
-          └$username$git_status$character'';
-
-        command_timeout = 90;
-
-        fill = {
-          symbol = "─";
-          style = "bold green";
-        };
-
-        directory = {
-          style = "blue";
-          truncate_to_repo = false;
-        };
-
-        character = {
-          success_symbol = "[λ](purple)";
-          error_symbol = "[λ](red)";
-          vicmd_symbol = "[❮](green)";
-        };
-
-        git_branch = {
-          format = "[$branch]($style)";
-          style = "bright-black";
-        };
-
-        git_status = {
-          format = "[\\($ahead_behind$staged$modified\\)]($style)";
-          style = "cyan";
-          conflicted = "[䷅](red)";
-          untracked = "[·](grey)";
-          modified = "[·](yellow)";
-          stashed = ""; # not interesting, keep empty
-          staged = "[·](green)";
-        };
-
-        git_state = {
-          format = "\\([|$state( $progress_current/$progress_total)]($style)\\)";
-          style = "bright-black";
-        };
-
-        cmd_duration = {
-          format = ''
-            [  $duration
-            ]($style)'';
-          style = "yellow";
-        };
-      };
-    };
     dircolors = {
       enable = true;
     };
