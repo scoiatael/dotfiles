@@ -4,13 +4,14 @@
   flake-file.inputs = {
     niri-nix.url = "git+https://codeberg.org/BANanaD3V/niri-nix";
     noctalia.url = "github:noctalia-dev/noctalia";
+    pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
   };
   den.aspects.nnn = {
     nixos = { pkgs, lib, ... }: {
       imports = [ inputs.niri-nix.nixosModules.default ];
       services.displayManager.sddm = {
         enable = true;
-        theme = "catppuccin-frappe";
+        theme = "pixie";
         # Crucial for Qt6: Use the KDE/Qt6 build of SDDM to fix missing cursors and module errors
         package = lib.mkForce pkgs.kdePackages.sddm;
 
@@ -23,11 +24,12 @@
       };
       environment.systemPackages =
         let
+          inherit (inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}) pixie-sddm;
           noctalia = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         in
         [
+          (pixie-sddm.override { })
           noctalia
-          pkgs.catppuccin-sddm
           pkgs.xwayland-satellite
         ];
       networking.networkmanager.enable = true;

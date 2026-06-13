@@ -34,6 +34,7 @@
       url = "git+https://git.sr.ht/~scoiatael/parrhasius";
       flake = false;
     };
+    pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:nix-community/stylix/release-26.05";
     walker.url = "github:abenz1267/walker";
