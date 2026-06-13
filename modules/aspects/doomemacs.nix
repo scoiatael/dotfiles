@@ -1,0 +1,111 @@
+{ inputs, ... }:
+
+{
+  flake-file.inputs.doomemacs = {
+    url = "github:doomemacs/doomemacs";
+    flake = false;
+  };
+  den.aspects.emacs = {
+    homeManager =
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
+      let
+        emacsPackage = config.programs.emacs.finalPackage;
+        doomemacs = inputs.doomemacs;
+      in
+      {
+        home.packages =
+          with pkgs;
+          [
+            #recutils
+            nixfmt
+            sqlite
+            clang
+            # TODO: https://github.com/aca/emmet-ls
+            zstd.bin
+            pass
+
+            rufo # formatter for Ruby
+            gopls # LSP for Go
+            clojure-lsp # LSP for Clojure
+            typescript-language-server
+
+            victor-mono
+            nerd-fonts.symbols-only
+
+            babashka
+
+            nuspell # spell checking
+
+            # for emacsclient.sh
+            gnused
+            uutils-coreutils-noprefix
+
+            # for thumbnails in deer
+            vips
+
+            (notmuch.overrideAttrs (x: {
+              withEmacs = false;
+              withVim = false;
+            }))
+          ]
+          ++ (with pkgs.hunspellDicts; [
+            pl_PL
+            en_GB-ise
+          ]);
+
+        fonts.fontconfig.enable = true; # required to autoload fonts from packages
+
+        # programs.afew.enable = true;
+        programs.emacs = {
+          enable = true;
+          extraPackages = epkgs: [
+            epkgs.vterm
+            epkgs.jinx
+            epkgs.treesit-grammars.with-all-grammars
+          ];
+          package = lib.mkIf pkgs.stdenv.isDarwin pkgs.emacs-macport;
+        };
+        programs.zsh.sessionVariables = {
+          DOOMLOCALDIR = "$HOME/.emacs.local";
+          LSP_USE_PLISTS = "true";
+          EDITOR = "env PATH=${config.home.homeDirectory}/.nix-profile/bin ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/emacs/emacsclient.sh";
+        };
+
+        # avoid copying into /nix/store to allow easy changes
+        # home.file.".config/doom".source = config.lib.file.mkOutOfStoreSymlink "~/dotfiles/config/doom";
+        home.activation.linkDoomConfig = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+          test -d ~/.config || mkdir ~/.config
+          test -d ~/.config/doom || ln -sf ~/dotfiles/config/doom ~/.config/doom
+
+          export DOOMLOCALDIR="~/.emacs.local/"
+          export EMACSDIR="~/.emacs.doom/"
+          export PATH=${emacsPackage}/bin/:${pkgs.git}/bin/:${pkgs.openssh}/bin/:$PATH
+          ${doomemacs}/bin/doom sync --force # Suppress prompts by auto-accepting their consequences.
+        '';
+
+        home.file.".emacs.doom".source = doomemacs;
+        home.file.".emacs.d/early-init.el".text = ''
+          (setq envrc-direnv-executable "${pkgs.direnv}/bin/direnv")
+          (setenv "DOOMLOCALDIR" (expand-file-name (file-name-as-directory "~/.emacs.local/")))
+          (setenv "EMACSDIR" (expand-file-name (file-name-as-directory "~/.emacs.doom/")))
+          (setenv "SSH_AUTH_SOCK" (expand-file-name "S.gpg-agent.ssh" (file-name-as-directory "~/.gnupg/")))
+          (load (concat (expand-file-name (file-name-as-directory "${doomemacs}")) "early-init.el") nil 'nomessage)
+        '';
+        home.file.".config/enchant/hunspell/".source = pkgs.symlinkJoin {
+          name = "hunspell-dicts";
+          paths = [
+            "${pkgs.hunspellDicts.pl_PL}/share/hunspell/"
+            "${pkgs.hunspellDicts.en_GB-ise}/share/hunspell/"
+          ];
+        };
+
+        programs.zsh.initContent = lib.mkAfter (builtins.readFile ./_emacs/vterm.zsh);
+        programs.zsh.oh-my-zsh.plugins = [ "emacs" ];
+      };
+  };
+}

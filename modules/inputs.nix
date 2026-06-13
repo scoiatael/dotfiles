@@ -1,14 +1,6 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 let
   release = "26.05";
-  mkNonFlakeInputs = lib.mapAttrs' (
-    name:
-    { url }:
-    lib.nameValuePair name {
-      flake = false;
-      inherit url;
-    }
-  );
 in
 {
   # https://flake-file.denful.dev/guides/lock-flattening/
@@ -28,9 +20,6 @@ in
       den.url = "github:denful/den";
       flake-file.url = "github:vic/flake-file";
       flake-parts.url = "github:hercules-ci/flake-parts";
-    }
-    // mkNonFlakeInputs {
-      doomemacs.url = "github:doomemacs/doomemacs";
     };
   };
 }

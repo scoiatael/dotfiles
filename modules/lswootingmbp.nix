@@ -8,7 +8,10 @@
 
   den.aspects.lswootingmbp = {
     provides.lukas = {
-      includes = [ den.aspects.llm ];
+      includes = [
+        den.aspects.llm
+        den.aspects.doomemacs
+      ];
       homeManager =
         { pkgs, lib, ... }:
 
@@ -20,7 +23,6 @@
             ../home/modules/git.nix
             ../home/modules/multiplexers/tmux.nix
             ../home/modules/shells/zsh.nix
-            ../home/modules/editors/emacs.nix
             ../home/modules/terminals/wezterm.nix
             ../home/modules/llm.nix
             ../home/modules/editors/neovim.nix

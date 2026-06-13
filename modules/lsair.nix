@@ -8,15 +8,18 @@
 
   den.aspects.LsAir = {
     provides.lukaszczaplinski = {
-      includes = [ den.aspects.llm ];
-      homeManager = {
+      includes = [
+        den.aspects.llm
+        den.aspects.doomemacs
+      ];
+      homeManager = { config, ... }: {
         home = {
           stateVersion = "22.05";
         };
+        programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
         imports = [
           ../home/modules/terminals/wezterm.nix
           ../home/modules/secretive.nix
-          ../home/modules/editors/emacs.nix
           ../home/modules/home-manager.nix
           ../home/modules/comma.nix
         ];
