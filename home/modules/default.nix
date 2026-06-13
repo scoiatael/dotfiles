@@ -77,7 +77,6 @@
       };
       config = {
         paging = "never";
-        theme = "catpuccin";
       };
       # extraPackages = with pkgs.bat-extras; [ batman ];
     };

@@ -7,7 +7,14 @@
     includes = [
       den.batteries.define-user
       den.batteries.primary-user
+      den.aspects.stylix
     ];
+    darwin = {
+      home-manager.backupFileExtension = "hm.bak";
+    };
+    nixos = {
+      home-manager.backupFileExtension = "hm.bak";
+    };
     homeManager = {
       imports = [
         ../home/modules/default.nix
