@@ -5,8 +5,8 @@
   ...
 }:
 let
-  dir-summary = pkgs.callPackage ../../../packages/dir-summary { };
-  batman = pkgs.callPackage ../../../packages/batman { };
+  dir-summary = pkgs.callPackage ../../../../packages/dir-summary { };
+  batman = pkgs.callPackage ../../../../packages/batman { };
 in
 {
   home.packages = [
@@ -18,7 +18,7 @@ in
     enableCompletion = false;
 
     envExtra = ''
-      export LESSOPEN="|${../../../bin/__lessfilter} %s"
+      export LESSOPEN="|${../../../../bin/__lessfilter} %s"
     '';
     shellAliases =
       let
@@ -110,8 +110,8 @@ in
     };
     initContent =
       let
-        qq = ../../../config/qq.zsh;
-        p10k = ../../../config/p10k.zsh;
+        qq = ../../../../config/qq.zsh;
+        p10k = ../../../../config/p10k.zsh;
       in
       lib.mkMerge [
         (lib.mkBefore ''

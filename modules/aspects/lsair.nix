@@ -11,6 +11,7 @@
       includes = [
         den.aspects.llm
         den.aspects.doomemacs
+        den.aspects.comma
       ];
       homeManager = { config, ... }: {
         home = {
@@ -18,10 +19,8 @@
         };
         programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
         imports = [
-          ../home/modules/terminals/wezterm.nix
-          ../home/modules/secretive.nix
-          ../home/modules/home-manager.nix
-          ../home/modules/comma.nix
+          ../_home/modules/terminals/wezterm.nix
+          ../_home/modules/secretive.nix
         ];
       };
     };
@@ -36,11 +35,11 @@
       {
         imports = [
           inputs.sops-nix.darwinModules.sops
-          ../darwin/modules/default.nix
-          ../darwin/modules/aerospace.nix
-          ../darwin/modules/sketchybar.nix
-          ../darwin/modules/lix.nix
-          ../darwin/modules/openssh-host-keys.nix
+          ../_darwin/modules/default.nix
+          ../_darwin/modules/aerospace.nix
+          ../_darwin/modules/sketchybar.nix
+          ../_darwin/modules/lix.nix
+          ../_darwin/modules/openssh-host-keys.nix
         ];
 
         system.primaryUser = "lukaszczaplinski";
@@ -51,7 +50,7 @@
         sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
         sops.secrets.lukas_ssh_config = {
           format = "binary";
-          sopsFile = ../darwin/LsAir/secrets/ssh_config;
+          sopsFile = ../_darwin/LsAir/secrets/ssh_config;
           owner = config.system.primaryUser;
           path = "${config.users.users.${config.system.primaryUser}.home}/.ssh/config";
         };
@@ -114,7 +113,6 @@
           package = pkgs.darwin.linux-builder-x86_64;
         };
         nix.settings.sandbox = "relaxed";
-        home-manager.extraSpecialArgs = inputs;
       };
   };
 }

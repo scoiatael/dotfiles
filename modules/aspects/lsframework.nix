@@ -2,20 +2,20 @@
 {
   den.hosts.x86_64-linux.LsFramework.users.lukaszczaplinski = { };
   den.aspects.LsFramework = {
-    includes = [ den.aspects.parrhasius ];
-    provides.lukaszczaplinski.includes = [ den.aspects.nnn ];
+    includes = [
+      den.aspects.parrhasius
+      den.aspects.steam
+    ];
+    provides.lukaszczaplinski.includes = [
+      den.aspects.nnn
+      den.aspects.neovim
+    ];
     provides.lukaszczaplinski.homeManager =
       { pkgs, lib, ... }:
       {
         imports = [
-          ../home/modules/default.nix
-          ../home/modules/git.nix
-          ../home/modules/editors/neovim.nix
-          ../home/modules/cli.nix
-          ../home/modules/linux.nix
-          ../home/modules/multiplexers/zellij.nix
-          ../home/modules/multiplexers/tmux.nix
-          ../home/modules/shells/zsh.nix
+          ../_home/modules/linux.nix
+          ../_home/modules/multiplexers/zellij.nix
         ];
 
         programs.zsh.sessionVariables = {
@@ -41,54 +41,53 @@
           inputs.nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
           inputs.lanzaboote.nixosModules.lanzaboote
           inputs.sops-nix.nixosModules.sops
-          ../nixos/modules/services/smb.nix
-          ../nixos/modules/services/blocky.nix
-          ../nixos/modules/services/jellyfin.nix
-          ../nixos/modules/steam.nix
-          ../nixos/modules/services/scrutiny.nix
-          ../nixos/modules/services/yarr.nix
-          ../nixos/modules/services/restic.nix
-          ../nixos/modules/tailscale.nix
-          ../nixos/modules/services/telegraf.nix
-          ../nixos/modules/services/mail.nix
-          ../nixos/modules/services/grafana.nix
-          ../nixos/modules/services/remote-builder.nix
-          ../nixos/modules/services/deluge.nix
-          ../nixos/modules/clamav.nix
-          ../nixos/modules/services/dashy.nix
-          ../nixos/framework/tailscale-services.nix
-          ../nixos/framework/caddy.nix
-          ../nixos/framework/hardware-configuration.nix
-          ../nixos/framework/rocm.nix
-          ../nixos/framework/nfs.nix
+          ../_nixos/modules/services/smb.nix
+          ../_nixos/modules/services/blocky.nix
+          ../_nixos/modules/services/jellyfin.nix
+          ../_nixos/modules/services/scrutiny.nix
+          ../_nixos/modules/services/yarr.nix
+          ../_nixos/modules/services/restic.nix
+          ../_nixos/modules/tailscale.nix
+          ../_nixos/modules/services/telegraf.nix
+          ../_nixos/modules/services/mail.nix
+          ../_nixos/modules/services/grafana.nix
+          ../_nixos/modules/services/remote-builder.nix
+          ../_nixos/modules/services/deluge.nix
+          ../_nixos/modules/clamav.nix
+          ../_nixos/modules/services/dashy.nix
+          ../_nixos/framework/tailscale-services.nix
+          ../_nixos/framework/caddy.nix
+          ../_nixos/framework/hardware-configuration.nix
+          ../_nixos/framework/rocm.nix
+          ../_nixos/framework/nfs.nix
         ];
         programs.mosh.enable = true;
 
         sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
         sops.secrets = {
           deluge-auth = {
-            sopsFile = ../nixos/framework/secrets/deluge-auth;
+            sopsFile = ../_nixos/framework/secrets/deluge-auth;
             format = "binary";
             owner = config.users.users.deluge.name;
           };
           offlineimap = {
-            sopsFile = ../nixos/framework/secrets/offlineimap;
+            sopsFile = ../_nixos/framework/secrets/offlineimap;
             format = "binary";
           };
           grafana-env = {
-            sopsFile = ../nixos/framework/secrets/grafana.env;
+            sopsFile = ../_nixos/framework/secrets/grafana.env;
             format = "dotenv";
           };
           parrhasius-env = {
-            sopsFile = ../nixos/framework/secrets/parrhasius.env;
+            sopsFile = ../_nixos/framework/secrets/parrhasius.env;
             format = "dotenv";
           };
           restic-password = {
-            sopsFile = ../nixos/framework/secrets/restic-password;
+            sopsFile = ../_nixos/framework/secrets/restic-password;
             format = "binary";
           };
           influx-token = {
-            sopsFile = ../nixos/framework/secrets/influx-token;
+            sopsFile = ../_nixos/framework/secrets/influx-token;
             format = "binary";
           };
         };

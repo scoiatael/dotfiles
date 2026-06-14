@@ -5,7 +5,7 @@
     url = "github:doomemacs/doomemacs";
     flake = false;
   };
-  den.aspects.emacs = {
+  den.aspects.doomemacs = {
     homeManager =
       {
         config,

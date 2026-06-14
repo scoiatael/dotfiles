@@ -22,7 +22,7 @@ in
     enable = true;
     settings =
       let
-        toml = builtins.fromTOML (builtins.readFile ../../config/aerospace.toml);
+        toml = builtins.fromTOML (builtins.readFile ../../../config/aerospace.toml);
       in
       toml // { exec-on-workspace-change = [ "${on-workspace-change}" ]; };
   };

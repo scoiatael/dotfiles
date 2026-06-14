@@ -11,6 +11,9 @@
       includes = [
         den.aspects.llm
         den.aspects.doomemacs
+        den.aspects.comma
+        den.aspects.graphite
+        den.aspects.neovim
       ];
       homeManager =
         { pkgs, lib, ... }:
@@ -19,15 +22,11 @@
           imports = [
             ../home/modules/default.nix
             ../home/modules/cli.nix
-            ../home/modules/home-manager.nix
             ../home/modules/git.nix
             ../home/modules/multiplexers/tmux.nix
             ../home/modules/shells/zsh.nix
             ../home/modules/terminals/wezterm.nix
             ../home/modules/llm.nix
-            ../home/modules/editors/neovim.nix
-            ../home/modules/comma.nix
-            ../home/modules/graphite.nix
           ];
 
           accounts.email.accounts = {

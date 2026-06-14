@@ -50,7 +50,7 @@
 
   home-manager.users.${config.system.primaryUser}.imports = [
     {
-      home.file.".config/karabiner/karabiner.json".source = ../../config/karabiner.json;
+      home.file.".config/karabiner/karabiner.json".source = ../../../config/karabiner.json;
     }
   ];
 

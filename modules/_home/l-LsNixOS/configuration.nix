@@ -19,7 +19,6 @@
     ../modules/shells/zsh.nix
     ../modules/editors/emacs.nix
     ../modules/terminals/wezterm.nix
-    ../modules/home-manager.nix
     ../modules/comma.nix
 
     # Linux extras

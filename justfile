@@ -22,3 +22,8 @@ deploy-tabletop-nixos: (deploy "root@tabletop-nixos" ".#tabletop-nixos" )
 # Update flake.* files from modules/
 write-flake:
     nix run '.#write-flake'
+
+host := `hostname`
+# emergency; in case `os-switch` is broken
+switch:
+    nix run '.#{{host}}' -- switch

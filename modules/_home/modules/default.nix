@@ -38,9 +38,9 @@
     restic
     rsync
     stylua
-    (callPackage ../../packages/gitblame { })
-    (callPackage ../../packages/inflector-rs { })
-    (callPackage ../../packages/indices { })
+    (callPackage ../../../packages/gitblame { })
+    (callPackage ../../../packages/inflector-rs { })
+    (callPackage ../../../packages/indices { })
     nixd
     nix-tree
 
@@ -64,17 +64,6 @@
     };
     bat = {
       enable = true;
-      themes = {
-        catpuccin = {
-          src = pkgs.fetchFromGitHub {
-            owner = "catppuccin";
-            repo = "bat";
-            rev = "d2bbee4f7e7d5bac63c054e4d8eca57954b31471";
-            sha256 = "sha256-x1yqPCWuoBSx/cI94eA+AWwhiSA42cLNUOFJl7qjhmw=";
-          };
-          file = "themes/Catppuccin Frappe.tmTheme";
-        };
-      };
       config = {
         paging = "never";
       };
@@ -101,11 +90,9 @@
       nix-direnv = {
         enable = true;
       };
-      stdlib = "source ${../../config/direnvrc}";
+      stdlib = "source ${../../../config/direnvrc}";
     };
   };
-
-  home.file.".direnvrc".source = ../../config/direnvrc; # for direnv to load in HOME
 
   home.file.".zprofile".text = ''
     export DOOMLOCALDIR="~/.emacs.local"

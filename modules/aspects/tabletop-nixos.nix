@@ -1,8 +1,11 @@
-{ inputs, ... }:
+{ den, inputs, ... }:
 {
   den.hosts.x86_64-linux.tabletop-nixos.users.lukaszczaplinski = { };
 
   den.aspects.tabletop-nixos = {
+    provides.lukaszczaplinski.includes = [
+      den.aspects.neovim
+    ];
     provides.lukaszczaplinski.homeManager =
       {
         pkgs,
@@ -14,7 +17,6 @@
         imports = [
           ../home/modules/default.nix
           ../home/modules/git.nix
-          ../home/modules/editors/neovim.nix
           ../home/modules/cli.nix
           ../home/modules/linux.nix
           ../home/modules/shells/zsh.nix
