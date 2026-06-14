@@ -3,6 +3,7 @@
   lib,
   pkgs,
   self',
+  dotfiles,
   ...
 }:
 let
@@ -110,8 +111,8 @@ in
     };
     initContent =
       let
-        qq = ../../../../config/qq.zsh;
-        p10k = ../../../../config/p10k.zsh;
+        qq = dotfiles.config."qq.zsh";
+        p10k = dotfiles.config."p10k.zsh";
       in
       lib.mkMerge [
         (lib.mkBefore ''

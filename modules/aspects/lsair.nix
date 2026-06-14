@@ -19,7 +19,7 @@
         };
         programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
         imports = [
-          ../_home/modules/terminals/wezterm.nix
+          den.aspects.dotfiles.homeModules."terminals/wezterm"
           ../_home/modules/secretive.nix
         ];
       };
