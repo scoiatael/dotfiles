@@ -19,7 +19,7 @@ in
     enableCompletion = false;
 
     envExtra = ''
-      export LESSOPEN="|${../../../../bin/__lessfilter} %s"
+      export LESSOPEN="|${<dotfiles/config/__lessfilter>} %s"
     '';
     shellAliases =
       let
