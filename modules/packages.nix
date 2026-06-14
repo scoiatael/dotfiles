@@ -1,18 +1,18 @@
-# Exposes flake apps under the name of each host / home for building with nh.
 {
-  den,
   lib,
   inputs,
   ...
 }:
 {
-
   flake.packages = lib.genAttrs lib.systems.flakeExposed (
     system:
     let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
+      tree = pkgs.lib.filesystem.packagesFromDirectoryRecursive {
+        inherit (pkgs) callPackage;
+        directory = ../packages;
+      };
     in
-
-    (den.lib.nh.denPackages { fromFlake = true; } pkgs)
+    lib.mapAttrs (_: { default, ... }: default) tree
   );
 }
