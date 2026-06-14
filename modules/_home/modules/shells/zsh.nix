@@ -3,7 +3,7 @@
   lib,
   pkgs,
   self',
-  dotfiles,
+  __findFile, # https://github.com/nix-community/nixd/issues/622
   ...
 }:
 let
@@ -111,8 +111,8 @@ in
     };
     initContent =
       let
-        qq = dotfiles.config."qq.zsh";
-        p10k = dotfiles.config."p10k.zsh";
+        qq = <dotfiles/config/qq.zsh>;
+        p10k = <dotfiles/config/p10k.zsh>;
       in
       lib.mkMerge [
         (lib.mkBefore ''

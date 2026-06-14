@@ -1,7 +1,15 @@
-{ den, lib, ... }:
+{
+  dotfiles,
+  findDotfile,
+  lib,
+  ...
+}:
 let
   mkAspect = class: {
-    ${class}._module.args.dotfiles = den.aspects.dotfiles;
+    ${class}._module.args = {
+      inherit dotfiles findDotfile;
+      __findFile = findDotfile;
+    };
   };
 
   osAspect =
