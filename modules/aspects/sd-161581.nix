@@ -5,24 +5,24 @@
     nixos = {
       imports = [
         inputs.sops-nix.nixosModules.sops
-        ../nixos/sd-161581/hardware-configuration.nix
-        ../nixos/sd-161581/networking.nix # generated at runtime by nixos-infect
-        ../nixos/modules/cli.nix
-        ../nixos/modules/tailscale.nix
-        ../nixos/modules/base.nix
-        ../nixos/modules/security.nix
-        ../nixos/modules/services/wh.nix
-        ../nixos/modules/services/nginx.nix
-        ../nixos/modules/services/octocrypt.nix
-        ../nixos/modules/ip.nix
-        ../nixos/modules/services/telegraf.nix
-        ../nixos/modules/services/magic-wormhole.nix
-        ../nixos/modules/services/prism-tools.nix
+        ../_nixos/sd-161581/hardware-configuration.nix
+        ../_nixos/sd-161581/networking.nix # generated at runtime by nixos-infect
+        ../_nixos/modules/cli.nix
+        ../_nixos/modules/tailscale.nix
+        ../_nixos/modules/base.nix
+        ../_nixos/modules/security.nix
+        ../_nixos/modules/services/wh.nix
+        ../_nixos/modules/services/nginx.nix
+        ../_nixos/modules/services/octocrypt.nix
+        ../_nixos/modules/ip.nix
+        ../_nixos/modules/services/telegraf.nix
+        ../_nixos/modules/services/magic-wormhole.nix
+        ../_nixos/modules/services/prism-tools.nix
       ];
 
       sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       sops.secrets.influx-token = {
-        sopsFile = ../nixos/sd-161581/secrets/influx-token;
+        sopsFile = ../_nixos/sd-161581/secrets/influx-token;
         format = "binary";
       };
 
