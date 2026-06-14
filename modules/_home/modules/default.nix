@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self',
   ...
 }:
 {
@@ -38,9 +39,9 @@
     restic
     rsync
     stylua
-    (callPackage ../../../packages/gitblame { })
-    (callPackage ../../../packages/inflector-rs { })
-    (callPackage ../../../packages/indices { })
+    self'.packages.gitblame
+    self'.packages.inflector-rs
+    self'.packages.indices
     nixd
     nix-tree
 

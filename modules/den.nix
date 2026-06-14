@@ -1,4 +1,5 @@
 {
+  den,
   inputs,
   lib,
   ...
@@ -11,6 +12,6 @@
   };
 
   imports = [ inputs.den.flakeModule ];
-
+  den.default.includes = [ den.batteries.self' ];
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
 }

@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  self',
+  pkgs,
+  ...
+}:
 
-let drv = pkgs.callPackage ../../packages/ip { };
-in {
+let
+  drv = self'.packages.ip;
+in
+{
   systemd.services.ip = {
     enable = true;
     description = "MyIP Web service";
@@ -12,7 +19,10 @@ in {
       ExecStart = "${drv}/bin/ip";
       DynamicUser = true;
       Restart = "on-failure";
-      Environment = [ "PORT=3002" "PROXY=true" ];
+      Environment = [
+        "PORT=3002"
+        "PROXY=true"
+      ];
       MemoryMax = "100M";
     };
   };
@@ -25,8 +35,7 @@ in {
       add_header X-Cache $upstream_cache_status;
     '';
     locations = {
-      "/".proxyPass =
-        "http://unix:${config.services.anubis.instances.ip.settings.BIND}";
+      "/".proxyPass = "http://unix:${config.services.anubis.instances.ip.settings.BIND}";
     };
   };
   services.anubis.instances.ip.settings = {

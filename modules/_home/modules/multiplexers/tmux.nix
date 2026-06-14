@@ -1,6 +1,5 @@
 {
-  config,
-  lib,
+  self',
   pkgs,
   ...
 }:
@@ -16,7 +15,7 @@
       tmuxPlugins.extrakto
       tmuxPlugins.tmux-fzf
       tmuxPlugins.open
-      (callPackage ../../../../packages/tmux-colortag { })
+      self'.packages.tmux-colortag
       {
         plugin = tmuxPlugins.prefix-highlight;
         extraConfig = ''

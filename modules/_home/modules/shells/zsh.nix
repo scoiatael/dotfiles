@@ -2,11 +2,11 @@
   config,
   lib,
   pkgs,
+  self',
   ...
 }:
 let
-  dir-summary = pkgs.callPackage ../../../../packages/dir-summary { };
-  batman = pkgs.callPackage ../../../../packages/batman { };
+  inherit (self'.packages) batman dir-summary;
 in
 {
   home.packages = [

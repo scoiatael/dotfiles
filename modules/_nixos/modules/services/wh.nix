@@ -1,12 +1,12 @@
 {
   config,
-  lib,
+  self',
   pkgs,
   ...
 }:
 
 let
-  drv = pkgs.callPackage ../../../packages/wh { };
+  drv = self'.packages.wh;
 in
 {
   systemd.services.wh = {

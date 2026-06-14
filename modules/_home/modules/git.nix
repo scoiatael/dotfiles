@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self',
   ...
 }:
 
@@ -296,7 +297,7 @@ in
     enable = true;
     extensions = [
       pkgs.gh-eco
-      (pkgs.callPackage ../../../packages/gh-poi { })
+      self'.packages.gh-poi
     ];
     settings = {
       git_protocol = "ssh";

@@ -2,11 +2,12 @@
   config,
   lib,
   pkgs,
+  self',
   ...
 }:
 
 let
-  sketchybar-helper = (pkgs.callPackage ../../../packages/sketchybar-helper { });
+  sketchybar-helper = self'.packages.sketchybar-helper;
   colors = ../../../config/sketchybar/colors.sh;
   icons = ../../../config/sketchybar/icons.sh;
   plugin_dir = ../../../config/sketchybar/plugins;

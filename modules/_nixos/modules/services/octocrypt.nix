@@ -1,12 +1,12 @@
 {
+  self',
   config,
-  lib,
   pkgs,
   ...
 }:
 
 let
-  drv = pkgs.callPackage ../../../packages/octocrypt { };
+  drv = self'.packages.octocrypt;
   logConfFile = pkgs.writeText "octocrypt-log4j2.properties" ''
     rootLogger.level = info
     rootLogger.appenderRef.stdout.ref = STDOUT

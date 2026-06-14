@@ -2,7 +2,12 @@
   flake-file.inputs.llm-agents.url = "github:numtide/llm-agents.nix";
 
   den.aspects.llm.homeManager =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      self',
+      ...
+    }:
     let
       configHome = if pkgs.stdenv.isDarwin then "Library/Application Support" else config.xdg.configHome;
       pdf-convert = pkgs.writeShellScriptBin "pdf-to-jpg" ''
@@ -17,11 +22,8 @@
       home.packages =
         with pkgs;
         [
-          # llm.withPlugins has been deprecated
-          (pkgs.callPackage ../../packages/llm-with-plugins { })
-
-          (pkgs.callPackage ../../packages/markitdown { })
-
+          self'.packages.llm-with-plugins
+          self'.packages.markitdown
           # for PDF conversion
           ghostscript
           pdf-convert

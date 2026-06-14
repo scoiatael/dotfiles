@@ -1,7 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ self', pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ wofi (callPackage ../packages/gtklock { }) ];
+  home.packages = with pkgs; [
+    wofi
+    self'.packages.gtklock
+  ];
 
   xdg.configFile."newm/config.py".source = ../config/newm/config.py;
 }
