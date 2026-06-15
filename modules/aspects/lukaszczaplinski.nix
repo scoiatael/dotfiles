@@ -1,5 +1,6 @@
 {
   den,
+  dotfiles,
   ...
 }:
 let
@@ -29,11 +30,11 @@ in
     };
     homeManager = {
       imports = [
+        dotfiles.homeModules.zsh
         ../_home/modules/default.nix
         ../_home/modules/git.nix
         ../_home/modules/cli.nix
         ../_home/modules/multiplexers/tmux.nix
-        ../_home/modules/shells/zsh.nix
       ];
     };
   };

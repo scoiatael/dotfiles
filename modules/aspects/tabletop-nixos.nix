@@ -1,4 +1,9 @@
-{ den, inputs, ... }:
+{
+  den,
+  inputs,
+  dotfiles,
+  ...
+}:
 {
   den.hosts.x86_64-linux.tabletop-nixos.users.lukaszczaplinski = { };
 
@@ -15,11 +20,11 @@
 
       {
         imports = [
+          dotfiles.homeModules.zsh
           ../home/modules/default.nix
           ../home/modules/git.nix
           ../home/modules/cli.nix
           ../home/modules/linux.nix
-          ../home/modules/shells/zsh.nix
         ];
 
         programs.zsh.sessionVariables = {

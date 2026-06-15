@@ -1,6 +1,7 @@
 {
   den,
   inputs,
+  dotfiles,
   ...
 }:
 {
@@ -20,11 +21,11 @@
 
         {
           imports = [
+            dotfiles.homeModules.zsh
             ../home/modules/default.nix
             ../home/modules/cli.nix
             ../home/modules/git.nix
             ../home/modules/multiplexers/tmux.nix
-            ../home/modules/shells/zsh.nix
             ../home/modules/terminals/wezterm.nix
             ../home/modules/llm.nix
           ];
