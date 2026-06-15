@@ -44,7 +44,9 @@
     ];
     brews = [ "switchaudio-osx" ];
     onActivation = {
-      cleanup = "uninstall";
+      extraFlags = [
+        "--force-cleanup"
+      ];
     };
   };
 
