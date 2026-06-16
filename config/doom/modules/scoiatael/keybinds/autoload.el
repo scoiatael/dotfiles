@@ -22,3 +22,8 @@
   (if (eq major-mode #'vterm-mode)
       (vterm-insert char)
     (insert char)))
+
+;;;###autoload
+(defun scoiatael/insert-uuid ()
+  (interactive)
+  (insert (s-downcase (string-trim (shell-command-to-string "uuidgen")))))

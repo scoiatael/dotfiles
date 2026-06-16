@@ -37,7 +37,7 @@
       "A" #'org-todo-list
       "D" #'deadgrep
       "/"   #'+default/search-project
-      "i u" #'list-unicode-display
+      "i u" #'scoiatael/insert-uuid
       "i d" #'scoiatael/yank-current-date
       "w 2" #'split-window-below
       "w 3" #'split-window-right
