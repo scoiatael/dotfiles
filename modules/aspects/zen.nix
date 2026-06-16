@@ -3,9 +3,7 @@
 {
   flake-file.inputs.zen-browser.url = "github:0xc000022070/zen-browser-flake";
   den.aspects.zen = {
-    # provides.stylix.homeManager = { config, ... }: {
-    #   stylix.targets.zen-browser.profileNames = [ config.home.username ];
-    # };
+    includes = [den.aspects.stylix];
     homeManager =
       {
         config,
