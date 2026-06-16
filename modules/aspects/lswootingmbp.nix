@@ -5,9 +5,9 @@
   ...
 }:
 {
-  den.hosts.aarch64-darwin.lswootingmbp.users.lukas = { };
+  den.hosts.aarch64-darwin.LsWootingMBP.users.lukas = { };
 
-  den.aspects.lswootingmbp = {
+  den.aspects.LsWootingMBP = {
     provides.lukas = {
       includes = [
         den.aspects.llm
@@ -15,6 +15,8 @@
         den.aspects.comma
         den.aspects.graphite
         den.aspects.neovim
+        den.aspects.stylix
+        (den.batteries.user-shell "zsh")
       ];
       homeManager =
         { pkgs, lib, ... }:
@@ -22,12 +24,11 @@
         {
           imports = [
             dotfiles.homeModules.zsh
-            ../home/modules/default.nix
-            ../home/modules/cli.nix
-            ../home/modules/git.nix
-            ../home/modules/multiplexers/tmux.nix
-            ../home/modules/terminals/wezterm.nix
-            ../home/modules/llm.nix
+            ../_home/modules/default.nix
+            ../_home/modules/cli.nix
+            ../_home/modules/git.nix
+            ../_home/modules/multiplexers/tmux.nix
+            ../_home/modules/terminals/wezterm.nix
           ];
 
           accounts.email.accounts = {
@@ -67,19 +68,18 @@
     darwin =
       {
         pkgs,
-        sops-nix,
         ...
       }:
 
       {
         imports = [
-          sops-nix.darwinModules.sops
-          ../darwin/modules/default.nix
-          ../darwin/modules/aerospace.nix
-          ../darwin/modules/sketchybar.nix
-          ../darwin/modules/lix.nix
-          ../darwin/modules/openssh-host-keys.nix
-          ../darwin/modules/compose-key/default.nix
+          inputs.sops-nix.darwinModules.sops
+          ../_darwin/modules/default.nix
+          ../_darwin/modules/aerospace.nix
+          ../_darwin/modules/sketchybar.nix
+          ../_darwin/modules/lix.nix
+          ../_darwin/modules/openssh-host-keys.nix
+          ../_darwin/modules/compose-key/default.nix
         ];
 
         system.primaryUser = "lukas";

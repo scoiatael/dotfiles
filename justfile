@@ -23,7 +23,7 @@ deploy-tabletop-nixos: (deploy "root@tabletop-nixos" ".#tabletop-nixos" )
 write-flake:
     nix run '.#write-flake'
 
-host := `hostname`
+host := `hostname -s`
 # emergency; in case `os-switch` is broken
 switch:
     nix run '.#{{host}}' -- switch

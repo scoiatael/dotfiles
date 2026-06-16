@@ -40,7 +40,6 @@
       "karabiner-elements"
       "wezterm"
       "arc"
-      "zen"
     ];
     brews = [ "switchaudio-osx" ];
     onActivation = {
