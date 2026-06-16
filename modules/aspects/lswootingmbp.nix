@@ -16,7 +16,9 @@
         den.aspects.graphite
         den.aspects.neovim
         den.aspects.stylix
+        den.aspects.zen
         (den.batteries.user-shell "zsh")
+        den.batteries.mkBackupCommand
       ];
       homeManager =
         { pkgs, lib, ... }:
@@ -102,7 +104,6 @@
             "astropad-studio"
             "utm"
             "notion"
-            "thebrowsercompany-dia"
             "tailscale-app"
             "eqmac"
             "keymapp"

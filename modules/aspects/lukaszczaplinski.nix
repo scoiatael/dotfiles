@@ -3,16 +3,6 @@
   dotfiles,
   ...
 }:
-let
-  mkBackupCommand =
-    pkgs:
-    let
-      date = "${pkgs.coreutils}/bin/date";
-    in
-    pkgs.writeShellScriptBin "mv-backup" ''
-      mv "$1" "$1"."$(${date} --iso-8601=s)".bak
-    '';
-in
 {
   den.aspects.lukaszczaplinski = {
     includes = [
@@ -21,13 +11,8 @@ in
       den.aspects.stylix
       den.aspects.neovim
       (den.batteries.user-shell "zsh")
+      den.batteries.mkBackupCommand
     ];
-    darwin = { pkgs, ... }: {
-      home-manager.backupCommand = mkBackupCommand pkgs;
-    };
-    nixos = { pkgs, ... }: {
-      home-manager.backupCommand = mkBackupCommand pkgs;
-    };
     homeManager = {
       imports = [
         dotfiles.homeModules.zsh

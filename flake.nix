@@ -38,5 +38,6 @@
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:nix-community/stylix/release-26.05";
     walker.url = "github:abenz1267/walker";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 }
