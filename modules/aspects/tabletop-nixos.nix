@@ -10,6 +10,8 @@
   den.aspects.tabletop-nixos = {
     provides.lukaszczaplinski.includes = [
       den.aspects.neovim
+      den.aspects.nnn
+      den.aspects.zen
     ];
     provides.lukaszczaplinski.homeManager =
       {
@@ -21,10 +23,10 @@
       {
         imports = [
           dotfiles.homeModules.zsh
-          ../home/modules/default.nix
-          ../home/modules/git.nix
-          ../home/modules/cli.nix
-          ../home/modules/linux.nix
+          dotfiles.homeModules.default
+          dotfiles.homeModules.git
+          dotfiles.homeModules.cli
+          dotfiles.homeModules.linux
         ];
 
         programs.zsh.sessionVariables = {
@@ -45,7 +47,7 @@
 
       {
         imports = [
-          ../nixos/tabletop-nixos/hardware-configuration.nix
+          ../_nixos/tabletop-nixos/hardware-configuration.nix
         ];
 
         # Bootloader.
@@ -86,7 +88,6 @@
         services.xserver.enable = true;
 
         # Enable the Budgie Desktop environment.
-        services.xserver.displayManager.lightdm.enable = true;
         services.xserver.desktopManager.budgie.enable = true;
 
         # Configure keymap in X11
@@ -128,7 +129,6 @@
             "networkmanager"
             "wheel"
           ];
-          shell = pkgs.zsh;
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJGdBIYMPRMhZ4KJ4excC5GjqvVKNFpxW0uUoH9zIqjQ"
             "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHJuPvZPJb9gGxF3EczaLOAUs4uzN06sk5AOSGGGozYy9j7xV+OdgTwVn3020l7Q85F0rCFBjRXyKm6uBOrilWw="
