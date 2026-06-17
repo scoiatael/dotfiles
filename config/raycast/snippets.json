@@ -26,7 +26,18 @@
   },
   {
     "name": "bq-refresh-mv",
-    "text": "CALL BQ.REFRESH_MATERIALIZED_VIEW(\"{argument name=\"table\"}\")\n",
-    "keyword": "bigquery"
+    "text": "CALL BQ.REFRESH_MATERIALIZED_VIEW(\"{argument name=\"table\"}\")\n"
+  },
+  {
+    "name": "bq-truncate-table",
+    "text": "TRUNCATE TABLE `{argument name=\"table\"}`"
+  },
+  {
+    "name": "wooting-vat",
+    "text": "Wooting Store B.V\nBuitenbrinkweg 77\n3853 LV, Ermelo\nNetherlands\nNL861115284B01"
+  },
+  {
+    "name": "shrug",
+    "text": "¯\\_(ツ)_/¯"
   }
 ]
