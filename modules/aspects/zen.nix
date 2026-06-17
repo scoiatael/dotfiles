@@ -20,6 +20,12 @@
 
         programs.zen-browser.policies =
           let
+            mkExtensionSettings = builtins.mapAttrs (
+              _: pluginId: {
+                install_url = "https://addons.mozilla.org/firefox/downloads/latest/${pluginId}/latest.xpi";
+                installation_mode = "force_installed";
+              }
+            );
             mkLockedAttrs = builtins.mapAttrs (
               _: value: {
                 Value = value;
@@ -74,6 +80,11 @@
               "network.http.http3.enabled" = true;
               "network.socket.ip_addr_any.disabled" = true; # disallow bind to 0.0.0.0
             };
+            ExtensionSettings = mkExtensionSettings {
+              "{85860b32-02a8-431a-b2b1-40fbd64c9c69}" = "github-file-icons" ;
+              "{446900e4-71c2-419f-a6a7-df9c091e268b}" = "bitwarden-password-manager" ;
+              "{52bda3fd-dc48-4b3d-a7b9-58af57879f1e}" = "stylebot-web" ;
+            };
           };
 
         # Use legacy profile mode to avoid needing machine-specific Install identifier
@@ -90,6 +101,7 @@
             "zen.view.compact.animate-sidebar" = true;
             "zen.welcome-screen.seen" = true;
             "zen.urlbar.behavior" = "float";
+            "zen.view.use-single-toolbar" = false;
           };
 
           # Optional: Pin to a specific shortcuts version to detect breaking changes
@@ -362,6 +374,14 @@
                 };
               };
           };
+          mods = [
+            "e122b5d9-d385-4bf8-9971-e137809097d0" # No Top Sites
+            "253a3a74-0cc4-47b7-8b82-996a64f030d5" # Floating History
+            "4ab93b88-151c-451b-a1b7-a1e0e28fa7f8" # No Sidebar Scrollbar
+            "7190e4e9-bead-4b40-8f57-95d852ddc941" # Tab title fixes
+            "803c7895-b39b-458e-84f8-a521f4d7a064" # Hide Inactive Workspaces
+            "906c6915-5677-48ff-9bfc-096a02a72379" # Floating Status Bar
+          ];
         };
 
         # Open files with the browser
