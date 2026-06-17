@@ -110,7 +110,13 @@
       "Linear" = {
         id = "58a13bf2-34bf-4631-a3ee-45e6a2ddeecb";
         workspace = spaces.Work.id;
-        url = "https://linear.app";
+        url = "https://linear.app/wooting/projects/view/my-projects-69238ed8cad4";
+        isEssential = false;
+      };
+      "Google Drive" = {
+        id = "166a5c58-3cb3-487d-bc06-b814302abe27";
+        workspace = spaces.Work.id;
+        url = "https://drive.google.com";
         isEssential = false;
       };
     };

@@ -6,7 +6,6 @@
     includes = [ den.aspects.stylix ];
     homeManager =
       {
-        config,
         pkgs,
         lib,
         ...
