@@ -9,6 +9,7 @@
     provides.lukaszczaplinski.includes = [
       den.aspects.nnn
       den.aspects.neovim
+      den.aspects.zen
     ];
     provides.lukaszczaplinski.homeManager =
       { pkgs, lib, ... }:

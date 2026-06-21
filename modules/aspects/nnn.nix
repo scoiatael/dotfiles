@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, dotfiles, ... }:
 
 {
   flake-file.inputs = {
@@ -28,7 +28,9 @@
           noctalia = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         in
         [
-          (pixie-sddm.override { })
+          (pixie-sddm.override {
+            avatar = dotfiles.config."doom/cacochan.png";
+          })
           noctalia
           pkgs.xwayland-satellite
         ];
@@ -56,33 +58,17 @@
       wayland.windowManager.niri.enable = true;
       wayland.windowManager.niri.settings = {
         spawn-at-startup = "noctalia";
-        window-rule = [
-          {
-            #/ Rounded corners for a modern look.
-            geometry-corner-radius = 20;
-
-            #/ Clips window contents to the rounded corner boundaries.
-            clip-to-geometry = true;
-          }
-
-          #/ Floating Noctalia settings window.
-          {
-            match._props.app-id = "dev.noctalia.Noctalia.Settings";
-            open-floating = true;
-            default-column-width = {
-              fixed = 1080;
-            };
-            default-window-height = {
-              fixed = 920;
-            };
-          }
-        ];
 
         debug = {
           #/ Allows notification actions and window activation from Noctalia.
           honor-xdg-activation-with-invalid-serial = true;
         };
 
+        binds = import _nnn/niri-keybinds.nix;
+        window-rule = import _nnn/niri-window-rule.nix;
+
+        # Screenshot
+        screenshot-path = "~/Pictures/Screenshots/screenshot-%Y-%m-%d-%H-%M-%S.png";
       };
       programs.noctalia = {
         enable = true;
