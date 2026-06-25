@@ -6,6 +6,14 @@
 }:
 
 {
+  imports = [
+    {
+      systemd.services.grafana.serviceConfig.EnvironmentFile = config.sops.secrets.grafana-env.path;
+    }
+
+  ];
+  # Default user:password is admin:admin
+  # Remember to change it :)
   services.grafana = {
     enable = true;
     settings = {
@@ -24,42 +32,37 @@
       };
     };
   };
-  systemd = {
-    services.grafana.serviceConfig.EnvironmentFile = [
-      config.sops.secrets.grafana-env.path
-    ];
-  }
-  # Default user:password is admin:admin
-  # Remember to change it :)
-  # Export scrutiny sqlite3 database into JSON format
-  // lib.mkIf config.services.scrutiny.enable {
-    services.grafana.serviceConfig.ReadOnlyPaths = [ "/var/lib/export-scrutiny" ];
-    services.export-scrutiny =
-      let
-        runFile = pkgs.writeShellApplication {
-          name = "export-scrutiny";
-          runtimeInputs = [ pkgs.sqlite ];
-          text = ''
-            sqlite3 -readonly -header -csv /var/lib/scrutiny/scrutiny.db 'select * from devices;' > devices.csv
-          '';
-        };
-      in
-      {
-        serviceConfig = {
-          ExecStart = lib.getExe runFile;
+  systemd = (
+    lib.mkIf config.services.scrutiny.enable {
+      # Export scrutiny sqlite3 database into JSON format
+      services.grafana.serviceConfig.ReadOnlyPaths = [ "/var/lib/export-scrutiny" ];
+      services.export-scrutiny =
+        let
+          runFile = pkgs.writeShellApplication {
+            name = "export-scrutiny";
+            runtimeInputs = [ pkgs.sqlite ];
+            text = ''
+              sqlite3 -readonly -header -csv /var/lib/scrutiny/scrutiny.db 'select * from devices;' > devices.csv
+            '';
+          };
+        in
+        {
+          serviceConfig = {
+            ExecStart = lib.getExe runFile;
 
-          Type = "oneshot";
-          Restart = "on-failure";
-          StateDirectoryMode = "0755";
-          StateDirectory = "export-scrutiny";
-          WorkingDirectory = "/var/lib/export-scrutiny";
+            Type = "oneshot";
+            Restart = "on-failure";
+            StateDirectoryMode = "0755";
+            StateDirectory = "export-scrutiny";
+            WorkingDirectory = "/var/lib/export-scrutiny";
+          };
+        };
+      timers.export-scrutiny = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily";
         };
       };
-    timers.export-scrutiny = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "daily";
-      };
-    };
-  };
+    }
+  );
 }
