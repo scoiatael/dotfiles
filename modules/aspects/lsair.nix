@@ -12,6 +12,7 @@
         den.aspects.llm
         den.aspects.doomemacs
         den.aspects.comma
+        den.aspects.zen
       ];
       homeManager = { config, ... }: {
         home = {
@@ -20,6 +21,7 @@
         programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
         imports = [
           den.aspects.dotfiles.homeModules."terminals/wezterm"
+          ./_lsair/zen.nix
           ../_home/modules/secretive.nix
         ];
       };
@@ -112,7 +114,7 @@
           systems = [ "x86_64-linux" ];
           package = pkgs.darwin.linux-builder-x86_64;
         };
-        nix.settings.sandbox = "relaxed";
+        # nix.settings.sandbox = "relaxed";
       };
   };
 }

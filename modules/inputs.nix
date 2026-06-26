@@ -15,8 +15,6 @@ in
       lanzaboote.url = "github:nix-community/lanzaboote";
       walker.url = "github:abenz1267/walker";
       sops-nix.url = "github:Mic92/sops-nix";
-      import-tree.url = "github:denful/import-tree";
-      flake-parts.url = "github:hercules-ci/flake-parts";
     };
   };
 }
