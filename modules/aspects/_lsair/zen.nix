@@ -11,7 +11,7 @@
         };
       };
 
-  programs.zen-browser.profiles.${config.home.username} = rec {
+  programs.zen-browser.profiles.default = rec {
     spaces = {
       "default" = {
         id = "55ca478f-638d-47e2-a723-18a0e9978ba4";
@@ -61,7 +61,7 @@
         url =  "https://gamersnexus.net/";
         isEssential = false;
       };
-      "Deluge WebUI 2.2.0" = {
+      "Deluge WebUI" = {
         id = "66c07dfb-a60d-4ff1-95ae-91f77739f69e";
         workspace = spaces.default.id;
         url =  "https://deluge.heron-pollux.ts.net/";

@@ -13,7 +13,7 @@
       };
     };
 
-  programs.zen-browser.profiles.${config.home.username} = rec {
+  programs.zen-browser.profiles.default = rec {
     spaces = {
       "Work" = {
         id = "1aa8cdd7-cf7b-4523-a2aa-20d3f085dfd3";

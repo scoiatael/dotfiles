@@ -70,12 +70,8 @@
             };
           };
 
-        # Use legacy profile mode to avoid needing machine-specific Install identifier
-        home.sessionVariables.MOZ_LEGACY_PROFILES = "1";
-
-        stylix.targets.zen-browser.profileNames = [ config.home.username ];
-        programs.zen-browser.profiles.${config.home.username} = rec {
-          id = 0; # Profile IDs must be sequential starting from 0
+        stylix.targets.zen-browser.profileNames = [ "default" ];
+        programs.zen-browser.profiles.default = rec {
           settings = {
             "zen.workspaces.continue-where-left-off" = true;
             "zen.workspaces.natural-scroll" = true;
