@@ -19,5 +19,9 @@
     serviceConfig = {
       Type = "idle";
     };
+    wantedBy = [
+      "immich-server.service"
+      "deluged.service"
+    ];
   };
 }

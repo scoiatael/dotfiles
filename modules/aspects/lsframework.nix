@@ -54,6 +54,7 @@
           ../_nixos/modules/services/grafana.nix
           ../_nixos/modules/services/remote-builder.nix
           ../_nixos/modules/services/deluge.nix
+          ../_nixos/modules/services/immich.nix
           ../_nixos/modules/clamav.nix
           ../_nixos/modules/services/dashy.nix
           ../_nixos/framework/tailscale-services.nix
