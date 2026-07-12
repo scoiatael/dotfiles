@@ -109,10 +109,10 @@
         # Use the systemd-boot EFI boot loader.
         boot.loader.systemd-boot.enable = false;
         boot.loader.efi.efiSysMountPoint = "/boot/EFI";
-        boot.kernelPackages = pkgs.linuxPackages_zen;
+        boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
         boot.kernelParams = [
-          "mem_sleep_default=deep"
-          "usbcore.quirks=0bda:8156:k"
+          # "mem_sleep_default=deep"
+          # "usbcore.quirks=0bda:8156:k"
         ];
         boot.kernel.sysctl."net.core.rmem_max" = 2500000;
         # Enroll keys once secureboot is enforced:
@@ -121,10 +121,10 @@
           enable = true;
         };
 
-        hardware.graphics.extraPackages = with pkgs; [
-          intel-compute-runtime
-          intel-media-driver
-        ];
+        # hardware.graphics.extraPackages = with pkgs; [
+        #   intel-compute-runtime
+        #   intel-media-driver
+        # ];
 
         security.sudo.enable = false;
         security.doas = {

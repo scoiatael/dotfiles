@@ -21,12 +21,10 @@
     "usb_storage"
     "sd_mod"
     "nvme"
-    "aesni_intel"
     "cryptd"
   ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [
-    "kvm-intel"
     "nct6775"
   ];
   boot.extraModulePackages = [ ];
@@ -103,8 +101,8 @@
   #  randomEncryption = true;
   # }];
 
-  powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = "ondemand";
+  # powerManagement.enable = true;
+  # powerManagement.cpuFreqGovernor = "ondemand";
   # hardware.cpu.intel.updateMicrocode =
   #   config.hardware.enableRedistributableFirmware;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
