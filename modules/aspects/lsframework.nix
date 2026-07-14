@@ -80,6 +80,10 @@
             sopsFile = ../_nixos/framework/secrets/grafana.env;
             format = "dotenv";
           };
+          backblaze-framework-srv-nfs-env = {
+            sopsFile = ../_nixos/framework/secrets/backblaze-framework-srv-nfs.env;
+            format = "dotenv";
+          };
           parrhasius-env = {
             sopsFile = ../_nixos/framework/secrets/parrhasius.env;
             format = "dotenv";

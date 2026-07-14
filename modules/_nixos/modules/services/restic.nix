@@ -27,6 +27,16 @@
       passwordFile = config.sops.secrets.restic-password.path;
     in
     {
+      b2-Pictures = {
+        inherit user;
+        inherit package;
+        inherit passwordFile;
+        environmentFile = config.sops.secrets.backblaze-framework-srv-nfs-env.path;
+        paths = [
+          "/srv/nfs/Pictures"
+        ];
+        repository = "b2:framework-srv-nfs";
+      };
       immich = {
         inherit user;
         inherit package;
