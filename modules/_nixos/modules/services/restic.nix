@@ -27,6 +27,13 @@
       passwordFile = config.sops.secrets.restic-password.path;
     in
     {
+      immich = {
+        inherit user;
+        inherit package;
+        inherit passwordFile;
+        paths = [ config.services.immich.mediaLocation ];
+        repository = "/srv/nfs/backups/immich";
+      };
       Mail = {
         inherit user;
         inherit package;
