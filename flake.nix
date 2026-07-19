@@ -35,8 +35,11 @@
       flake = false;
     };
     pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
+    pyproject-build-systems.url = "github:pyproject-nix/build-system-pkgs";
+    pyproject-nix.url = "github:pyproject-nix/pyproject.nix";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:nix-community/stylix/release-26.05";
+    uv2nix.url = "github:pyproject-nix/uv2nix";
     walker.url = "github:abenz1267/walker";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };

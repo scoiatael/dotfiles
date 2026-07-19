@@ -11,7 +11,10 @@
       # For initially solving DoH/DoT Requests when no system Resolver is available.
       bootstrapDns = {
         upstream = "https://dns.quad9.net/dns-query";
-        ips = [ "9.9.9.9" "149.112.112.112" ];
+        ips = [
+          "9.9.9.9"
+          "149.112.112.112"
+        ];
       };
       #Enable Blocking of certian domains.
       blocking = {
@@ -22,7 +25,9 @@
           ];
         };
         #Configure what block categories are used
-        clientGroupsBlock = { default = [ "ads" ]; };
+        clientGroupsBlock = {
+          default = [ "ads" ];
+        };
       };
       # This would work if LAN included tailscale routing
       # conditional = {
@@ -39,6 +44,7 @@
         "grafana.heron-pollux.ts.net" = "192.168.180.153";
         "deluge.heron-pollux.ts.net" = "192.168.180.153";
         "dashy.heron-pollux.ts.net" = "192.168.180.153";
+        "llama.heron-pollux.ts.net" = "192.168.180.153";
       };
     };
   };

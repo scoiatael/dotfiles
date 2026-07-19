@@ -5,6 +5,7 @@
     includes = [
       den.aspects.parrhasius
       den.aspects.steam
+      den.aspects.llama
     ];
     provides.lukaszczaplinski.includes = [
       den.aspects.nnn
@@ -95,6 +96,10 @@
           influx-token = {
             sopsFile = ../_nixos/framework/secrets/influx-token;
             format = "binary";
+          };
+          kagimcp-env = {
+            sopsFile = ../_nixos/framework/secrets/kagimcp.env;
+            format = "dotenv";
           };
         };
 

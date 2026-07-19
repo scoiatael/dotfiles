@@ -20,6 +20,7 @@ in
 
     envExtra = ''
       export LESSOPEN="|${<dotfiles/config/__lessfilter>} %s"
+      export LESS="-R"
     '';
     shellAliases =
       let

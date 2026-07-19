@@ -1,27 +1,34 @@
-{ config, lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  systemd.services = lib.mapAttrs' (name: config:
-    lib.nameValuePair "tailscale-serve-${name}" {
-      description = "tailscale serve - svc:${name}";
-      wantedBy = [ "default.target" ];
+  systemd.services =
+    lib.mapAttrs'
+      (
+        name: config:
+        lib.nameValuePair "tailscale-serve-${name}" {
+          description = "tailscale serve - svc:${name}";
+          wantedBy = [ "default.target" ];
 
-      serviceConfig = {
-        Type = "oneshot";
-        Restart = "on-failure";
-        ExecStart =
-          "${pkgs.tailscale}/bin/tailscale serve --service=svc:${name} ${
-            toString config.port
-          }";
+          serviceConfig = {
+            Type = "oneshot";
+            Restart = "on-failure";
+            ExecStart = "${pkgs.tailscale}/bin/tailscale serve --service=svc:${name} ${toString config.port}";
+          };
+        }
+      )
+      {
+        parrhasius.port = 4567;
+        yarr.port = 7070;
+        scrutiny.port = 8053;
+        jellyfin.port = 8096;
+        influxdb.port = 8086;
+        grafana.port = 3000;
+        deluge.port = 8112;
+        dashy.port = 443;
+        llama.port = 8080;
       };
-    }) {
-      parrhasius = { port = 4567; };
-      yarr = { port = 7070; };
-      scrutiny = { port = 8053; };
-      jellyfin = { port = 8096; };
-      influxdb = { port = 8086; };
-      grafana = { port = 3000; };
-      deluge = { port = 8112; };
-      dashy = { port = 443; };
-    };
 }
