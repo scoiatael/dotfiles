@@ -13,6 +13,7 @@
         den.aspects.doomemacs
         den.aspects.comma
         den.aspects.zen
+        den.aspects.mpv
       ];
       homeManager = { config, ... }: {
         home = {
@@ -42,6 +43,7 @@
           ../_darwin/modules/sketchybar.nix
           ../_darwin/modules/lix.nix
           ../_darwin/modules/openssh-host-keys.nix
+          ../_darwin/modules/compose-key/default.nix
         ];
 
         system.primaryUser = "lukaszczaplinski";
