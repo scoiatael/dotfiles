@@ -25,6 +25,11 @@
               hf-file = "Qwen-AgentWorld-35B-A3B-UD-Q4_K_XL.gguf";
               alias = "unsloth/Qwen-AgentWorld";
             };
+            "Qwen3-VL" = {
+              hf-repo = "Qwen/Qwen3-VL-8B-Instruct-GGUF";
+              hf-file = "Qwen3VL-8B-Instruct-Q8_0.gguf";
+              alias = "Qwen/Qwen-VL";
+            };
             "Qwen3-Coder-Next" = {
               hf-repo = "unsloth/Qwen3-Coder-Next-GGUF";
               hf-file = "Qwen3-Coder-Next-UD-Q4_K_XL.gguf";
