@@ -7,7 +7,8 @@
 
 {
   users.users.restic = {
-    isNormalUser = true;
+    isSystemUser = true;
+    shell = "/run/current-system/sw/bin/nologin";
   };
 
   security.wrappers.restic = {

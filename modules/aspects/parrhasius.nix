@@ -25,6 +25,7 @@
             BUNDLE_HOME="/var/lib/parrhasius-gems"
             DATABASE_URL="sqlite3:///var/lib/parrhasius-db/production.sqlite3"
             LD_LIBRARY_PATH="${pkgs.vips.out}/lib"
+            ANTHROPIC_BASE_URL="https://llama.heron-pollux.ts.net"
           '';
         };
       in
