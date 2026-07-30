@@ -14,6 +14,7 @@
         den.aspects.comma
         den.aspects.zen
         den.aspects.mpv
+        den.aspects.llama
       ];
       homeManager = { config, ... }: {
         home = {
@@ -57,6 +58,11 @@
           sopsFile = ../_darwin/LsAir/secrets/ssh_config;
           owner = config.system.primaryUser;
           path = "${config.users.users.${config.system.primaryUser}.home}/.ssh/config";
+        };
+        sops.secrets.kagimcp-env = {
+          sopsFile = ../_darwin/LsAir/secrets/kagimcp.env;
+          format = "dotenv";
+          owner = config.users.users._llama.name;
         };
 
         homebrew = {
