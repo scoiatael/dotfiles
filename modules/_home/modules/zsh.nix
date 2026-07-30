@@ -85,8 +85,7 @@ in
       // (lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
         # NOTE: Available since macOS 15
         # See https://github.com/sindresorhus/macos-trash
-        rm = "trash";
-        r = "rm";
+        r = "trash";
       });
     shellGlobalAliases =
       let
@@ -203,6 +202,8 @@ in
           add-zsh-hook chpwd do-ls
 
           source ${p10k}
+
+          if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 
           # TODO: fix on non-Darwin
           path+=("/opt/homebrew/bin/" "$HOME/dotfiles/bin" "$HOME/.emacs.doom/bin")

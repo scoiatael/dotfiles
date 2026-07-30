@@ -18,6 +18,7 @@ in
     tig
     git-revise
     git-branchless
+    worktrunk
   ];
   programs.git = {
     enable = true;
