@@ -103,7 +103,6 @@
             "mitmproxy"
             "astropad-studio"
             "utm"
-            "notion"
             "tailscale-app"
             "eqmac"
             "keymapp"

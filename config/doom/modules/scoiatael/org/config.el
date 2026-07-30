@@ -17,7 +17,7 @@
   (add-hook 'text-mode-hook #'scoiatael/org-roam-fontify-mode)
   (add-hook 'prog-mode-hook #'scoiatael/org-roam-fontify-mode)
   (setq
-   org-todo-keywords '((sequence "TODO" "HOLD" "DONE"))
+   org-todo-keywords '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "KILL(k!)"))
    org-babel-clojure-backend 'babashka
    org-archive-location (concat org-directory "/archive/%s::")
    org-ellipsis " ¼ "
