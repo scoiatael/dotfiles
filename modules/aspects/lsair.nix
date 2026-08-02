@@ -72,8 +72,12 @@
             {
               name = "scoiatael/dotfiles";
               clone_target = "https://github.com/scoiatael/dotfiles.git";
+              trusted = true;
             }
-            "RhetTbull/osxphotos"
+            {
+              name = "RhetTbull/osxphotos";
+              trusted = true;
+            }
           ];
           brews = [ "rhettbull/osxphotos/osxphotos" ];
           casks = [
