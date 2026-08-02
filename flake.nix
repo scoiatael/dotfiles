@@ -21,6 +21,7 @@
     import-tree.url = "github:denful/import-tree";
     lanzaboote.url = "github:nix-community/lanzaboote";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    maki.url = "github:tontinton/maki";
     niri-nix.url = "git+https://codeberg.org/BANanaD3V/niri-nix";
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";

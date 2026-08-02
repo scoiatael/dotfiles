@@ -5,6 +5,7 @@
 }:
 {
   den.hosts.aarch64-darwin.LsAir.users.lukaszczaplinski = { };
+  den.homes.aarch64-darwin."lukaszczaplinski@LsAir" = { };
 
   den.aspects.LsAir = {
     provides.lukaszczaplinski = {
@@ -15,6 +16,7 @@
         den.aspects.zen
         den.aspects.mpv
         den.aspects.llama
+        den.aspects.maki
       ];
       homeManager = { config, ... }: {
         home = {
