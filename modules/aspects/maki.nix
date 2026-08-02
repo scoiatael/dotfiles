@@ -1,4 +1,8 @@
-{ inputs, ... }:
+{
+  inputs,
+  dotfiles,
+  ...
+}:
 
 {
   flake-file.inputs.llm-agents.url = "github:numtide/llm-agents.nix";
@@ -9,6 +13,9 @@
       pkgs,
       ...
     }:
+    let
+      tomlFormat = pkgs.formats.toml { };
+    in
     {
       home.packages = [
         inputs.maki.packages.${pkgs.stdenv.hostPlatform.system}.default # [[id:ecb2f488-6fe0-450b-9fd4-34b1b1686587][llm-maki]]
@@ -18,5 +25,14 @@
         nono # [[id:b87289c9-f761-49d5-9f24-a99efbb9f402][llm-nono]]
         codegraph # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
       ]);
+
+      home.file.".config/maki/mcp.toml".source = tomlFormat.generate "maki-mcp" {
+        mcp = {
+          kagi = {
+            url = "http://127.0.0.1:8081/mcp";
+          };
+        };
+      };
+      home.file.".config/maki/init.lua".source = dotfiles.config."maki/init.lua";
     };
 }

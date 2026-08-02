@@ -18,17 +18,19 @@
         den.aspects.llama
         den.aspects.maki
       ];
-      homeManager = { config, ... }: {
-        home = {
-          stateVersion = "22.05";
+      homeManager =
+        { config, ... }:
+        {
+          home = {
+            stateVersion = "22.05";
+          };
+          programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
+          imports = [
+            den.aspects.dotfiles.homeModules."terminals/wezterm"
+            ./_lsair/zen.nix
+            ../_home/modules/secretive.nix
+          ];
         };
-        programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
-        imports = [
-          den.aspects.dotfiles.homeModules."terminals/wezterm"
-          ./_lsair/zen.nix
-          ../_home/modules/secretive.nix
-        ];
-      };
     };
 
     darwin =
@@ -90,7 +92,10 @@
             "proton-pass"
             "arc"
             "secretive"
-            "scoiatael/dotfiles/legimi-kindle"
+            {
+              name = "scoiatael/dotfiles/legimi-kindle";
+              trusted = true;
+            }
             "astropad-studio"
             "tailscale-app"
             "eqmac"
