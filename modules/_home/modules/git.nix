@@ -75,137 +75,141 @@ in
       # Restore the deleted files to the working tree.
       unwip = "!git log --max-count=1 | grep -q -c wip && git reset HEAD~1";
     };
-    ignores = [
-      "/result"
-      "/.secret/"
-      "/.org/"
-      # Source https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
-      "*~"
-      "#*#"
-      "/.emacs.desktop"
-      "/.emacs.desktop.lock"
-      "/TODO.org"
-      "*.elc"
-      "auto-save-list"
-      "tramp"
-      ".#*"
-      "recentf"
-      "srecode-map.el"
-      ".dir-locals.el"
-      ".project"
-      ".projectile"
+    ignores = lib.mkMerge [
+      [
+        "/result"
+        "/.secret/"
+        "/.org/"
+        # Source https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
+        "*~"
+        "#*#"
+        "/.emacs.desktop"
+        "/.emacs.desktop.lock"
+        "/TODO.org"
+        "*.elc"
+        "auto-save-list"
+        "tramp"
+        ".#*"
+        "recentf"
+        "srecode-map.el"
+        ".dir-locals.el"
+        ".project"
+        ".projectile"
 
-      # Org-mode
-      ".org-id-locations"
-      "*_archive"
+        # Org-mode
+        ".org-id-locations"
+        "*_archive"
 
-      # flymake-mode
-      "*_flymake.*"
+        # flymake-mode
+        "*_flymake.*"
 
-      # eshell files
-      "/eshell/history"
-      "/eshell/lastdir"
+        # eshell files
+        "/eshell/history"
+        "/eshell/lastdir"
 
-      # elpa packages
-      "/elpa/"
+        # elpa packages
+        "/elpa/"
 
-      # reftex files
-      "*.rel"
+        # reftex files
+        "*.rel"
 
-      # AUCTeX auto folder
-      "/auto/"
+        # AUCTeX auto folder
+        "/auto/"
 
-      # cask packages
-      ".cask/"
+        # cask packages
+        ".cask/"
 
-      # emacs sessions
-      "^session.*"
+        # emacs sessions
+        "^session.*"
 
-      # ctags
-      "TAGS"
+        # ctags
+        "TAGS"
 
-      # Source https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
-      "[._]*.s[a-w][a-z]"
-      "[._]s[a-w][a-z]"
-      "*.un~"
-      "Session.vim"
-      ".netrwhist"
-      "*~"
+        # Source https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
+        "[._]*.s[a-w][a-z]"
+        "[._]s[a-w][a-z]"
+        "*.un~"
+        "Session.vim"
+        ".netrwhist"
+        "*~"
 
-      # JetBrains
-      # Source https://raw.githubusercontent.com/github/gitignore/master/Global/JetBrains.gitignore
-      # covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
-      # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-      ".idea/"
+        # JetBrains
+        # Source https://raw.githubusercontent.com/github/gitignore/master/Global/JetBrains.gitignore
+        # covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+        # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+        ".idea/"
 
-      # User-specific stuff:
-      ".idea/workspace.xml"
-      ".idea/tasks.xml"
-      ".idea/dictionaries"
-      ".idea/vcs.xml"
-      ".idea/jsLibraryMappings.xml"
+        # User-specific stuff:
+        ".idea/workspace.xml"
+        ".idea/tasks.xml"
+        ".idea/dictionaries"
+        ".idea/vcs.xml"
+        ".idea/jsLibraryMappings.xml"
 
-      # Sensitive or high-churn files:
-      ".idea/dataSources.ids"
-      ".idea/dataSources.xml"
-      ".idea/dataSources.local.xml"
-      ".idea/sqlDataSources.xml"
-      ".idea/dynamic.xml"
-      ".idea/uiDesigner.xml"
+        # Sensitive or high-churn files:
+        ".idea/dataSources.ids"
+        ".idea/dataSources.xml"
+        ".idea/dataSources.local.xml"
+        ".idea/sqlDataSources.xml"
+        ".idea/dynamic.xml"
+        ".idea/uiDesigner.xml"
 
-      # Gradle:
-      ".idea/gradle.xml"
-      ".idea/libraries"
+        # Gradle:
+        ".idea/gradle.xml"
+        ".idea/libraries"
 
-      # Mongo Explorer plugin:
-      ".idea/mongoSettings.xml"
+        # Mongo Explorer plugin:
+        ".idea/mongoSettings.xml"
 
-      ## File-based project format:
-      "*.iws"
+        ## File-based project format:
+        "*.iws"
 
-      ## Plugin-specific files:
+        ## Plugin-specific files:
 
-      # IntelliJ
-      "/out/"
+        # IntelliJ
+        "/out/"
 
-      # mpeltonen/sbt-idea plugin
-      ".idea_modules/"
+        # mpeltonen/sbt-idea plugin
+        ".idea_modules/"
 
-      # JIRA plugin
-      "atlassian-ide-plugin.xml"
+        # JIRA plugin
+        "atlassian-ide-plugin.xml"
 
-      # Crashlytics plugin (for Android Studio and IntelliJ)
-      "com_crashlytics_export_strings.xml"
-      "crashlytics.properties"
-      "crashlytics-build.properties"
-      "fabric.properties"
+        # Crashlytics plugin (for Android Studio and IntelliJ)
+        "com_crashlytics_export_strings.xml"
+        "crashlytics.properties"
+        "crashlytics-build.properties"
+        "fabric.properties"
 
-      # OS X
-      ".DS_Store"
+        # OS X
+        ".DS_Store"
 
-      # GTags
-      "GPATH"
-      "GTAGS"
-      "GRTAGS"
+        # GTags
+        "GPATH"
+        "GTAGS"
+        "GRTAGS"
 
-      # Virtualfish
-      ".venv"
+        # Virtualfish
+        ".venv"
 
-      # Ensime for Scala
-      ".ensime"
-      ".ensime_cache"
+        # Ensime for Scala
+        ".ensime"
+        ".ensime_cache"
 
-      # direnv
-      ".direnv/"
+        # direnv
+        ".direnv/"
 
-      # Visual Studio Code ElixirLS
-      ".elixir_ls"
+        # Visual Studio Code ElixirLS
+        ".elixir_ls"
 
-      # Asdf-vm
-      ".tool-versions"
+        # Asdf-vm
+        ".tool-versions"
 
-      # mvbak
-      "*.bak.*"
+        # mvbak
+        "*.bak.*"
+
+        # codegraph
+      ]
     ];
     settings = {
       color = {
