@@ -71,11 +71,11 @@
 
         homebrew = {
           taps = [
-            {
-              name = "scoiatael/dotfiles";
-              clone_target = "https://github.com/scoiatael/dotfiles.git";
-              trusted = true;
-            }
+            # {
+            #   name = "scoiatael/dotfiles";
+            #   clone_target = "https://github.com/scoiatael/dotfiles.git";
+            #   trusted = true;
+            # }
             {
               name = "RhetTbull/osxphotos";
               trusted = true;
@@ -92,10 +92,10 @@
             "proton-pass"
             "arc"
             "secretive"
-            {
-              name = "scoiatael/dotfiles/legimi-kindle";
-              trusted = true;
-            }
+            # {
+            #   name = "scoiatael/dotfiles/legimi-kindle";
+            #   trusted = true;
+            # }
             "astropad-studio"
             "tailscale-app"
             "eqmac"
