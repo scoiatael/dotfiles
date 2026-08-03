@@ -10,6 +10,8 @@
     isSystemUser = true;
     shell = "/run/current-system/sw/bin/nologin";
   };
+  users.users.restic.group = "restic";
+  users.groups.restic = { };
 
   security.wrappers.restic = {
     source = "${pkgs.restic.out}/bin/restic";
