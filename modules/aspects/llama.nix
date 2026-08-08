@@ -18,6 +18,10 @@
           hf-file = "Qwen3-Coder-Next-UD-Q4_K_XL.gguf";
           alias = "unsloth/Qwen3-Coder-Next";
         };
+        "DeepSeek-V4-Flash" = {
+          hf-repo = "unsloth/DeepSeek-V4-Flash-0731-GGUF:UD-Q2_K_XL";
+          alias = "DeepSeek-V4-Flash";
+        };
       };
     in
     {
@@ -43,6 +47,8 @@
             "--tools"
             "all"
             "--webui-mcp-proxy"
+            "--gpu-layers"
+            "all"
           ];
           serve = pkgs.writers.writeBash "llama-serve" ''
             ${lib.getExe' pkgs.llama-cpp "llama-server"} ${lib.escapeShellArgs flags}
