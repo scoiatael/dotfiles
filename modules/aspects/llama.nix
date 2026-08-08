@@ -1,6 +1,7 @@
 {
   den.aspects.llama =
     let
+      # https://github.com/ggml-org/llama.cpp/tree/master/tools/server#model-presets
       modelsPreset = {
         "Qwen-AgentWorld" = {
           hf-repo = "unsloth/Qwen-AgentWorld-35B-A3B-GGUF";

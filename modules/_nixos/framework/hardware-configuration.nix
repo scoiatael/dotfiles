@@ -47,23 +47,12 @@
     };
   };
 
-  # boot.initrd.luks.devices."external".device = "/dev/disk/by-uuid/76d7740a-dc5d-4a17-b730-4ba388902b08";
   boot.initrd.luks.devices = {
     internal = {
       device = "/dev/disk/by-uuid/e9c87df3-a5b1-4765-8da6-d055c26d3323";
-      # Doesn't work - root fs has to be mounted before this can be performed.
-      # keyFile = "/crypto_keyfile.bin";
-      # preLVM = false;
+      allowDiscards = true;
     };
-    # cryptHdd_mirror1 = {
-    #   device = "/dev/disk/by-uuid/3217d74c-b2bf-4c66-979a-586822df6c51";
-    # };
-    # cryptHdd_mirror2 = {
-    #   device = "/dev/disk/by-uuid/2c48ce2e-2aa6-4557-b71c-14d47805eb87";
-    # };
-    # cryptHdd_mirror3 = {
-    #   device = "/dev/disk/by-uuid/127162ee-cb94-4d6f-a313-15dd7607fdbb";
-    # };
+    external.device = "/dev/disk/by-uuid/c5ff78fd-65af-403c-a64b-d80d8192fbf6";
   };
 
   fileSystems."/" = {
@@ -74,6 +63,11 @@
   fileSystems."/var" = {
     device = "/dev/disk/by-uuid/8937c5b3-be18-42fb-b614-fe3f7ae70415";
     fsType = "xfs";
+  };
+
+  fileSystems."/var/cache/private/llama-cpp" = {
+    device = "/dev/disk/by-uuid/1ff15061-1bbc-49da-9068-01a9db444934";
+    fsType = "btrfs";
   };
 
   fileSystems."/home" = {
