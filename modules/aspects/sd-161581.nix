@@ -18,12 +18,17 @@
         ../_nixos/modules/services/telegraf.nix
         ../_nixos/modules/services/magic-wormhole.nix
         ../_nixos/modules/services/prism-tools.nix
+        ../_nixos/modules/services/valheim.nix
       ];
 
       sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       sops.secrets.influx-token = {
         sopsFile = ../_nixos/sd-161581/secrets/influx-token;
         format = "binary";
+      };
+      sops.secrets.valheim-server-env = {
+        sopsFile = ../_nixos/sd-161581/secrets/valheim-server.env;
+        format = "dotenv";
       };
 
       services.kubo.enable = true;
