@@ -123,6 +123,10 @@
         # nix.settings.trusted-users = [ "@admin" ];
         # services.aerospace.settings.gaps.outer.top = lib.mkForce 42;
         home-manager.extraSpecialArgs = inputs;
+        nix.gc = {
+          automatic = true;
+          options = "--delete-older-than 7d";
+        };
       };
   };
 }

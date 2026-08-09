@@ -25,7 +25,7 @@
   #     -e WORLD_NAME="Neotopia" \
   #     -e SERVER_PASS="secret" \
   #     ghcr.io/community-valheim-tools/valheim-server
-  virtualisation.oci-containers.valheim-server = {
+  virtualisation.oci-containers.containers.valheim-server = {
     image = "ghcr.io/community-valheim-tools/valheim-server";
     environmentFiles = [ config.sops.secrets.valheim-server-env.path ];
     volumes = [

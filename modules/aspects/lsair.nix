@@ -134,6 +134,10 @@
           package = pkgs.darwin.linux-builder-x86_64;
         };
         # nix.settings.sandbox = "relaxed";
+        nix.gc = {
+          automatic = true;
+          options = "--delete-older-than 7d";
+        };
       };
   };
 }
