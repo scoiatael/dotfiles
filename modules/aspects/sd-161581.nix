@@ -22,13 +22,23 @@
       ];
 
       sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      sops.secrets.influx-token = {
-        sopsFile = ../_nixos/sd-161581/secrets/influx-token;
-        format = "binary";
-      };
-      sops.secrets.valheim-server-env = {
-        sopsFile = ../_nixos/sd-161581/secrets/valheim-server.env;
-        format = "dotenv";
+      sops.secrets = {
+        influx-token = {
+          sopsFile = ../_nixos/sd-161581/secrets/influx-token;
+          format = "binary";
+        };
+        valheim-server-env = {
+          sopsFile = ../_nixos/sd-161581/secrets/valheim-server.env;
+          format = "dotenv";
+        };
+        backblaze-valheim-env = {
+          sopsFile = ../_nixos/sd-161581/secrets/backblaze-valheim.env;
+          format = "dotenv";
+        };
+        restic-password = {
+          sopsFile = ../_nixos/sd-161581/secrets/restic-password;
+          format = "binary";
+        };
       };
 
       services.kubo.enable = true;

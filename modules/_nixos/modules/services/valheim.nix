@@ -77,4 +77,11 @@ in
       "--stop-timeout=120"
     ];
   };
+  services.restic.backups.b2-valheim-server = {
+    environmentFile = config.sops.secrets.backblaze-valheim-env.path;
+    passwordFile = config.sops.secrets.restic-password.path;
+    paths = [ "${config.users.users.valheim.home}/config" ];
+    repository = "b2:sd-161581-valheim";
+    initialize = true;
+  };
 }
