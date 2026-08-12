@@ -11,6 +11,8 @@
     provides.lukas = {
       includes = [
         den.aspects.llm
+        den.aspects.claude
+        den.aspects.mcp
         den.aspects.doomemacs
         den.aspects.comma
         den.aspects.graphite

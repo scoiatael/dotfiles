@@ -1,6 +1,5 @@
-{ inputs, ... }: {
-  flake-file.inputs.llm-agents.url = "github:numtide/llm-agents.nix";
-
+{ ... }:
+{
   den.aspects.llm.homeManager =
     {
       config,
@@ -19,19 +18,14 @@
       '';
     in
     {
-      home.packages =
-        with pkgs;
-        [
-          self'.packages.llm-with-plugins
-          self'.packages.markitdown
-          # for PDF conversion
-          ghostscript
-          pdf-convert
-          llm-invoice
-        ]
-        ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
-          (claude-code.overrideAttrs { disableTelemetry = true; })
-        ]);
+      home.packages = with pkgs; [
+        self'.packages.llm-with-plugins
+        self'.packages.markitdown
+        # for PDF conversion
+        ghostscript
+        pdf-convert
+        llm-invoice
+      ];
 
       home.file."${configHome}/io.datasette.llm/default_model.txt".text = "anthropic/claude-sonnet-4-5";
 
