@@ -12,9 +12,8 @@ let
   # Raids: none, muchless, less, more, muchmore
   # Portals: casual, hard, veryhard
   modifiers = {
-    Combat = "hard";
     DeathPenalty = "casual";
-    Resources = "most";
+    Resources = "muchmore";
     Raids = "muchless";
     Portals = "casual";
   };
