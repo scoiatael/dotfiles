@@ -1,6 +1,6 @@
-{ inputs, ... }:
+{ den, inputs, ... }:
 {
-  flake-file.inputs.llm-agents.url = "github:numtide/llm-agents.nix";
+  den.aspects.claude.includes = [ den.aspects.llm-agents ];
 
   den.aspects.claude.homeManager =
     {

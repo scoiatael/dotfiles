@@ -1,0 +1,49 @@
+#!/usr/bin/env zsh
+#
+# Print the store path of a flake input.
+#
+#   ,flake-input llm-agents
+#   ,flake-input llm-agents/nixpkgs
+#   bat "$(,flake-input llm-agents)/flake.nix"
+#
+# With no argument, lists the available input names.
+#
+# Uses 'nix flake archive --dry-run', so no --impure / builtins.getFlake.
+
+set -euo pipefail
+
+me="$0" # zsh rebinds $0 inside functions
+flake="${DOTFILES:-$HOME/dotfiles}"
+
+usage() {
+    sed -n '3,11p' "$me" | sed 's/^#\s\?//'
+    echo
+    echo "Options:"
+    echo "  --flake PATH   flake directory (default: \$DOTFILES or ~/dotfiles)"
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --flake) flake="$2"; shift 2 ;;
+        -h|--help) usage; exit 0 ;;
+        *) break ;;
+    esac
+done
+
+archive="$(nix flake archive "$flake" --json --dry-run)"
+
+if [[ $# -lt 1 ]]; then
+    jq -r '.inputs | keys[]' <<<"$archive"
+    exit 0
+fi
+
+query='.'
+for part in ${(s:/:)1}; do
+    query+=".inputs[\"${part}\"]"
+done
+
+if ! jq -re "${query}.path" <<<"$archive"; then
+    >&2 echo "No such input: $1"
+    >&2 echo "Available: $(jq -r '.inputs | keys | join(", ")' <<<"$archive")"
+    exit 1
+fi
