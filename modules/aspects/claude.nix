@@ -49,6 +49,7 @@
 
         settings = {
           tui = "default";
+          spinnerTipsEnabled = false;
 
           enabledPlugins = {
             "clangd-lsp@claude-plugins-official" = true;
