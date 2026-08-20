@@ -7,6 +7,7 @@
       config,
       lib,
       pkgs,
+      self',
       ...
     }:
     let
@@ -24,7 +25,11 @@
       '';
     in
     {
-      home.packages = [ claude-sandboxed ];
+      home.packages = [
+        claude-sandboxed
+        # PreToolUse hook helper for whitelisting URLs in project settings
+        self'.packages.claude-url-allowlist
+      ];
 
       xdg.configFile = {
         "nono/profiles/claude.json".source = "${nono-packs}/claude/policy.json";
