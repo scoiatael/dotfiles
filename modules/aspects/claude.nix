@@ -19,6 +19,7 @@
             };
 
         context = ../../config/claude/CLAUDE.md;
+        skills = ../../config/claude/skills;
 
         settings = {
           tui = "default";
