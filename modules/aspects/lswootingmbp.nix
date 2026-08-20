@@ -91,6 +91,12 @@
         system.primaryUser = "lukas";
 
         sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+        sops.secrets.lukas_ssh_config = {
+          format = "binary";
+          sopsFile = ../_darwin/LsWootingMBP/secrets/ssh_config;
+          owner = config.system.primaryUser;
+          path = "${config.users.users.${config.system.primaryUser}.home}/.ssh/config";
+        };
         sops.secrets.kagimcp-env = {
           sopsFile = ../_darwin/LsWootingMBP/secrets/kagimcp.env;
           format = "dotenv";
