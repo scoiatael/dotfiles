@@ -37,7 +37,7 @@ if [[ $# -lt 1 ]]; then
     exit 0
 fi
 
-query='.'
+query=''
 for part in ${(s:/:)1}; do
     query+=".inputs[\"${part}\"]"
 done
