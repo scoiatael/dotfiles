@@ -17,7 +17,7 @@
       home.packages = (
         with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
         [
-          # nono # [[id:b87289c9-f761-49d5-9f24-a99efbb9f402][llm-nono]]
+          nono # [[id:b87289c9-f761-49d5-9f24-a99efbb9f402][llm-nono]]
           agent-browser
           codegraph # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
         ]
