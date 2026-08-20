@@ -19,6 +19,7 @@
         den.aspects.neovim
         den.aspects.stylix
         den.aspects.zen
+        den.aspects.maki
         (den.batteries.user-shell "zsh")
         den.batteries.mkBackupCommand
       ];
@@ -72,6 +73,7 @@
     darwin =
       {
         pkgs,
+        config,
         ...
       }:
 
@@ -87,6 +89,13 @@
         ];
 
         system.primaryUser = "lukas";
+
+        sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+        sops.secrets.kagimcp-env = {
+          sopsFile = ../_darwin/LsWootingMBP/secrets/kagimcp.env;
+          format = "dotenv";
+          owner = config.users.users._llama.name;
+        };
 
         users.users.lukas = {
           name = "lukas";
