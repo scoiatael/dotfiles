@@ -38,6 +38,7 @@ in
       cometary # [[id:09791008-55e2-47e7-9100-53ee1a1ae6bd][cometary]]
       human # [[id:802d01e4-e1f0-4843-aa4e-53943330e763][human]]
       mvbak # [[id:80944be2-1ab0-4400-a143-f73deaab1522][mvbak]]
+      tt # track work across Linear, Github, Notion (org-babel blocks in todo.org)
     ])
     ++ (lib.lists.optional (
       with pkgs.stdenv.hostPlatform; isDarwin -> lib.versionAtLeast darwinSdkVersion "11.0"
