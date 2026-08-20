@@ -1,0 +1,245 @@
+#!/usr/bin/env bb
+;; Query and write org-roam notes through the running Emacs.
+;;
+;;   ,roam                        list every node
+;;   ,roam systemd                match title, alias or tag
+;;   ,roam cat systemd-cred       print a note's org source
+;;   ,roam file systemd-cred      print just the resolved path
+;;   ,roam links terraform        backlinks into a node, and its outbound links
+;;   ,roam tags                   every tag with its node count
+;;   ,roam open systemd-cred      visit the node in the running Emacs
+;;
+;;   ,roam add TITLE [--tags a,b] [--ref URL] [--body TEXT | -]
+;;   ,roam append TERM [TEXT | -]
+;;   ,roam edit TERM              open in $EDITOR, reindex on exit
+;;
+;; Goes through emacsclient rather than reading org-roam.db directly: the
+;; database on disk lags the live session, and the node accessors keep this
+;; helper out of emacsql's serialization details. Writes reindex the file
+;; afterwards so the running Emacs sees them immediately.
+
+(require '[babashka.process :as p]
+         '[cheshire.core :as json]
+         '[clojure.string :as str]
+         '[clojure.java.io :as io])
+
+(import '[java.time LocalDateTime]
+        '[java.time.format DateTimeFormatter])
+
+(defn- die [& msg]
+  (binding [*out* *err*] (apply println msg))
+  (System/exit 1))
+
+(defn- elisp-str
+  "Quote S as an elisp string literal."
+  [s]
+  (str \" (-> (str s) (str/replace "\\" "\\\\") (str/replace "\"" "\\\"")) \"))
+
+(defn- eval-elisp
+  "Evaluate FORM in the running Emacs. :as is :json, :string or :raw."
+  [form & {:keys [as] :or {as :json}}]
+  (let [{:keys [out err exit]}
+        (p/shell {:out :string :err :string :continue true}
+                 "emacsclient" "-e" form)]
+    (when-not (zero? exit)
+      (die (str/trim err)
+           "\n,roam needs a running Emacs server — start Emacs, or (server-start)."))
+    (let [out (str/trim out)]
+      ;; emacsclient prin1s the result, so a returned string arrives quoted and
+      ;; escaped. That outer layer is itself valid JSON, hence the double parse.
+      (case as
+        :json   (json/parse-string (json/parse-string out) true)
+        :string (json/parse-string out)
+        :raw    out))))
+
+(def ^:private node-fields
+  "(lambda (n) (list (cons \"id\" (org-roam-node-id n))
+                     (cons \"title\" (org-roam-node-title n))
+                     (cons \"file\" (org-roam-node-file n))
+                     (cons \"tags\" (org-roam-node-tags n))
+                     (cons \"aliases\" (org-roam-node-aliases n))))")
+
+(defn- nodes []
+  (eval-elisp (format "(json-encode (mapcar %s (org-roam-node-list)))" node-fields)))
+
+(defn- matches [term ns]
+  (let [lower (str/lower-case term)
+        hit?  #(str/includes? (str/lower-case (str %)) lower)]
+    (filter #(or (hit? (:title %))
+                 (some hit? (:tags %))
+                 (some hit? (:aliases %)))
+            ns)))
+
+;; Resolution order: exact id, exact title, then unique substring match.
+(defn- resolve-node [term]
+  (when (str/blank? term) (die "Need a node id, title or substring."))
+  (let [all   (nodes)
+        lower (str/lower-case term)
+        hits  (or (seq (filter #(= term (:id %)) all))
+                  (seq (filter #(= lower (str/lower-case (str (:title %)))) all))
+                  (seq (matches term all)))]
+    (cond
+      (nil? hits) (die (format "No node matching '%s'" term))
+      (next hits) (die (format "'%s' is ambiguous — %d nodes match:" term (count hits))
+                       (str "\n  " (str/join "\n  " (map :title hits))))
+      :else       (first hits))))
+
+(defn- print-nodes [rows]
+  (if (empty? rows)
+    (println "No nodes.")
+    (let [w (apply max (map #(count (str (:title %))) rows))]
+      (doseq [{:keys [title tags id]} rows]
+        (println (format (str "%-" w "s  %-28s  %s")
+                         title
+                         (str/join " " (map #(str "#" %) tags))
+                         id))))))
+
+(defn- cmd-links [term]
+  (let [{:keys [id title]} (resolve-node term)
+        pair (fn [form] (eval-elisp (format "(json-encode (mapcar %s %s))" node-fields form)))
+        back (pair (format "(mapcar #'org-roam-backlink-source-node
+                              (org-roam-backlinks-get (org-roam-node-from-id %s)))"
+                           (elisp-str id)))
+        out  (pair (format "(delq nil (mapcar (lambda (l) (org-roam-node-from-id (car l)))
+                              (org-roam-db-query
+                                [:select [dest] :from links
+                                 :where (= source $s1) :and (= type \"id\")] %s)))"
+                           (elisp-str id)))]
+    (println title)
+    (println (format "\n  %d backlink(s) in:" (count back)))
+    (doseq [n back] (println "   <-" (:title n)))
+    (println (format "\n  %d outbound link(s):" (count out)))
+    (doseq [n out] (println "   ->" (:title n)))))
+
+(defn- cmd-tags []
+  (->> (nodes)
+       (mapcat :tags)
+       frequencies
+       (sort-by (juxt (comp - val) key))
+       (run! (fn [[tag n]] (println (format "%4d  %s" n tag))))))
+
+;;; Writing
+
+;; Emacs owns any file it has open with unsaved edits; writing underneath it
+;; would be lost on the next save from the buffer.
+(defn- assert-not-dirty [path]
+  (when (= "t" (eval-elisp
+                (format "(let ((b (get-file-buffer %s))) (if (and b (buffer-modified-p b)) \"t\" \"nil\"))"
+                        (elisp-str path))
+                :as :string))
+    (die (format "Emacs has unsaved changes in %s — save or revert there first." path))))
+
+(defn- reindex
+  "Reindex PATH and refresh any clean buffer showing it."
+  [path]
+  (eval-elisp (format "(progn (org-roam-db-update-file %s)
+                              (let ((b (get-file-buffer %s)))
+                                (when (and b (not (buffer-modified-p b)))
+                                  (with-current-buffer b (revert-buffer t t t))))
+                              \"ok\")"
+                      (elisp-str path) (elisp-str path))
+              :as :string))
+
+(defn- read-body
+  "Body text from --body, or stdin when it is piped in or '-' is given."
+  [explicit stdin?]
+  (cond
+    explicit explicit
+    (or stdin? (pos? (.available System/in))) (slurp *in*)
+    :else nil))
+
+(defn- parse-flags [args]
+  (loop [[a & more :as all] args, opts {}, rest* []]
+    (cond
+      (nil? a) [opts (str/join " " rest*)]
+      (= "--tags" a) (recur (next more) (assoc opts :tags (first more)) rest*)
+      (= "--ref" a)  (recur (next more) (assoc opts :ref (first more)) rest*)
+      (= "--body" a) (recur (next more) (assoc opts :body (first more)) rest*)
+      (= "--force" a) (recur more (assoc opts :force true) rest*)
+      (= "-" a)      (recur more (assoc opts :stdin true) rest*)
+      :else          (recur more opts (conj rest* a)))))
+
+(defn- cmd-add [args]
+  (let [[opts title] (parse-flags args)]
+    (when (str/blank? title) (die "Need a title: ,roam add TITLE [--tags a,b]"))
+    (when-not (:force opts)
+      (when-let [dup (seq (filter #(= (str/lower-case title)
+                                      (str/lower-case (str (:title %))))
+                                  (nodes)))]
+        (die (format "A node titled '%s' already exists (%s). Use --force to add another."
+                     title (:id (first dup))))))
+    (let [dir   (eval-elisp "org-roam-directory" :as :string)
+          id    (eval-elisp "(org-id-new)" :as :string)
+          slug  (eval-elisp (format "(org-roam-node-slug (org-roam-node-create :title %s))"
+                                    (elisp-str title))
+                            :as :string)
+          stamp (.format (LocalDateTime/now) (DateTimeFormatter/ofPattern "yyyyMMddHHmmss"))
+          path  (str dir stamp "-" slug ".org")
+          tags  (some->> (:tags opts)
+                         (#(str/split % #","))
+                         (map str/trim)
+                         (remove str/blank?)
+                         seq)
+          body  (read-body (:body opts) (:stdin opts))]
+      (when (.exists (io/file path)) (die (format "%s already exists." path)))
+      (spit path
+            (str ":PROPERTIES:\n"
+                 ":ID:       " id "\n"
+                 (when (:ref opts) (str ":ROAM_REFS: " (:ref opts) "\n"))
+                 ":END:\n"
+                 "#+title: " title "\n"
+                 (when tags (str "#+filetags: :" (str/join ":" tags) ":\n"))
+                 (when body (str "\n" (str/trim-newline body) "\n"))))
+      (reindex path)
+      (println id)
+      (println path))))
+
+(defn- cmd-append [args]
+  (let [[opts term] (parse-flags args)
+        {:keys [file title]} (resolve-node term)
+        text (read-body (:body opts) (:stdin opts))]
+    (when (str/blank? text)
+      (die "Nothing to append — pass --body TEXT or pipe it in."))
+    (assert-not-dirty file)
+    (let [existing (slurp file)]
+      (spit file (str existing
+                      (when-not (str/ends-with? existing "\n") "\n")
+                      (str/trim-newline text) "\n")))
+    (reindex file)
+    (println (format "Appended %d line(s) to %s" (count (str/split-lines (str/trim text))) title))))
+
+(defn- cmd-edit [term]
+  (let [{:keys [file title]} (resolve-node term)
+        editor (or (System/getenv "VISUAL") (System/getenv "EDITOR") "vi")]
+    (assert-not-dirty file)
+    ;; Via sh so $EDITOR may carry flags, as git does it.
+    (let [{:keys [exit]} (p/shell {:continue true :inherit true}
+                                  "sh" "-c" (str editor " \"$1\"") "sh" file)]
+      (when-not (zero? exit) (die (format "%s exited with %d — not reindexing." editor exit))))
+    (reindex file)
+    (println "Reindexed" title)))
+
+(let [[cmd & args] *command-line-args*
+      arg (str/join " " args)]
+  (case cmd
+    nil             (print-nodes (nodes))
+    ("-h" "--help") (->> (str/split-lines (slurp *file*))
+                         (drop 1) (take 13)
+                         (map #(str/replace % #"^;; ?" ""))
+                         (str/join "\n")
+                         println)
+    "search"        (print-nodes (matches arg (nodes)))
+    "cat"           (print (slurp (:file (resolve-node arg))))
+    "file"          (println (:file (resolve-node arg)))
+    "links"         (cmd-links arg)
+    "tags"          (cmd-tags)
+    "add"           (cmd-add args)
+    "append"        (cmd-append args)
+    "edit"          (cmd-edit arg)
+    "open"          (let [{:keys [id title]} (resolve-node arg)]
+                      (eval-elisp (format "(org-roam-node-visit (org-roam-node-from-id %s))"
+                                          (elisp-str id))
+                                  :as :raw)
+                      (println "Visiting" title))
+    ;; Bare term is the common case: ,roam systemd == ,roam search systemd
+    (print-nodes (matches (str/join " " (cons cmd args)) (nodes)))))
