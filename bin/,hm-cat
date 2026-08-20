@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+#
+# Show the contents of a home-manager-generated file for a host in this flake.
+#
+#   ,hm-cat 'xdg.configFile."mcp/mcp.json".source'
+#   ,hm-cat 'home.file.".claude/settings.json".source'
+#   ,hm-cat --path 'home.file.".claude/CLAUDE.md".source'
+#
+# The option must evaluate to a store path. Reading it forces the derivation
+# to be built, so no separate 'nix build' step is needed.
+
+set -euo pipefail
+
+me="$0" # zsh rebinds $0 inside functions
+here="${me:A:h}"
+
+usage() {
+    sed -n '3,11p' "$me" | sed 's/^#\s\?//'
+    echo
+    echo "Options:"
+    echo "  --path         print the store path instead of the contents"
+    echo "  --host/--user/--flake  forwarded to ,hm-eval"
+}
+
+args=()
+show_path=0
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --path) show_path=1; shift ;;
+        -h|--help) usage; exit 0 ;;
+        *) args+=("$1"); shift ;;
+    esac
+done
+
+if [[ ${#args} -lt 1 ]]; then
+    usage
+    exit 1
+fi
+
+if [[ $show_path -eq 1 ]]; then
+    exec "$here/,hm-eval" "${args[@]}" --raw
+fi
+
+"$here/,hm-eval" "${args[@]}" --raw --apply 'p: builtins.readFile p' \
+    | ${PAGER_CAT:-cat}

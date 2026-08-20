@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+#
+# Evaluate a home-manager option for a host in this flake.
+#
+#   ,hm-eval programs.claude-code.settings
+#   ,hm-eval --host LsAir home.packages --apply 'map (p: p.name)'
+#   ,hm-eval home.file.".claude/settings.json".source --raw
+#
+# Pure evaluation: the flake is referenced by path, so no --impure needed.
+
+set -euo pipefail
+
+me="$0" # zsh rebinds $0 inside functions
+flake="${DOTFILES:-$HOME/dotfiles}"
+host="$(hostname -s)"
+user="$USER"
+
+usage() {
+    sed -n '3,9p' "$me" | sed 's/^#\s\?//'
+    echo
+    echo "Options:"
+    echo "  --host HOST    host to evaluate (default: $(hostname -s))"
+    echo "  --user USER    home-manager user (default: $USER)"
+    echo "  --flake PATH   flake directory (default: \$DOTFILES or ~/dotfiles)"
+    echo
+    echo "Remaining arguments are passed through to 'nix eval' (default: --json)."
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --host) host="$2"; shift 2 ;;
+        --user) user="$2"; shift 2 ;;
+        --flake) flake="$2"; shift 2 ;;
+        -h|--help) usage; exit 0 ;;
+        *) break ;;
+    esac
+done
+
+if [[ $# -lt 1 ]]; then
+    usage
+    exit 1
+fi
+
+option="$1"
+shift
+
+# Only the attribute names of the configurations set are forced here.
+has_host() {
+    [[ "$(nix eval --raw "${flake}#${1}" \
+            --apply "s: if s ? \"${host}\" then \"y\" else \"n\"" 2>/dev/null)" == "y" ]]
+}
+
+kind=""
+for candidate in darwinConfigurations nixosConfigurations; do
+    if has_host "$candidate"; then
+        kind="$candidate"
+        break
+    fi
+done
+
+if [[ -z "$kind" ]]; then
+    >&2 echo "No darwinConfigurations.$host or nixosConfigurations.$host in $flake"
+    exit 1
+fi
+
+exec nix eval "${flake}#${kind}.${host}.config.home-manager.users.${user}.${option}" "${@:---json}"

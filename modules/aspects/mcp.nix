@@ -21,6 +21,17 @@
         ]
       );
 
+      programs.mcp = {
+        enable = true;
+        servers.codegraph = {
+          command = "codegraph";
+          args = [
+            "serve"
+            "--mcp"
+          ];
+        };
+      };
+
       programs.git.ignores = lib.mkAfter (
         map (p: "/.codegraph/${p}") [
           # CodeGraph data files
