@@ -13,8 +13,9 @@
 
 (after! projectile
   (setq projectile-require-project-root "prompt"
-        projectile-enable-idle-timer 90)
-  (add-hook 'projectile-idle-timer-hook #'projectile-invalidate-cache))
+        ;; Doom forces `projectile-enable-caching' to 'persistent, so a stale file
+        ;; list otherwise survives restarts; bound it instead of never expiring.
+        projectile-files-cache-expire 300))
 
 (after! minimap
   (add-hook 'org-capture-mode-hook (lambda () (minimap-mode 0))))
