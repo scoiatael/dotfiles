@@ -20,6 +20,7 @@
         den.aspects.stylix
         den.aspects.zen
         den.aspects.maki
+        den.aspects.fish
         (den.batteries.user-shell "zsh")
         den.batteries.mkBackupCommand
       ];
