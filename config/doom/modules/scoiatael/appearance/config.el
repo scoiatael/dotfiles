@@ -6,28 +6,28 @@
  doom-font (font-spec :family "Victor Mono" :size 12)
  doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
  fancy-splash-image "~/dotfiles/config/doom/cacochan.png"
- +doom-dashboard-functions '(doom-dashboard-widget-banner doom-dashboard-widget-loaded doom-dashboard-widget-shortmenu)
- +doom-dashboard-menu-sections
+ +dashboard-functions '(+dashboard-widget-banner +dashboard-widget-loaded +dashboard-widget-shortmenu)
+ +dashboard-menu-sections
  '(("Open todo list"
-    :icon (nerd-icons-octicon "nf-oct-check" :face 'doom-dashboard-menu-title)
+    :icon (nerd-icons-octicon "nf-oct-check" :face 'dashboard-menu-title)
     :action scoiatael/switch-to-agenda-workspace)
    ("Open nixpkgs"
-    :icon (nerd-icons-devicon "nf-dev-nixos" :face 'doom-dashboard-menu-title)
+    :icon (nerd-icons-devicon "nf-dev-nixos" :face 'dashboard-menu-title)
     :action scoiatael/switch-to-nixpkgs-workspace )
    ("Open home-manager"
-    :icon (nerd-icons-mdicon "nf-md-home_assistant" :face 'doom-dashboard-menu-title)
+    :icon (nerd-icons-mdicon "nf-md-home_assistant" :face 'dashboard-menu-title)
     :action scoiatael/switch-to-home-manager-workspace )
    ("Open nix-darwin"
-    :icon (nerd-icons-devicon "nf-dev-apple" :face 'doom-dashboard-menu-title)
+    :icon (nerd-icons-devicon "nf-dev-apple" :face 'dashboard-menu-title)
     :action scoiatael/switch-to-nix-darwin-workspace )
    ("Open project"
-    :icon (nerd-icons-octicon "nf-oct-briefcase" :face 'doom-dashboard-menu-title)
+    :icon (nerd-icons-octicon "nf-oct-briefcase" :face 'dashboard-menu-title)
     :action projectile-switch-project)
    ("Jump to bookmark"
-    :icon (nerd-icons-octicon "nf-oct-bookmark" :face 'doom-dashboard-menu-title)
+    :icon (nerd-icons-octicon "nf-oct-bookmark" :face 'dashboard-menu-title)
     :action bookmark-jump)))
 
-(map! :mode #'+doom-dashboard-mode
+(map! :mode #'+dashboard-mode
       :n "q" #'+workspace/kill
       :n "1" #'scoiatael/switch-to-agenda-workspace
       :n "2" #'scoiatael/switch-to-nixpkgs-workspace

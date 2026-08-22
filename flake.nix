@@ -8,10 +8,6 @@
   inputs = {
     darwin.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
     den.url = "github:denful/den";
-    doomemacs = {
-      url = "github:doomemacs/doomemacs";
-      flake = false;
-    };
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";

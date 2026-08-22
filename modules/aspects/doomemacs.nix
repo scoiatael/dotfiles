@@ -1,10 +1,4 @@
-{ inputs, ... }:
-
 {
-  flake-file.inputs.doomemacs = {
-    url = "github:doomemacs/doomemacs";
-    flake = false;
-  };
   den.aspects.doomemacs = {
     homeManager =
       {
@@ -15,7 +9,13 @@
       }:
       let
         emacsPackage = config.programs.emacs.finalPackage;
-        doomemacs = inputs.doomemacs;
+        doomemacs = pkgs.fetchFromGitHub {
+          fetchSubmodules = true;
+          owner = "doomemacs";
+          repo = "core";
+          rev = "v2.2.3";
+          hash = "sha256-eR6gb8rzdiZF3vsq+HAeUbriTmtagNjLhDYCaQhaJYk=";
+        };
       in
       {
         home.packages =
