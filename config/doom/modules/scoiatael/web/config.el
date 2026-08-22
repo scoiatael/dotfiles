@@ -31,13 +31,14 @@
 
 ;;     :config
 ;;     (mp-setup-install-grammars)
-;;     ;; (use-package combobulate
-;;     ;;   :custom
-;;     ;;   ;; You can customize Combobulate's key prefix here.
-;;     ;;   ;; Note that you may have to restart Emacs for this to take effect!
-;;     ;;   (combobulate-key-prefix "C-s")
-;;     ;;   :hook ((prog-mode . combobulate-mode)))
 ;;     ))
+
+(use-package combobulate
+  :custom
+  ;; You can customize Combobulate's key prefix here.
+  ;; Note that you may have to restart Emacs for this to take effect!
+  (combobulate-key-prefix "C-s")
+  :hook ((prog-mode . combobulate-mode)))
 
 ;; Reason and ReScript
 (use-package reason-mode
