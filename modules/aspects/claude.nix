@@ -43,11 +43,9 @@
 
         plugins = [ "${nono-packs}/claude" ];
 
-        package =
-          inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code.overrideAttrs
-            {
-              disableTelemetry = true;
-            };
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code.overrideAttrs {
+          disableTelemetry = true;
+        };
 
         context = ../../config/claude/CLAUDE.md;
         skills = ../../config/claude/skills;

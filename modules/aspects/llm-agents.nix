@@ -14,6 +14,9 @@ let
 in
 {
   flake-file.inputs.llm-agents.url = "github:numtide/llm-agents.nix";
+  # llm-agents want unstable nixpkgs - depends on features missing from stable releases
+  flake-file.inputs.llm-agents.inputs.nixpkgs.follows = "nixpkgs-unstable";
+  flake-file.inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   den.aspects.llm-agents = {
     darwin = numtideCache;
