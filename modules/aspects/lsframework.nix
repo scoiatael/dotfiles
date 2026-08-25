@@ -122,6 +122,7 @@
         boot.kernelParams = [
           # "mem_sleep_default=deep"
           # "usbcore.quirks=0bda:8156:k"
+          "split_lock_detect=off"
         ];
         boot.kernel.sysctl."net.core.rmem_max" = 2500000;
         # Enroll keys once secureboot is enforced:
@@ -166,6 +167,7 @@
               }
             ];
           };
+          wireless.enable = false;
           defaultGateway = {
             address = "192.168.180.1";
             interface = "enp191s0";
@@ -422,24 +424,8 @@
         # https://nixos.wiki/wiki/Fwupd
         services.fwupd.enable = true;
 
-        environment.etc."NetworkManager/dispatcher.d/99-wlan" = {
-          text = ''
-            #!${pkgs.bash}/bin/bash
-            wired_interfaces="en.*|eth.*"
-            if [[ "$1" =~ $wired_interfaces ]]; then
-                case "$2" in
-                    up)
-                        nmcli radio wifi off
-                        ;;
-                    down)
-                        nmcli radio wifi on
-                        ;;
-                esac
-            fi
-          '';
-
-          mode = "0550";
-        };
+        # NetworkManager dispatcher script removed: NetworkManager is not enabled,
+        # and WiFi is now explicitly disabled via networking.wireless.enable = false.
 
         # This value determines the NixOS release from which the default
         # settings for stateful data, like file locations and database versions

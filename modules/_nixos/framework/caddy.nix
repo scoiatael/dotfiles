@@ -7,6 +7,9 @@
 
 {
   services.caddy.enable = true;
+  services.caddy.globalConfig = ''
+    default_bind 192.168.180.153 127.0.0.1 ::1
+  '';
   services.caddy.virtualHosts."parrhasius.heron-pollux.ts.net".extraConfig = ''
     reverse_proxy :4567
   '';
