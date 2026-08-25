@@ -222,6 +222,7 @@
        time-zones
        fountain
        eat     ; emulate a terminal
+       clojure
        ;;gleam             ; uncomment to enable gleam support
        ;;spacehammer       ; uncomment to enable spacehammer integration
        )
