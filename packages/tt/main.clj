@@ -5,6 +5,7 @@
 ;;   tt linear issues|projects [--format table|org|json]
 ;;   tt linear api <graphql query>
 ;;   tt gh prs|todo            [--format table|org|json|md]
+;;   tt gh comments [<pr>]     [--format table|org|json|md] [--all]
 ;;   tt notion tasks           [--format table|org|json]
 ;;
 ;; Auth: `pass linear-personal-api-token`, `pass notion-api-key`, and the
@@ -50,6 +51,20 @@
                    ;; a literal | would break the org table cell
                    (str "| " (str/join " | " (map #(str/replace (str %) "|" "¦") row)) " |"))
                  rows)))
+
+(defn- indent [s]
+  (str/join "\n" (map #(str "  " %) (str/split-lines (str s)))))
+
+(defn- comment-head [[author kind where created _ _]]
+  (str/join "  " (remove str/blank? [author kind where (first (str/split (str created) #"T"))])))
+
+(defn render-comments [rows]
+  (str/join "\n\n" (map #(str (comment-head %) "\n" (indent (nth % 4))) rows)))
+
+(defn render-comment-list [link]
+  (fn [rows]
+    (str/join "\n" (map #(str "- " (link (nth % 5) (comment-head %)) "\n" (indent (nth % 4)))
+                        rows))))
 
 (defn render-json [cols rows]
   (json/generate-string (map #(zipmap cols %) rows) {:pretty true}))
@@ -115,13 +130,13 @@
 
 (def pr-fields "number,repository,state,isDraft,title,author,createdAt,commentsCount,url")
 
-(defn gh-search [& args]
+(defn gh-json [& args]
   (try
-    (json/parse-string
-     (:out (apply p/shell {:out :string} "gh" "search" "prs" "--state=open"
-                  "--json" pr-fields args))
-     true)
-    (catch Exception _ (die "gh search failed:" (str/join " " args)))))
+    (json/parse-string (:out (apply p/shell {:out :string} "gh" args)) true)
+    (catch Exception _ (die "gh failed:" (str/join " " args)))))
+
+(defn gh-search [& args]
+  (apply gh-json "search" "prs" "--state=open" "--json" pr-fields args))
 
 (defn fetch-prs []
   {:requested (gh-search "--review-requested=@me")
@@ -157,6 +172,97 @@
                   (str/join "\n" (map (fn [[pr title url]]
                                         (str "- [" pr "](" url ") " title))
                                       rows)))}})
+
+;; --- github comments ----------------------------------------------------
+
+(def comments-query
+  "query($owner:String!,$repo:String!,$number:Int!){
+     repository(owner:$owner,name:$repo){ pullRequest(number:$number){
+       comments(first:100){ pageInfo{ hasNextPage } nodes{ createdAt url body author{login __typename} } }
+       reviews(first:100){ pageInfo{ hasNextPage } nodes{ createdAt url body state author{login __typename} } }
+       reviewThreads(first:100){ pageInfo{ hasNextPage } nodes{ isResolved path line originalLine
+         comments(first:50){ pageInfo{ hasNextPage }
+           nodes{ createdAt url body author{login __typename} } } } } } } }")
+
+;; integration comments posted under a human account, so __typename won't out them
+(def bot-noise #"(?m)^<!-- \w+-pr-comment|^<!-- linear-|This stack of pull requests is managed by")
+
+(defn- gh-pr-args [arg]
+  ;; gh itself takes a number, url or branch; owner/repo#n needs splitting into -R
+  (if-let [[_ repo number] (re-find #"^([^/\s]+/[^/#\s]+)#(\d+)$" (str arg))]
+    [number "-R" repo]
+    (when arg [(str arg)])))
+
+(defn pr-ref [arg]
+  ;; gh's own diagnosis of an unresolvable ref beats anything we could infer, so keep it
+  (let [{:keys [exit out err]} (apply p/shell {:out :string :err :string :continue true}
+                                      "gh" "pr" "view" (concat (gh-pr-args arg) ["--json" "url"]))
+        url (when (zero? exit) (:url (json/parse-string out true)))
+        [_ owner repo number] (re-find #"github\.com/([^/]+)/([^/]+)/pull/(\d+)" (str url))]
+    (when-not number
+      (die (str/join "\n"
+                     (remove str/blank?
+                             [(if arg
+                                (str "no PR matching " arg)
+                                (str "no PR for the current branch of "
+                                     (System/getProperty "user.dir")))
+                              (str/trim (str err))
+                              "give a PR as a number, url or owner/repo#n"]))))
+    {:owner owner :repo repo :number (parse-long number)}))
+
+(defn- truncated? [pr]
+  (or (some #(get-in pr [% :pageInfo :hasNextPage]) [:comments :reviews :reviewThreads])
+      (some #(get-in % [:comments :pageInfo :hasNextPage]) (get-in pr [:reviewThreads :nodes]))))
+
+(defn fetch-comments [{:keys [owner repo number]}]
+  (let [body (gh-json "api" "graphql"
+                      "-F" (str "owner=" owner) "-F" (str "repo=" repo) "-F" (str "number=" number)
+                      "-f" (str "query=" comments-query))]
+    (when (truncated? (get-in body [:data :repository :pullRequest]))
+      (binding [*out* *err*]
+        (println "warning: showing one page only (100 comments, 50 replies per thread);"
+                 "this PR has more")))
+    body))
+
+(defn- comment-row [kind where c]
+  [(get-in c [:author :login] "ghost") kind where (:createdAt c)
+   (str/trim (str (:body c))) (:url c)])
+
+(defn- worth-showing? [all? c]
+  (or all?
+      (and (not= "Bot" (get-in c [:author :__typename]))
+           (not (re-find bot-noise (str (:body c)))))))
+
+(defn- review-entry [keep? r]
+  ;; a bodyless COMMENTED review is just the envelope around its inline comments
+  (when (and (keep? r) (not (and (str/blank? (str (:body r)))
+                                 (= "COMMENTED" (:state r)))))
+    [(comment-row (str/lower-case (str (:state r))) nil r)]))
+
+(defn- thread-entry [keep? t]
+  (let [where (str (:path t) ":" (or (:line t) (:originalLine t)))
+        kind (if (:isResolved t) "resolved" "inline")]
+    (->> (get-in t [:comments :nodes])
+         (filter keep?)
+         (map-indexed #(comment-row (if (zero? %1) kind "reply") where %2))
+         seq)))
+
+(defn comments-view [body {:keys [all]}]
+  (let [pr (get-in body [:data :repository :pullRequest])
+        keep? (partial worth-showing? all)
+        threads (cond->> (get-in pr [:reviewThreads :nodes])
+                  (not all) (remove :isResolved))]
+    {:cols [:author :kind :where :created :body :url]
+     ;; entries stay contiguous so a thread's replies follow its first comment
+     :rows (->> (concat (keep #(review-entry keep? %) (get-in pr [:reviews :nodes]))
+                        (keep #(thread-entry keep? %) threads)
+                        (map #(vector (comment-row "comment" nil %))
+                             (filter keep? (get-in pr [:comments :nodes]))))
+                (sort-by #(nth (first %) 3))
+                (apply concat))
+     :render {:table render-comments
+              :org (render-comment-list #(str "[[" %1 "][" %2 "]]"))
+              :md (render-comment-list #(str "[" %2 "](" %1 ")"))}}))
 
 ;; --- notion ------------------------------------------------------------
 
@@ -199,6 +305,9 @@ usage: tt <command> [--format table|org|json]
   tt linear api <query>       raw GraphQL query, prints JSON
   tt gh prs                   open PRs: review-requested + authored
   tt gh todo                  authored non-draft PRs (--format md|org lists)
+  tt gh comments [<pr>]       review comments on a PR (default: current branch);
+                              <pr> is a number, url or owner/repo#n. --all keeps
+                              resolved threads and bot chatter
   tt notion tasks             my unfinished Notion tasks")))
   (System/exit 2))
 
@@ -214,6 +323,11 @@ usage: tt <command> [--format table|org|json]
       :fn #(emit (prs-view (fetch-prs)) (fmt %))}
      {:cmds ["gh" "todo"]         :spec format-spec
       :fn #(emit (todo-view (:mine (fetch-prs))) (fmt %))}
+     ;; :args->opts, or babashka.cli would treat flags after the pr ref as trailing args
+     {:cmds ["gh" "comments"]     :spec (assoc format-spec :all {:coerce :boolean})
+      :args->opts [:pr]
+      :fn #(emit (comments-view (fetch-comments (pr-ref (get-in % [:opts :pr]))) (:opts %))
+                 (fmt %))}
      {:cmds ["notion" "tasks"]    :spec format-spec
       :fn #(emit (notion-view (notion-post)) (fmt %))}
      {:cmds [] :fn usage!}]))

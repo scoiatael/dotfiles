@@ -52,6 +52,65 @@
     (is (= "- [[u1][repo-a#1]] ready" ((get-in view [:render :org]) (:rows view))))
     (is (= "- [repo-a#1](u1) ready" ((get-in view [:render :md]) (:rows view))))))
 
+(defn- gh-comment [login typename at body]
+  {:createdAt at :url (str "u-" at) :body body :author {:login login :__typename typename}})
+
+(def comments-fixture
+  {:data {:repository {:pullRequest
+    {:comments {:nodes [(gh-comment "linear-code" "Bot" "2026-08-01T00:00:00Z" "<!-- linear-linkback -->")
+                        (gh-comment "lukas" "User" "2026-08-05T00:00:00Z"
+                                    "* **#333**\nThis stack of pull requests is managed by Graphite.")
+                        (gh-comment "lukas" "User" "2026-08-06T00:00:00Z" "screenshots below")]}
+     :reviews {:nodes [(assoc (gh-comment "pasta" "User" "2026-08-04T00:00:00Z" "does it need both?")
+                              :state "APPROVED")
+                       (assoc (gh-comment "pasta" "User" "2026-08-03T00:00:00Z" "")
+                              :state "COMMENTED")]}
+     :reviewThreads {:nodes
+       [{:isResolved false :path "a.rb" :line 9 :originalLine 20
+         :comments {:nodes [(gh-comment "rjoken" "User" "2026-08-02T00:00:00Z" "unique per attempt?")
+                            (gh-comment "lukas" "User" "2026-08-02T01:00:00Z" "per invoice")]}}
+        {:isResolved true :path "b.rb" :line nil :originalLine 29
+         :comments {:nodes [(gh-comment "pasta" "User" "2026-08-07T00:00:00Z" "where from?")]}}]}}}}})
+
+(deftest comments-hides-noise-and-keeps-threads-together
+  (let [rows (:rows (comments-view comments-fixture {}))]
+    (is (= [["rjoken" "inline"] ["lukas" "reply"] ["pasta" "approved"] ["lukas" "comment"]]
+           (map #(vec (take 2 %)) rows))
+        "bots, integration chatter, empty review envelopes and resolved threads drop out")
+    (is (= "a.rb:9" (nth (first rows) 2)))))
+
+(deftest comments-all-keeps-everything
+  (let [rows (:rows (comments-view comments-fixture {:all true}))]
+    (is (= ["linear-code" "rjoken" "lukas" "pasta" "lukas" "lukas" "pasta"]
+           (map first rows))
+        "--all brings back bots and resolved threads, but never empty review envelopes")
+    (is (= "b.rb:29" (nth (last rows) 2)) "resolved threads fall back to originalLine")
+    (is (= "resolved" (nth (last rows) 1)))))
+
+(deftest comments-pr-ref-forms
+  (is (= ["326" "-R" "WootingKb/wooting-mono"] (gh-pr-args "WootingKb/wooting-mono#326")))
+  (is (= ["326"] (gh-pr-args 326)) "cli coerces a bare number, gh needs a string")
+  (is (= ["https://github.com/o/r/pull/1"] (gh-pr-args "https://github.com/o/r/pull/1")))
+  (is (nil? (gh-pr-args nil)) "no ref at all means gh picks the current branch"))
+
+(deftest comments-truncation-detection
+  (let [pr #(get-in % [:data :repository :pullRequest])]
+    (is (not (truncated? (pr comments-fixture))) "a fixture within one page stays quiet")
+    (is (truncated? (assoc-in (pr comments-fixture) [:reviews :pageInfo :hasNextPage] true)))
+    (is (truncated? (assoc-in (pr comments-fixture)
+                              [:reviewThreads :nodes 0 :comments :pageInfo :hasNextPage] true))
+        "a thread whose replies overflow counts too")))
+
+(deftest comments-rendering
+  (let [view (comments-view comments-fixture {})
+        rows (:rows view)]
+    (is (= "rjoken  inline  a.rb:9  2026-08-02\n  unique per attempt?"
+           (first (str/split (render-comments rows) #"\n\n"))))
+    (is (str/starts-with? ((get-in view [:render :md]) rows)
+                          "- [rjoken  inline  a.rb:9  2026-08-02](u-2026-08-02T00:00:00Z)\n  unique"))
+    (is (str/starts-with? ((get-in view [:render :org]) rows)
+                          "- [[u-2026-08-02T00:00:00Z][rjoken  inline  a.rb:9  2026-08-02]]\n"))))
+
 (def notion-fixture
   {:results
    [{:properties {:Status {:status {:name "In progress"}}
@@ -85,18 +144,37 @@
     (testing "gh subcommands work against a stubbed gh"
       (let [dir (fs/create-temp-dir)
             stub (fs/file (fs/path dir "gh"))]
-        (spit stub (str "#!/bin/sh\necho '" (json/generate-string pr-fixture) "'\n"))
+        (spit stub (str "#!/bin/sh\ncase \"$*\" in\n"
+                        "  *graphql*) echo '" (json/generate-string comments-fixture) "' ;;\n"
+                        "  \"pr view\"*) echo '{\"url\":\"https://github.com/o/r/pull/7\"}' ;;\n"
+                        "  *) echo '" (json/generate-string pr-fixture) "' ;;\n"
+                        "esac\n"))
         (fs/set-posix-file-permissions stub "rwxr-xr-x")
         (let [env {"PATH" (str dir ":" (System/getenv "PATH"))}
-              prs (p/shell {:out :string :continue true :extra-env env}
-                           bin "gh" "prs" "--format" "json")
-              todo (p/shell {:out :string :continue true :extra-env env}
-                            bin "gh" "todo" "--format" "md")]
+              run #(p/shell {:out :string :continue true :extra-env env} bin "gh" %1 %2 %3)
+              prs (run "prs" "--format" "json")
+              todo (run "todo" "--format" "md")
+              comments (run "comments" "--format" "json")]
           (is (zero? (:exit prs)))
           (is (= 4 (count (json/parse-string (:out prs))))
               "review-requested + authored fixtures concatenated")
           (is (zero? (:exit todo)))
-          (is (= "- [repo-a#1](u1) ready" (str/trim (:out todo)))))))))
+          (is (= "- [repo-a#1](u1) ready" (str/trim (:out todo))))
+          (is (zero? (:exit comments)))
+          (is (= ["rjoken" "lukas" "pasta" "lukas"]
+                 (map #(get % "author") (json/parse-string (:out comments))))))))
+    (testing "an unresolvable PR explains itself and keeps gh's diagnosis"
+      (let [dir (fs/create-temp-dir)
+            stub (fs/file (fs/path dir "gh"))]
+        (spit stub "#!/bin/sh\necho 'no remotes point to a known GitHub host' >&2\nexit 1\n")
+        (fs/set-posix-file-permissions stub "rwxr-xr-x")
+        (let [r (p/shell {:out :string :err :string :continue true
+                          :extra-env {"PATH" (str dir ":" (System/getenv "PATH"))}}
+                         bin "gh" "comments")]
+          (is (= 1 (:exit r)))
+          (is (str/includes? (:err r) "no PR for the current branch of"))
+          (is (str/includes? (:err r) "no remotes point to a known GitHub host"))
+          (is (str/includes? (:err r) "number, url or owner/repo#n")))))))
 
 (let [{:keys [fail error]} (run-tests)]
   (when (pos? (+ fail error))

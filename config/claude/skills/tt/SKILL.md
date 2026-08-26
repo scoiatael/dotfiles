@@ -16,6 +16,7 @@ tt linear projects          projects from the "My projects" view
 tt linear api '<query>'     raw Linear GraphQL, prints JSON
 tt gh prs                   open PRs: review-requested + authored (drafts first)
 tt gh todo                  authored non-draft PRs awaiting action
+tt gh comments [<pr>]       one PR's review discussion — see [[pr-comments]]
 tt notion tasks             unfinished Notion tasks assigned to the user
 ```
 
