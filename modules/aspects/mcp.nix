@@ -40,33 +40,6 @@
         };
       };
 
-      programs.git.ignores = lib.mkAfter (
-        map (p: "/.codegraph/${p}") [
-          # CodeGraph data files
-          # These are local to each machine and should not be committed
-
-          # Database
-          "*.db"
-          "*.db-wal"
-          "*.db-shm"
-
-          # Cache
-          "cache/"
-
-          # Logs
-          "*.log"
-
-          # Hook markers
-          ".dirty"
-
-          # Misc
-          "daemon.pid"
-          "codegraph.lock"
-          "daemon.sock"
-
-          # Yeah...
-          ".gitignore"
-        ]
-      );
+      programs.git.ignores = lib.mkAfter [ "/.codegraph" ];
     };
 }
