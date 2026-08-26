@@ -11,6 +11,7 @@
   den.aspects.maki.includes = [
     den.aspects.llm-agents
     den.aspects.llama
+    den.aspects.mcp
   ];
   den.aspects.maki.homeManager =
     {
@@ -48,5 +49,6 @@
         };
       };
       home.file.".config/maki/init.lua".source = dotfiles.config."maki/init.lua";
+      programs.git.ignores = lib.mkAfter [ "/.maki" ];
     };
 }
