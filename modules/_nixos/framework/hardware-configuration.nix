@@ -47,12 +47,23 @@
     };
   };
 
+  boot.initrd.systemd.services.mount-usb-stick = {
+    script = ''
+      systemd-mount /dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89 || echo "USB key not found"
+    '';
+    wantedBy = [ "cryptsetup-pre.target" ];
+  };
+
   boot.initrd.luks.devices = {
     internal = {
       device = "/dev/disk/by-uuid/e9c87df3-a5b1-4765-8da6-d055c26d3323";
       allowDiscards = true;
+      keyFile = "/run/media/system/primary/e9c87df3-a5b1-4765-8da6-d055c26d3323.key";
     };
-    external.device = "/dev/disk/by-uuid/c5ff78fd-65af-403c-a64b-d80d8192fbf6";
+    external = {
+      device = "/dev/disk/by-uuid/c5ff78fd-65af-403c-a64b-d80d8192fbf6";
+      keyFile = "/run/media/system/primary/c5ff78fd-65af-403c-a64b-d80d8192fbf6.key";
+    };
   };
 
   fileSystems."/" = {
