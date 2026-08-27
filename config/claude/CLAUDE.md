@@ -9,6 +9,8 @@ In repositories indexed by CodeGraph (a `.codegraph/` directory exists at the re
 If there is no `.codegraph/` directory, skip CodeGraph entirely — indexing is the user's decision.
 <!-- CODEGRAPH_END -->
 
-## Comments
+## Comments and docs
 
 Prefer self-explanatory code over comments: clear names, small functions, explicit types. Add a comment only when it carries something the code cannot — a non-obvious constraint, why a workaround exists, or a link to an external reference. Never restate what the next line already says.
+
+Describe how the code works now, not how it got there. Once something is fixed, drop the symptom, the diagnosis and the date — git history already records them. Keep the past only where it still constrains the present: an ordering or workaround that looks arbitrary needs the reason it exists, phrased as a live constraint rather than a changelog entry.

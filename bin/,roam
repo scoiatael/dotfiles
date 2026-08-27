@@ -130,12 +130,16 @@
     (die (format "Emacs has unsaved changes in %s — save or revert there first." path))))
 
 (defn- reindex
-  "Reindex PATH and refresh any clean buffer showing it."
+  "Refresh any clean buffer showing PATH, then reindex it.
+  The revert must come first: writes here reach the file directly, leaving an
+  open buffer clean but stale, and org-roam-db-update-file hashes the file from
+  disk while parsing through that buffer. Reindexing first would record the new
+  hash against stale content, which later syncs then skip as up to date."
   [path]
-  (eval-elisp (format "(progn (org-roam-db-update-file %s)
-                              (let ((b (get-file-buffer %s)))
+  (eval-elisp (format "(progn (let ((b (get-file-buffer %s)))
                                 (when (and b (not (buffer-modified-p b)))
                                   (with-current-buffer b (revert-buffer t t t))))
+                              (org-roam-db-update-file %s)
                               \"ok\")"
                       (elisp-str path) (elisp-str path))
               :as :string))

@@ -5,9 +5,13 @@ description: Read and write the user's org-roam notes with the ,roam helper — 
 
 # Working with org-roam notes
 
-`bin/,roam` drives org-roam through the running Emacs, using org-roam's own
-node accessors. 253 notes live in `$org-roam-directory`
+`,roam` drives org-roam through the running Emacs, using org-roam's own node
+accessors. 253 notes live in `$org-roam-directory`
 (`/Users/lukas/My Drive/org/roam/`).
+
+It is already on `PATH` as `,roam` (it lives in the dotfiles `bin/`, not in
+this skill directory — there is no `bin/` here). Call it bare: `,roam cat foo`.
+Never prepend anything to `PATH` first, and never invoke it by absolute path.
 
 Prefer it over grepping the notes directory: it resolves aliases and tags,
 knows the link graph, and reflects the live session rather than what has been
@@ -83,17 +87,9 @@ Note paths contain spaces — `~/org` symlinks to Google Drive and the notes
 resolve under `/Users/lukas/My Drive/org/roam/`. Quote every path taken from
 `,roam file`.
 
-The per-file reindex does not always pick up changed `#+title:` or
-`#+filetags:`. After such an edit the node can keep its old title, so a lookup
-by the new one fails while the old one still resolves. Neither `edit`'s own
-reindex nor a plain `(org-roam-db-sync)` helped; a forced full sync did:
-
-```
-emacsclient -e '(org-roam-db-sync t)'
-```
-
-Check with `,roam links <new-title>` before assuming a rename took, and run
-the forced sync whenever new `[[id:...]]` links need to show up as backlinks.
+If the index ever looks out of step with the files, a forced full sync repairs
+it — `emacsclient -e '(org-roam-db-sync t)'`. The `t` is what does the work;
+without it the call returns `t` and changes nothing.
 
 Retitling does not rename the file. The slug is fixed at creation from the
 original title, so an edited `#+title:` leaves the filename behind — every
