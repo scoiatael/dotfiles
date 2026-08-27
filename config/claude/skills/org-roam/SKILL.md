@@ -47,6 +47,18 @@ template.
 Every write reindexes via `org-roam-db-update-file`, so a new note is
 searchable immediately and any clean buffer showing the file is reverted.
 
+No verb replaces a note wholesale, and `edit` blocks on an interactive
+`$EDITOR`. To rewrite a whole note non-interactively, point `EDITOR` at a
+command that takes the file as its last argument — `edit` runs it as
+`sh -c '$EDITOR "$1"'`, so baked-in arguments work:
+
+```
+EDITOR="cp /path/to/new.org" ,roam edit systemd-cred
+```
+
+That keeps the dirty-buffer check and the reindex. Copy the original aside
+first; there is no undo.
+
 There is deliberately no delete verb. Removing notes stays a manual act in
 Emacs.
 
@@ -70,3 +82,20 @@ and names the existing id; `--force` overrides.
 Note paths contain spaces — `~/org` symlinks to Google Drive and the notes
 resolve under `/Users/lukas/My Drive/org/roam/`. Quote every path taken from
 `,roam file`.
+
+The per-file reindex does not always pick up changed `#+title:` or
+`#+filetags:`. After such an edit the node can keep its old title, so a lookup
+by the new one fails while the old one still resolves. Neither `edit`'s own
+reindex nor a plain `(org-roam-db-sync)` helped; a forced full sync did:
+
+```
+emacsclient -e '(org-roam-db-sync t)'
+```
+
+Check with `,roam links <new-title>` before assuming a rename took, and run
+the forced sync whenever new `[[id:...]]` links need to show up as backlinks.
+
+Retitling does not rename the file. The slug is fixed at creation from the
+original title, so an edited `#+title:` leaves the filename behind — every
+other note has them matching, so rename it in Emacs (`org-roam-node-slug`
+style) or leave the title alone.
