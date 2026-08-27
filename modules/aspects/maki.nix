@@ -59,6 +59,10 @@
           name = "maki/mcp.toml";
           path = mcpToml;
         }
+        {
+          name = "maki/AGENTS.md";
+          path = dotfiles.config."maki/AGENTS.md";
+        }
       ];
 
       # Runs inside the sandbox. XDG_CONFIG_HOME is set here rather than in
@@ -98,6 +102,7 @@
       ];
 
       home.file.".config/maki/mcp.toml".source = mcpToml;
+      home.file.".config/maki/AGENTS.md".source = dotfiles.config."maki/AGENTS.md";
       home.file.".config/maki/init.lua".source = dotfiles.config."maki/init.lua";
       programs.git.ignores = lib.mkAfter [ "/.maki" ];
     };
