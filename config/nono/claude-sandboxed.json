@@ -1,0 +1,42 @@
+{
+  "extends": "claude",
+  "meta": {
+    "name": "claude-sandboxed"
+  },
+  "groups": {
+    "include": [],
+    "exclude": []
+  },
+  "commands": {
+    "allow": [],
+    "deny": []
+  },
+  "workdir": {
+    "access": "readwrite"
+  },
+  "filesystem": {
+    "allow": ["~/Documents", "~/dotfiles"],
+    "read": [],
+    "write": [],
+    "allow_file": [],
+    "read_file": [],
+    "write_file": [],
+    "deny": [],
+    "bypass_protection": [],
+    "suppress_save_prompt": []
+  },
+  "network": {
+    "block": false,
+    "allow_domain": [],
+    "credentials": [],
+    "open_port": [],
+    "listen_port": [],
+    "custom_credentials": {}
+  },
+  "env_credentials": {},
+  "hooks": {},
+  "rollback": {
+    "exclude_patterns": [],
+    "exclude_globs": []
+  }
+}

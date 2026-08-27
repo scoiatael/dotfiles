@@ -20,7 +20,9 @@
       nono = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.nono;
       claude-sandboxed = pkgs.writeShellScriptBin "claude-sandboxed" ''
         exec ${lib.getExe' nono "nono"} run \
-          --profile ${nono-packs}/claude/policy.json \
+          --rollback \
+          --profile claude-sandboxed \
+          --
           ${lib.getExe' config.programs.claude-code.finalPackage "claude"} "$@"
       '';
     in
@@ -31,10 +33,12 @@
         self'.packages.claude-url-allowlist
       ];
 
-      xdg.configFile = {
-        "nono/profiles/claude.json".source = "${nono-packs}/claude/policy.json";
-        "nono/profile-drafts/.nono-claude-pack-marker".source =
-          "${nono-packs}/claude/wiring/profile-drafts-dir-marker";
+      xdg.configFile."nono/profiles".source = pkgs.buildEnv {
+        name = "nono-profiles";
+        paths = [ ../../config/nono ];
+        postBuild = ''
+          ln -s "${nono-packs}/claude/policy.json" $out/claude.json
+        '';
       };
 
       programs.claude-code = {
