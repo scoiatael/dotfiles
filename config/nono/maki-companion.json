@@ -1,0 +1,37 @@
+{
+  "extends": "default",
+  "meta": {
+    "name": "maki-companion",
+    "description": "Read-only maki ACP companion agent driven from Emacs"
+  },
+  "groups": {
+    "include": [
+      "nix_runtime",
+      "git_config",
+      "unlink_protection",
+      { "name": "system_read_macos", "when": "macos" },
+      { "name": "system_write_macos", "when": "macos" },
+      { "name": "user_caches_macos", "when": "macos" }
+    ]
+  },
+  "workdir": {
+    "access": "read"
+  },
+  "filesystem": {
+    "allow": [
+      "$HOME/.local/state/maki",
+      "/tmp/maki-companion-$UID",
+      "$WORKDIR/.codegraph"
+    ],
+    "read": [
+      "$HOME/.config/maki",
+      "$NONO_CONFIG/profiles",
+      "$NONO_PACKAGES"
+    ]
+  },
+  "network": {
+    "block": false,
+    "open_port": [8081]
+  },
+  "interactive": false
+}

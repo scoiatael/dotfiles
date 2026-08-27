@@ -69,3 +69,18 @@
 
 (use-package! amp
   :when (modulep! +amp))
+
+;; Read-only companion agent: maki over ACP, sandboxed by nono. See
+;; modules/aspects/maki.nix (the `maki-companion' launcher) and
+;; config/nono/maki-companion.json for what it is actually allowed to touch.
+(use-package! agent-shell
+  :when (modulep! +agent)
+  :init
+  (setq agent-shell-permission-responder-function
+        #'scoiatael/agent-shell-companion-permission-responder)
+  :config
+  (add-to-list 'agent-shell-agent-configs
+               #'scoiatael/agent-shell-maki-companion-config)
+  (map! :localleader
+        "g c" #'scoiatael/agent-shell-maki-companion
+        "g v" #'scoiatael/agent-shell-companion-review))

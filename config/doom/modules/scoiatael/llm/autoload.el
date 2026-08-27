@@ -52,3 +52,100 @@ With prefix ARG, prompt for a gptel directive."
 
     ;; Display the new buffer
     (pop-to-buffer gptel-buffer)))
+
+;;; Companion agent (maki over ACP, sandboxed by nono)
+
+(defvar scoiatael/maki-companion-acp-command '("maki-companion")
+  "Command starting the read-only maki ACP server.
+
+Defined in `modules/aspects/maki.nix'.  It resolves the API key outside
+the sandbox, points XDG_CONFIG_HOME at the companion's own maki config
+\(which is what drops the write tools), points TMPDIR at the one writable
+scratch directory, and execs `maki acp' under the `maki-companion' nono
+profile.")
+
+(defvar scoiatael/agent-shell-companion-denied-tool-kinds '("edit" "delete" "move")
+  "ACP tool-call kinds the companion is never allowed to run.
+
+Everything else is auto-approved, `execute' included: the point of the
+companion is that it can run checks and linters unattended, and the nono
+profile -- not a modal dialog -- is what stops it changing anything.")
+
+;;;###autoload
+(defun scoiatael/agent-shell-maki-companion-config ()
+  "Return the agent-shell configuration for the maki companion agent."
+  (agent-shell-make-agent-config
+   :identifier 'maki-companion
+   :mode-line-name "Maki companion"
+   :buffer-name "Maki companion"
+   :shell-prompt "Companion> "
+   :shell-prompt-regexp "Companion> "
+   :client-maker
+   (lambda (buffer)
+     (agent-shell--make-acp-client
+      :command (car scoiatael/maki-companion-acp-command)
+      :command-params (cdr scoiatael/maki-companion-acp-command)
+      :environment-variables (agent-shell-make-environment-variables
+                              :inherit-env t)
+      :context-buffer buffer))
+   :install-instructions
+   "Provided by the `maki' aspect. Run a home-manager switch to install it."))
+
+;;;###autoload
+(defun scoiatael/agent-shell-maki-companion ()
+  "Start, or switch to, the read-only maki companion shell."
+  (interactive)
+  (agent-shell--dwim :config (scoiatael/agent-shell-maki-companion-config)))
+
+;;;###autoload
+(defun scoiatael/agent-shell-companion-permission-responder (permission)
+  "Answer PERMISSION without prompting, in companion shells only.
+
+Returns nil elsewhere, so other agents keep the interactive dialog."
+  (when (eq 'maki-companion
+            (map-elt (agent-shell-get-config (current-buffer)) :identifier))
+    (let* ((kind (map-elt (map-elt permission :tool-call) :kind))
+           (wanted (if (member kind scoiatael/agent-shell-companion-denied-tool-kinds)
+                       "reject_once"
+                     "allow_once")))
+      (when-let* ((choice (seq-find (lambda (option)
+                                      (equal (map-elt option :kind) wanted))
+                                    (map-elt permission :options))))
+        (funcall (map-elt permission :respond) (map-elt choice :option-id))
+        t))))
+
+(defvar scoiatael/agent-shell-companion-review-prompt
+  "Review this for anything worth changing. Skip praise and summary."
+  "Default request sent by `scoiatael/agent-shell-companion-review'.")
+
+;;;###autoload
+(defun scoiatael/agent-shell-companion-review (&optional arg)
+  "Ask the companion agent about the region, or the whole buffer.
+
+Sends a `file:line-line' reference rather than the text itself: the agent
+can read the file, the transcript stays short, and the reference keeps
+pointing at the right place as the buffer changes.
+
+With prefix ARG, prompt for the question instead of using
+`scoiatael/agent-shell-companion-review-prompt'."
+  (interactive "P")
+  (unless (buffer-file-name)
+    (user-error "Buffer is not visiting a file"))
+  (let* ((root (if-let* ((project (project-current)))
+                   (project-root project)
+                 default-directory))
+         (target (if (use-region-p)
+                     (format "%s:%d-%d"
+                             (file-relative-name (buffer-file-name) root)
+                             (line-number-at-pos (region-beginning))
+                             (line-number-at-pos (max (region-beginning)
+                                                      (1- (region-end)))))
+                   (file-relative-name (buffer-file-name) root)))
+         (question (if arg
+                       (read-string (format "Ask about %s: " target)
+                                    scoiatael/agent-shell-companion-review-prompt)
+                     scoiatael/agent-shell-companion-review-prompt)))
+    (deactivate-mark)
+    (agent-shell-insert :text (format "%s\n\n%s" question target)
+                        :submit t
+                        :shell-buffer (agent-shell-shell-buffer))))
