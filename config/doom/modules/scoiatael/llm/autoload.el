@@ -91,11 +91,26 @@ profile -- not a modal dialog -- is what stops it changing anything.")
    :install-instructions
    "Provided by the `maki' aspect. Run a home-manager switch to install it."))
 
+(defun scoiatael/agent-shell-companion-buffer ()
+  "Return this project's companion shell buffer, starting one if needed.
+
+Deliberately not `agent-shell--dwim' or `agent-shell-shell-buffer': both
+end up in `agent-shell--shell-buffer', whose last resort is prompting for
+an agent, and `--dwim' ignores its :config unless :new-shell is set."
+  (or (seq-find (lambda (buffer)
+                  (eq 'maki-companion
+                      (map-elt (agent-shell-get-config buffer) :identifier)))
+                (agent-shell-project-buffers))
+      (agent-shell-start :config (scoiatael/agent-shell-maki-companion-config))))
+
 ;;;###autoload
 (defun scoiatael/agent-shell-maki-companion ()
   "Start, or switch to, the read-only maki companion shell."
   (interactive)
-  (agent-shell--dwim :config (scoiatael/agent-shell-maki-companion-config)))
+  (let ((buffer (scoiatael/agent-shell-companion-buffer)))
+    (if-let* ((window (get-buffer-window buffer)))
+        (select-window window)
+      (select-window (display-buffer buffer agent-shell-display-action)))))
 
 ;;;###autoload
 (defun scoiatael/agent-shell-companion-permission-responder (permission)
@@ -148,4 +163,4 @@ With prefix ARG, prompt for the question instead of using
     (deactivate-mark)
     (agent-shell-insert :text (format "%s\n\n%s" question target)
                         :submit t
-                        :shell-buffer (agent-shell-shell-buffer))))
+                        :shell-buffer (scoiatael/agent-shell-companion-buffer))))

@@ -81,6 +81,14 @@
   :config
   (add-to-list 'agent-shell-agent-configs
                #'scoiatael/agent-shell-maki-companion-config)
+  ;; A dedicated side window, treemacs style: it survives `delete-other-windows'
+  ;; and keeps its width, so the companion stays visible next to the code.
+  (setq agent-shell-display-action
+        '((display-buffer-in-side-window)
+          (side . left)
+          (slot . 0)
+          (window-width . 0.4)
+          (window-parameters . ((no-delete-other-windows . t)))))
   (map! :localleader
         "g c" #'scoiatael/agent-shell-maki-companion
         "g v" #'scoiatael/agent-shell-companion-review))
