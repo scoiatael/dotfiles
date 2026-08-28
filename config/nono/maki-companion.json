@@ -1,3 +1,6 @@
+// Sandbox for the read-only maki companion agent driven from Emacs.
+// Launched by the `maki-companion' script in modules/aspects/maki.nix.
+// nono parses JSONC, so these comments are fine; unknown *keys* are not.
 {
   "extends": "default",
   "meta": {
@@ -14,24 +17,52 @@
       { "name": "user_caches_macos", "when": "macos" }
     ]
   },
+  "security": {
+    // Babashka is a GraalVM native image, and its startup opens a POSIX
+    // semaphore. Under the default "shared_memory_only" that is denied and
+    // every bb script dies before running:
+    //
+    //   CSunMiscSignal.open() failed.  errno: 1  Operation not permitted
+    //
+    // The name points at signals, but signal_mode is not the fix -- semaphores
+    // are IPC. "full" is what enables them. Without this, the ,roam / ,hm-eval
+    // style helpers the skills depend on are all unusable.
+    "ipc_mode": "full"
+  },
   "workdir": {
+    // The whole point: the project is readable, never writable. Needs
+    // --allow-cwd on the command line, which is mandatory anyway when
+    // interactive is false.
     "access": "read"
   },
   "filesystem": {
     "allow": [
       "$HOME/.local/state/maki",
+      // Scratch space for one-off scripts. The launcher points TMPDIR here so
+      // anything using mktemp stays inside the grant.
       "/tmp/maki-companion-$UID",
+      // SQLite must create WAL/journal files beside the database even to read
+      // it, so a read-only .codegraph/ fails with "unable to open database
+      // file". Expanded from --workdir on the launcher.
       "$WORKDIR/.codegraph"
     ],
     "read": [
       "$HOME/.config/maki",
+      // maki discovers skills from ~/.claude/skills. Without this only its
+      // builtin skill is found. Deliberately not all of ~/.claude, which also
+      // holds credentials.
+      "$HOME/.claude/skills",
       "$NONO_CONFIG/profiles",
       "$NONO_PACKAGES"
     ]
   },
   "network": {
     "block": false,
+    // Kagi's MCP server. A no-op on macOS -- Seatbelt cannot filter outbound
+    // connections by port -- but it is what grants this on Linux.
     "open_port": [8081]
   },
+  // A save-profile prompt would be written into the ACP stdio stream and
+  // corrupt the JSON-RPC framing. Same reason the launcher passes --silent.
   "interactive": false
 }
