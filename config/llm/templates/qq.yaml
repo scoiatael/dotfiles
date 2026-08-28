@@ -24,11 +24,12 @@ prompt: |
   ASSISTANT: { "commandline": "ffmpeg -i input.mp4 output.mp3" }
 
   USER: convert an mp4 to jpg
-  ASSISTANT: { "comments: "%F{red}It makes no sense!%F{reset_color}Did you mean: %F{blue}convert an mp4 to mp3?%F{reset_color}" }
+  ASSISTANT: { "comments": "%F{red}It makes no sense!%F{reset_color}Did you mean: %F{blue}convert an mp4 to mp3?%F{reset_color}" }
+
 schema_object:
   type: object
   properties:
     comments:
-      type: ["string", "null"]
+      type: "string"
     commandline:
-      type: ["string", "null"]
+      type: "string"
