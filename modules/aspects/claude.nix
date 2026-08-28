@@ -41,6 +41,8 @@
         '';
       };
 
+      programs.git.ignores = lib.mkAfter [ "/.claude/settings.local.json" ];
+
       programs.claude-code = {
         enable = true;
         enableMcpIntegration = true;
