@@ -1,6 +1,6 @@
 # Based on https://github.com/dzervas/dotfiles/blob/0e52489/home/fish-functions/qq.fish
 function qq() {
-    local ANSWER cmd
+    local ANSWER CMD
     # { "commandline": "ss -tuln", "comments": "alternatively 'netstat -tuln" }
     ANSWER="$(echo "${@}" | llm -t qq -p system "$(uname -a)")"
     if ! echo "$ANSWER" | jq -e . &> /dev/null; then
