@@ -11,6 +11,16 @@
     "allow": [],
     "deny": []
   },
+  "security": {
+    // Babashka is a GraalVM native image and opens a POSIX semaphore at
+    // startup. The inherited default denies semaphores, so every bb script
+    // (,roam and friends) dies with:
+    //
+    //   CSunMiscSignal.open() failed.  errno: 1  Operation not permitted
+    //
+    // Despite the name that is IPC, not signals -- signal_mode is not the fix.
+    "ipc_mode": "full"
+  },
   "workdir": {
     "access": "readwrite"
   },
