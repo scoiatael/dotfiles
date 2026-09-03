@@ -1,11 +1,12 @@
-// Sandbox for the read-only maki companion agent driven from Emacs.
-// Launched by the `maki-companion' script in modules/aspects/maki.nix.
+// Sandbox for the read-only claude-agent-acp companion agent driven from
+// Emacs. Launched by the `claude-companion' script in
+// modules/aspects/companion.nix; the maki-backed twin is maki-companion.json.
 // nono parses JSONC, so these comments are fine; unknown *keys* are not.
 {
   "extends": "default",
   "meta": {
-    "name": "maki-companion",
-    "description": "Read-only maki ACP companion agent driven from Emacs"
+    "name": "claude-companion",
+    "description": "Read-only claude-agent-acp companion agent driven from Emacs"
   },
   "groups": {
     "include": [
@@ -18,15 +19,13 @@
     ]
   },
   "security": {
-    // Babashka is a GraalVM native image, and its startup opens a POSIX
-    // semaphore. Under the default "shared_memory_only" that is denied and
-    // every bb script dies before running:
+    // Babashka is a GraalVM native image whose startup opens a POSIX
+    // semaphore, denied under the default "shared_memory_only":
     //
     //   CSunMiscSignal.open() failed.  errno: 1  Operation not permitted
     //
-    // The name points at signals, but signal_mode is not the fix -- semaphores
-    // are IPC. "full" is what enables them. Without this, the ,roam / ,hm-eval
-    // style helpers the skills depend on are all unusable.
+    // Semaphores are IPC, not signals, so signal_mode is not the fix. Without
+    // this the ,roam / ,hm-eval style helpers the skills depend on all die.
     "ipc_mode": "full"
   },
   "workdir": {
@@ -37,21 +36,19 @@
   },
   "filesystem": {
     "allow": [
-      "$HOME/.local/state/maki",
+      // CLAUDE_CONFIG_DIR. Holds the linked-in settings.json, CLAUDE.md and
+      // skills/, but also everything the CLI writes: session transcripts under
+      // projects/, todos/, shell snapshots. Hence write, not read.
+      "$HOME/.local/state/claude-companion",
       // Scratch space for one-off scripts. The launcher points TMPDIR here so
       // anything using mktemp stays inside the grant.
-      "/tmp/maki-companion-$UID",
+      "/tmp/claude-companion-$UID",
       // SQLite must create WAL/journal files beside the database even to read
       // it, so a read-only .codegraph/ fails with "unable to open database
       // file". Expanded from --workdir on the launcher.
       "$WORKDIR/.codegraph"
     ],
     "read": [
-      "$HOME/.config/maki",
-      // maki discovers skills from ~/.claude/skills. Without this only its
-      // builtin skill is found. Deliberately not all of ~/.claude, which also
-      // holds credentials.
-      "$HOME/.claude/skills",
       // In a project with no index, codegraph walks up looking for one and
       // stats this. Denied, that is fatal ("EPERM ... stat '$HOME/.codegraph'")
       // and its MCP server never starts; granted, the stat returns ENOENT and

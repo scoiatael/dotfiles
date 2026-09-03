@@ -3,7 +3,9 @@
     "allow": [
       "Bash(tree:*)",
       "Bash(nix flake check:*)",
-      "Bash(nix flake show:*)"
+      "Bash(nix flake show:*)",
+        "Bash(,roam cat *)",
+        "Read(/nix/store/*)"
     ]
   }
 }

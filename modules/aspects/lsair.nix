@@ -16,7 +16,7 @@
         den.aspects.zen
         den.aspects.mpv
         den.aspects.llama
-        den.aspects.maki
+        den.aspects.companion
       ];
       homeManager =
         { config, ... }:

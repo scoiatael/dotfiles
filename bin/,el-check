@@ -1,0 +1,115 @@
+#!/usr/bin/env bb
+;; Byte-compile elisp in the running Emacs to check it.
+;;
+;;   ,el-check config/doom/modules/scoiatael/llm/autoload.el
+;;   ,el-check config/doom/**/*.el
+;;   ,el-check --errors-only FILE...   skip warnings
+;;
+;; Byte-compilation is the cheapest real check: it catches read errors and
+;; unbalanced parens, and also free variables, wrong argument counts and
+;; obsolete calls that a plain `read' would happily accept.
+;;
+;; Goes through emacsclient so the check sees the load-path, macros and package
+;; versions the config actually runs with; `doomscript' runs a minimal CLI
+;; environment where most of that is missing. The .elc goes to a temp file, so
+;; nothing is ever written next to the source.
+;;
+;; Exits non-zero if any file failed to compile.
+
+(require '[babashka.process :as p]
+         '[cheshire.core :as json]
+         '[clojure.string :as str])
+
+(defn- die [& msg]
+  (binding [*out* *err*] (apply println msg))
+  (System/exit 1))
+
+(defn- elisp-str
+  "Quote S as an elisp string literal."
+  [s]
+  (str \" (-> (str s) (str/replace "\\" "\\\\") (str/replace "\"" "\\\"")) \"))
+
+(defn- eval-elisp [form]
+  (let [{:keys [out err exit]}
+        (p/shell {:out :string :err :string :continue true}
+                 "emacsclient" "-e" form)]
+    (when-not (zero? exit)
+      (die (str/trim err)
+           "\n,el-check needs a running Emacs server — start Emacs, or (server-start)."))
+    ;; emacsclient prin1s the result, so the JSON arrives as a quoted elisp
+    ;; string: one parse to unwrap it, one to read it.
+    (json/parse-string (json/parse-string (str/trim out)) true)))
+
+;; Reading *Compile-Log* as a buffer string hands back propertized text, which
+;; emacsclient's printer cannot render ("*ERROR*: Unknown message"). Stripping
+;; the properties and going through json-encode is what keeps it readable.
+(defn- check-form [file]
+  (format
+   "(let ((byte-compile-dest-file-function (lambda (_) %s))
+          (byte-compile-verbose nil))
+      (when (get-buffer \"*Compile-Log*\") (kill-buffer \"*Compile-Log*\"))
+      (let ((ok (condition-case err (byte-compile-file %s)
+                  (error (format \"!%%S\" err)))))
+        (json-encode
+         (list (cons \"ok\" (if (eq ok t) t :json-false))
+               (cons \"signal\" (if (stringp ok) (substring ok 1) :json-false))
+               (cons \"log\" (if (get-buffer \"*Compile-Log*\")
+                                (substring-no-properties
+                                 (with-current-buffer \"*Compile-Log*\" (buffer-string)))
+                              \"\"))))))"
+   (elisp-str (str (System/getProperty "java.io.tmpdir") "/el-check.elc"))
+   (elisp-str file)))
+
+(def ^:private noise
+  #"^(Leaving directory|Entering directory|Compiling file |\s*$|\f)")
+
+(defn- parse-log
+  "Group LOG into {:context :severity :lines} diagnostics.
+
+  The log is line-oriented but not one-line-per-diagnostic: an `In foo:'
+  header applies to everything under it, and a long message wraps onto
+  indented continuation lines. Grouping keeps a filtered view from emitting
+  headers whose diagnostics were dropped, or halves of a wrapped message."
+  [log]
+  (:entries
+   (reduce
+    (fn [{:keys [entries context] :as acc} line]
+      (cond
+        (re-matches #"In .*:" line)
+        (assoc acc :context line)
+
+        (re-find #": (Warning|Error): " line)
+        (update acc :entries conj
+                {:context context
+                 :severity (if (str/includes? line " Error: ") :error :warning)
+                 :lines [line]})
+
+        (and (seq entries) (re-matches #"\s+\S.*" line))
+        (update-in acc [:entries (dec (count entries)) :lines] conj line)
+
+        :else acc))
+    {:entries [] :context nil}
+    (remove #(re-find noise %) (str/split-lines log)))))
+
+(defn- check [file errors-only?]
+  (let [{:keys [ok signal log]} (eval-elisp (check-form file))
+        entries (cond->> (parse-log log)
+                  errors-only? (filter #(= :error (:severity %))))]
+    (println (str (if ok "ok   " "FAIL ") file))
+    (when signal (println (str "  signalled: " signal)))
+    (reduce (fn [shown {:keys [context lines]}]
+              (when (and context (not= context shown))
+                (println (str "  " context)))
+              (doseq [l lines] (println (str "    " l)))
+              context)
+            nil
+            entries)
+    ok))
+
+(let [args (vec *command-line-args*)
+      errors-only? (boolean (some #{"--errors-only"} args))
+      files (remove #(str/starts-with? % "-") args)]
+  (when (empty? files)
+    (die "usage: ,el-check [--errors-only] FILE...\n\nByte-compiles each FILE in the running Emacs and prints what it says."))
+  (let [results (doall (map #(check (.getAbsolutePath (java.io.File. %)) errors-only?) files))]
+    (System/exit (if (every? true? results) 0 1))))

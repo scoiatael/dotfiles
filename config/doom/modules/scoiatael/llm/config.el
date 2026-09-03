@@ -70,9 +70,10 @@
 (use-package! amp
   :when (modulep! +amp))
 
-;; Read-only companion agent: maki over ACP, sandboxed by nono. See
-;; modules/aspects/maki.nix (the `maki-companion' launcher) and
-;; config/nono/maki-companion.json for what it is actually allowed to touch.
+;; Read-only companion agent over ACP, sandboxed by nono. Backed by either
+;; maki or claude-agent-acp -- see `scoiatael/companion-backend'. The launchers
+;; live in modules/aspects/companion.nix, and config/nono/{maki,claude}-companion.json
+;; is what actually decides what either of them is allowed to touch.
 (use-package! agent-shell
   :when (modulep! +agent)
   :init

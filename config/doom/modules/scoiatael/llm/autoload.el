@@ -53,16 +53,59 @@ With prefix ARG, prompt for a gptel directive."
     ;; Display the new buffer
     (pop-to-buffer gptel-buffer)))
 
-;;; Companion agent (maki over ACP, sandboxed by nono)
+;;; Companion agent (read-only ACP agent, sandboxed by nono)
+
+(defcustom scoiatael/companion-backend 'maki
+  "Which ACP agent backs the companion shell.
+
+`maki' runs `maki acp'; `claude' runs claude-agent-acp.  Both are
+sandboxed the same way and answer to the same commands, so this is a
+free choice -- see `modules/aspects/companion.nix'.  Existing shells keep
+the backend they started with; `agent-shell-restart' picks up a change."
+  :type '(choice (const maki) (const claude))
+  :group 'agent-shell)
 
 (defvar scoiatael/maki-companion-acp-command '("maki-companion")
   "Command starting the read-only maki ACP server.
 
-Defined in `modules/aspects/maki.nix'.  It resolves the API key outside
-the sandbox, points XDG_CONFIG_HOME at the companion's own maki config
-\(which is what drops the write tools), points TMPDIR at the one writable
-scratch directory, and execs `maki acp' under the `maki-companion' nono
-profile.")
+Defined in `modules/aspects/companion.nix'.  It resolves the API key
+outside the sandbox, points XDG_CONFIG_HOME at the companion's own maki
+config \(which is what drops the write tools), points TMPDIR at the one
+writable scratch directory, and execs `maki acp' under the
+`maki-companion' nono profile.")
+
+(defvar scoiatael/claude-companion-acp-command '("claude-companion")
+  "Command starting the read-only claude-agent-acp server.
+
+The claude-agent-acp twin of `scoiatael/maki-companion-acp-command',
+also from `modules/aspects/companion.nix'.  Points CLAUDE_CONFIG_DIR at
+the companion's own config -- settings.json denying the write tools, the
+companion prompt as CLAUDE.md -- and runs under the `claude-companion'
+nono profile.")
+
+(defvar scoiatael/claude-companion-disallowed-tools
+  ["Write" "Edit" "NotebookEdit"]
+  "Tools claude-agent-acp is started without.
+
+Sent as `_meta.claudeCode.options.disallowedTools', which the adapter
+merges into the Claude Agent SDK options, so the model never sees them.
+This is the counterpart of disabling maki's write/edit plugins; the
+`permissions.deny' list in the companion settings.json is the second
+layer, and the nono profile the third.
+
+A vector rather than a list: it has to reach the agent as a JSON array,
+and a list of strings would be ambiguous with an alist.")
+
+(defun scoiatael/claude-companion-session-meta ()
+  "Return the `_meta' claude-agent-acp gets with session-creating requests."
+  `((claudeCode
+     . ((options
+         . ((disallowedTools . ,scoiatael/claude-companion-disallowed-tools)
+            ;; Recent Claude models default `thinking.display' to "omitted",
+            ;; which streams signature-only blocks with no visible text.  The
+            ;; same request agent-shell's own Claude config makes.
+            (thinking . ((type . "adaptive")
+                         (display . "summarized")))))))))
 
 (defvar scoiatael/agent-shell-companion-denied-tool-kinds '("edit" "delete" "move")
   "ACP tool-call kinds the companion is never allowed to run.
@@ -71,25 +114,46 @@ Everything else is auto-approved, `execute' included: the point of the
 companion is that it can run checks and linters unattended, and the nono
 profile -- not a modal dialog -- is what stops it changing anything.")
 
+(defun scoiatael/agent-shell-companion-client-maker (command)
+  "Return a client maker running COMMAND, a list of program and arguments."
+  (lambda (buffer)
+    (agent-shell--make-acp-client
+     :command (car command)
+     :command-params (cdr command)
+     :environment-variables (agent-shell-make-environment-variables
+                             :inherit-env t)
+     :context-buffer buffer)))
+
 ;;;###autoload
 (defun scoiatael/agent-shell-maki-companion-config ()
-  "Return the agent-shell configuration for the maki companion agent."
-  (agent-shell-make-agent-config
+  "Return the agent-shell configuration for the companion agent.
+
+Which backend it runs is `scoiatael/companion-backend'.  The
+`:identifier' is the same either way, so the buffer lookup in
+`scoiatael/agent-shell-companion-buffer' and the auto-approval in
+`scoiatael/agent-shell-companion-permission-responder' need not care."
+  (apply
+   #'agent-shell-make-agent-config
    :identifier 'maki-companion
-   :mode-line-name "Maki companion"
-   :buffer-name "Maki companion"
    :shell-prompt "Companion> "
    :shell-prompt-regexp "Companion> "
-   :client-maker
-   (lambda (buffer)
-     (agent-shell--make-acp-client
-      :command (car scoiatael/maki-companion-acp-command)
-      :command-params (cdr scoiatael/maki-companion-acp-command)
-      :environment-variables (agent-shell-make-environment-variables
-                              :inherit-env t)
-      :context-buffer buffer))
    :install-instructions
-   "Provided by the `maki' aspect. Run a home-manager switch to install it."))
+   "Provided by the `companion' aspect. Run a home-manager switch to install it."
+   (pcase scoiatael/companion-backend
+     ('maki
+      (list :mode-line-name "Maki companion"
+            :buffer-name "Maki companion"
+            :client-maker (scoiatael/agent-shell-companion-client-maker
+                           scoiatael/maki-companion-acp-command)))
+     ('claude
+      (list :mode-line-name "Claude companion"
+            :buffer-name "Claude companion"
+            :client-maker (scoiatael/agent-shell-companion-client-maker
+                           scoiatael/claude-companion-acp-command)
+            ;; MCP servers deliberately absent: both backends get them from
+            ;; nix, so `programs.mcp.servers' stays the single registry.
+            :session-meta (scoiatael/claude-companion-session-meta)))
+     (backend (user-error "Unknown `scoiatael/companion-backend': %s" backend)))))
 
 (defun scoiatael/agent-shell-companion-buffer ()
   "Return this project's companion shell buffer, starting one if needed.
@@ -105,7 +169,7 @@ an agent, and `--dwim' ignores its :config unless :new-shell is set."
 
 ;;;###autoload
 (defun scoiatael/agent-shell-maki-companion ()
-  "Start, or switch to, the read-only maki companion shell."
+  "Start, or switch to, the read-only companion shell."
   (interactive)
   (let ((buffer (scoiatael/agent-shell-companion-buffer)))
     (if-let* ((window (get-buffer-window buffer)))

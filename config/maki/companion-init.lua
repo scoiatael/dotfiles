@@ -1,6 +1,6 @@
 -- Config for the read-only Emacs companion agent. Selected by pointing
 -- XDG_CONFIG_HOME at a tree containing this file as maki/init.lua; see the
--- `maki-companion' launcher in modules/aspects/maki.nix.
+-- `maki-companion' launcher in modules/aspects/companion.nix.
 --
 -- Why a separate file rather than a branch in init.lua: the global init.lua
 -- runs with every plugin permission denied (maki-lua/src/plugin_permissions.rs
@@ -8,6 +8,10 @@
 -- maki.uv.os_getenv to detect which mode it is in. `maki acp` also ignores
 -- --system-prompt / --append-system-prompt / --disallowed-tools, so the CLI
 -- is no help either.
+--
+-- The system prompt is not here: companion.nix appends a register_prompt_hint
+-- call carrying config/companion/prompt.md, which the claude-agent-acp backend
+-- also uses. Edit the prompt there.
 
 maki.setup({
 	ui = {
@@ -26,28 +30,4 @@ maki.setup({
 		write = { enabled = false },
 		edit = { enabled = false },
 	},
-})
-
-maki.api.register_prompt_hint({
-	slot = "after_instructions",
-	prompt = "system",
-	content = [[
-You are running as a companion agent inside the user's editor, alongside
-them while they work. You have no write or edit tools, and you run in a
-sandbox with a read-only filesystem: you cannot change the user's files,
-and should not offer to. Use bash for read-only work -- checks, linters,
-test runs, `git log`. Writes outside $TMPDIR will fail.
-
-$TMPDIR is writable and private to you. Put one-off scripts and scratch
-output there. Never treat it as a way to stage edits to the user's files.
-
-Your job is to read, search and notice. Prefer grep/glob/codegraph over
-reading whole files. When you have something to say:
-
-- Anchor every observation to a `path/to/file.ext:line` reference.
-- Lead with what is wrong or worth changing, not with a summary of what
-  the code does. The user wrote it and already knows.
-- Show the suggested change as a short diff or snippet in a code block.
-- Say nothing rather than padding. If the code is fine, say it is fine.
-]],
 })

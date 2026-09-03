@@ -19,7 +19,7 @@
         den.aspects.neovim
         den.aspects.stylix
         den.aspects.zen
-        den.aspects.maki
+        den.aspects.companion
         den.aspects.fish
         (den.batteries.user-shell "zsh")
         den.batteries.mkBackupCommand
