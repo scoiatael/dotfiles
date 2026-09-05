@@ -5,6 +5,17 @@
   ...
 }:
 
+let
+  mount-usb-stick = {
+    script = ''
+      systemd-mount /dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89 || echo "USB key not found"
+    '';
+    wantedBy = [ "cryptsetup-pre.target" ];
+    before = [ "cryptsetup-pre.target" ];
+    after = [ "systemd-udevd.service" ];
+    unitConfig.DefaultDependencies = false;
+  };
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -32,10 +43,10 @@
   boot.kernelParams = [ ];
 
   # https://nixos.wiki/wiki/TPM
-  security.tpm2.enable = true;
-  security.tpm2.pkcs11.enable = true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
-  security.tpm2.tctiEnvironment.enable = true; # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  users.users.lukaszczaplinski.extraGroups = [ "tss" ]; # tss group has access to TPM devices
+  # security.tpm2.enable = true;
+  # security.tpm2.pkcs11.enable = true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
+  # security.tpm2.tctiEnvironment.enable = true; # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
+  # users.users.lukaszczaplinski.extraGroups = [ "tss" ]; # tss group has access to TPM devices
 
   # https://nixos.wiki/wiki/Secure_Boot
   boot.bootspec.enable = true;
@@ -47,12 +58,8 @@
     };
   };
 
-  boot.initrd.systemd.services.mount-usb-stick = {
-    script = ''
-      systemd-mount /dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89 || echo "USB key not found"
-    '';
-    wantedBy = [ "cryptsetup-pre.target" ];
-  };
+  boot.initrd.systemd.services.mount-usb-stick = mount-usb-stick;
+  systemd.services.mount-usb-stick = mount-usb-stick;
 
   boot.initrd.luks.devices = {
     internal = {
