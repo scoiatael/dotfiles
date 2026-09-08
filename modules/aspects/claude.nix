@@ -1,6 +1,10 @@
 { den, inputs, ... }:
 {
-  den.aspects.claude.includes = [ den.aspects.llm-agents ];
+  # mcp for nono itself and the profiles claude-sandboxed needs.
+  den.aspects.claude.includes = [
+    den.aspects.llm-agents
+    den.aspects.mcp
+  ];
 
   den.aspects.claude.homeManager =
     {
@@ -22,7 +26,7 @@
         exec ${lib.getExe' nono "nono"} run \
           --rollback \
           --profile claude-sandboxed \
-          --
+          -- \
           ${lib.getExe' config.programs.claude-code.finalPackage "claude"} "$@"
       '';
     in
@@ -33,13 +37,9 @@
         self'.packages.claude-url-allowlist
       ];
 
-      xdg.configFile."nono/profiles".source = pkgs.buildEnv {
-        name = "nono-profiles";
-        paths = [ ../../config/nono ];
-        postBuild = ''
-          ln -s "${nono-packs}/claude/policy.json" $out/claude.json
-        '';
-      };
+      # The base policy claude-sandboxed extends. The `mcp' aspect owns
+      # ~/.config/nono/profiles and merges this in as claude.json.
+      nono.extraPacks.claude = "${nono-packs}/claude";
 
       programs.git.ignores = lib.mkAfter [ "/.claude/settings.local.json" ];
 
