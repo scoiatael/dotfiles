@@ -1,4 +1,5 @@
--- Config for the read-only Emacs companion agent. Selected by pointing
+-- Config for the read-only companion agent, in both its ACP (Emacs) and TUI
+-- modes -- the launcher runs the same maki either way. Selected by pointing
 -- XDG_CONFIG_HOME at a tree containing this file as maki/init.lua; see the
 -- `maki-companion' launcher in modules/aspects/companion.nix.
 --

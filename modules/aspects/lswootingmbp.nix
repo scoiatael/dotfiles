@@ -124,7 +124,6 @@
             "tailscale-app"
             "eqmac"
             "keymapp"
-            "claude"
           ];
           brews = [ "stlink" ];
         };

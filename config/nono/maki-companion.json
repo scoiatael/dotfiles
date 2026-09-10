@@ -1,11 +1,12 @@
-// Sandbox for the read-only maki companion agent driven from Emacs.
-// Launched by the `maki-companion' script in modules/aspects/maki.nix.
+// Sandbox for the read-only maki companion agent -- both the ACP server
+// Emacs drives and the terminal TUI session. Launched by the `maki-companion'
+// script in modules/aspects/companion.nix.
 // nono parses JSONC, so these comments are fine; unknown *keys* are not.
 {
   "extends": "default",
   "meta": {
     "name": "maki-companion",
-    "description": "Read-only maki ACP companion agent driven from Emacs"
+    "description": "Read-only maki companion agent, over ACP or as a TUI"
   },
   "groups": {
     "include": [
@@ -74,7 +75,9 @@
     // connections by port -- but it is what grants this on Linux.
     "open_port": [8081]
   },
-  // A save-profile prompt would be written into the ACP stdio stream and
-  // corrupt the JSON-RPC framing. Same reason the launcher passes --silent.
+  // A save-profile prompt has nowhere to go in either mode: in ACP it would
+  // land in the stdio stream and corrupt the JSON-RPC framing, and in the TUI
+  // it would fight maki for the terminal. In ACP the launcher also passes
+  // --silent, for the same reason.
   "interactive": false
 }

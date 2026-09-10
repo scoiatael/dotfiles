@@ -65,23 +65,27 @@ the backend they started with; `agent-shell-restart' picks up a change."
   :type '(choice (const maki) (const claude))
   :group 'agent-shell)
 
-(defvar scoiatael/maki-companion-acp-command '("maki-companion")
+(defvar scoiatael/maki-companion-acp-command '("maki-companion" "acp")
   "Command starting the read-only maki ACP server.
 
 Defined in `modules/aspects/companion.nix'.  It resolves the API key
 outside the sandbox, points XDG_CONFIG_HOME at the companion's own maki
 config \(which is what drops the write tools), points TMPDIR at the one
 writable scratch directory, and execs `maki acp' under the
-`maki-companion' nono profile.")
+`maki-companion' nono profile.
 
-(defvar scoiatael/claude-companion-acp-command '("claude-companion")
+The `acp' argument is what selects the server; run `maki-companion' with
+no arguments in a terminal to get the same agent as a maki TUI session.")
+
+(defvar scoiatael/claude-companion-acp-command '("claude-companion" "acp")
   "Command starting the read-only claude-agent-acp server.
 
 The claude-agent-acp twin of `scoiatael/maki-companion-acp-command',
 also from `modules/aspects/companion.nix'.  Points CLAUDE_CONFIG_DIR at
 the companion's own config -- settings.json denying the write tools, the
 companion prompt as CLAUDE.md -- and runs under the `claude-companion'
-nono profile.")
+nono profile.  Without `acp' it starts the Claude Code TUI on that same
+config instead.")
 
 (defvar scoiatael/claude-companion-disallowed-tools
   ["Write" "Edit" "NotebookEdit"]

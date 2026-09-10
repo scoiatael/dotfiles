@@ -6,15 +6,19 @@
 }:
 
 {
-  # A read-only companion agent driven from Emacs over ACP (agent-shell) and
-  # sandboxed by nono. It searches and suggests while the user works; it cannot
-  # change their files.
+  # A read-only companion agent, sandboxed by nono. It searches and suggests
+  # while the user works; it cannot change their files.
   #
   # Two interchangeable backends, same shape each time: an outer launcher that
   # resolves the API key before entering the sandbox, a config tree that drops
   # the write tools, and the shared prompt in config/companion/prompt.md.
   # `scoiatael/companion-backend' in the doom `scoiatael/llm' module picks
   # which launcher agent-shell spawns, so switching needs no rebuild.
+  #
+  # Each launcher has two modes. `maki-companion acp' / `claude-companion acp'
+  # is the ACP server Emacs (agent-shell) drives; with any other arguments the
+  # same sandbox and config run that backend's own terminal UI -- `maki' and
+  # `claude' respectively -- so the companion is usable outside Emacs too.
   #
   # [[id:b842d083-9f81-44d4-b3e6-f140c32a8bee][llm-maki-companion]]
   den.aspects.companion.includes = [
@@ -39,6 +43,15 @@
       claude-code = inputs.llm-agents.packages.${system}.claude-code;
       pass = lib.getExe pkgs.pass;
       gh = lib.getExe pkgs.gh;
+      nonoExe = lib.getExe' nono "nono";
+
+      # The wrap both modes of a launcher share, so the ACP server and the
+      # terminal session can never drift apart on what they may touch.
+      # --allow-cwd is mandatory with the profile's `interactive: false';
+      # --workdir expands $WORKDIR in it, which grants write to the project's
+      # .codegraph/ -- SQLite needs to create WAL/journal files beside the DB
+      # even to read it.
+      wrapArgs = profile: "wrap --profile ${profile} --allow-cwd --workdir \"$PWD\" --";
 
       # gh keeps its token in the macOS keychain, which the sandbox denies and
       # cannot grant per item, so it is resolved out here like the API key.
@@ -99,7 +112,7 @@
       # fail with "Profile not found: maki-companion".
       makiCompanionInner = pkgs.writeShellScriptBin "maki-companion-inner" ''
         export XDG_CONFIG_HOME="${makiCompanionConfigHome}"
-        exec ${maki}/bin/maki acp
+        exec ${maki}/bin/maki "''${@}"
       '';
 
       # Resolves the API key before entering the sandbox: nono's
@@ -115,13 +128,18 @@
         export TMPDIR="/tmp/maki-companion-$UID"
         mkdir -p "$TMPDIR"
 
-        # --silent: nono's banner must not reach the ACP stdio stream.
-        # --workdir: expands $WORKDIR in the profile, which grants write to
-        # the project's .codegraph/ -- SQLite needs to create WAL/journal
-        # files beside the DB even to read it.
-        exec ${lib.getExe' nono "nono"} --silent wrap \
-          --profile maki-companion --allow-cwd --workdir "$PWD" -- \
-          ${makiCompanionInner}/bin/maki-companion-inner
+        # `acp' is the server agent-shell drives; --silent keeps nono's banner
+        # out of its stdio stream. Anything else -- no arguments included --
+        # is maki's own TUI in the same sandbox, where the banner is worth
+        # seeing.
+        if [ "''${1:-}" = "acp" ]; then
+          shift
+          exec ${nonoExe} --silent ${wrapArgs "maki-companion"} \
+            ${makiCompanionInner}/bin/maki-companion-inner acp "''${@}"
+        fi
+
+        exec ${nonoExe} ${wrapArgs "maki-companion"} \
+          ${makiCompanionInner}/bin/maki-companion-inner "''${@}"
       '';
 
       ## claude-agent-acp backend
@@ -215,9 +233,19 @@
         # which CLAUDE_CONFIG_DIR leaves alone. So no inner script is needed.
         export CLAUDE_CONFIG_DIR="$HOME/${claudeStateDir}"
 
-        exec ${lib.getExe' nono "nono"} --silent wrap \
-          --profile claude-companion --allow-cwd --workdir "$PWD" -- \
-          ${lib.getExe claude-agent-acp}
+        # `acp' runs the adapter agent-shell drives; --silent keeps nono's
+        # banner out of its stdio stream. Anything else -- no arguments
+        # included -- is the Claude Code TUI on the same config and sandbox,
+        # so the deny rules in settings.json are what hold there (the
+        # adapter's `disallowedTools' are an Emacs-side setting).
+        if [ "''${1:-}" = "acp" ]; then
+          shift
+          exec ${nonoExe} --silent ${wrapArgs "claude-companion"} \
+            ${lib.getExe claude-agent-acp} "''${@}"
+        fi
+
+        exec ${nonoExe} ${wrapArgs "claude-companion"} \
+          ${lib.getExe claudeCompanionCli} "''${@}"
       '';
     in
     {

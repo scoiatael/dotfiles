@@ -1,12 +1,13 @@
-// Sandbox for the read-only claude-agent-acp companion agent driven from
-// Emacs. Launched by the `claude-companion' script in
+// Sandbox for the read-only Claude companion agent -- both the
+// claude-agent-acp server Emacs drives and the Claude Code TUI session.
+// Launched by the `claude-companion' script in
 // modules/aspects/companion.nix; the maki-backed twin is maki-companion.json.
 // nono parses JSONC, so these comments are fine; unknown *keys* are not.
 {
   "extends": "default",
   "meta": {
     "name": "claude-companion",
-    "description": "Read-only claude-agent-acp companion agent driven from Emacs"
+    "description": "Read-only Claude companion agent, over ACP or as a TUI"
   },
   "groups": {
     "include": [
@@ -71,7 +72,9 @@
     // connections by port -- but it is what grants this on Linux.
     "open_port": [8081]
   },
-  // A save-profile prompt would be written into the ACP stdio stream and
-  // corrupt the JSON-RPC framing. Same reason the launcher passes --silent.
+  // A save-profile prompt has nowhere to go in either mode: in ACP it would
+  // land in the stdio stream and corrupt the JSON-RPC framing, and in the TUI
+  // it would fight Claude Code for the terminal. In ACP the launcher also
+  // passes --silent, for the same reason.
   "interactive": false
 }
