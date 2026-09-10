@@ -124,6 +124,7 @@
             "tailscale-app"
             "eqmac"
             "keymapp"
+            "canario"
           ];
           brews = [ "stlink" ];
         };
