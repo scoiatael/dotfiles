@@ -223,7 +223,9 @@ With prefix ARG, prompt for the question instead of using
                              (line-number-at-pos (region-beginning))
                              (line-number-at-pos (max (region-beginning)
                                                       (1- (region-end)))))
-                   (file-relative-name (buffer-file-name) root)))
+                   (format "%s:%d"
+                           (file-relative-name (buffer-file-name) root)
+                           (line-number-at-pos (point)))))
          (question (if arg
                        (read-string (format "Ask about %s: " target)
                                     scoiatael/agent-shell-companion-review-prompt)
