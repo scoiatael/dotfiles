@@ -25,6 +25,6 @@
         "f Y" #'git-link))
 
 
-;; https://www.gnu.org/software/emacs/manual/html_node/auth/The-Unix-password-store.html
 ;; https://github.com/blahgeek/emacs-pr-review
+;; [[id:247ec365-b292-4fb5-94d8-a4a07c2bbe26][emacs-auth-sources]]
 (use-package! pr-review)
