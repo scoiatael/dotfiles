@@ -207,7 +207,7 @@
        markup
        data
        devops
-       (llm +tools +agent)
+       (llm +agent)
        build
        vcs
        lsp
