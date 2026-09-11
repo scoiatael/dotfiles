@@ -5,6 +5,8 @@
  doom-localleader-key ","
  comint-prompt-read-only nil)
 
+(auth-source-pass-enable)
+
 ;; https://emacs.stackexchange.com/a/221
 (define-key input-decode-map [?\C-i] [C-i])
 

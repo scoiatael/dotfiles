@@ -23,3 +23,8 @@
   :config
   (map! :leader
         "f Y" #'git-link))
+
+
+;; https://www.gnu.org/software/emacs/manual/html_node/auth/The-Unix-password-store.html
+;; https://github.com/blahgeek/emacs-pr-review
+(use-package! pr-review)
