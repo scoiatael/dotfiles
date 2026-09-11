@@ -23,6 +23,7 @@
         den.aspects.fish
         (den.batteries.user-shell "zsh")
         den.batteries.mkBackupCommand
+        den.aspects.canario
       ];
       homeManager =
         { pkgs, lib, ... }:
@@ -124,7 +125,6 @@
             "tailscale-app"
             "eqmac"
             "keymapp"
-            "canario"
           ];
           brews = [ "stlink" ];
         };
