@@ -8,7 +8,7 @@ let
       mv "$1" "$1"."$(${date} --iso-8601=s)".bak
     '';
   nixos = { pkgs, ... }: {
-    home-manager.backupCommand = mkBackupCommand pkgs;
+    home-manager.backupCommand = pkgs.lib.getExe (mkBackupCommand pkgs);
   };
   darwin = nixos;
 in
