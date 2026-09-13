@@ -28,8 +28,9 @@ let
       val
     ]) modifiers
   ));
-  serverEnv = pkgs.writers.writeText "valheim-server-args" ''
+  serverEnv = pkgs.writers.writeText "valheim-server-env" ''
     SERVER_ARGS=${lib.escapeShellArgs serverArgs}
+    CROSSPLAY=true
   '';
 in
 {
