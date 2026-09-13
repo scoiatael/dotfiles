@@ -2,18 +2,29 @@
   config,
   lib,
   modulesPath,
+  utils,
   ...
 }:
 
 let
   mount-usb-stick = {
     script = ''
-      systemd-mount /dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89 || echo "USB key not found"
+      systemd-mount /dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89
     '';
-    wantedBy = [ "cryptsetup-pre.target" ];
-    before = [ "cryptsetup-pre.target" ];
-    after = [ "systemd-udevd.service" ];
+    wantedBy = [ "sysinit.target" ];
+    before = [
+      "systemd-cryptsetup@internal.service"
+      "systemd-cryptsetup@external.service"
+    ];
+    wants = [
+      "${utils.escapeSystemdPath "/dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89"}.device"
+    ];
+    after = [
+      "systemd-udevd.service"
+      "${utils.escapeSystemdPath "/dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89"}.device"
+    ];
     unitConfig.DefaultDependencies = false;
+    serviceConfig.TimeoutStartSec = "10s";
   };
 in
 {
@@ -33,6 +44,7 @@ in
     "sd_mod"
     "nvme"
     "cryptd"
+    "btrfs"
   ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [
@@ -86,6 +98,11 @@ in
   fileSystems."/var/cache/private/llama-cpp" = {
     device = "/dev/disk/by-uuid/1ff15061-1bbc-49da-9068-01a9db444934";
     fsType = "btrfs";
+
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=10s"
+    ];
   };
 
   fileSystems."/home" = {
