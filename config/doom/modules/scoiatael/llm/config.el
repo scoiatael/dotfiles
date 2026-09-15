@@ -39,5 +39,5 @@
           (window-width . 0.4)
           (window-parameters . ((no-delete-other-windows . t)))))
   (map! :localleader
-        "g c" #'scoiatael/agent-shell-maki-companion
-        "g v" #'scoiatael/agent-shell-companion-review))
+        "g g" #'scoiatael/agent-shell-maki-companion
+        "g n" #'scoiatael/agent-shell-companion-review))
