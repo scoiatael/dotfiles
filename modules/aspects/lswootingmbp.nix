@@ -15,7 +15,6 @@
         den.aspects.mcp
         den.aspects.doomemacs
         den.aspects.comma
-        den.aspects.graphite
         den.aspects.neovim
         den.aspects.stylix
         den.aspects.zen

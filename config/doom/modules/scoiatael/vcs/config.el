@@ -14,11 +14,6 @@
                (string-match-p jujutsu-commit-filename-regexp buffer-file-name))
       (git-commit-setup))))
 
-(use-package! magit-gt
-  :config
-  (map! :mode 'magit-status-mode :desc "Magit Graphite" :n "w" #'magit-gt))
-
-
 (use-package! git-link
   :config
   (map! :leader

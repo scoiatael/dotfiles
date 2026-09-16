@@ -89,12 +89,6 @@
         url = "https://temporal-ui.tail4b94e5.ts.net/";
         isEssential = false;
       };
-      "Graphite" = {
-        id = "9418efa6-8723-42e8-b745-e7401eae14a2";
-        workspace = spaces.Work.id;
-        url = "https://app.graphite.com/#needs-your-review";
-        isEssential = true;
-      };
       "k3s" = {
         id = "0a1665e6-4d85-4c96-81f2-2b77c8d73e56";
         workspace = spaces.Work.id;
