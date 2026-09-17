@@ -35,6 +35,8 @@
         claude-sandboxed
         # PreToolUse hook helper for whitelisting URLs in project settings
         self'.packages.claude-url-allowlist
+        # PreToolUse hook helper backing the Bash rules below
+        self'.packages.claude-bash-guard
       ];
 
       # The base policy claude-sandboxed extends. The `mcp' aspect owns
@@ -64,8 +66,35 @@
             "clangd-lsp@claude-plugins-official" = true;
           };
 
-          # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
-          permissions.allow = [ "mcp__codegraph__*" ];
+          permissions = {
+            # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
+            allow = [ "mcp__codegraph__*" ];
+
+            # Enforces the CLAUDE.md rules that are easy to forget mid-task:
+            # commits belong to the user, and ~ itself is not writable (its
+            # dotfiles are generated, and subdirectories stay allowed).
+            deny = [
+              "Bash(git commit)"
+              "Bash(git commit:*)"
+              "Write(~/*)"
+              "Edit(~/*)"
+            ];
+          };
+
+          # Write(~/*) only covers the file tools; this catches the shell
+          # equivalents, and refuses commands with more moving parts than it
+          # can account for.
+          hooks.PreToolUse = [
+            {
+              matcher = "Bash";
+              hooks = [
+                {
+                  type = "command";
+                  command = "claude-bash-guard";
+                }
+              ];
+            }
+          ];
 
           hooks.UserPromptSubmit = [
             {
