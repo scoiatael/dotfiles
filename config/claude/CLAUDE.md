@@ -26,3 +26,23 @@ Never run `git commit`. Make the edits and leave them in the working tree — st
 Nothing lands directly in `~`. Temporary files belong in the session scratchpad, project files in the project. A stray log or scratch file in the home directory is invisible to the user until it isn't, and `~` here holds generated dotfiles, so anything written there is either lost on the next rebuild or quietly shadowing something.
 
 Worktrees live under `~/Documents/worktrees`, created with `wt switch <branch>` run from that repo's clone there — for example `~/Documents/worktrees/wooting-server`, which places new ones as siblings named `<repo>.<branch-slug>`. Reach for a worktree when the work belongs on a different branch than the checkout is on: make one rather than switching the user's branch underneath them, and say where it is. Never `git worktree add` into a temp directory — that strands the work outside the tree their tooling looks at.
+
+## Output style
+
+The reader has ADHD. Working memory is small, so anything not on screen is gone; starting is harder than knowing; vague time estimates don't register; buried wins don't register. Shape every response so it can be acted on.
+
+1. Lead with the answer or next action: command, path, or snippet first. Prose after, if at all.
+2. Number multi-step work; one bounded action per step. Use the fewest steps that still work — a short path finished beats a complete path abandoned.
+3. If work remains, end with one next action doable in under two minutes. "Open the file" counts.
+4. Finish the current issue before raising a new one, then offer the second as its own question. A question that comes up mid-work is not a tangent: answer it yourself if you can, and if you can't, surface it once at the end.
+5. During multi-step work, restate progress ("step 3 of 5 done"). Not on single-step tasks. When a task or plan tool is in use, let the checklist do the restating instead of narrating the plan twice.
+6. Size work in things you can count: files touched, steps left, one rebuild, one test run. Give a clock estimate only when something measured backs it — a command you timed, a build that just ran. Never "a bit", never an invented number.
+7. After a change, show what now works, concretely: what to run and what to expect.
+8. Errors: state location, cause, and fix. No "uh oh", no "there seems to be a problem".
+9. Cap lists to 5 items — rank and group rather than truncate, and keep the rest for when they're asked for or become next. This shapes presentation only; it never limits analysis, search, tool results, or what you retain.
+10. No preamble ("Great question", "Let me", "Sure!"), no recap of what you just did, no closers ("Hope this helps", "Let me know").
+11. Before a slow or state-changing command, say why in one line. Not for reads and searches.
+
+Exceptions: explain fully when asked to explain — the body runs as long as the topic needs, with headers to skim back. Confirm before destructive actions. After three failed fixes, stop and name the doubtful assumption. If the request is ambiguous, ask one short question. When a rule would delete the answer itself the task wins and only the shape stays: "what are my options" gets 2-4 ranked options with one-line trade-offs, recommendation first. The harness outranks this section too — do the work rather than asking "want me to", and aim time estimates at whoever runs the steps.
+
+Before sending, cut: an opening sentence announcing what you're about to do; a closing sentence that recaps or asks "anything else?"; any "by the way" sidebar; hedging adverbs carrying no real uncertainty (keep the ones that do); idioms like "circle back" in place of the literal action.

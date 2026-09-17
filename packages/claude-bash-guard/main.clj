@@ -1,8 +1,10 @@
-;; Claude Code PreToolUse hook for Bash. Splits the command with
+;; Claude Code PreToolUse hook for Bash, Write and Edit. Splits a command with
 ;; babashka.process/tokenize and denies two kinds of call: ones built from
 ;; parts this parser cannot account for, and ones that create or replace files
-;; directly in $HOME (subdirectories stay fine). The exit code is 0 either way
-;; so the hook protocol sees a decision, not a hook failure.
+;; directly in $HOME. A file tool is checked on its path alone. Subdirectories
+;; stay fine either way — a permission rule cannot express that, since its `*`
+;; matches separators too. The exit code is 0 either way so the hook protocol
+;; sees a decision, not a hook failure.
 
 (require '[babashka.process :as p]
          '[cheshire.core :as json]
@@ -118,33 +120,42 @@
                       (remove #(str/starts-with? % "-") args)))
                   (segments tokens))))
 
+(defn home-write-reason
+  "Deny reason for a path a call is about to write, or nil."
+  [path home]
+  (let [rel (under-home path home)]
+    (cond
+      (= :unknown rel)
+      (str "cannot tell where " path " points; write to a literal path")
+
+      (home-child? rel)
+      (str path " writes directly into $HOME; use a subdirectory"
+           " or the session scratchpad"))))
+
+(defn bash-reason [{:keys [max-chain home]} command]
+  (let [tokens (p/tokenize (normalize command))]
+    (or (some #(when-let [what (opaque %)]
+                 (str "command uses " what ", so what it writes cannot be"
+                      " checked; run the steps as separate calls"))
+              tokens)
+        (when (some #{"&"} tokens)
+          "command backgrounds a process; use the run_in_background option instead")
+        (let [n (inc (count (filter chain-separators tokens)))]
+          (when (> n max-chain)
+            (str "command chains " n " commands (limit " max-chain
+                 "); run them separately so each result is visible")))
+        (some #(home-write-reason % home) (written-paths tokens)))))
+
 (defn decide
   "Returns nil to allow the call, or a deny reason string."
-  [{:keys [max-chain home]} input]
-  (let [command (get-in (try (json/parse-string input) (catch Exception _ nil))
-                        ["tool_input" "command"])]
-    (when-not (str/blank? command)
-      (let [tokens (p/tokenize (normalize command))]
-        (or (some #(when-let [what (opaque %)]
-                     (str "command uses " what ", so what it writes cannot be"
-                          " checked; run the steps as separate calls"))
-                  tokens)
-            (when (some #{"&"} tokens)
-              "command backgrounds a process; use the run_in_background option instead")
-            (let [n (inc (count (filter chain-separators tokens)))]
-              (when (> n max-chain)
-                (str "command chains " n " commands (limit " max-chain
-                     "); run them separately so each result is visible")))
-            (some (fn [token]
-                    (let [rel (under-home token home)]
-                      (cond
-                        (= :unknown rel)
-                        (str "cannot tell where " token " points; write to a literal path")
-
-                        (home-child? rel)
-                        (str token " writes directly into $HOME; use a subdirectory"
-                             " or the session scratchpad"))))
-                  (written-paths tokens)))))))
+  [{:keys [home] :as opts} input]
+  (let [tool-input (get (try (json/parse-string input) (catch Exception _ nil))
+                        "tool_input")
+        command (get tool-input "command")
+        path (or (get tool-input "file_path") (get tool-input "notebook_path"))]
+    (cond
+      (not (str/blank? command)) (bash-reason opts command)
+      (not (str/blank? path))    (home-write-reason path home))))
 
 (defn deny [reason]
   (println (json/generate-string

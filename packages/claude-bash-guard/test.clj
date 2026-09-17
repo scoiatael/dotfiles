@@ -81,6 +81,20 @@
     (is (nil? (reason "rg 'a;b' src")))
     (is (nil? (reason "echo 'a && b'")))))
 
+(deftest checks-the-file-tools-by-path
+  (let [write (fn [path] (decide opts (json/generate-string
+                                       {:tool_name "Write" :tool_input {:file_path path}})))]
+    (testing "a permission rule cannot express direct-child-only, so this does"
+      (is (some? (write (str home "/stray.md"))))
+      (is (some? (write "~/stray.md")))
+      (is (nil? (write (str home "/Documents/server/src/index.ts"))))
+      (is (nil? (write (str home "/.claude/projects/x/memory/note.md"))))
+      (is (nil? (write "/tmp/scratch/note.md")))))
+  (testing "notebooks are named differently"
+    (is (some? (decide opts (json/generate-string
+                             {:tool_name "NotebookEdit"
+                              :tool_input {:notebook_path (str home "/x.ipynb")}}))))))
+
 (deftest nothing-to-check-allows
   (is (nil? (decide opts (json/generate-string {:tool_input {}}))))
   (is (nil? (decide opts (hook ""))))

@@ -22,12 +22,18 @@
         hash = "sha256-F55fESmCvtxZcJt9z9iZ5sptPLu8s5/t5Dn+itgSU2E=";
       };
       nono = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.nono;
+      # nono plus --rollback is the boundary inside the sandbox, so permission
+      # prompts add nothing there. It rides on the flag rather than
+      # permissions.defaultMode in the settings below, which plain `claude'
+      # shares -- and `auto' only takes effect from user or managed settings
+      # anyway, not from a --settings overlay.
       claude-sandboxed = pkgs.writeShellScriptBin "claude-sandboxed" ''
         exec ${lib.getExe' nono "nono"} run \
           --rollback \
           --profile claude-sandboxed \
           -- \
-          ${lib.getExe' config.programs.claude-code.finalPackage "claude"} "$@"
+          ${lib.getExe' config.programs.claude-code.finalPackage "claude"} \
+          --permission-mode auto "$@"
       '';
     in
     {
@@ -70,23 +76,21 @@
             # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
             allow = [ "mcp__codegraph__*" ];
 
-            # Enforces the CLAUDE.md rules that are easy to forget mid-task:
-            # commits belong to the user, and ~ itself is not writable (its
-            # dotfiles are generated, and subdirectories stay allowed).
+            # Commits belong to the user. Keeping ~ clean is left to the hook
+            # below: a permission rule's star matches separators too, so
+            # Write(~/*) denies every path under home, not its direct children.
             deny = [
               "Bash(git commit)"
               "Bash(git commit:*)"
-              "Write(~/*)"
-              "Edit(~/*)"
             ];
           };
 
-          # Write(~/*) only covers the file tools; this catches the shell
-          # equivalents, and refuses commands with more moving parts than it
-          # can account for.
+          # Keeps files out of ~ itself — for the file tools by path, for Bash
+          # by parsing the command — and refuses commands with more moving
+          # parts than it can account for.
           hooks.PreToolUse = [
             {
-              matcher = "Bash";
+              matcher = "Bash|Write|Edit|NotebookEdit";
               hooks = [
                 {
                   type = "command";

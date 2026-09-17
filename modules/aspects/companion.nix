@@ -154,11 +154,16 @@
       claudeCompanionSettings = jsonFormat.generate "claude-companion-settings.json" {
         # Belt to the sandbox's braces, and to the `disallowedTools' the Emacs
         # side sends: deny rules also cover Task subagents.
-        permissions.deny = [
-          "Write"
-          "Edit"
-          "NotebookEdit"
-        ];
+        permissions = {
+          deny = [
+            "Write"
+            "Edit"
+            "NotebookEdit"
+          ];
+          # nono and the deny rules are the boundary; prompts on top of them
+          # only stall the ACP stream, which has no good place to show them.
+          defaultMode = "auto";
+        };
         # Claude Code can sandbox Bash itself with seatbelt. Nesting that
         # inside nono's seatbelt sandbox buys nothing and can only break it --
         # nono is the boundary here.
