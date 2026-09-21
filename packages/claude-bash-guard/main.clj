@@ -1,7 +1,9 @@
 ;; Claude Code PreToolUse hook for Bash, Write and Edit. Splits a command with
-;; babashka.process/tokenize and denies two kinds of call: ones built from
-;; parts this parser cannot account for, and ones that create or replace files
-;; directly in $HOME. A file tool is checked on its path alone. Subdirectories
+;; babashka.process/tokenize and denies three kinds of call: ones built from
+;; parts this parser cannot account for, ones that create or replace files
+;; directly in $HOME, and throwaway scripts handed to a general-purpose
+;; interpreter, which belong in babashka. A file tool is checked on its path
+;; alone. Subdirectories
 ;; stay fine either way — a permission rule cannot express that, since its `*`
 ;; matches separators too. The exit code is 0 either way so the hook protocol
 ;; sees a decision, not a hook failure.
@@ -14,6 +16,26 @@
   "Commands whose non-flag arguments name files they create, replace or remove."
   #{"touch" "mkdir" "cp" "mv" "ln" "tee" "install" "rsync" "dd"
     "rm" "rmdir" "truncate"})
+
+(def interpreters
+  "General-purpose interpreters. A script written for this session goes to bb
+  instead; these still run whatever a project already ships."
+  #{"python" "python2" "python3" "ruby" "perl" "node" "bash" "sh" "zsh"})
+
+(def scratch-dirs
+  "Where a throwaway script lands — /tmp, its macOS spellings, and the session
+  scratchpad under them."
+  #"^(/private)?/(tmp|var/folders)/")
+
+(def script-suffixes
+  "Extensions of a script one of the interpreters above would be handed."
+  #"\.(py|rb|pl|sh|bash|zsh|js|mjs)$")
+
+(def authored-script-suffixes
+  "The subset refused at authoring time. .js is left out: an artifact's
+  supporting files land in the scratchpad too, and only handing one to `node'
+  says it is a script rather than a page asset."
+  #"\.(py|rb|pl|sh|bash|zsh)$")
 
 (def separators
   "Operators that end one command and start the next."
@@ -72,13 +94,26 @@
             (do (.append out c) (recur (inc i) quote))))))))
 
 (defn opaque
-  "Names the construct that puts a token beyond this parser, or nil."
-  [token]
-  (cond
-    (str/includes? token "$(")      "command substitution"
-    (str/includes? token "`")       "backquotes"
-    (re-find #"[<>]\(" token)       "process substitution"
-    (str/starts-with? token "<<")   "a heredoc"))
+  "Names the construct that puts a command beyond this parser, or nil. Scanned
+  on the raw string rather than on tokens: quoting decides whether a construct
+  is live, and tokenize has dropped the quotes by the time tokens exist. Single
+  quotes make everything literal; command substitution survives double ones."
+  [s]
+  (let [n (count s)]
+    (loop [i 0, quote nil]
+      (when (< i n)
+        (let [c (.charAt s i)
+              nxt (when (< (inc i) n) (.charAt s (inc i)))]
+          (cond
+            (= quote \')                (recur (inc i) (when-not (= c \') quote))
+            (= c \\)                    (recur (+ i 2) quote)
+            (and (= c \$) (= nxt \())   "command substitution"
+            (= c \`)                    "backquotes"
+            (= quote \")                (recur (inc i) (when-not (= c \") quote))
+            (#{\' \"} c)                (recur (inc i) c)
+            (and (#{\< \>} c) (= nxt \()) "process substitution"
+            (and (= c \<) (= nxt \<))   "a heredoc"
+            :else                       (recur (inc i) quote)))))))
 
 (defn segments
   "Tokens grouped into the individual commands they make up."
@@ -120,6 +155,46 @@
                       (remove #(str/starts-with? % "-") args)))
                   (segments tokens))))
 
+(defn inline-code-flag?
+  "True for the flags that hand an interpreter a program on the command line,
+  clusters like `bash -lc' included. `-m' and a bare script path are not among
+  them, so `python -m pytest' and a project's own script still run."
+  [token]
+  (boolean (or (#{"--eval" "--command" "--print"} token)
+               (re-matches #"-[a-zA-Z]*[cep]" token))))
+
+(defn scratch-script?
+  "True for a script path under a temp directory, which is where a script
+  written for this session ends up."
+  [token]
+  (boolean (and (re-find script-suffixes token)
+                (re-find scratch-dirs token))))
+
+(defn scratch-script-reason
+  "Deny reason for authoring a throwaway script in something other than
+  babashka, or nil."
+  [path]
+  (when (and (re-find authored-script-suffixes path)
+             (re-find scratch-dirs path))
+    (str path " is a scratch script; write it in babashka instead — a .clj file"
+         " run with bb (see the bb-script skill)")))
+
+(defn interpreter-reason
+  "Deny reason for a throwaway script handed to an interpreter, or nil."
+  [tokens]
+  (some (fn [[cmd & args]]
+          (let [bin (last (str/split cmd #"/"))]
+            (when (and (interpreters bin) (seq args))
+              (cond
+                (some inline-code-flag? args)
+                (str bin " runs inline code; write it as a babashka script and"
+                     " run that with bb (see the bb-script skill)")
+
+                (some scratch-script? args)
+                (str bin " runs a scratch script; write it in babashka and run"
+                     " it with bb (see the bb-script skill)")))))
+        (segments tokens)))
+
 (defn home-write-reason
   "Deny reason for a path a call is about to write, or nil."
   [path home]
@@ -134,12 +209,12 @@
 
 (defn bash-reason [{:keys [max-chain home]} command]
   (let [tokens (p/tokenize (normalize command))]
-    (or (some #(when-let [what (opaque %)]
-                 (str "command uses " what ", so what it writes cannot be"
-                      " checked; run the steps as separate calls"))
-              tokens)
+    (or (when-let [what (opaque command)]
+          (str "command uses " what ", so what it writes cannot be"
+               " checked; run the steps as separate calls"))
         (when (some #{"&"} tokens)
           "command backgrounds a process; use the run_in_background option instead")
+        (interpreter-reason tokens)
         (let [n (inc (count (filter chain-separators tokens)))]
           (when (> n max-chain)
             (str "command chains " n " commands (limit " max-chain
@@ -155,7 +230,8 @@
         path (or (get tool-input "file_path") (get tool-input "notebook_path"))]
     (cond
       (not (str/blank? command)) (bash-reason opts command)
-      (not (str/blank? path))    (home-write-reason path home))))
+      (not (str/blank? path))    (or (home-write-reason path home)
+                                     (scratch-script-reason path)))))
 
 (defn deny [reason]
   (println (json/generate-string

@@ -56,7 +56,38 @@
   (is (str/includes? (reason "echo `date`") "backquotes"))
   (is (str/includes? (reason "diff <(a) <(b)") "process substitution"))
   (is (str/includes? (reason "cat <<EOF") "heredoc"))
-  (is (str/includes? (reason "long-task &") "backgrounds")))
+  (is (str/includes? (reason "long-task &") "backgrounds"))
+  (testing "single quotes make a construct literal, so it stays allowed"
+    (is (nil? (reason "q list '`CloseTime` BETWEEN \"a\" AND \"b\"' | jq -r .x")))
+    (is (nil? (reason "rg '\\$\\(x\\)' src")))
+    (is (nil? (reason "echo 'cost: $(5)'")))
+    (is (nil? (reason "psql -c 'select `a` from t'"))))
+  (testing "double quotes do not, since the shell still expands there"
+    (is (str/includes? (reason "echo \"$(date)\"") "command substitution"))
+    (is (str/includes? (reason "echo \"`date`\"") "backquotes"))))
+
+(deftest sends-throwaway-scripts-to-babashka
+  (testing "inline code goes to bb"
+    (is (str/includes? (reason "python -c 'print(1)'") "bb"))
+    (is (some? (reason "python3 -c 'print(1)'")))
+    (is (some? (reason "ruby -e 'puts 1'")))
+    (is (some? (reason "perl -e 'print 1'")))
+    (is (some? (reason "node -e 'console.log(1)'")))
+    (is (some? (reason "bash -lc 'for f in *; do echo $f; done'")))
+    (is (some? (reason "sh -c 'echo hi'"))))
+  (testing "a script written for this session goes to bb"
+    (is (some? (reason "python /tmp/claude-501/x/scratchpad/parse.py")))
+    (is (some? (reason "bash /private/tmp/claude-501/x/run.sh")))
+    (is (some? (reason "node /tmp/probe.mjs"))))
+  (testing "but a project's own tooling still runs"
+    (is (nil? (reason "python -m pytest tests/")))
+    (is (nil? (reason "python manage.py migrate")))
+    (is (nil? (reason "node build.js --watch")))
+    (is (nil? (reason "bash scripts/deploy.sh")))
+    (is (nil? (reason "ruby bin/rails console")))
+    (is (nil? (reason "python3")))
+    (is (nil? (reason "bb -e '(println 1)'")))
+    (is (nil? (reason "psql -c 'select 1'")))))
 
 (deftest limits-command-chaining
   (is (nil? (reason "a && b && c")))
@@ -90,6 +121,19 @@
       (is (nil? (write (str home "/Documents/server/src/index.ts"))))
       (is (nil? (write (str home "/.claude/projects/x/memory/note.md"))))
       (is (nil? (write "/tmp/scratch/note.md")))))
+  (testing "a scratch script is refused at authoring time, not just at run time"
+    (let [write (fn [path] (decide opts (json/generate-string
+                                         {:tool_name "Write" :tool_input {:file_path path}})))]
+      (is (str/includes? (write "/tmp/claude-501/x/scratchpad/parse.py") "babashka"))
+      (is (some? (write "/private/tmp/claude-501/x/scratchpad/run.sh")))
+      (is (some? (write "/tmp/probe.rb")))
+      (testing "babashka itself is the point, and project scripts are untouched"
+        (is (nil? (write "/tmp/claude-501/x/scratchpad/parse.clj")))
+        (is (nil? (write (str home "/dotfiles/scripts/deploy.sh"))))
+        (is (nil? (write (str home "/Documents/server/manage.py")))))
+      (testing "an artifact's supporting files land in the scratchpad too"
+        (is (nil? (write "/tmp/claude-501/x/scratchpad/report.html")))
+        (is (nil? (write "/tmp/claude-501/x/scratchpad/app.js"))))))
   (testing "notebooks are named differently"
     (is (some? (decide opts (json/generate-string
                              {:tool_name "NotebookEdit"
