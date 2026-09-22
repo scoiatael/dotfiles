@@ -1,9 +1,9 @@
 ;; Claude Code PreToolUse hook for Bash, Write and Edit. Splits a command with
-;; babashka.process/tokenize and denies three kinds of call: ones built from
+;; babashka.process/tokenize and denies four kinds of call: ones built from
 ;; parts this parser cannot account for, ones that create or replace files
-;; directly in $HOME, and throwaway scripts handed to a general-purpose
-;; interpreter, which belong in babashka. A file tool is checked on its path
-;; alone. Subdirectories
+;; directly in $HOME, throwaway scripts handed to a general-purpose
+;; interpreter, which belong in babashka, and searches rooted at / or $HOME.
+;; A file tool is checked on its path alone. Subdirectories
 ;; stay fine either way — a permission rule cannot express that, since its `*`
 ;; matches separators too. The exit code is 0 either way so the hook protocol
 ;; sees a decision, not a hook failure.
@@ -36,6 +36,14 @@
   supporting files land in the scratchpad too, and only handing one to `node'
   says it is a script rather than a page asset."
   #"\.(py|rb|pl|sh|bash|zsh)$")
+
+(def searchers
+  "Commands that walk a directory tree looking for files or content."
+  #{"find" "fd" "fdfind" "rg" "grep" "ag" "ack"})
+
+(def pattern-first-searchers
+  "The subset whose first non-flag argument is the pattern, not a path."
+  #{"fd" "fdfind" "rg" "grep" "ag" "ack"})
 
 (def separators
   "Operators that end one command and start the next."
@@ -145,6 +153,31 @@
        (seq rel)
        (not (str/includes? (str/replace rel #"/+$" "") "/"))))
 
+(defn search-root?
+  "True for a token naming / or $HOME itself, however it is spelled."
+  [token home]
+  (let [expanded (-> token
+                     (str/replace #"^\$\{?HOME\}?$" home)
+                     (str/replace #"^\$\{?HOME\}?(?=/)" home)
+                     (str/replace #"^~$" home)
+                     (str/replace #"^~(?=/)" home)
+                     (str/replace #"(?<=.)/+$" ""))]
+    (contains? #{"/" home} expanded)))
+
+(defn search-root-reason
+  "Deny reason for a search rooted at / or $HOME, or nil. Such a walk hits
+  macOS's permission-protected directories and buries the hits in errors."
+  [tokens home]
+  (some (fn [[cmd & args]]
+          (let [bin (last (str/split cmd #"/"))
+                args (remove #(str/starts-with? % "-") args)
+                paths (if (pattern-first-searchers bin) (rest args) args)]
+            (when (and (searchers bin) (some #(search-root? % home) paths))
+              (str bin " searches all of / or $HOME; pick one directory to"
+                   " search — `ls` the top level first (see the"
+                   " filesystem-search skill)"))))
+        (segments tokens)))
+
 (defn written-paths
   "Tokens sitting where a command names a file it writes to."
   [tokens]
@@ -215,6 +248,7 @@
         (when (some #{"&"} tokens)
           "command backgrounds a process; use the run_in_background option instead")
         (interpreter-reason tokens)
+        (search-root-reason tokens home)
         (let [n (inc (count (filter chain-separators tokens)))]
           (when (> n max-chain)
             (str "command chains " n " commands (limit " max-chain

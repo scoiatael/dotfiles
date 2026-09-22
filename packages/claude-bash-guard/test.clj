@@ -89,6 +89,26 @@
     (is (nil? (reason "bb -e '(println 1)'")))
     (is (nil? (reason "psql -c 'select 1'")))))
 
+(deftest denies-searches-rooted-at-slash-or-home
+  (is (str/includes? (reason "find / -name '*.el'") "one directory"))
+  (is (some? (reason "find ~ -name foo")))
+  (is (some? (reason "find ~/ -type d")))
+  (is (some? (reason (str "find " home " -type f"))))
+  (is (some? (reason "find $HOME -name foo")))
+  (is (some? (reason "fd -H skills ~")))
+  (is (some? (reason "rg -n pattern /")))
+  (is (some? (reason "grep -r pattern ${HOME}")))
+  (testing "a scoped search is the point"
+    (is (nil? (reason "find . -name '*.tmp'")))
+    (is (nil? (reason "fd -t d skills ~/dotfiles")))
+    (is (nil? (reason "rg -n pattern /etc/nix")))
+    (is (nil? (reason "grep -r pattern src")))
+    (is (nil? (reason "ls -la ~")))
+    (is (nil? (reason "du -sh /")))
+    (testing "a pattern that looks like a root is not one"
+      (is (nil? (reason "rg / src")))
+      (is (nil? (reason "grep ~ notes.txt"))))))
+
 (deftest limits-command-chaining
   (is (nil? (reason "a && b && c")))
   (is (str/includes? (reason "a && b && c && d") "chains 4 commands"))
