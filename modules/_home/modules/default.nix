@@ -40,8 +40,8 @@
     rsync
     stylua
     self'.packages.gitblame
-    self'.packages.inflector-rs
-    self'.packages.indices
+    # self'.packages.inflector-rs
+    # self'.packages.indices
     nixd
     nix-tree
 

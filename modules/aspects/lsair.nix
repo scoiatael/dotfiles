@@ -10,10 +10,10 @@
   den.aspects.LsAir = {
     provides.lukaszczaplinski = {
       includes = [
-        den.aspects.llm
+        # den.aspects.llm
         den.aspects.doomemacs
         den.aspects.comma
-        den.aspects.zen
+        # den.aspects.zen
         den.aspects.mpv
         den.aspects.llama
         den.aspects.companion
@@ -27,7 +27,7 @@
           programs.zsh.sessionVariables.NOTMUCH_CONFIG = "${config.home.homeDirectory}/Mail/notmuch-config";
           imports = [
             den.aspects.dotfiles.homeModules."terminals/wezterm"
-            ./_lsair/zen.nix
+            # ./_lsair/zen.nix
             ../_home/modules/secretive.nix
           ];
         };
