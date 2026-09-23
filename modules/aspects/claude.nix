@@ -22,11 +22,8 @@
         hash = "sha256-F55fESmCvtxZcJt9z9iZ5sptPLu8s5/t5Dn+itgSU2E=";
       };
       nono = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.nono;
-      # nono plus --rollback is the boundary inside the sandbox, so permission
-      # prompts add nothing there. It rides on the flag rather than
-      # permissions.defaultMode in the settings below, which plain `claude'
-      # shares -- and `auto' only takes effect from user or managed settings
-      # anyway, not from a --settings overlay.
+      # nono plus --rollback is the boundary inside the sandbox, so the flag
+      # pins auto there regardless of what project settings ask for.
       claude-sandboxed = pkgs.writeShellScriptBin "claude-sandboxed" ''
         exec ${lib.getExe' nono "nono"} run \
           --rollback \
@@ -73,6 +70,8 @@
           };
 
           permissions = {
+            defaultMode = "auto";
+
             # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
             allow = [ "mcp__codegraph__*" ];
 
