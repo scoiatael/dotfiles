@@ -100,6 +100,7 @@
             "tailscale-app"
             "eqmac"
             "petrichor"
+            "darrylmorley/whatcable/whatcable"
           ];
           masApps = {
             "Affinity Photo 2" = 1616822987;

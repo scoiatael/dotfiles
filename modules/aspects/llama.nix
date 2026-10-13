@@ -22,6 +22,10 @@
           hf-repo = "unsloth/DeepSeek-V4-Flash-0731-GGUF:UD-Q2_K_XL";
           alias = "DeepSeek-V4-Flash";
         };
+        "Qwen-Image-2.1" = {
+          hf-repo = "abenzerps/Qwen-Image-2.1-Uncensored-GGUF:Q4_0";
+          alias = "Qwen-Image";
+        };
       };
     in
     {
