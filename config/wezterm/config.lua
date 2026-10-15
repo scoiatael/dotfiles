@@ -40,6 +40,7 @@ local process_icons = {
 	["zsh"] = wezterm.nerdfonts.dev_terminal,
 	["sh"] = wezterm.nerdfonts.cod_terminal_bash,
 	[".nh-wrapped"] = "󱄅",
+	[".claude-wrapped"] = "󰛄",
 }
 
 -- Return the Tab's current working directory
