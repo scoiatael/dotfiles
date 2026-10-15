@@ -22,7 +22,7 @@
   #
   # [[id:b842d083-9f81-44d4-b3e6-f140c32a8bee][llm-maki-companion]]
   den.aspects.companion.includes = [
-    den.aspects.maki
+    # den.aspects.maki
     den.aspects.llm-agents
   ];
 
@@ -35,112 +35,25 @@
     }:
     let
       inherit (pkgs.stdenv.hostPlatform) system;
+      inherit
+        (import ./_companion/default.nix {
+          inherit
+            dotfiles
+            inputs
+            lib
+            pkgs
+            ;
+        })
+        pass
+        companionPrompt
+        wrapArgs
+        resolveGhToken
+        nonoExe
+        ;
       jsonFormat = pkgs.formats.json { };
 
-      maki = inputs.maki.packages.${system}.default;
-      nono = inputs.llm-agents.packages.${system}.nono;
       claude-agent-acp = inputs.llm-agents.packages.${system}.claude-agent-acp;
       claude-code = inputs.llm-agents.packages.${system}.claude-code;
-      pass = lib.getExe pkgs.pass;
-      gh = lib.getExe pkgs.gh;
-      nonoExe = lib.getExe' nono "nono";
-
-      # The wrap both modes of a launcher share, so the ACP server and the
-      # terminal session can never drift apart on what they may touch.
-      # --allow-cwd is mandatory with the profile's `interactive: false';
-      # --workdir expands $WORKDIR in it, which grants write to the project's
-      # .codegraph/ -- SQLite needs to create WAL/journal files beside the DB
-      # even to read it.
-      wrapArgs = profile: "wrap --profile ${profile} --allow-cwd --workdir \"$PWD\" --";
-
-      # gh keeps its token in the macOS keychain, which the sandbox denies and
-      # cannot grant per item, so it is resolved out here like the API key.
-      # Prefers a fine-grained read-only PAT; falls back to the keychain token,
-      # which carries `repo` write scope -- the sandbox cannot restrain that,
-      # since anything gh does is network, not filesystem.
-      resolveGhToken = ''
-        GH_TOKEN="$(${pass} show github-com-readonly-token 2>/dev/null | head -1)"
-        if [ -z "$GH_TOKEN" ]; then
-          GH_TOKEN="$(${gh} auth token 2>/dev/null)"
-        fi
-        [ -n "$GH_TOKEN" ] && export GH_TOKEN || unset GH_TOKEN
-      '';
-
-      companionPrompt = dotfiles.config."companion/prompt.md";
-
-      ## maki backend
-
-      # The companion wants exactly the MCP servers the normal maki has, so it
-      # reuses the file the `maki' aspect already generates rather than
-      # regenerating an identical one.
-      makiMcpToml = config.home.file.".config/maki/mcp.toml".source;
-
-      # The prompt is shared with the claude backend, so it is appended here
-      # instead of living in the lua. Long-bracket strings end at `]]`, which
-      # the prompt must therefore not contain.
-      makiCompanionInit = pkgs.writeText "maki-companion-init.lua" ''
-        ${builtins.readFile dotfiles.config."maki/companion-init.lua"}
-        maki.api.register_prompt_hint({
-        	slot = "after_instructions",
-        	prompt = "system",
-        	content = [[
-        ${builtins.readFile companionPrompt}]],
-        })
-      '';
-
-      # An XDG_CONFIG_HOME for the companion, so it gets its own init.lua
-      # without the normal `maki` seeing any of it. maki resolves its config
-      # dir through etcetera's base strategy, which honours XDG_CONFIG_HOME.
-      makiCompanionConfigHome = pkgs.linkFarm "maki-companion-config" [
-        {
-          name = "maki/init.lua";
-          path = makiCompanionInit;
-        }
-        {
-          name = "maki/mcp.toml";
-          path = makiMcpToml;
-        }
-        {
-          name = "maki/AGENTS.md";
-          path = dotfiles.config."maki/AGENTS.md";
-        }
-      ];
-
-      # Runs inside the sandbox. XDG_CONFIG_HOME is set here rather than in
-      # the outer launcher because nono resolves its own profiles through
-      # XDG_CONFIG_HOME too -- exporting it before invoking nono makes it
-      # fail with "Profile not found: maki-companion".
-      makiCompanionInner = pkgs.writeShellScriptBin "maki-companion-inner" ''
-        export XDG_CONFIG_HOME="${makiCompanionConfigHome}"
-        exec ${maki}/bin/maki "''${@}"
-      '';
-
-      # Resolves the API key before entering the sandbox: nono's
-      # deny_credentials and deny_keychains_macos groups block gpg inside it,
-      # so this execs the raw binary rather than the pass-wrapping `maki`.
-      makiCompanion = pkgs.writeShellScriptBin "maki-companion" ''
-        export ANTHROPIC_API_KEY="$(${pass} anthropic-com-api-token)"
-        ${resolveGhToken}
-
-        # The one writable spot, for one-off scripts and scratch output.
-        # Pointing TMPDIR at it keeps tools that use mktemp inside the grant.
-        # $UID matches how nono expands it in the profile's filesystem grant.
-        export TMPDIR="/tmp/maki-companion-$UID"
-        mkdir -p "$TMPDIR"
-
-        # `acp' is the server agent-shell drives; --silent keeps nono's banner
-        # out of its stdio stream. Anything else -- no arguments included --
-        # is maki's own TUI in the same sandbox, where the banner is worth
-        # seeing.
-        if [ "''${1:-}" = "acp" ]; then
-          shift
-          exec ${nonoExe} --silent ${wrapArgs "maki-companion"} \
-            ${makiCompanionInner}/bin/maki-companion-inner acp "''${@}"
-        fi
-
-        exec ${nonoExe} ${wrapArgs "maki-companion"} \
-          ${makiCompanionInner}/bin/maki-companion-inner "''${@}"
-      '';
 
       ## claude-agent-acp backend
 
@@ -192,30 +105,29 @@
           # The same transform home-manager's claude-code module applies, so
           # the companion's servers are shaped exactly like the normal
           # claude's -- it is what drops the null url/enabled defaults.
-          servers = lib.mapAttrs (
-            name: server:
-            lib.hm.mcp.transformMcpServer {
-              inherit server;
-              extraTransforms = [
-                lib.hm.mcp.addType
-                (lib.hm.mcp.wrapEnvFilesCommand { inherit pkgs name; })
-              ];
-            }
-          ) config.programs.mcp.servers
-          // {
-            kagi = {
-              type = "http";
-              url = "http://127.0.0.1:8081/mcp";
+          servers =
+            lib.mapAttrs (
+              name: server:
+              lib.hm.mcp.transformMcpServer {
+                inherit server;
+                extraTransforms = [
+                  lib.hm.mcp.addType
+                  (lib.hm.mcp.wrapEnvFilesCommand { inherit pkgs name; })
+                ];
+              }
+            ) config.programs.mcp.servers
+            // {
+              kagi = {
+                type = "http";
+                url = "http://127.0.0.1:8081/mcp";
+              };
             };
-          };
         in
         pkgs.runCommand "claude-companion-mcp-plugin" { } ''
           install -Dm644 ${
             jsonFormat.generate "plugin.json" { name = "claude-companion"; }
           } $out/.claude-plugin/plugin.json
-          install -Dm644 ${
-            jsonFormat.generate "mcp.json" { mcpServers = servers; }
-          } $out/.mcp.json
+          install -Dm644 ${jsonFormat.generate "mcp.json" { mcpServers = servers; }} $out/.mcp.json
         '';
 
       claudeCompanionCli = pkgs.writeShellScriptBin "claude-companion-cli" ''
@@ -255,7 +167,6 @@
     in
     {
       home.packages = [
-        makiCompanion
         claudeCompanion
       ];
 

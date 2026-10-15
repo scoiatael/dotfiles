@@ -98,11 +98,11 @@
           owner = config.system.primaryUser;
           path = "${config.users.users.${config.system.primaryUser}.home}/.ssh/config";
         };
-        sops.secrets.kagimcp-env = {
-          sopsFile = ../_darwin/LsWootingMBP/secrets/kagimcp.env;
-          format = "dotenv";
-          owner = config.users.users._llama.name;
-        };
+        # sops.secrets.kagimcp-env = {
+        #   sopsFile = ../_darwin/LsWootingMBP/secrets/kagimcp.env;
+        #   format = "dotenv";
+        #   owner = config.users.users._llama.name;
+        # };
 
         users.users.lukas = {
           name = "lukas";
