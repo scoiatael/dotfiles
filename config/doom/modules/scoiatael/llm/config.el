@@ -5,7 +5,7 @@
     :key (lambda () (password-store-get "kagi-api-token")))
 
   (setq
-   gptel-model 'claude-sonnet-4-6
+   gptel-model 'claude-sonnet-5
    gptel-backend (gptel-make-anthropic "Claude"
                    :stream t
                    :key (lambda () (password-store-get "anthropic-com-api-token"))))
@@ -41,3 +41,11 @@
   (map! :localleader
         "g g" #'scoiatael/agent-shell-maki-companion
         "g n" #'scoiatael/agent-shell-companion-review))
+
+(use-package! hutch
+  :when (modulep! +hutch)
+  :config
+  (setq hutch-backend
+        (gptel-make-anthropic "Claude"
+          :key (lambda () (password-store-get "anthropic-com-api-token"))
+          :models '(claude-sonnet-5))) )
