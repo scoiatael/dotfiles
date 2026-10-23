@@ -21,7 +21,7 @@
 (use-package! git-link
   :config
   (map! :leader
-        "f Y" #'git-link))
+        "g :" #'git-link))
 
 ;; https://github.com/blahgeek/emacs-pr-review
 ;; [[id:247ec365-b292-4fb5-94d8-a4a07c2bbe26][emacs-auth-sources]]

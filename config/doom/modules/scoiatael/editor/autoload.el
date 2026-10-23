@@ -10,7 +10,9 @@
 ;;;###autoload
 (defun scoiatael/yank-file-location ()
   (interactive)
-  (scoiatael/yank (format "%s:%d" (scoiatael/file-relative-name) (line-number-at-pos))))
+  (let ((loc (format "%s:%d" (scoiatael/file-relative-name) (line-number-at-pos))))
+    (scoiatael/yank loc)
+    (message "Copied path: %s" loc)))
 
 ;;;###autoload
 (defun scoiatael/blog/cover-img ()

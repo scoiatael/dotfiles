@@ -45,6 +45,7 @@
       "f d" #'dired-jump
       "s c" #'evil-ex-nohighlight
       "s e" #'iedit-mode
+      "f Y" #'scoiatael/yank-file-location
       "r r" #'scoiatael/org-roam-open-id-at-point)
 
 (map! :leader
