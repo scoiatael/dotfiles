@@ -13,8 +13,8 @@
           fetchSubmodules = true;
           owner = "doomemacs";
           repo = "core";
-          rev = "v2.2.3";
-          hash = "sha256-eR6gb8rzdiZF3vsq+HAeUbriTmtagNjLhDYCaQhaJYk=";
+          rev = "v2.2.4";
+          hash = "sha256-BNqDIPTTv4GDElTdMV9LgDf3Nh+nyjsUElRIAROLI5g=";
         };
       in
       {
