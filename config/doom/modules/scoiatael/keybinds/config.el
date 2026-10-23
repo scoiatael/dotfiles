@@ -15,6 +15,7 @@
       :n "[p" #'evil-unimpaired-paste-above
       :n "!" #'+default/yank-pop
       :n ";" #'affe-find
+      :n "_" #'dirvish
       :n "\\" #'+vterm/toggle
       :v "[6" #'base64-decode-region
       :v "]6" #'base64-encode-region
