@@ -14,6 +14,10 @@
                (string-match-p jujutsu-commit-filename-regexp buffer-file-name))
       (git-commit-setup))))
 
+(map! :leader
+      "g -" #'scoiatael/git-switch-previous-branch
+      "g P" #'scoiatael/git-pull-main)
+
 (use-package! git-link
   :config
   (map! :leader
