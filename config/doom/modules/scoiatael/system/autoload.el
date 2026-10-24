@@ -98,11 +98,13 @@ Switches to WORKSPACE-NAME (creating it if needed), then evaluates BODY."
   `(defun ,name ()
      ,(format "Switch to workspace named %s or create it if it doesn't exist." workspace-name)
      (interactive)
-     (let ((workspace-name ,workspace-name))
-       (unless (eq (+workspace-current-name) +workspaces-main)
+     (let ((workspace-name ,workspace-name)
+           (current-workspace-name (+workspace-current-name)))
+       (unless (or (eq current-workspace-name +workspaces-main) (s-starts-with? "#" current-workspace-name))
          (unless (+workspace-exists-p workspace-name)
            (+workspace-new workspace-name))
-         (+workspace-switch workspace-name)))
+         (+workspace-switch workspace-name))
+       (+workspace-rename current-workspace-name workspace-name))
      ,@body))
 
 
