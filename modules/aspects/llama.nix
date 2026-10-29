@@ -139,20 +139,20 @@
             inherit modelsPreset;
           };
 
-          systemd.services.kagimcp = {
-            description = "Kagi MCP";
-            wantedBy = [ "default.target" ];
-            path = [ self'.packages.kagimcp ];
-            script = ''
-              kagimcp --host 127.0.0.1 --port 8081 --cors-origins llama.heron-pollux.ts.net --http
-            '';
-            serviceConfig = {
-              Type = "simple";
-              Restart = "on-failure";
-              DynamicUser = true;
-              EnvironmentFile = [ config.sops.secrets.kagimcp-env.path ];
-            };
-          };
+          # systemd.services.kagimcp = {
+          #   description = "Kagi MCP";
+          #   wantedBy = [ "default.target" ];
+          #   path = [ self'.packages.kagimcp ];
+          #   script = ''
+          #     kagimcp --host 127.0.0.1 --port 8081 --cors-origins llama.heron-pollux.ts.net --http
+          #   '';
+          #   serviceConfig = {
+          #     Type = "simple";
+          #     Restart = "on-failure";
+          #     DynamicUser = true;
+          #     EnvironmentFile = [ config.sops.secrets.kagimcp-env.path ];
+          #   };
+          # };
         };
     };
 }

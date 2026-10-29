@@ -2,31 +2,9 @@
   config,
   lib,
   modulesPath,
-  utils,
   ...
 }:
 
-let
-  mount-usb-stick = {
-    script = ''
-      systemd-mount /dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89
-    '';
-    wantedBy = [ "sysinit.target" ];
-    before = [
-      "systemd-cryptsetup@internal.service"
-      "systemd-cryptsetup@external.service"
-    ];
-    wants = [
-      "${utils.escapeSystemdPath "/dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89"}.device"
-    ];
-    after = [
-      "systemd-udevd.service"
-      "${utils.escapeSystemdPath "/dev/disk/by-uuid/b9ee7bed-c893-485c-9dcf-f3e4e3f2ac89"}.device"
-    ];
-    unitConfig.DefaultDependencies = false;
-    serviceConfig.TimeoutStartSec = "10s";
-  };
-in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -70,18 +48,10 @@ in
     };
   };
 
-  boot.initrd.systemd.services.mount-usb-stick = mount-usb-stick;
-  systemd.services.mount-usb-stick = mount-usb-stick;
-
   boot.initrd.luks.devices = {
     internal = {
       device = "/dev/disk/by-uuid/e9c87df3-a5b1-4765-8da6-d055c26d3323";
       allowDiscards = true;
-      keyFile = "/run/media/system/primary/e9c87df3-a5b1-4765-8da6-d055c26d3323.key";
-    };
-    external = {
-      device = "/dev/disk/by-uuid/c5ff78fd-65af-403c-a64b-d80d8192fbf6";
-      keyFile = "/run/media/system/primary/c5ff78fd-65af-403c-a64b-d80d8192fbf6.key";
     };
   };
 
@@ -93,16 +63,6 @@ in
   fileSystems."/var" = {
     device = "/dev/disk/by-uuid/8937c5b3-be18-42fb-b614-fe3f7ae70415";
     fsType = "xfs";
-  };
-
-  fileSystems."/var/cache/private/llama-cpp" = {
-    device = "/dev/disk/by-uuid/1ff15061-1bbc-49da-9068-01a9db444934";
-    fsType = "btrfs";
-
-    options = [
-      "nofail"
-      "x-systemd.device-timeout=10s"
-    ];
   };
 
   fileSystems."/home" = {
