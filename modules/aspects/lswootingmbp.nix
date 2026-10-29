@@ -23,6 +23,7 @@
         (den.batteries.user-shell "zsh")
         den.batteries.mkBackupCommand
         den.aspects.canario
+        den.aspects.gram
       ];
       homeManager =
         { pkgs, lib, ... }:
@@ -124,8 +125,8 @@
             "tailscale-app"
             "eqmac"
             "keymapp"
+            "darrylmorley/whatcable/whatcable"
           ];
-          brews = [ "stlink" ];
         };
         nix.linux-builder = {
           enable = true;
