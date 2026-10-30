@@ -12,7 +12,6 @@ in
       darwin.url = "github:LnL7/nix-darwin/nix-darwin-${release}";
       stylix.url = "github:nix-community/stylix/release-${release}";
       nixos-hardware.url = "github:NixOS/nixos-hardware";
-      lanzaboote.url = "github:nix-community/lanzaboote";
       walker.url = "github:abenz1267/walker";
       sops-nix.url = "github:Mic92/sops-nix";
     };

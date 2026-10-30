@@ -1,19 +1,12 @@
 { pkgs, ... }:
 
 {
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-qt;
-  };
-  programs.zsh = {
-    sessionVariables = {
-      # nixOS workaround for https://github.com/99designs/aws-vault/issues/670
-      AWS_VAULT_BACKEND = "kwallet";
-    };
-  };
+  # services.gpg-agent = {
+  #   enable = true;
+  #   enableSshSupport = true;
+  #   pinentryPackage = pkgs.pinentry-qt;
+  # };
 
-  services.emacs.enable = true;
   home.packages = with pkgs; [
     janet # broken on macOS
     procs # broken on macOS

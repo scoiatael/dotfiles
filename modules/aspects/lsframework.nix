@@ -41,7 +41,6 @@
       {
         imports = [
           inputs.nixos-hardware.nixosModules.framework-desktop-amd-ai-max-300-series
-          inputs.lanzaboote.nixosModules.lanzaboote
           inputs.sops-nix.nixosModules.sops
           ../_nixos/modules/services/smb.nix
           ../_nixos/modules/services/blocky.nix
@@ -115,14 +114,11 @@
           dataDir = "/home/lukaszczaplinski";
         };
 
-        # Use the systemd-boot EFI boot loader.
-        boot.loader.systemd-boot.enable = false;
-        boot.loader.efi.efiSysMountPoint = "/boot/EFI";
         boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
         boot.kernelParams = [
           # "mem_sleep_default=deep"
           # "usbcore.quirks=0bda:8156:k"
-          "split_lock_detect=off"
+          # "split_lock_detect=off"
         ];
         boot.kernel.sysctl."net.core.rmem_max" = 2500000;
         # Enroll keys once secureboot is enforced:
@@ -291,20 +287,24 @@
         # https://wiki.archlinux.org/title/Solid_state_drive
         services.fstrim.enable = true;
 
-        # Enable the Plasma 5 Desktop Environment.
         services.displayManager.sddm = {
           enable = true;
-          wayland.enable = true;
+          wayland = {
+            enable = true;
+            compositor = "weston";
+          };
         };
+        environment.systemPackages = with pkgs; [
+          wayland
+          libxcb-cursor
+          kdePackages.qtsvg
+          kdePackages.qtdeclarative
+          kdePackages.qt5compat
+          kdePackages.qtbase
+          kdePackages.qtwayland
+          kdePackages.qtmultimedia
+        ];
         services.desktopManager.plasma6.enable = true;
-        # services.xserver.enable = true;
-        # services.xserver.desktopManager.lxqt.enable = true;
-        # disable the default
-        # services.xserver.displayManager.lightdm.enable = false;
-        # programs.sway = {
-        #  enable = true;
-        #   wrapperFeatures.gtk = true;
-        # };
 
         # Define a user account. Don't forget to set a password with ‘passwd’.
         users.users.lukaszczaplinski = {
@@ -329,49 +329,49 @@
 
         # List packages installed in system profile. To search, run:
         # $ nix search wget
-        environment.systemPackages = (
-          with pkgs;
-          [
-            helix
-            pciutils
-            lm_sensors
-            yubioath-flutter
-            git
-            lsof
-            go
-            xsel
-            xclip
-            rclone
-            signal-desktop
-            keybase-gui
-            gparted
-            htop
-            fzf
-            sd
-            zsh
-            mpv
-            shotcut
-            powertop
-            cpupower-gui
-            # For waybar tray support
-            libappindicator
-            libappindicator-gtk3
-            # modify external screen brightness
-            brightnessctl
-            ddcutil
-            ddcui
-            # soundcontrol
-            pavucontrol
-            # gsettings
-            glib
-            # Sway nice-to-haves
-            wl-clipboard
-            adwaita-qt
-            # Screenshotting under sway
-            sway-contrib.grimshot
-            aria2
-          ]
-        );
+        # environment.systemPackages = (
+        #   with pkgs;
+        #   [
+        #     helix
+        #     pciutils
+        #     lm_sensors
+        #     yubioath-flutter
+        #     git
+        #     lsof
+        #     go
+        #     xsel
+        #     xclip
+        #     rclone
+        #     signal-desktop
+        #     keybase-gui
+        #     gparted
+        #     htop
+        #     fzf
+        #     sd
+        #     zsh
+        #     mpv
+        #     shotcut
+        #     powertop
+        #     cpupower-gui
+        #     # For waybar tray support
+        #     libappindicator
+        #     libappindicator-gtk3
+        #     # modify external screen brightness
+        #     brightnessctl
+        #     ddcutil
+        #     ddcui
+        #     # soundcontrol
+        #     pavucontrol
+        #     # gsettings
+        #     glib
+        #     # Sway nice-to-haves
+        #     wl-clipboard
+        #     adwaita-qt
+        #     # Screenshotting under sway
+        #     sway-contrib.grimshot
+        #     aria2
+        #   ]
+        # );
 
         fonts.packages = with pkgs; [
           nerd-fonts.fira-code
@@ -423,9 +423,6 @@
 
         # https://nixos.wiki/wiki/Fwupd
         services.fwupd.enable = true;
-
-        # NetworkManager dispatcher script removed: NetworkManager is not enabled,
-        # and WiFi is now explicitly disabled via networking.wireless.enable = false.
 
         # This value determines the NixOS release from which the default
         # settings for stateful data, like file locations and database versions

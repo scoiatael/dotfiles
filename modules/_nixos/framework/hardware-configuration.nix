@@ -32,21 +32,8 @@
   boot.tmp.useTmpfs = true;
   boot.kernelParams = [ ];
 
-  # https://nixos.wiki/wiki/TPM
-  # security.tpm2.enable = true;
-  # security.tpm2.pkcs11.enable = true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
-  # security.tpm2.tctiEnvironment.enable = true; # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  # users.users.lukaszczaplinski.extraGroups = [ "tss" ]; # tss group has access to TPM devices
-
-  # https://nixos.wiki/wiki/Secure_Boot
-  boot.bootspec.enable = true;
-  boot = {
-    loader.systemd-boot.enable = lib.mkForce false;
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/etc/secureboot";
-    };
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/EFI";
 
   boot.initrd.luks.devices = {
     internal = {
@@ -96,18 +83,5 @@
   #   config.hardware.enableRedistributableFirmware;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  security.pam.services.login.fprintAuth = false;
-  security.pam.services.xscreensaver.fprintAuth = false;
-  services.fprintd.enable = true;
-
   services.thermald.enable = true;
-  # TODO
-  # services.xserver.videoDrivers = lib.mkDefault [ "nvidia" ];
-  # hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
-
-  # TODO #2
-  #  cryptsetup open /dev/disk/by-uuid/3217d74c-b2bf-4c66-979a-586822df6c51 cryptHdd_mirror1
-  #  cryptsetup open /dev/disk/by-uuid/2c48ce2e-2aa6-4557-b71c-14d47805eb87 cryptHdd_mirror3
-  #  cryptsetup open /dev/disk/by-uuid/127162ee-cb94-4d6f-a313-15dd7607fdbb cryptHdd_mirror4
-  #  mount /dev/mapper/SrvVG-nfs /srv/nfs
 }

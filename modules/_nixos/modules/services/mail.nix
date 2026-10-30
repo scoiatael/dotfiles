@@ -22,7 +22,6 @@
     in
     {
       description = "offlineimap - mail sync";
-      wantedBy = [ "default.target" ];
       restartIfChanged = false;
 
       environment = {

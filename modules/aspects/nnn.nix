@@ -1,4 +1,4 @@
-{ inputs, dotfiles, ... }:
+{ inputs, ... }:
 
 {
   flake-file.inputs = {
@@ -7,47 +7,44 @@
     pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
   };
   den.aspects.nnn = {
-    nixos = { pkgs, lib, ... }: {
-      imports = [ inputs.niri-nix.nixosModules.default ];
-      services.displayManager.sddm = {
-        enable = true;
-        theme = "pixie";
-        # Crucial for Qt6: Use the KDE/Qt6 build of SDDM to fix missing cursors and module errors
-        package = lib.mkForce pkgs.kdePackages.sddm;
+    nixos =
+      { pkgs, lib, ... }:
+      {
+        imports = [ inputs.niri-nix.nixosModules.default ];
+        services.displayManager.sddm = {
+          theme = "pixie";
+          package = lib.mkForce pkgs.kdePackages.sddm;
+          extraPackages = [
+            pkgs.kdePackages.qtsvg
+            pkgs.kdePackages.qtdeclarative
+            pkgs.kdePackages.qt5compat
+          ];
 
-        # Fix for NixOS explicitly requiring a cursor theme
-        settings = {
-          Theme = {
-            CursorTheme = "breeze_cursors"; # Change this if you use a different cursor theme (e.g., Adwaita)
+          # Fix for NixOS explicitly requiring a cursor theme
+          settings = {
+            Theme = {
+              CursorTheme = "breeze_cursors"; # Change this if you use a different cursor theme (e.g., Adwaita)
+            };
           };
         };
-      };
-      environment.systemPackages =
-        let
-          inherit (inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}) pixie-sddm;
-          noctalia = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        in
-        [
-          (pixie-sddm.override {
-            avatar = dotfiles.config."doom/cacochan.png";
-          })
-          noctalia
-          pkgs.xwayland-satellite
-        ];
-      hardware.bluetooth.enable = true;
-      services.power-profiles-daemon.enable = true;
-      services.upower.enable = true;
-      programs.niri = {
-        enable = true;
-        # package = pkgs.niri-unstable;
-      };
-
-      environment = {
-        sessionVariables = {
-          NIXOS_OZONE_WL = "1";
+        environment.systemPackages =
+          let
+            inherit (inputs.pixie-sddm.packages.${pkgs.stdenv.hostPlatform.system}) pixie-sddm;
+            noctalia = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          in
+          [
+            pixie-sddm
+            noctalia
+            pkgs.xwayland-satellite
+          ];
+        hardware.bluetooth.enable = true;
+        services.power-profiles-daemon.enable = true;
+        services.upower.enable = true;
+        programs.niri = {
+          enable = true;
+          # package = pkgs.niri-unstable;
         };
       };
-    };
     homeManager = {
       imports = [
         inputs.niri-nix.homeModules.default
@@ -68,6 +65,15 @@
 
         # Screenshot
         screenshot-path = "~/Pictures/Screenshots/screenshot-%Y-%m-%d-%H-%M-%S.png";
+
+        # Displays
+        output = [
+          {
+            _args = [ "HDMI-A-1" ];
+            mode = "3840x2160@60.000";
+            scale = 2;
+          }
+        ];
       };
       programs.noctalia = {
         enable = true;
