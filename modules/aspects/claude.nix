@@ -67,6 +67,11 @@
           permissions = {
             defaultMode = "auto";
 
+            additionalDirectories = [
+              "${config.home.homeDirectory}/dotfiles"
+              "${config.home.homeDirectory}/Documents/worktrees"
+            ];
+
             # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
             allow = [ "mcp__codegraph__*" ];
 
