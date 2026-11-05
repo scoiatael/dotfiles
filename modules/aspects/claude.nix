@@ -36,10 +36,9 @@
     {
       home.packages = [
         claude-sandboxed
-        # PreToolUse hook helper for whitelisting URLs in project settings
         self'.packages.claude-url-allowlist
-        # PreToolUse hook helper backing the Bash rules below
         self'.packages.claude-bash-guard
+        self'.packages.claude-statusline
       ];
 
       # The base policy claude-sandboxed extends. The `mcp' aspect owns
@@ -65,10 +64,6 @@
           tui = "default";
           spinnerTipsEnabled = false;
 
-          enabledPlugins = {
-            "clangd-lsp@claude-plugins-official" = true;
-          };
-
           permissions = {
             defaultMode = "auto";
 
@@ -82,6 +77,11 @@
               "Bash(git commit)"
               "Bash(git commit:*)"
             ];
+          };
+
+          statusLine = {
+            type = "command";
+            command = "claude-statusline";
           };
 
           # Keeps files out of ~ itself — for the file tools by path, for Bash
