@@ -87,18 +87,21 @@ local function get_process(tab)
 	return process_icons[process_name] or string.format("[%s]", process_name)
 end
 
+local function is_claude(tab)
+	local process_name = remove_abs_path(tab.active_pane.foreground_process_name or "")
+	return process_name == ".claude-wrapped" or process_name == "claude"
+end
+
 -- Pretty format the tab title
 local function format_title(tab)
-	local cwd = get_display_cwd(tab)
 	local process = get_process(tab)
 
-	local active_title = tab.active_pane.title
-	if active_title:find("- NVIM") then
-		active_title = active_title:gsub("^([^ ]+) .*", "%1")
+	-- Claude Code sets the pane title to "<status glyph> <session name>"
+	if is_claude(tab) and tab.active_pane.title ~= "" then
+		return string.format(" %s %s ", process, tab.active_pane.title)
 	end
 
-	local description = (not active_title or active_title == cwd) and "~" or active_title
-	return string.format(" %s %s ", process, cwd)
+	return string.format(" %s %s ", process, get_display_cwd(tab))
 end
 
 -- Determine if a tab has unseen output since last visited
