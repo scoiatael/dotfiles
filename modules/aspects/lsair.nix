@@ -17,6 +17,7 @@
         den.aspects.mpv
         den.aspects.llama
         den.aspects.companion
+        den.aspects.gram
       ];
       homeManager =
         { config, ... }:

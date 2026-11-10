@@ -1,4 +1,5 @@
-{ den, ... }: {
+{ den, ... }:
+{
   den.aspects.steam = {
     includes = [
       (den.batteries.unfree [

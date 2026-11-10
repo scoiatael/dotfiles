@@ -5,6 +5,7 @@
     includes = [
       den.aspects.parrhasius
       den.aspects.steam
+      den.aspects.battle_net
       den.aspects.llama
     ];
     provides.lukaszczaplinski.includes = [
