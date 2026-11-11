@@ -1,4 +1,4 @@
-# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
 # Use `nix run .#write-flake` to regenerate it.
 {
   description = "My den-ful nix setup (home-manager, nixos, nix-darwin)";
@@ -15,7 +15,6 @@
     };
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     import-tree.url = "github:denful/import-tree";
-    lanzaboote.url = "github:nix-community/lanzaboote";
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -25,6 +24,10 @@
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-gram-extensions = {
+      url = "git+https://codeberg.org/niklaskorz/nix-gram-extensions";
+      inputs.nixpkgs.follows = "wasip2-nixpkgs";
     };
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -42,6 +45,7 @@
     stylix.url = "github:nix-community/stylix/release-26.05";
     uv2nix.url = "github:pyproject-nix/uv2nix";
     walker.url = "github:abenz1267/walker";
+    wasip2-nixpkgs.url = "github:niklaskorz/nixpkgs/wasip2-rustc";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 }
