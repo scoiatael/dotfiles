@@ -12,25 +12,26 @@
         pkgs,
         config,
         system,
+        self',
         ...
       }:
       let
         gram-extensions = inputs.nix-gram-extensions.packages.${system};
         extensions = with gram-extensions; [
-          bearded-icons
           catppuccin
           catppuccin-icons
-          deno
-          helm
-          graphql
-          gdscript
           git-firefly
-          night-owlz
-          typst
+          self'.packages.clojure-gram
         ];
         extensions-dir = gram-extensions.linkGramExtensions extensions;
       in
       {
+
+        home.packages = with pkgs; [
+          yaml-language-server
+          vscode-json-languageserver
+          bash-language-server
+        ];
         # on 26-11:
         # programs.gram = {
         #   enable = true;
