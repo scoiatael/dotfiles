@@ -85,7 +85,7 @@
           # Optional: Pin to a specific shortcuts version to detect breaking changes
           # Find the current version at about:config -> zen.keyboard.shortcuts.version
           # If Zen Browser updates and changes shortcuts, activation will fail with a clear error
-          keyboardShortcutsVersion = 19;
+          keyboardShortcutsVersion = 21;
           keyboardShortcuts = [
             {
               id = "zen-compact-mode-toggle";
