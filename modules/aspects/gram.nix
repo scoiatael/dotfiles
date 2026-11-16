@@ -3,7 +3,7 @@
   flake-file.inputs = {
     nix-gram-extensions.url = "git+https://codeberg.org/niklaskorz/nix-gram-extensions";
     nix-gram-extensions.inputs.nixpkgs.follows = "wasip2-nixpkgs";
-    # The default.nix by default fetches a version of nixpkgs that includes the WASIp2 changes required to build Gram extensions from source. You can optionally pass your own instance of pkgs instead, but are then responsible for ensuring this includes the wasm32-wasip2 cross target, which has not yet landed in any upstream nixpkgs channel. You can even pass it your own WASIp2 cross pkgs instance as wasip2Pkgs. From default.nix, you get a set of extensions defined in this repository along with three useful functions buildGramExtension, buildGramRustExtension and linkGramExtensions. For convenience, these are also exposed by a flake.nix.
+    # Building extensions needs the wasm32-wasip2 target, which no upstream nixpkgs channel has yet.
     wasip2-nixpkgs.url = "github:niklaskorz/nixpkgs/wasip2-rustc";
   };
   den.aspects.gram = {
@@ -71,17 +71,16 @@
         home.file."Library/Application Support/Gram/extensions/installed" = {
           enable = pkgs.stdenv.hostPlatform.isDarwin;
           source = extensions-dir;
+          # Gram rebuilds its extension index on launch when the file is gone.
           onChange = ''
-            cd "Library/Application Support/Gram/extensions"
-            mv index.json index.json.backup
+            rm -f "${config.home.homeDirectory}/Library/Application Support/Gram/extensions/index.json"
           '';
         };
         xdg.dataFile."gram/extensions/installed" = {
           enable = pkgs.stdenv.hostPlatform.isLinux;
           source = extensions-dir;
           onChange = ''
-            cd "${config.xdg.dataHome}/gram/extensions"
-            mv index.json index.json.backup
+            rm -f "${config.xdg.dataHome}/gram/extensions/index.json"
           '';
         };
       };

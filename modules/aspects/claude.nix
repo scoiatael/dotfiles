@@ -73,7 +73,8 @@
             ];
 
             # [[id:caabd499-2344-4dd7-a9de-72fe04af0a49][llm-codegraph]]
-            allow = [ "mcp__codegraph__*" ];
+            # MCP servers reach claude through home-manager's generated plugin, hence the prefix.
+            allow = [ "mcp__plugin_claude-code-home-manager_codegraph__*" ];
 
             # Commits belong to the user. Keeping ~ clean is left to the hook
             # below: a permission rule's star matches separators too, so
