@@ -17,7 +17,7 @@
         den.aspects.comma
         den.aspects.neovim
         den.aspects.stylix
-        den.aspects.zen
+        # den.aspects.zen
         den.aspects.companion
         den.aspects.fish
         (den.batteries.user-shell "zsh")
