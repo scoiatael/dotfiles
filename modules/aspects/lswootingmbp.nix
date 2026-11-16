@@ -24,6 +24,7 @@
         den.batteries.mkBackupCommand
         den.aspects.canario
         den.aspects.gram
+        den.aspects.delta
       ];
       homeManager =
         { pkgs, lib, ... }:
