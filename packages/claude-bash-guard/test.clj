@@ -159,6 +159,36 @@
                              {:tool_name "NotebookEdit"
                               :tool_input {:notebook_path (str home "/x.ipynb")}}))))))
 
+(deftest commits-only-in-linked-worktrees
+  (let [home (str (fs/create-temp-dir))
+        wt (str home "/Documents/worktrees")
+        linked (str wt "/server.fix-login")
+        clone (str wt "/server")
+        _ (fs/create-dirs (str linked "/src"))
+        _ (spit (str linked "/.git") "gitdir: ../server/.git/worktrees/fix-login")
+        _ (fs/create-dirs (str clone "/.git"))
+        reason (fn [cwd command]
+                 (decide {:max-chain 3 :home home}
+                         (json/generate-string {:cwd cwd :tool_input {:command command}})))]
+    (testing "a linked worktree is Claude's to commit in"
+      (is (nil? (reason linked "git commit -m 'fix login'")))
+      (is (nil? (reason (str linked "/src") "git add -A && git commit -m x")))
+      (is (nil? (reason home (str "cd " linked " && git commit -m x"))))
+      (is (nil? (reason home "git -C ~/Documents/worktrees/server.fix-login commit -m x")))
+      (is (nil? (reason clone "git -C ../server.fix-login commit -m x"))))
+    (testing "the user's own checkouts are not"
+      (is (str/includes? (reason clone "git commit -m x") "linked worktree"))
+      (is (some? (reason (str home "/dotfiles") "git commit --amend")))
+      (is (some? (reason linked "cd ../server && git commit -m x")))
+      (is (some? (reason clone "git --no-pager -c user.name=x commit -m x")))
+      (is (some? (reason linked "git -C $REPO commit -m x")))
+      (is (some? (reason nil "git commit -m x"))))
+    (testing "other git commands are untouched"
+      (is (nil? (reason clone "git status")))
+      (is (nil? (reason clone "git log --oneline -3")))
+      (is (nil? (reason clone "git -c core.pager=cat diff")))
+      (is (nil? (reason clone "echo git commit"))))))
+
 (deftest nothing-to-check-allows
   (is (nil? (decide opts (json/generate-string {:tool_input {}}))))
   (is (nil? (decide opts (hook ""))))

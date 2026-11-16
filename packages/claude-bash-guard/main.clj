@@ -1,14 +1,16 @@
 ;; Claude Code PreToolUse hook for Bash, Write and Edit. Splits a command with
-;; babashka.process/tokenize and denies four kinds of call: ones built from
+;; babashka.process/tokenize and denies five kinds of call: ones built from
 ;; parts this parser cannot account for, ones that create or replace files
 ;; directly in $HOME, throwaway scripts handed to a general-purpose
-;; interpreter, which belong in babashka, and searches rooted at / or $HOME.
+;; interpreter, which belong in babashka, searches rooted at / or $HOME, and
+;; git commits outside a linked worktree under ~/Documents/worktrees.
 ;; A file tool is checked on its path alone. Subdirectories
 ;; stay fine either way — a permission rule cannot express that, since its `*`
 ;; matches separators too. The exit code is 0 either way so the hook protocol
 ;; sees a decision, not a hook failure.
 
-(require '[babashka.process :as p]
+(require '[babashka.fs :as fs]
+         '[babashka.process :as p]
          '[cheshire.core :as json]
          '[clojure.string :as str])
 
@@ -240,7 +242,73 @@
       (str path " writes directly into $HOME; use a subdirectory"
            " or the session scratchpad"))))
 
-(defn bash-reason [{:keys [max-chain home]} command]
+(def git-valued-options
+  "Global git options that consume the next token."
+  #{"-C" "-c" "--git-dir" "--work-tree" "--namespace" "--config-env"})
+
+(defn git-subcommand
+  "The subcommand of a git invocation and the -C directories before it, or nil."
+  [[cmd & args]]
+  (when (= "git" (last (str/split cmd #"/")))
+    (loop [[a b & more :as args] args, dirs []]
+      (cond
+        (nil? a)                nil
+        (= "-C" a)              (recur more (conj dirs b))
+        (git-valued-options a)  (recur more dirs)
+        (str/starts-with? a "-") (recur (rest args) dirs)
+        :else                   {:sub a :dirs dirs}))))
+
+(defn resolve-dir
+  "The absolute directory a token names from base, or nil when a variable or
+  an unknown base leaves it unanswerable."
+  [base token home]
+  (let [expanded (-> token
+                     (str/replace #"^\$\{?HOME\}?(?=/|$)" home)
+                     (str/replace #"^~(?=/|$)" home))]
+    (cond
+      (str/includes? expanded "$")      nil
+      (fs/absolute? expanded)           (str (fs/normalize expanded))
+      base                              (str (fs/normalize (fs/path base expanded))))))
+
+(defn commit-dirs
+  "The directory each `git commit` in the command runs in, following `cd` and
+  -C. nil stands for one that cannot be resolved."
+  [tokens cwd home]
+  (:dirs
+   (reduce (fn [{:keys [cwd] :as acc} [cmd & args :as segment]]
+             (let [git (git-subcommand segment)]
+               (cond
+                 (= "cd" cmd)
+                 (assoc acc :cwd (if-let [to (first args)] (resolve-dir cwd to home) home))
+
+                 (= "commit" (:sub git))
+                 (update acc :dirs conj (reduce #(when %1 (resolve-dir %1 %2 home))
+                                                cwd (:dirs git)))
+
+                 :else acc)))
+           {:cwd cwd :dirs []}
+           (segments tokens))))
+
+(defn linked-worktree?
+  "True for a directory inside a linked worktree under ~/Documents/worktrees.
+  Those have a .git file pointing at their clone; the clone itself, which is
+  the user's checkout, has a .git directory."
+  [dir home]
+  (let [root (str home "/Documents/worktrees/")]
+    (boolean
+     (when (and dir (str/starts-with? (str dir "/") root))
+       (let [name (first (str/split (subs (str dir "/") (count root)) #"/"))]
+         (and (seq name) (fs/regular-file? (str root name "/.git"))))))))
+
+(defn commit-reason
+  "Deny reason for a git commit outside a linked worktree, or nil."
+  [tokens cwd home]
+  (when (some #(not (linked-worktree? % home)) (commit-dirs tokens cwd home))
+    (str "git commit is the user's outside a linked worktree under"
+         " ~/Documents/worktrees; leave the changes in the working tree, or"
+         " print the command for them")))
+
+(defn bash-reason [{:keys [max-chain home cwd]} command]
   (let [tokens (p/tokenize (normalize command))]
     (or (when-let [what (opaque command)]
           (str "command uses " what ", so what it writes cannot be"
@@ -249,6 +317,7 @@
           "command backgrounds a process; use the run_in_background option instead")
         (interpreter-reason tokens)
         (search-root-reason tokens home)
+        (commit-reason tokens cwd home)
         (let [n (inc (count (filter chain-separators tokens)))]
           (when (> n max-chain)
             (str "command chains " n " commands (limit " max-chain
@@ -258,12 +327,12 @@
 (defn decide
   "Returns nil to allow the call, or a deny reason string."
   [{:keys [home] :as opts} input]
-  (let [tool-input (get (try (json/parse-string input) (catch Exception _ nil))
-                        "tool_input")
+  (let [event (try (json/parse-string input) (catch Exception _ nil))
+        tool-input (get event "tool_input")
         command (get tool-input "command")
         path (or (get tool-input "file_path") (get tool-input "notebook_path"))]
     (cond
-      (not (str/blank? command)) (bash-reason opts command)
+      (not (str/blank? command)) (bash-reason (assoc opts :cwd (get event "cwd")) command)
       (not (str/blank? path))    (or (home-write-reason path home)
                                      (scratch-script-reason path)))))
 

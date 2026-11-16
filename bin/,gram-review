@@ -1,0 +1,104 @@
+#!/usr/bin/env bb
+;; Hand a branch to the user for review in Gram, and report back what they did.
+;;
+;;   ,gram-review --notes REVIEW.md          diff against the merge-base with origin/HEAD
+;;   ,gram-review --notes REVIEW.md main     diff against another base
+;;   ,gram-review --dry-run ...              print the gram command, open nothing
+;;
+;; Opens one Gram window with the repo, the notes file and a base-vs-current
+;; diff per changed file (committed, uncommitted and untracked alike). The
+;; right side of each diff is the real file, so edits there land in the
+;; worktree; the base side is a read-only copy. Blocks until the window
+;; closes, then prints the notes and the files the user edited.
+
+(require '[babashka.fs :as fs]
+         '[babashka.process :as p]
+         '[clojure.string :as str])
+
+(defn- die [& msg]
+  (binding [*out* *err*] (apply println msg))
+  (System/exit 1))
+
+(def root
+  (let [r (p/shell {:out :string :err :string :continue true}
+                   "git" "rev-parse" "--show-toplevel")]
+    (if (zero? (:exit r)) (str/trim-newline (:out r)) (die "not inside a git repo"))))
+
+(defn- git [& args]
+  (let [r (apply p/shell {:dir root :out :string :err :string :continue true} "git" args)]
+    (when (zero? (:exit r)) (str/trim-newline (:out r)))))
+
+(defn- default-base []
+  (or (some #(git "merge-base" "HEAD" %)
+            ["origin/HEAD" "origin/main" "origin/master" "main" "master"])
+      (die "no base found; pass one, e.g. ,gram-review --notes REVIEW.md main")))
+
+(defn- changes
+  "[status path] for every file that differs from base, untracked included."
+  [base]
+  (concat (->> (str/split (git "diff" "--name-status" "--no-renames" "-z" base) #"\x00")
+               (remove str/blank?)
+               (partition 2)
+               (map (fn [[status path]] [(subs status 0 1) path])))
+          (->> (str/split (git "ls-files" "-z" "--others" "--exclude-standard") #"\x00")
+               (remove str/blank?)
+               (map (fn [path] ["A" path])))))
+
+(defn- empty-file [dir path]
+  (let [f (fs/path dir path)]
+    (fs/create-dirs (fs/parent f))
+    (spit (str f) "")
+    (str f)))
+
+(defn- base-copy
+  "A read-only copy of path as it was at base, empty for an added file."
+  [tmp base status path]
+  (let [f (empty-file (fs/path tmp "base") path)]
+    (when-not (= "A" status)
+      (p/shell {:dir root :out (fs/file f)} "git" "show" (str base ":" path)))
+    (fs/set-posix-file-permissions f "r--r--r--")
+    f))
+
+(defn- fingerprint [f]
+  (when (fs/exists? f)
+    [(fs/size f) (str (fs/last-modified-time f))]))
+
+(defn- parse-args [args]
+  (loop [[a b & more :as args] args, opts {}]
+    (cond
+      (nil? a)            opts
+      (= "--notes" a)     (recur more (assoc opts :notes b))
+      (= "--dry-run" a)   (recur (rest args) (assoc opts :dry-run true))
+      (#{"-h" "--help"} a) (do (println "usage: ,gram-review --notes FILE [--dry-run] [BASE]")
+                               (System/exit 0))
+      :else               (recur (rest args) (assoc opts :base a)))))
+
+(let [{:keys [notes dry-run base]} (parse-args *command-line-args*)
+      _ (when-not notes (die "--notes FILE is required: what Claude wants looked at"))
+      notes (str (fs/absolutize notes))
+      base (or base (default-base))
+      changed (sort-by second (changes base))
+      _ (when (empty? changed) (die "nothing differs from" base))
+      tmp (str (fs/create-temp-dir {:prefix "gram-review-"}))
+      pairs (for [[status path] changed]
+              [path
+               (base-copy tmp base status path)
+               (if (= "D" status)
+                 (empty-file (fs/path tmp "deleted") path)
+                 (str (fs/path root path)))])
+      before (into {} (for [[path _ current] pairs] [path (fingerprint current)]))
+      cmd (concat ["gram" "-n" "-w" root notes]
+                  (mapcat (fn [[_ old new]] ["--diff" old new]) pairs))]
+  (when-not (fs/exists? notes) (spit notes ""))
+  (if dry-run
+    (println (str/join " " (map #(if (re-find #"\s" %) (pr-str %) %) cmd)))
+    (do
+      (apply p/shell {:dir root} cmd)
+      (let [edited (for [[path _ current] pairs
+                         :when (not= (before path) (fingerprint current))]
+                     path)]
+        (println "Review window closed.\n")
+        (println "## Notes" notes "\n")
+        (println (slurp notes))
+        (println "## Files the user edited\n")
+        (println (if (seq edited) (str/join "\n" edited) "none"))))))

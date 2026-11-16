@@ -19,7 +19,9 @@ Comment should never be longer than 1-2 simple sentences.
 
 ## Commits
 
-Never run `git commit`. Make the edits and leave them in the working tree — staging and committing are the user's, including when a commit would be convenient for getting CI to run or for tidying a branch. If a commit is genuinely needed, print the command instead of running it.
+In a linked worktree under `~/Documents/worktrees` (a `<repo>.<branch-slug>` sibling you or `wt switch` made), commit only when the user asks; otherwise leave the edits in the working tree. Everywhere else — the repo clones themselves, `~/dotfiles`, any other checkout — never run `git commit`: leave the edits in the working tree, and if a commit is genuinely needed, print the command instead. The bash guard hook enforces this split.
+
+When work in a worktree is ready for the user to look at, hand it over with the gram-review skill rather than summarising the diff in chat.
 
 ## Where files go
 

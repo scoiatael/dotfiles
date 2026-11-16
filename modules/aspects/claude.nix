@@ -76,13 +76,8 @@
             # MCP servers reach claude through home-manager's generated plugin, hence the prefix.
             allow = [ "mcp__plugin_claude-code-home-manager_codegraph__*" ];
 
-            # Commits belong to the user. Keeping ~ clean is left to the hook
-            # below: a permission rule's star matches separators too, so
-            # Write(~/*) denies every path under home, not its direct children.
-            deny = [
-              "Bash(git commit)"
-              "Bash(git commit:*)"
-            ];
+            # No deny rules: commits and writes into ~ depend on the directory,
+            # which a rule cannot match, so the hook below decides both.
           };
 
           statusLine = {
@@ -91,8 +86,8 @@
           };
 
           # Keeps files out of ~ itself — for the file tools by path, for Bash
-          # by parsing the command — and refuses commands with more moving
-          # parts than it can account for.
+          # by parsing the command — keeps commits to linked worktrees, and
+          # refuses commands with more moving parts than it can account for.
           hooks.PreToolUse = [
             {
               matcher = "Bash|Write|Edit|NotebookEdit";
