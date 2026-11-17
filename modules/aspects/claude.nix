@@ -32,6 +32,7 @@
           ${lib.getExe' config.programs.claude-code.finalPackage "claude"} \
           --permission-mode auto "$@"
       '';
+      trackerAsk = ''echo '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"Writes a tracker item. Approve only if you reviewed its markdown preview in Gram."}}' '';
     in
     {
       home.packages = [
@@ -95,6 +96,32 @@
                 {
                   type = "command";
                   command = "claude-bash-guard";
+                }
+              ];
+            }
+            # Auto mode would otherwise write tracker items unseen, so every
+            # create or update stops for approval.
+            {
+              matcher = "mcp__claude_ai_Linear__save_(project|issue|milestone|document)";
+              hooks = [
+                {
+                  type = "command";
+                  command = trackerAsk;
+                }
+              ];
+            }
+            {
+              matcher = "Bash";
+              hooks = [
+                {
+                  type = "command";
+                  "if" = "Bash(gh issue create*)";
+                  command = trackerAsk;
+                }
+                {
+                  type = "command";
+                  "if" = "Bash(gh issue edit*)";
+                  command = trackerAsk;
                 }
               ];
             }

@@ -23,6 +23,10 @@ In a linked worktree under `~/Documents/worktrees` (a `<repo>.<branch-slug>` sib
 
 When work in a worktree is ready for the user to look at, hand it over with the gram-review skill rather than summarising the diff in chat.
 
+## Creating items
+
+Before creating or updating any external project or issue (e.g. in Github, Linear or Notion), write its full contents — title, description, milestones, labels, assignee — to a markdown file in the session scratchpad, open it with `gram <file>`, and wait for the user's go-ahead. Write exactly what the file says after their edits; re-read it first. For Linear and `gh issue` a hook asks for approval on every write, so an item that skipped the preview gets refused there.
+
 ## Where files go
 
 Nothing lands directly in `~`. Temporary files belong in the session scratchpad, project files in the project. A stray log or scratch file in the home directory is invisible to the user until it isn't, and `~` here holds generated dotfiles, so anything written there is either lost on the next rebuild or quietly shadowing something.
