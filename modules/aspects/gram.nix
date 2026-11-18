@@ -22,6 +22,7 @@
           catppuccin-icons
           git-firefly
           self'.packages.clojure-gram
+          self'.packages.ruby-gram
         ];
         extensions-dir = gram-extensions.linkGramExtensions extensions;
       in
