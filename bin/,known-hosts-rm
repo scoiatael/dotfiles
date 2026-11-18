@@ -1,0 +1,57 @@
+#!/usr/bin/env bb
+;; Delete entries from ~/.ssh/known_hosts by line number.
+;;
+;;   ,known-hosts-rm 42
+;;   ,known-hosts-rm 42 57
+;;   ,known-hosts-rm /Users/lukas/.ssh/known_hosts:42   pasted from ssh's "Offending key" line
+;;
+;; The previous file is kept as known_hosts.old, like ssh-keygen -R does.
+
+(require '[babashka.fs :as fs]
+         '[clojure.string :as str])
+
+;; fs/home reads Java's user.home, which ignores an overridden $HOME.
+(def default-file (str (System/getenv "HOME") "/.ssh/known_hosts"))
+
+(defn- die [& msg]
+  (binding [*out* *err*] (apply println msg))
+  (System/exit 1))
+
+(defn- usage []
+  (->> (fs/read-all-lines *file*)
+       (drop 1)
+       (take-while #(str/starts-with? % ";;"))
+       (map #(str/replace % #"^;; ?" ""))
+       (str/join "\n")))
+
+(defn- parse-arg
+  "Turn \"42\" or \"path:42\" into [path 42]."
+  [arg]
+  (let [[_ file n] (re-matches #"(?:(.+):)?(\d+)" arg)]
+    (when-not n (die "not a line number:" arg))
+    [(or file default-file) (parse-long n)]))
+
+(defn- check-lines [file line-numbers]
+  (let [lines (fs/read-all-lines file)]
+    (doseq [n line-numbers]
+      (when-not (<= 1 n (count lines))
+        (die (format "not a line in %s (1-%d): %d" file (count lines) n))))
+    lines))
+
+(defn- remove-lines! [file lines line-numbers]
+  (doseq [n (sort line-numbers)
+          :let [line (nth lines (dec n))]]
+    (println (format "removing %s:%d  %s" file n (subs line 0 (min 80 (count line))))))
+  (fs/copy file (str file ".old") {:replace-existing true :copy-attributes true})
+  (fs/write-lines file (keep-indexed (fn [i line] (when-not (line-numbers (inc i)) line))
+                                     lines)))
+
+(let [args *command-line-args*]
+  (when (or (empty? args) (some #{"-h" "--help"} args))
+    (println (usage))
+    (System/exit (if (empty? args) 1 0)))
+  (let [by-file (update-vals (group-by first (map parse-arg args))
+                             #(set (map second %)))
+        lines   (into {} (for [[file ns] by-file] [file (check-lines file ns)]))]
+    (doseq [[file ns] by-file]
+      (remove-lines! file (lines file) ns))))
