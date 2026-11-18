@@ -23,6 +23,7 @@
           git-firefly
           self'.packages.clojure-gram
           self'.packages.ruby-gram
+          self'.packages.prisma-gram
         ];
         extensions-dir = gram-extensions.linkGramExtensions extensions;
       in
