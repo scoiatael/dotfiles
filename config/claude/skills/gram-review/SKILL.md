@@ -1,6 +1,6 @@
 ---
 name: gram-review
-description: Hand finished work to the user for review in the Gram editor with ,gram-review, which opens every changed file as a base-vs-branch diff next to your review notes and reports back the user's notes and edits once they close the window. Use when work in a worktree is ready for the user to look at, or when they ask to review, check or look over the changes in Gram, instead of pasting the diff into chat.
+description: Hand finished work to the user for review in the Gram editor with ,gram-review, which opens every changed file as a base-vs-branch diff next to your review notes and reports back the user's notes and edits once they close the window. Use when work in a worktree or a Github PR is ready for the user to look at, or when they ask to review, check or look over the changes in Gram, instead of pasting the diff into chat.
 ---
 
 # Handing a review to the user in Gram
@@ -16,7 +16,9 @@ worktree. The base side is a read-only copy.
 
 ## Steps
 
-1. Write the notes to the session scratchpad as `REVIEW.md`, in this shape:
+1. For your own work, write notes to the session scratchpad as `REVIEW.md`.
+   For a PR the user just wants to read, skip them and drop `--notes`; the
+   window then gets an empty notes file for the user's own notes. Notes shape:
 
    ```markdown
    # <branch>: <one-line what it does>
@@ -37,12 +39,21 @@ worktree. The base side is a read-only copy.
    ```
    ,gram-review --notes <scratchpad>/REVIEW.md          # base: merge-base with origin/HEAD
    ,gram-review --notes <scratchpad>/REVIEW.md main     # another base
+   ,gram-review --notes <scratchpad>/REVIEW.md --pr 123 # a PR of the current repo
+   ,gram-review --pr https://github.com/WootingKb/wooting-mono/pull/526 # no notes
    ```
+
+   `--pr` reuses the worktree on the PR's branch, or creates one with
+   `wt switch pr:N`, and diffs against the PR's base branch. A URL picks the
+   clone under `~/Documents/worktrees/<repo>`, so it runs from anywhere.
+
+   Given a Linear review URL (`linear.app/<org>/review/...`), resolve it first
+   with the Linear MCP's `get_diff` and pass its `url` field (the Github PR).
 
 3. Tell the user in one line that the review is open in Gram and that closing
    the window hands it back.
-4. When the task finishes, its output holds the notes file and the files the
-   user edited. Read `git diff` for those files and treat their edits as
+4. When the task finishes, its output holds the worktree, the notes file and
+   the files the user edited. Read `git diff` for those files and treat their edits as
    decisions, not as something to undo. Then act on the notes.
 
 ## Several worktrees at once
