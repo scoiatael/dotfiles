@@ -146,14 +146,18 @@
                  (empty-file (fs/path tmp "deleted") path)
                  (str (fs/path root path)))])
       before (into {} (for [[path _ current] pairs] [path (fingerprint current)]))
-      cmd (concat ["gram" "-n" "-w" root notes]
-                  (mapcat (fn [[_ old new]] ["--diff" old new]) pairs))]
+      ;; Gram focuses the last tab it opens and opens diffs after plain paths,
+      ;; so the notes go in with a second call that also waits for the window to close.
+      cmds [(concat ["gram" "-n" root]
+                    (mapcat (fn [[_ old new]] ["--diff" old new]) pairs))
+            ["gram" "-a" "-w" root notes]]]
   (when-not (fs/exists? notes) (spit notes ""))
   (if dry-run
-    (println (str/join " " (map #(if (re-find #"\s" %) (pr-str %) %) cmd)))
+    (doseq [cmd cmds]
+      (println (str/join " " (map #(if (re-find #"\s" %) (pr-str %) %) cmd))))
     (do
       (wait-for-turn!)
-      (apply p/shell {:dir root} cmd)
+      (doseq [cmd cmds] (apply p/shell {:dir root} cmd))
       (let [edited (for [[path _ current] pairs
                          :when (not= (before path) (fingerprint current))]
                      path)]
