@@ -45,6 +45,14 @@ worktree. The base side is a read-only copy.
    user edited. Read `git diff` for those files and treat their edits as
    decisions, not as something to undo. Then act on the notes.
 
+## Several worktrees at once
+
+Hand over one review at a time: open the next only after the previous window
+closed and you acted on its notes. When the same change lands in several repos
+(a backport), review the first one, apply the user's feedback to the rest, and
+then open the others one by one. The helper also queues a second call behind an
+open window, but a queue of identical reviews is still one too many.
+
 ## Notes
 
 `--dry-run` prints the gram command without opening anything. Use it to

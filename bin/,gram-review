@@ -63,6 +63,18 @@
   (when (fs/exists? f)
     [(fs/size f) (str (fs/last-modified-time f))]))
 
+(defn- wait-for-turn!
+  "Blocks while another review window is open, so parallel calls queue instead of stacking windows."
+  []
+  (let [ch (java.nio.channels.FileChannel/open
+            (fs/path (fs/temp-dir) "gram-review.lock")
+            (into-array java.nio.file.OpenOption
+                        [java.nio.file.StandardOpenOption/CREATE
+                         java.nio.file.StandardOpenOption/WRITE]))]
+    (when-not (.tryLock ch)
+      (binding [*out* *err*] (println "Another review is open in Gram; waiting for it to close."))
+      (.lock ch))))
+
 (defn- parse-args [args]
   (loop [[a b & more :as args] args, opts {}]
     (cond
@@ -93,6 +105,7 @@
   (if dry-run
     (println (str/join " " (map #(if (re-find #"\s" %) (pr-str %) %) cmd)))
     (do
+      (wait-for-turn!)
       (apply p/shell {:dir root} cmd)
       (let [edited (for [[path _ current] pairs
                          :when (not= (before path) (fingerprint current))]
