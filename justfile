@@ -17,7 +17,7 @@ deploy target flake build=target:
 
 deploy-sd-161581: (deploy "root@sd-161581.scoiatael.omg.lol" ".#sd-161581" )
 deploy-framework: (deploy "root@192.168.180.153" ".#LsFramework" )
-deploy-tabletop-nixos: (deploy "root@tabletop-nixos" ".#tabletop-nixos" )
+deploy-tabletop-nixos: (deploy "root@192.168.1.128" ".#tabletop-nixos" )
 
 # Update flake.* files from modules/
 write-flake:

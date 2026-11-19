@@ -47,16 +47,20 @@
 
       {
         imports = [
+          inputs.nixos-hardware.nixosModules.common-cpu-amd
+          inputs.nixos-hardware.nixosModules.common-gpu-intel
+          inputs.nixos-hardware.nixosModules.common-pc-ssd
           ../_nixos/tabletop-nixos/hardware-configuration.nix
         ];
+        hardware.intelgpu.driver = "xe";
 
         # Bootloader.
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
 
-        boot.initrd.luks.devices."luks-635483c0-a7da-41ea-815c-67af200fc196".device =
-          "/dev/disk/by-uuid/635483c0-a7da-41ea-815c-67af200fc196";
-        networking.hostName = "nixos"; # Define your hostname.
+        boot.initrd.luks.devices."luks-b9dd291f-5012-47fe-85fd-fdd178db0717".device =
+          "/dev/disk/by-uuid/b9dd291f-5012-47fe-85fd-fdd178db0717";
+        networking.hostName = "tabletop-nixos"; # Define your hostname.
         # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
         # Configure network proxy if necessary
