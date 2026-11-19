@@ -8,7 +8,14 @@
   den.hosts.x86_64-linux.tabletop-nixos.users.lukaszczaplinski = { };
 
   den.aspects.tabletop-nixos = {
+    includes = [
+      den.aspects.kde
+      den.aspects.caps2esc
+      den.aspects.incus
+      (den.batteries.unfree [ "wootility" ])
+    ];
     provides.lukaszczaplinski.includes = [
+      den.aspects.keyboard-pl
       den.aspects.neovim
       den.aspects.nnn
       den.aspects.zen
@@ -44,7 +51,12 @@
         pkgs,
         ...
       }:
-
+      let
+        sshKeys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJGdBIYMPRMhZ4KJ4excC5GjqvVKNFpxW0uUoH9zIqjQ"
+          "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHJuPvZPJb9gGxF3EczaLOAUs4uzN06sk5AOSGGGozYy9j7xV+OdgTwVn3020l7Q85F0rCFBjRXyKm6uBOrilWw="
+        ];
+      in
       {
         imports = [
           inputs.nixos-hardware.nixosModules.common-cpu-amd
@@ -88,20 +100,8 @@
           LC_TIME = "pl_PL.UTF-8";
         };
 
-        # Enable the X11 windowing system.
-        services.xserver.enable = true;
+        hardware.wooting.enable = true;
 
-        # Enable the Budgie Desktop environment.
-        services.xserver.desktopManager.budgie.enable = true;
-
-        # Configure keymap in X11
-        services.xserver.xkb = {
-          layout = "pl";
-          variant = "";
-        };
-
-        # Configure console keymap
-        console.keyMap = "pl2";
 
         # Enable CUPS to print documents.
         services.printing.enable = true;
@@ -133,12 +133,12 @@
             "networkmanager"
             "wheel"
           ];
-          openssh.authorizedKeys.keys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJGdBIYMPRMhZ4KJ4excC5GjqvVKNFpxW0uUoH9zIqjQ"
-            "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHJuPvZPJb9gGxF3EczaLOAUs4uzN06sk5AOSGGGozYy9j7xV+OdgTwVn3020l7Q85F0rCFBjRXyKm6uBOrilWw="
-          ];
+          openssh.authorizedKeys.keys = sshKeys;
         };
         services.tailscale.enable = true;
+
+        users.users.incant.openssh.authorizedKeys.keys = sshKeys;
+        boot.kernelModules = [ "kvm-amd" ];
 
         programs.zsh.enable = true;
         # Install firefox.
@@ -146,10 +146,6 @@
 
         # List packages installed in system profile. To search, run:
         # $ nix search wget
-        environment.systemPackages = with pkgs; [
-          #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-          #  wget
-        ];
 
         # Some programs need SUID wrappers, can be configured further or are
         # started in user sessions.
@@ -169,9 +165,7 @@
           settings.KbdInteractiveAuthentication = false;
           settings.PermitRootLogin = "prohibit-password";
         };
-        users.users.root.openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJGdBIYMPRMhZ4KJ4excC5GjqvVKNFpxW0uUoH9zIqjQ"
-        ];
+        users.users.root.openssh.authorizedKeys.keys = [ (builtins.head sshKeys) ];
 
         # Open ports in the firewall.
         # networking.firewall.allowedTCPPorts = [ ... ];

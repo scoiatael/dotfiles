@@ -7,8 +7,11 @@
       den.aspects.steam
       den.aspects.battle_net
       den.aspects.llama
+      den.aspects.kde
+      den.aspects.caps2esc
     ];
     provides.lukaszczaplinski.includes = [
+      den.aspects.keyboard-pl
       den.aspects.nnn
       den.aspects.neovim
       den.aspects.zen
@@ -199,7 +202,6 @@
           earlySetup = true;
           font = "${pkgs.terminus_font}/share/consolefonts/ter-m32n.psf.gz";
           packages = with pkgs; [ terminus_font ];
-          keyMap = "us";
           #TODO: https://github.com/coderonline/base16-vtrgb/blob/master/consolecolors/base16-nord.vga
           colors = [
             "002b36"
@@ -222,18 +224,6 @@
         };
 
         # List services that you want to enable:
-
-        # https://github.com/NixOS/nixpkgs/issues/126681
-        services.interception-tools = {
-          enable = true;
-          plugins = [ pkgs.interception-tools-plugins.caps2esc ];
-          udevmonConfig = ''
-            - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc -m 1 | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
-              DEVICE:
-                EVENTS:
-                  EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
-          '';
-        };
 
         # https://nixos.wiki/wiki/Yubikey
         services.udev.packages = [ pkgs.yubikey-personalization ];
@@ -288,24 +278,6 @@
         # https://wiki.archlinux.org/title/Solid_state_drive
         services.fstrim.enable = true;
 
-        services.displayManager.sddm = {
-          enable = true;
-          wayland = {
-            enable = true;
-            compositor = "weston";
-          };
-        };
-        environment.systemPackages = with pkgs; [
-          wayland
-          libxcb-cursor
-          kdePackages.qtsvg
-          kdePackages.qtdeclarative
-          kdePackages.qt5compat
-          kdePackages.qtbase
-          kdePackages.qtwayland
-          kdePackages.qtmultimedia
-        ];
-        services.desktopManager.plasma6.enable = true;
 
         # Define a user account. Don't forget to set a password with ‘passwd’.
         users.users.lukaszczaplinski = {
