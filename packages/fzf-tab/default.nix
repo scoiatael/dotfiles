@@ -1,3 +1,4 @@
+# @ts: { pkgs: Pkgs }
 { pkgs ? import <nixpkgs> { }, ... }:
 
 # NOTE; looks like there's a problem with nix case hack in here.

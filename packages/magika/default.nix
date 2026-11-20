@@ -1,3 +1,4 @@
+# @ts: { config: any; lib: Lib; pkgs: Pkgs }
 { config, lib, pkgs, ... }:
 
 # Adding magika directly results in errors on macOS as of 2025-07-11

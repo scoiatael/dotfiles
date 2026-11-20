@@ -1,3 +1,4 @@
+# @ts: { inputs: Inputs; system: string; pkgs: Pkgs }
 {
   inputs,
   system,

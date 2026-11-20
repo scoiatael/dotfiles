@@ -1,3 +1,4 @@
+# @ts: PythonCallPackageArgs
 { llm, buildPythonPackage, fetchFromGitHub, setuptools, click, pytestCheckHook
 }:
 

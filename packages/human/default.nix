@@ -1,3 +1,4 @@
+# @ts: { config: any; lib: Lib; pkgs: Pkgs }
 { config, lib, pkgs, ... }:
 
 pkgs.stdenv.mkDerivation {

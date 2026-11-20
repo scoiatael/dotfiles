@@ -1,4 +1,5 @@
 # TODO Add this to https://codeberg.org/niklaskorz/nix-gram-extensions/src/branch/main
+# @ts: { inputs: Inputs; system: string; pkgs: Pkgs }
 {
   inputs,
   system,

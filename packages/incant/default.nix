@@ -1,3 +1,4 @@
+# @ts: { pkgs: Pkgs }
 { pkgs, ... }:
 
 pkgs.python3Packages.buildPythonApplication rec {

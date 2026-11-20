@@ -1,3 +1,4 @@
+# @ts: { pkgs: Pkgs }
 { pkgs ? import (fetchTarball {
   name = "nixos-unstable-2022-08-09";
   url =
@@ -24,4 +25,6 @@ pkgs.stdenv.mkDerivation rec {
   installPhase = ''
     DESTDIR=$out make install
   '';
+
+  meta.platforms = pkgs.lib.platforms.linux;
 }

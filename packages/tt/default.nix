@@ -1,3 +1,4 @@
+# @ts: Pkgs
 { writers, babashka, lib }:
 
 (writers.writeBabashkaBin "tt" { } (builtins.readFile ./main.clj)).overrideAttrs (old: {

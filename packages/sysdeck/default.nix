@@ -1,3 +1,4 @@
+# @ts: { lib: Lib; pkgs: Pkgs }
 { pkgs, lib, ... }:
 
 let
@@ -16,11 +17,11 @@ let
     doCheck = false;
   });
 in
-pkgs.stdenv.mkDerivation (finalAttrs: {
+pkgs.stdenv.mkDerivation rec {
   pname = "sysdeck";
   version = "0.1.0";
   src = pkgs.fetchurl {
-    url = "https://github.com/mrusme/sysdeck/releases/download/v${finalAttrs.version}/sysdeck-v${finalAttrs.version}-x86_64-linux-gnu.tar.gz";
+    url = "https://github.com/mrusme/sysdeck/releases/download/v${version}/sysdeck-v${version}-x86_64-linux-gnu.tar.gz";
     hash = "sha256-MoMT8qogHJbjN1/R73FPfcv49IyaeVnsBSWMoK3Sumk=";
   };
   nativeBuildInputs = [
@@ -49,4 +50,4 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
     mainProgram = "sysdeck";
     platforms = [ "x86_64-linux" ];
   };
-})
+}

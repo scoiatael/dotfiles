@@ -1,3 +1,4 @@
+# @ts: { inputs: Inputs; lib: Lib; pkgs: Pkgs }
 {
   inputs,
   lib,

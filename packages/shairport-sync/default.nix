@@ -1,3 +1,4 @@
+# @ts: Pkgs & { enableDbus?: boolean; enableMetadata?: boolean; enableMpris?: boolean }
 { lib, stdenv, fetchFromGitHub, autoreconfHook, pkg-config, openssl, avahi
 , alsa-lib, glib, libdaemon, popt, libconfig, libpulseaudio, soxr
 , enableDbus ? stdenv.isLinux, enableMetadata ? false
@@ -47,6 +48,6 @@ stdenv.mkDerivation rec {
     description = "Airtunes server and emulator with multi-room capabilities";
     license = licenses.mit;
     maintainers = with maintainers; [ lnl7 ];
-    platforms = platforms.unix;
+    platforms = platforms.linux;
   };
 }

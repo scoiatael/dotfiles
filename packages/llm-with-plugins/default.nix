@@ -1,3 +1,4 @@
+# @ts: { lib: Lib; pkgs: Pkgs }
 { lib, pkgs, ... }:
 
 let

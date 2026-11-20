@@ -1,3 +1,4 @@
+# @ts: Pkgs
 { lib, fetchFromGitHub, rustPlatform }:
 
 rustPlatform.buildRustPackage rec {

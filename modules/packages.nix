@@ -21,6 +21,8 @@
         directory = ../packages;
       };
     in
-    lib.mapAttrs (_: { default, ... }: default) tree
+    lib.filterAttrs (_: lib.meta.availableOn pkgs.stdenv.hostPlatform) (
+      lib.mapAttrs (_: { default, ... }: default) tree
+    )
   );
 }

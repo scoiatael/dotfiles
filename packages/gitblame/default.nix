@@ -1,3 +1,4 @@
+# @ts: Pkgs
 { lib, fetchFromGitHub, buildGoModule }:
 
 buildGoModule rec {

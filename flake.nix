@@ -50,6 +50,7 @@
     pyproject-nix.url = "github:pyproject-nix/pyproject.nix";
     sops-nix.url = "github:Mic92/sops-nix";
     stylix.url = "github:nix-community/stylix/release-26.05";
+    typenix.url = "github:ryanrasti/typenix";
     uv2nix.url = "github:pyproject-nix/uv2nix";
     walker.url = "github:abenz1267/walker";
     wasip2-nixpkgs.url = "github:niklaskorz/nixpkgs/wasip2-rustc";

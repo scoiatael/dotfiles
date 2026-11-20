@@ -1,3 +1,4 @@
+# @ts: Pkgs
 { writers, babashka, lib }:
 
 (writers.writeBabashkaBin "claude-bash-guard" { } (builtins.readFile ./main.clj)).overrideAttrs

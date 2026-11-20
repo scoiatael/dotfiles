@@ -1,3 +1,4 @@
+# @ts: { pkgs: Pkgs }
 { pkgs ? import <nixpkgs> { }, ... }:
 
 pkgs.tmuxPlugins.mkTmuxPlugin rec {

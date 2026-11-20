@@ -1,3 +1,4 @@
+# @ts: Pkgs
 { writers, babashka, lib }:
 
 (writers.writeBabashkaBin "claude-url-allowlist" { } (builtins.readFile ./main.clj)).overrideAttrs

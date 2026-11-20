@@ -1,3 +1,4 @@
+# @ts: Pkgs
 { writers, babashka, lib }:
 
 (writers.writeBabashkaBin "claude-tracker-ask" { } (builtins.readFile ./main.clj)).overrideAttrs
