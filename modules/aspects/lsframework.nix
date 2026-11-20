@@ -9,6 +9,7 @@
       den.aspects.llama
       den.aspects.kde
       den.aspects.caps2esc
+      den.aspects.etc-nixos
     ];
     provides.lukaszczaplinski.includes = [
       den.aspects.keyboard-pl

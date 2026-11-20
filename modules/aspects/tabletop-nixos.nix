@@ -13,6 +13,7 @@
       den.aspects.caps2esc
       den.aspects.incus
       (den.batteries.unfree [ "wootility" ])
+      den.aspects.etc-nixos
     ];
     provides.lukaszczaplinski.includes = [
       den.aspects.keyboard-pl
