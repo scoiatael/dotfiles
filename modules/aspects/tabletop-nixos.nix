@@ -12,8 +12,9 @@
       den.aspects.kde
       den.aspects.caps2esc
       den.aspects.incus
-      (den.batteries.unfree [ "wootility" ])
       den.aspects.etc-nixos
+      den.aspects.battle_net
+      (den.batteries.unfree [ "wootility" "steam" "steam-unwrapped" ])
     ];
     provides.lukaszczaplinski.includes = [
       den.aspects.keyboard-pl
