@@ -65,15 +65,6 @@
 
         # Screenshot
         screenshot-path = "~/Pictures/Screenshots/screenshot-%Y-%m-%d-%H-%M-%S.png";
-
-        # Displays
-        output = [
-          {
-            _args = [ "HDMI-A-1" ];
-            mode = "3840x2160@60.000";
-            scale = 2;
-          }
-        ];
       };
       programs.noctalia = {
         enable = true;

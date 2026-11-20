@@ -39,6 +39,13 @@
       flake = false;
     };
     pixie-sddm.url = "github:xCaptaiN09/pixie-sddm";
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     pyproject-build-systems.url = "github:pyproject-nix/build-system-pkgs";
     pyproject-nix.url = "github:pyproject-nix/pyproject.nix";
     sops-nix.url = "github:Mic92/sops-nix";

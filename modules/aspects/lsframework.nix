@@ -15,6 +15,7 @@
       den.aspects.keyboard-pl
       den.aspects.nnn
       den.aspects.neovim
+      den.aspects.sysdeck
       den.aspects.zen
     ];
     provides.lukaszczaplinski.homeManager =
@@ -28,6 +29,14 @@
         programs.zsh.sessionVariables = {
           EDITOR = lib.getExe pkgs.neovim;
         };
+
+        wayland.windowManager.niri.settings.output = [
+          {
+            _args = [ "HDMI-A-1" ];
+            mode = "3840x2160@60.000";
+            scale = 2;
+          }
+        ];
 
         home = {
           username = "lukaszczaplinski";
