@@ -27,9 +27,16 @@
         den.aspects.delta
       ];
       homeManager =
-        { pkgs, lib, ... }:
+        {
+          pkgs,
+          lib,
+          self',
+          ...
+        }:
 
         {
+          home.packages = [ self'.packages.dreamcoder ];
+
           imports = [
             dotfiles.homeModules.zsh
             ../_home/modules/default.nix
