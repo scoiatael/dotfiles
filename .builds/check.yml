@@ -6,4 +6,6 @@ environment:
 tasks:
   - check: |
       cd dotfiles
+      # Full evaluation peaks near 4 GB, so checks are built first in a small process and flake check finds them done.
+      nix build -L --no-link .#checks.x86_64-linux.typenix .#checks.x86_64-linux.check-flake-file
       nix flake check -L

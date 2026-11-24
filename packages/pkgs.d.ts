@@ -49,6 +49,7 @@ type PythonCallPackageArgs = PythonPkgs & Pick<Pkgs, "fetchFromGitHub">;
 type Pkgs = ByNamePackages & {
   lib: Lib;
   stdenv: Stdenv;
+  stdenvNoCC: Stdenv;
 
   fetchFromGitHub: (args: FetchFromGitHubArgs) => Derivation;
   fetchgit: (args: { url: string; hash: string; rev?: string }) => Derivation;
@@ -86,6 +87,7 @@ type Pkgs = ByNamePackages & {
   openssl: Derivation;
   pass: Derivation;
   wrapGAppsHook4: Derivation;
+  zlib: Derivation;
 
   // TypeNix rewrites `-` to `_` in Nix identifiers, so hyphenated attrs are only reachable under these names.
   alsa_lib: Derivation;
