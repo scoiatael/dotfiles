@@ -14,6 +14,7 @@
       den.aspects.incus
       den.aspects.etc-nixos
       den.aspects.battle_net
+      den.aspects.graphical-unlock
       (den.batteries.unfree [ "wootility" "steam" "steam-unwrapped" ])
     ];
     provides.lukaszczaplinski.includes = [
@@ -76,6 +77,7 @@
           ../_nixos/tabletop-nixos/hardware-configuration.nix
         ];
         hardware.intelgpu.driver = "xe";
+        boot.initrd.kernelModules = [ "xe" ];
 
         # Bootloader.
         boot.loader.systemd-boot.enable = true;
