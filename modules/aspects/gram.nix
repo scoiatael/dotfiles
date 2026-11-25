@@ -68,6 +68,7 @@
             "ui_font_size": 14,
             "buffer_font_size": 14,
             "theme": "Catppuccin Frappé",
+            "autosave": "on_focus_change",
           }
         '';
         home.file."Library/Application Support/Gram/extensions/installed" = {
