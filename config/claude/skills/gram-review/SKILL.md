@@ -5,7 +5,7 @@ description: Hand finished work to the user for review in the Gram editor with ,
 
 # Handing a review to the user in Gram
 
-`bin/,gram-review` opens one Gram window per review:
+`,gram-review` (`packages/gram-review` in ~/dotfiles) opens one Gram window per review:
 
 - the repo, so the user can browse beyond the diff
 - your notes file
@@ -52,9 +52,25 @@ worktree. The base side is a read-only copy.
 
 3. Tell the user in one line that the review is open in Gram and that closing
    the window hands it back.
-4. When the task finishes, its output holds the worktree, the notes file and
-   the files the user edited. Read `git diff` for those files and treat their edits as
-   decisions, not as something to undo. Then act on the notes.
+4. When the task finishes, its output holds the worktree, the notes file,
+   the files the user edited and the files they marked as seen. Read `git diff`
+   for the edited files and treat their edits as decisions, not as something
+   to undo. Then act on the notes.
+
+## Files marked as seen
+
+The helper appends a `## Mark as seen` checklist of the shown files to the
+notes file. A file the user ticks is remembered per branch at its current
+content. Later reviews of that branch hide it while it stays unchanged, and once
+it changes they diff it against the content the user saw instead of the base.
+So after acting on review notes, a second review shows only what you touched
+since.
+
+- Never tick boxes yourself: seen means the user looked at it.
+- If every changed file is hidden, the helper says so and exits 0. Tell the
+  user nothing is new; pass `--all` only if they want to see everything again.
+- State lives in `<git common dir>/gram-review-seen.edn`, shared by every
+  worktree of the clone.
 
 ## Several worktrees at once
 

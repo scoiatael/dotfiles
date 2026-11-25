@@ -39,6 +39,7 @@
         self'.packages.claude-url-allowlist
         self'.packages.claude-bash-guard
         self'.packages.gram-approve
+        self'.packages.gram-review
         self'.packages.claude-statusline
       ];
 
