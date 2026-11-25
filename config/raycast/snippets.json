@@ -38,6 +38,16 @@
   },
   {
     "name": "shrug",
-    "text": "¯\\_(ツ)_/¯"
+    "text": "¯\\_(ツ)_/¯",
+    "keyword": "<shrug"
+  },
+  {
+    "name": "node-ip",
+    "text": "node --eval='console.log(await (await fetch(\"https://ip.scoiatael.dev\")).text())'"
+  },
+  {
+    "name": "linear-issue",
+    "text": "https://linear.app/issue/{clipboard}",
+    "keyword": "<li"
   }
 ]
