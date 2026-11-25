@@ -25,7 +25,7 @@ When work in a worktree is ready for the user to look at, hand it over with the 
 
 ## Creating items
 
-Before creating or updating any external project or issue (e.g. in Github, Linear or Notion), write its full contents — title, description, milestones, labels, assignee — to a markdown file in the session scratchpad, open it with `gram <file>`, and wait for the user's go-ahead. Write exactly what the file says after their edits; re-read it first. For Linear and `gh issue` a hook asks for approval on every write, so an item that skipped the preview gets refused there.
+Before creating or updating any external project or issue (e.g. in Github, Linear or Notion), write its full contents — title, description, milestones, labels, assignee — to a markdown preview in the session scratchpad, one `## [ ] <title>` section per item with its body below, and run `gram-approve <preview>` in the background; it blocks until the user closes the window and prints which items they ticked. Re-read the preview, then send each ticked item's title and body exactly as written there. For Linear and Github a hook refuses any title or body that doesn't match a ticked item; status and label changes pass. Post to Github only with a lone `gh issue|pr create|edit|comment|review -t <title> --body-file <file>`, the file holding the item's body copied verbatim from the preview.
 
 ## Where files go
 

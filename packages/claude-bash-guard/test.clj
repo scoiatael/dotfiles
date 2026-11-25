@@ -189,6 +189,42 @@
       (is (nil? (reason clone "git -c core.pager=cat diff")))
       (is (nil? (reason clone "echo git commit"))))))
 
+(deftest github-writes-only-in-reviewable-form
+  (testing "a lone gh write with --body-file is the allowed form"
+    (is (nil? (reason "gh issue create -t x --body-file /tmp/s/issue.md")))
+    (is (nil? (reason "gh pr comment 5 -F /tmp/s/c.md")))
+    (is (nil? (reason "gh pr review 5 --approve")))
+    (is (nil? (reason "gh issue edit 3 --add-label bug"))))
+  (testing "inline bodies are refused"
+    (is (str/includes? (reason "gh issue comment 3 -b hi") "--body-file"))
+    (is (some? (reason "gh pr comment 5 --body 'looks good'")))
+    (is (some? (reason "gh pr review 5 --request-changes --body=nope")))
+    (is (some? (reason "gh issue comment 3 -F - < notes.md"))))
+  (testing "chained or piped gh writes are refused"
+    (is (str/includes? (reason "cd repo && gh issue create -t x -F f.md") "on its own"))
+    (is (some? (reason "gh pr comment 5 -F - | cat"))))
+  (testing "gh api writes are refused"
+    (is (str/includes? (reason "gh api repos/a/b/issues/1/comments -f body=hi") "gh api"))
+    (is (some? (reason "gh api -X POST repos/a/b/pulls/1/comments")))
+    (is (some? (reason "gh api --method=PATCH repos/a/b/issues/comments/9")))
+    (is (some? (reason "gh api repos/a/b/pulls/1/reviews --input r.json")))
+    (is (some? (reason "gh api graphql -f query='mutation { addComment(input: {}) { clientMutationId } }'")))
+    (is (some? (reason "gh api graphql -F query=@m.graphql"))))
+  (testing "reads stay allowed"
+    (is (nil? (reason "gh api repos/a/b/issues/1/comments")))
+    (is (nil? (reason "gh api repos/a/b/pulls/1/comments | jq -r '.[].body'")))
+    (is (nil? (reason "gh api -X GET search/issues -f q=bug")))
+    (is (nil? (reason "gh api graphql -f query='query { viewer { login } }'")))
+    (is (nil? (reason "gh pr view 5 --comments")))
+    (is (nil? (reason "gh issue list && gh pr list")))))
+
+(deftest approvals-file-is-off-limits
+  (is (str/includes? (reason "echo abc >> ~/.claude/gram-approvals") "gram-approve"))
+  (is (some? (reason "cp x /home/tester/.claude/gram-approvals")))
+  (is (some? (decide opts (json/generate-string
+                           {:tool_input {:file_path "/home/tester/.claude/gram-approvals"}}))))
+  (is (nil? (reason "gram-approve /tmp/s/preview.md"))))
+
 (deftest nothing-to-check-allows
   (is (nil? (decide opts (json/generate-string {:tool_input {}}))))
   (is (nil? (decide opts (hook ""))))

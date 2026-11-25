@@ -1,9 +1,11 @@
 ;; Claude Code PreToolUse hook for Bash, Write and Edit. Splits a command with
-;; babashka.process/tokenize and denies five kinds of call: ones built from
+;; babashka.process/tokenize and denies seven kinds of call: ones built from
 ;; parts this parser cannot account for, ones that create or replace files
 ;; directly in $HOME, throwaway scripts handed to a general-purpose
-;; interpreter, which belong in babashka, searches rooted at / or $HOME, and
-;; git commits outside a linked worktree under ~/Documents/worktrees.
+;; interpreter, which belong in babashka, searches rooted at / or $HOME,
+;; git commits outside a linked worktree under ~/Documents/worktrees,
+;; Github writes in a form gram-approve cannot match against a preview, and
+;; anything touching gram-approve's approvals file.
 ;; A file tool is checked on its path alone. Subdirectories
 ;; stay fine either way — a permission rule cannot express that, since its `*`
 ;; matches separators too. The exit code is 0 either way so the hook protocol
@@ -308,6 +310,68 @@
          " ~/Documents/worktrees; leave the changes in the working tree, or"
          " print the command for them")))
 
+(def gh-writes
+  "gh subcommands that post text; gram-approve checks them against a preview."
+  {"issue" #{"create" "edit" "comment"}
+   "pr"    #{"create" "edit" "comment" "review"}})
+
+(defn gh-write? [[cmd group sub]]
+  (boolean (and (= "gh" (last (str/split cmd #"/")))
+                (contains? (get gh-writes group) sub))))
+
+(defn flag-value
+  "The value of the first of names in args, given as `--name v` or `--name=v`."
+  [args names]
+  (some (fn [[a b]]
+          (or (when (names a) b)
+              (some #(when (str/starts-with? a (str % "=")) (subs a (inc (count %)))) names)))
+        (partition-all 2 1 args)))
+
+(defn gh-api-write?
+  "True for a `gh api` call that changes something. Fields make gh default to
+  POST, and a graphql call always POSTs, so only a mutation writes there; a
+  query read from a file could be one, so it counts as a write."
+  [[cmd sub & args]]
+  (when (and (= "gh" (last (str/split cmd #"/"))) (= "api" sub))
+    (let [method (or (flag-value args #{"-X" "--method"})
+                     (some #(second (re-matches #"-X(\w+)" %)) args))
+          fields? (some #(re-matches #"-[fF].*|--(raw-)?field(=.*)?|--input(=.*)?" %) args)]
+      (cond
+        method                    (not= "GET" (str/upper-case method))
+        (some #{"graphql"} args)  (boolean (some #(re-find #"\bmutation\b|^query=@" %) args))
+        :else                     (boolean fields?)))))
+
+(defn gh-reason
+  "Deny reason for a Github write gram-approve could not match to a preview, or
+  nil. The one form allowed is a lone `gh issue|pr <write>` with --body-file."
+  [tokens]
+  (let [segs (segments tokens)]
+    (some (fn [[_ group sub & args :as seg]]
+            (cond
+              (gh-api-write? seg)
+              (str "gh api writes cannot be reviewed; use gh issue/pr"
+                   " create|edit|comment|review with --body-file")
+
+              (not (gh-write? seg)) nil
+
+              (> (count segs) 1)
+              (str "run gh " group " " sub " on its own, not chained or piped,"
+                   " so gram-approve can check exactly what it sends")
+
+              (or (some #(re-matches #"-b|--body(=.*)?" %) args)
+                  (= "-" (flag-value args #{"-F" "--body-file"})))
+              (str "gh " group " " sub " takes its text inline or from stdin;"
+                   " write it to a markdown file, approve it with gram-approve,"
+                   " and pass --body-file")))
+          segs)))
+
+(defn approvals-reason
+  "Deny reason for a call that names gram-approve's approvals file, or nil.
+  Only a tick in Gram may add to it."
+  [strings]
+  (when (some #(str/includes? % "gram-approvals") strings)
+    "the approvals file is written only by gram-approve, from ticks in Gram"))
+
 (defn bash-reason [{:keys [max-chain home cwd]} command]
   (let [tokens (p/tokenize (normalize command))]
     (or (when-let [what (opaque command)]
@@ -318,6 +382,8 @@
         (interpreter-reason tokens)
         (search-root-reason tokens home)
         (commit-reason tokens cwd home)
+        (gh-reason tokens)
+        (approvals-reason tokens)
         (let [n (inc (count (filter chain-separators tokens)))]
           (when (> n max-chain)
             (str "command chains " n " commands (limit " max-chain
@@ -333,7 +399,8 @@
         path (or (get tool-input "file_path") (get tool-input "notebook_path"))]
     (cond
       (not (str/blank? command)) (bash-reason (assoc opts :cwd (get event "cwd")) command)
-      (not (str/blank? path))    (or (home-write-reason path home)
+      (not (str/blank? path))    (or (approvals-reason [path])
+                                     (home-write-reason path home)
                                      (scratch-script-reason path)))))
 
 (defn deny [reason]

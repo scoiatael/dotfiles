@@ -38,7 +38,7 @@
         claude-sandboxed
         self'.packages.claude-url-allowlist
         self'.packages.claude-bash-guard
-        self'.packages.claude-tracker-ask
+        self'.packages.gram-approve
         self'.packages.claude-statusline
       ];
 
@@ -87,8 +87,9 @@
           };
 
           # Keeps files out of ~ itself — for the file tools by path, for Bash
-          # by parsing the command — keeps commits to linked worktrees, and
-          # refuses commands with more moving parts than it can account for.
+          # by parsing the command — keeps commits to linked worktrees, keeps
+          # Github writes to the form gram-approve can check, and refuses
+          # commands with more moving parts than it can account for.
           hooks.PreToolUse = [
             {
               matcher = "Bash|Write|Edit|NotebookEdit";
@@ -99,14 +100,14 @@
                 }
               ];
             }
-            # Auto mode would otherwise write tracker items unseen, so every
-            # create or update stops for approval.
+            # Auto mode would otherwise write tracker items and comments
+            # unseen, so each must match a preview approved in Gram.
             {
               matcher = "Bash|mcp__claude_ai_Linear__save_(project|issue|milestone|document)";
               hooks = [
                 {
                   type = "command";
-                  command = "claude-tracker-ask";
+                  command = "gram-approve --hook";
                 }
               ];
             }
