@@ -1,0 +1,81 @@
+#!/usr/bin/env bb
+;; Fast-forward the default branch of every repo clone under ~/Documents/worktrees
+;; and sync its CodeGraph index.
+;;
+;;   ,wt-pull                  every clone (dirs without a `.` in the name)
+;;   ,wt-pull wooting-server   only the named clones
+;;
+;; Linked worktrees (`<repo>.<branch-slug>`) are left alone. A clone checked out
+;; on another branch still gets its default branch ref fast-forwarded. Local
+;; changes are autostashed; if they don't reapply cleanly they stay in the stash.
+
+(require '[babashka.fs :as fs]
+         '[babashka.process :as p]
+         '[clojure.string :as str])
+
+(def root (fs/path (fs/home) "Documents" "worktrees"))
+
+(defn- git [dir & args]
+  (let [{:keys [exit out err]} (apply p/sh {:dir (str dir)} "git" args)]
+    {:ok (zero? exit) :out (str/trim out) :err (str/trim err)}))
+
+(defn- default-branch [dir]
+  (let [{:keys [ok out]} (git dir "symbolic-ref" "--short" "refs/remotes/origin/HEAD")]
+    (if ok
+      (str/replace-first out "origin/" "")
+      (first (filter #(:ok (git dir "rev-parse" "--verify" "-q" (str "refs/remotes/origin/" %)))
+                     ["main" "master"])))))
+
+(defn- fail-msg
+  "Git's first error line plus any tab-indented file list under it."
+  [err]
+  (let [[head & more] (str/split-lines err)
+        files (keep #(when (str/starts-with? % "\t") (str/trim %)) more)]
+    (cond-> head (seq files) (str " " (str/join ", " files)))))
+
+(defn- update-branch [dir branch]
+  (let [before (:out (git dir "rev-parse" "--short" branch))
+        current (:out (git dir "branch" "--show-current"))
+        ;; `fetch origin b:b` refuses to touch the checked-out branch, so that one merges instead.
+        res (if (= current branch)
+              (git dir "merge" "--ff-only" "--autostash" "-q" (str "origin/" branch))
+              (git dir "fetch" "-q" "origin" (str branch ":" branch)))
+        after (:out (git dir "rev-parse" "--short" branch))]
+    (cond
+      (not (:ok res)) {:status :fail :msg (fail-msg (:err res))}
+      ;; A conflicting autostash pop still exits 0; git only says so on stderr.
+      (str/includes? (:err res) "autostash resulted in conflicts"){:status :fail :msg (str branch " " before ".." after ", local changes left in `git stash`")}
+      (= before after) {:status :ok :msg (str branch " up to date")}
+      :else {:status :ok :msg (str branch " " before ".." after)})))
+
+(defn- sync-codegraph [dir]
+  (when (fs/exists? (fs/path dir ".codegraph"))
+    (let [{:keys [exit err]} (p/sh {:dir (str dir)} "codegraph" "sync" "-q" (str dir))]
+      (if (zero? exit) "codegraph synced" (str "codegraph FAILED: " (str/trim err))))))
+
+(defn- process [dir]
+  (let [fetch (git dir "fetch" "-q" "--prune" "origin")
+        branch (default-branch dir)
+        result (cond
+                 (not (:ok fetch)) {:status :fail :msg (str "fetch: " (:err fetch))}
+                 (nil? branch) {:status :fail :msg "no origin/HEAD, main or master"}
+                 :else (update-branch dir branch))
+        cg (sync-codegraph dir)]
+    (assoc result :name (fs/file-name dir) :codegraph cg)))
+
+(defn- clones [names]
+  (->> (fs/list-dir root)
+       (filter #(and (fs/directory? %)
+                     (not (str/includes? (fs/file-name %) "."))
+                     (fs/exists? (fs/path % ".git"))
+                     (or (empty? names) (contains? names (fs/file-name %)))))
+       (sort-by str)))
+
+(let [results (doall (pmap process (clones (set *command-line-args*))))
+      width (apply max 0 (map (comp count :name) results))]
+  (doseq [{:keys [name status msg codegraph]} results]
+    (println (format (str "%s %-" width "s  %s%s")
+                     (if (= status :ok) "✓" "✗") name msg
+                     (if codegraph (str " · " codegraph) ""))))
+  (when (some #(= :fail (:status %)) results)
+    (System/exit 1)))
