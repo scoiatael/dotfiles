@@ -99,7 +99,7 @@
 
 (def issues-query
   (format "query { customView(id: \"%s\") { issues { nodes {
-             identifier state { name } title url } } } }"
+             identifier state { name } title url project { name } } } } }"
           (:issues linear-views)))
 
 (def projects-query
@@ -108,10 +108,10 @@
           (:projects linear-views)))
 
 (defn issues-view [body]
-  {:cols [:state :id :title :url]
+  {:cols [:state :project :id :title :url]
    :rows (->> (get-in body [:data :customView :issues :nodes])
               (sort-by #(get linear-state-order (get-in % [:state :name]) -1))
-              (map (juxt #(get-in % [:state :name]) :identifier :title :url)))})
+              (map (juxt #(get-in % [:state :name]) #(get-in % [:project :name]) :identifier :title :url)))})
 
 (defn projects-view [body]
   {:cols [:status :id :name :url]

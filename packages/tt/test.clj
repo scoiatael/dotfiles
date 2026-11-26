@@ -13,15 +13,15 @@
 
 (def issues-fixture
   {:data {:customView {:issues {:nodes
-    [{:identifier "W-1" :state {:name "In Review"} :title "review me" :url "u1"}
-     {:identifier "W-2" :state {:name "Backlog"} :title "later" :url "u2"}
-     {:identifier "W-3" :state {:name "Triage"} :title "triage me" :url "u3"}
-     {:identifier "W-4" :state {:name "Brand New State"} :title "unknown" :url "u4"}]}}}})
+    [{:identifier "W-1" :project {:name "foo"} :state {:name "In Review"} :title "review me" :url "u1"}
+     {:identifier "W-2" :project {:name "foo"} :state {:name "Backlog"} :title "later" :url "u2"}
+     {:identifier "W-3" :project {:name "bar"} :state {:name "Triage"} :title "triage me" :url "u3"}
+     {:identifier "W-4" :project nil :state {:name "Brand New State"} :title "unknown" :url "u4"}]}}}})
 
 (deftest issues-sorted-by-state
   (let [{:keys [cols rows]} (issues-view issues-fixture)]
-    (is (= [:state :id :title :url] cols))
-    (is (= ["W-4" "W-3" "W-2" "W-1"] (map second rows))
+    (is (= [:state :project :id :title :url] cols))
+    (is (= ["W-4" "W-3" "W-2" "W-1"] (map #(nth % 2) rows))
         "unknown states first, then Triage < Backlog < In Review")))
 
 (def projects-fixture
