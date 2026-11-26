@@ -15,8 +15,9 @@
 (defn plain [s]
   (str/replace s #"\u001b\[[0-9;]*m" ""))
 
-(defn render [status & {:keys [git columns] :or {columns 100}}]
-  (with-redefs [git-status (constantly git)]
+(defn render [status & {:keys [git codegraph columns] :or {columns 100}}]
+  (with-redefs [git-status (constantly git)
+                codegraph-status (constantly codegraph)]
     (plain (statusline status columns))))
 
 (deftest renders-one-line-filled-to-columns
@@ -53,6 +54,20 @@
   (is (= "@c54b3031" (plain (vcs-segment (assoc clean-repo :branch "(detached)")))))
   (is (= "feature/very…-branch-name"
          (plain (vcs-segment (assoc clean-repo :branch "feature/very-long-descriptive-branch-name"))))))
+
+(def synced-index {:initialized true
+                   :pendingChanges {:added 0 :modified 0 :removed 0}
+                   :index {:state "complete" :reindexRecommended false}})
+
+(deftest formats-codegraph-state
+  (is (= "cg ✓" (plain (codegraph-segment synced-index))))
+  (is (= "cg !3" (plain (codegraph-segment (assoc synced-index :pendingChanges {:added 1 :modified 2 :removed 0})))))
+  (is (= "cg reindex" (plain (codegraph-segment (assoc-in synced-index [:index :reindexRecommended] true)))))
+  (is (nil? (codegraph-segment {:initialized false}))))
+
+(deftest shows-codegraph-after-vcs
+  (is (str/includes? (render example-json :git clean-repo :codegraph synced-index)
+                     "master ╱ cg ✓")))
 
 (deftest shortens-dirs-to-unique-prefix
   (is (= "alph" (unique-prefix "alpha" ["alpha" "alpine" "beta"])))

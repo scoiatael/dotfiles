@@ -35,6 +35,7 @@
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
+    codegraph               # codegraph index freshness (prompt_codegraph below)
     # =========================[ Line #2 ]=========================
     newline                 # \n
     prompt_char             # prompt symbol
@@ -1700,6 +1701,38 @@
     # instant_prompt_example. This will give us the same `example` prompt segment in the instant
     # and regular prompts.
     prompt_example
+  }
+
+  # Codegraph index state for the nearest `.codegraph/` above $PWD: ✓, !N pending files, or reindex.
+  # `codegraph status` takes ~0.25s, so it runs in the background and the prompt redraws when it lands.
+  typeset -g _codegraph_text= _codegraph_root=
+  function _codegraph_done() {
+    local fd=$1 root text
+    IFS=$'\t' read -r root text <&$fd
+    zle -F $fd
+    exec {fd}<&-
+    [[ $root == $_codegraph_root ]] || return
+    _codegraph_text=$text
+    p10k display -r
+  }
+  function prompt_codegraph() {
+    local root=$PWD
+    while [[ $root != / && ! -d $root/.codegraph ]]; do root=${root:h}; done
+    if [[ ! -d $root/.codegraph ]]; then
+      _codegraph_root= _codegraph_text=
+      return
+    fi
+    [[ $root == $_codegraph_root ]] || _codegraph_text='%248Fcg …'
+    _codegraph_root=$root
+    local fd
+    exec {fd}< <(print -rn -- "$root"$'\t'; codegraph status --json "$root" 2>/dev/null | jq -r '
+      if .initialized | not then ""
+      elif .index.reindexRecommended or (.index and .index.state != "complete") then "%248Fcg %196Freindex"
+      else ((.pendingChanges // {}) | (.added // 0) + (.modified // 0) + (.removed // 0)) as $n
+        | if $n > 0 then "%248Fcg %178F!\($n)" else "%248Fcg %76F✓" end
+      end')
+    zle -F $fd _codegraph_done
+    p10k segment -e -c '$_codegraph_text' -t '$_codegraph_text'
   }
 
   # User-defined prompt segments can be customized the same way as built-in segments.

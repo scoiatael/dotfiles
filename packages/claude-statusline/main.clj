@@ -100,6 +100,30 @@
          (when (pos? unstaged) (str " " modified "!" unstaged))
          (when (pos? untracked) (str " " untracked-c "?" untracked)))))
 
+(defn codegraph-root [dir]
+  (some #(when (fs/directory? (fs/path % ".codegraph")) %)
+        (take-while some? (iterate fs/parent (fs/path dir)))))
+
+;; Only shells out when an index exists, since codegraph's node startup costs ~0.25s.
+(defn codegraph-status [dir]
+  (when (codegraph-root dir)
+    (try
+      (let [{:keys [exit out]} (p/shell {:dir dir :out :string :err :string :continue true}
+                                        "codegraph" "status" "--json" dir)]
+        (when (zero? exit)
+          (json/parse-string out true)))
+      (catch Exception _ nil))))
+
+(defn codegraph-segment [{:keys [initialized pendingChanges index]}]
+  (when initialized
+    (let [{:keys [added modified removed] :or {added 0 modified 0 removed 0}} pendingChanges
+          pending (+ added modified removed)]
+      (str (fg 248) "cg "
+           (cond (or (:reindexRecommended index)
+                     (and index (not= "complete" (:state index)))) (str (fg 196) "reindex")
+                 (pos? pending) (str (fg 178) "!" pending)
+                 :else (str (fg 76) "✓"))))))
+
 (defn usage-color [pct]
   (cond (>= pct 90) 196
         (>= pct 70) 178
@@ -133,11 +157,13 @@
 (defn statusline [status columns]
   (let [dir (get-in status ["workspace" "current_dir"])
         git (git-status dir)
+        cg (codegraph-segment (codegraph-status dir))
         pct (long (or (get-in status ["context_window" "used_percentage"]) 0))
         cost (or (get-in status ["cost" "total_cost_usd"]) 0)
         ms (or (get-in status ["cost" "total_duration_ms"]) 0)]
     (fill-line (powerline (cond-> [(dir-segment dir)]
-                            git (conj (vcs-segment git))))
+                            git (conj (vcs-segment git))
+                            cg (conj cg)))
                (powerline [(str (fg 255) (get-in status ["model" "display_name"]))
                            (context-bar pct)
                            (str (fg 178) (format "$%.2f" (double cost)))
