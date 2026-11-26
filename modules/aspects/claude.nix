@@ -78,8 +78,10 @@
             # MCP servers reach claude through home-manager's generated plugin, hence the prefix.
             allow = [ "mcp__plugin_claude-code-home-manager_codegraph__*" ];
 
-            # No deny rules: commits and writes into ~ depend on the directory,
-            # which a rule cannot match, so the hook below decides both.
+            # Commits and writes into ~ depend on the directory, which a rule
+            # cannot match, so the hook below decides both.
+            # codex-review needs the Codex CLI, which isn't installed; second-opinion covers it.
+            deny = [ "Skill(wooting-dev:codex-review)" ];
           };
 
           statusLine = {
